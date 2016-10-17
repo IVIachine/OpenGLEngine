@@ -1,0 +1,48 @@
+﻿  Transform.cpp
+  Texture.cpp
+c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  c:\users\tcherms\desktop\opengl\engine\libraries\glfw-3.2.1\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+  SkyBox.cpp
+  Shader.cpp
+c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  c:\users\tcherms\desktop\opengl\engine\libraries\glfw-3.2.1\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\shader.cpp(53): warning C4267: '=': conversion from 'size_t' to 'GLint', possible loss of data
+  ObjLoader.cpp
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\objloader.cpp(27): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\objloader.cpp(84): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\objloader.cpp(121): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\objloader.cpp(136): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\objloader.cpp(164): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\objloader.cpp(262): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\objloader.cpp(296): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\objloader.cpp(329): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\objloader.cpp(378): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\objloader.cpp(386): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+  Mesh.cpp
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\mesh.cpp(50): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+  Image.cpp
+c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  c:\users\tcherms\desktop\opengl\engine\libraries\glfw-3.2.1\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+  Graphics.cpp
+c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  c:\users\tcherms\desktop\opengl\engine\libraries\glfw-3.2.1\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\graphics.cpp(18): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\graphics.cpp(19): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\graphics.cpp(64): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\graphics.cpp(212): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\graphics.cpp(213): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\graphics.cpp(217): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\graphics.cpp(218): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\graphics.cpp(219): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\graphics.cpp(220): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+  Game.cpp
+c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  c:\users\tcherms\desktop\opengl\engine\libraries\glfw-3.2.1\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+c:\users\tcherms\desktop\opengl\engine\openglengine\gurmnchermengine\commonlib\game.cpp(44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  EventSystem.cpp
+  EventListener.cpp
+  Event.cpp
+  Color.cpp
+  Camera.cpp
+  Generating Code...
+  CommonLib.vcxproj -> C:\Users\tcherms\Desktop\OpenGL\Engine\OpenGLEngine\GurmNChermEngine\x64\Debug\CommonLib.lib

@@ -4,7 +4,6 @@
 #include "EventListener.h"
 #include "Graphics.h"
 #include "Image.h"
-#include "SkyBox.h"
 
 #define GAME Game::getInstance()
 
@@ -40,7 +39,7 @@ private:
 	static Game* sp_instance;
 	Camera* m_camera;
 	float m_counter;
-	SkyBox* m_skybox;
+	Image* m_skybox;
 };
 
 #endif

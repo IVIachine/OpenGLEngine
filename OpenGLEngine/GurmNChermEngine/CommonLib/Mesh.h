@@ -41,9 +41,10 @@ private:
 	GLuint m_vertexArrayObject;
 	GLuint mVertexArrayBuffers[NUM_BUFFERS];
 	unsigned int m_drawCount; 
+	bool m_isSkyBox;
 
 public:
-	Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices);
+	Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices, bool isSkyBox);
 	Mesh(std::string fileName);
 	Mesh() {};
 	~Mesh();

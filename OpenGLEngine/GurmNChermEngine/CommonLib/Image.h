@@ -22,7 +22,7 @@ public:
 	Image(const std::string & fileName, const char * imagepath, const char * meshPath, bool isCubeMap);
 	Image();
 	~Image();
-
+	Transform& getTransform() { return m_transform; };
 	void draw(Camera& camera);
 	void setTransform(Transform transform) { m_transform = transform; };
 };

@@ -14,7 +14,6 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ObjLoader.cpp" />
-    <ClCompile Include="SkyBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h" />
@@ -30,6 +29,5 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ObjLoader.h" />
-    <ClInclude Include="SkyBox.h" />
   </ItemGroup>
 </Project>

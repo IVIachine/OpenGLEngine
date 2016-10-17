@@ -1,10 +1,10 @@
 #include "Mesh.h"
 #include <vector>
 
-Mesh::Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices)
+Mesh::Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices, bool isSkyBox)
 {
 	m_drawCount = numIndices;
-
+	m_isSkyBox = isSkyBox;
 	glGenVertexArrays(1, &m_vertexArrayObject);
 	glBindVertexArray(m_vertexArrayObject);
 
@@ -76,6 +76,16 @@ Mesh::~Mesh()
 void Mesh::draw()
 {
 	glBindVertexArray(m_vertexArrayObject);
-	glDrawElements(GL_TRIANGLES, m_drawCount, GL_UNSIGNED_INT, 0);
+	if (m_isSkyBox)
+	{
+		glCullFace(GL_FRONT);
+		glDrawElements(GL_TRIANGLES, m_drawCount, GL_UNSIGNED_INT, 0);
+		glCullFace(GL_BACK);
+	}
+	else
+	{
+		glDrawElements(GL_TRIANGLES, m_drawCount, GL_UNSIGNED_INT, 0);
+	}
+
 	glBindVertexArray(0);
 }

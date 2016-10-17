@@ -2,7 +2,7 @@
 #define _GRAPHICS_H_
 
 #include <cassert>
-#include "vec2.hpp"
+#include <vec2.hpp>
 #include <string>
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>

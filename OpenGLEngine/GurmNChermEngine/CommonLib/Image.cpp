@@ -11,7 +11,7 @@ Image::Image(const std::string & fileName, Vertex * vertices, unsigned int numVe
 {
 	m_vertices = vertices;
 	m_shader = new Shader(fileName);
-	m_mesh = new Mesh(m_vertices, numVertices, indices, numIndices);
+	m_mesh = new Mesh(m_vertices, numVertices, indices, numIndices, isCubeMap);
 	m_texture = new Texture(imagepath);
 	m_transform = Transform(glm::vec3(0,0,0), glm::vec3(0,0,0));
 }

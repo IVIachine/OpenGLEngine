@@ -1,0 +1,14 @@
+#version 130
+attribute vec4 position;
+
+varying mediump vec3 vTexCoordinates;
+
+uniform mat4 modelViewProjectionMatrix;
+
+void main()
+{
+	vTexCoordinates=normalize(position.xyz);
+	gl_Position=modelViewProjectionMatrix * position;
+	gl_Position=gl_Position.xyww;
+
+}

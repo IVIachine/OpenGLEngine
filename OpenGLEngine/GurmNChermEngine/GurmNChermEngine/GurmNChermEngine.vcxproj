@@ -77,8 +77,8 @@
       <AdditionalIncludeDirectories>..\..\..\Libraries\assimp-3.1.1\include;..\..\..\Libraries\FreeImage\Dist\x32\;..\CommonLib;..\..\..\Libraries\glfw-3.2.1\include;..\..\..\Libraries\RaknetFiles\Includes\RakNet;..\..\..\Libraries\glew-2.0.0\include;..\..\..\Libraries\glm-0.9.8.1\glm\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>..\..\..\Libraries\glfw-3.2.1\lib-vc2015;..\..\..\Libraries\FreeImage\Dist\x32\;..\..\..\libraries\RaknetFiles\Libs\Debug;..\CommonLib\Debug;%(AdditionalLibraryDirectories);..\..\..\Libraries\glew-2.0.0\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;glew32s.lib;FreeImage.lib;glfw3.lib;opengl32.lib;RakNet.lib;%(AdditionalDependencies);CommonLib.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Libraries\glfw-3.2.1\lib-vc2015;..\..\..\Libraries\FreeImage\Dist\x32;..\CommonLib\Debug;%(AdditionalLibraryDirectories);..\..\..\Libraries\glew-2.0.0\lib\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies);CommonLib.lib;FreeImage.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -106,7 +106,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\..\..\Libraries\glfw-3.2.1\lib-vc2015;..\..\..\Libraries\FreeImage\Dist\x32\;..\..\..\Libraries\RaknetFiles\Libs\Release;..\CommonLib\Release;%(AdditionalLibraryDirectories);..\..\..\Libraries\glew-2.0.0\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;glew32s.lib;FreeImage.lib;glfw3.lib;RakNet.lib;CommonLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;FreeImage.lib;glfw3.lib;CommonLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

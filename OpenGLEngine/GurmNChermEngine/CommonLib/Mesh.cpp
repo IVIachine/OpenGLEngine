@@ -42,6 +42,7 @@ Mesh::Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, un
 
 Mesh::Mesh(std::string fileName)
 {
+	m_isSkyBox = false;
 	glGenVertexArrays(1, &m_vertexArrayObject);
 	glBindVertexArray(m_vertexArrayObject);
 
@@ -80,10 +81,10 @@ void Mesh::draw()
 	{
 		glCullFace(GL_FRONT);
 		glDrawElements(GL_TRIANGLES, m_drawCount, GL_UNSIGNED_INT, 0);
-		glCullFace(GL_BACK);
 	}
 	else
 	{
+		glCullFace(GL_BACK);
 		glDrawElements(GL_TRIANGLES, m_drawCount, GL_UNSIGNED_INT, 0);
 	}
 

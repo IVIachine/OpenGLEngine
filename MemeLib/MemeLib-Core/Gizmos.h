@@ -5,6 +5,7 @@
 #include <GL\glew.h>
 #include <Trackable.h>
 #include <cassert>
+#include "Color.h"
 
 #define GIZMOS Gizmos::getInstance()
 
@@ -29,6 +30,8 @@ public:
 
 	bool setup();
 	void cleanup();
+
+	void setColor(Color color);
 
 	void drawPoint(glm::vec3 pos);
 	void drawRay(glm::vec3 start, glm::vec3 end);

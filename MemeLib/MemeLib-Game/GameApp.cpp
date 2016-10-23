@@ -208,9 +208,17 @@ void GameApp::draw()
 			Node* prev = mNavMesh->getNode(i);
 			Node* next = mNavMesh->getNode(i + 1);
 
-			GIZMOS->drawRay(prev->getPosition(), next->getPosition());
+			//GIZMOS->drawRay(prev->getPosition(), next->getPosition());
+			//GIZMOS->drawPoint(prev->getPosition());
+		}
 
-			GIZMOS->drawPoint(prev->getPosition());
+		for (size_t i = 0; i < mNavMesh->edgeCount(); i++)
+		{
+			EdgeTemp* e = mNavMesh->getEdge(i);
+
+			GIZMOS->drawRay(e->mFirst, e->mSecond);
+
+			GIZMOS->drawPoint(e->mFirst);
 		}
 
 		UNITS->drawAll();

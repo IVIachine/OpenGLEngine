@@ -59,5 +59,7 @@ public:
 
 	size_t vertCount() const { return mVerts.size(); };
 
+	size_t edgeCount() const { return mEdges.size(); };
+	EdgeTemp* getEdge(size_t index) { return &mEdges[index]; };
 };
 #endif

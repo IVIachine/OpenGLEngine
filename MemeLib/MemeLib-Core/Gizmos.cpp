@@ -21,11 +21,31 @@ void Gizmos::cleanup()
 {
 }
 
+void Gizmos::setColor(Color color)
+{
+	glColor4ui(
+		color.r, 
+		color.g, 
+		color.b, 
+		color.a);
+}
+
 
 void Gizmos::drawPoint(glm::vec3 pos)
 {
-	glBegin(GL_POINT);
-	glVertex3f(pos.x, pos.y, pos.z);
+	float
+		x1 = pos.x,
+		y1 = pos.y,
+		z1 = pos.z;
+
+	glBegin(GL_POINTS);
+
+	glPointSize(10.0f);
+	
+	glVertex3f(x1, y1, z1);
+
+	//glVertex3f(x1 - amt, y1 - amt, z1 - amt);
+
 	glEnd();
 }
 

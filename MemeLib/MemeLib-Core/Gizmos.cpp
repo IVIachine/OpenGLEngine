@@ -22,6 +22,13 @@ void Gizmos::cleanup()
 }
 
 
+void Gizmos::drawPoint(glm::vec3 pos)
+{
+	glBegin(GL_POINT);
+	glVertex3f(pos.x, pos.y, pos.z);
+	glEnd();
+}
+
 void Gizmos::drawRay(glm::vec3 start, glm::vec3 end)
 {
 	float 

@@ -57,5 +57,7 @@ public:
 	std::vector<FaceTemp> getEdgeFaces(std::vector<FaceTemp>& faces, EdgeTemp key);
 	float norm2(glm::vec3 v);
 
+	size_t vertCount() const { return mVerts.size(); };
+
 };
 #endif

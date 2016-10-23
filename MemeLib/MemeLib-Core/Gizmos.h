@@ -30,6 +30,7 @@ public:
 	bool setup();
 	void cleanup();
 
+	void drawPoint(glm::vec3 pos);
 	void drawRay(glm::vec3 start, glm::vec3 end);
 
 private:

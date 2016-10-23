@@ -203,12 +203,14 @@ void GameApp::draw()
 		mp_sprite2->setScale({ 1.f, 1.f });
 		mp_sprite2->draw(*cam);
 
-		for (size_t i = 0; i < m_path.size() - 1; i++)
+		for (size_t i = 0; i < mNavMesh->getNodeCount() - 1; i++)
 		{
-			Node* prev = m_path[i];
-			Node* next = m_path[i + 1];
+			Node* prev = mNavMesh->getNode(i);
+			Node* next = mNavMesh->getNode(i + 1);
 
 			GIZMOS->drawRay(prev->getPosition(), next->getPosition());
+
+			GIZMOS->drawPoint(prev->getPosition());
 		}
 
 		UNITS->drawAll();

@@ -31,11 +31,11 @@
     <Filter Include="Source Files\Util">
       <UniqueIdentifier>{c4d487a0-eb4b-475f-92c9-7da8568fb6aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Messages">
-      <UniqueIdentifier>{993f39ff-8e64-487c-91c7-ba6ba718c0f6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Messaging">
       <UniqueIdentifier>{bce3ac5e-295b-4402-b148-a0d182e053ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Messaging">
+      <UniqueIdentifier>{993f39ff-8e64-487c-91c7-ba6ba718c0f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -165,11 +165,19 @@
     <ClInclude Include="Graph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="AStarPathfinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Heuristic.h">
       <Filter>Header Files</Filter>
+=======
+    <ClInclude Include="Font.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Gizmos.h">
+      <Filter>Header Files\Graphics</Filter>
+>>>>>>> eaa0a2435d34bb3b970504b442349b714a1aae3d
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -222,13 +230,13 @@
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="GameMessage.cpp">
-      <Filter>Source Files\Messages</Filter>
+      <Filter>Source Files\Messaging</Filter>
     </ClCompile>
     <ClCompile Include="GameMessageManager.cpp">
-      <Filter>Source Files\Messages</Filter>
+      <Filter>Source Files\Messaging</Filter>
     </ClCompile>
     <ClCompile Include="Notification.cpp">
-      <Filter>Source Files\Messages</Filter>
+      <Filter>Source Files\Messaging</Filter>
     </ClCompile>
     <ClCompile Include="Time.cpp">
       <Filter>Source Files\Util</Filter>
@@ -255,16 +263,16 @@
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="NotificationQueue.cpp">
-      <Filter>Source Files\Messages</Filter>
+      <Filter>Source Files\Messaging</Filter>
     </ClCompile>
     <ClCompile Include="NotificationProcessor.cpp">
-      <Filter>Source Files\Messages</Filter>
+      <Filter>Source Files\Messaging</Filter>
     </ClCompile>
     <ClCompile Include="Dictionary.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
     <ClCompile Include="Transaction.cpp">
-      <Filter>Source Files\Messages</Filter>
+      <Filter>Source Files\Messaging</Filter>
     </ClCompile>
     <ClCompile Include="Serializable.cpp">
       <Filter>Source Files\Util</Filter>
@@ -290,11 +298,19 @@
     <ClCompile Include="Graph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="AStarPathfinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Heuristic.cpp">
       <Filter>Source Files</Filter>
+=======
+    <ClCompile Include="Font.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Gizmos.cpp">
+      <Filter>Source Files\Graphics</Filter>
+>>>>>>> eaa0a2435d34bb3b970504b442349b714a1aae3d
     </ClCompile>
   </ItemGroup>
 </Project>

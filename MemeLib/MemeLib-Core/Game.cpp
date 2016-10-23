@@ -2,6 +2,7 @@
 #include "EventSystem.h"
 #include "GameMessageManager.h"
 #include "Input.h"
+#include "Gizmos.h"
 
 Game* Game::sp_instance = NULL;
 
@@ -41,7 +42,14 @@ bool Game::setup(int width, int height)
 	{
 		fprintf(stderr, "Failed to initialize Graphics.\n");
 		return false;
-	}	
+	}
+
+	// Setup Gizmos
+	if (!Gizmos::createInstance()->setup())
+	{
+		fprintf(stderr, "Failed to initialize Gizmos.\n");
+		return false;
+	}
 
 	// Setup Input
 	if (!Input::createInstance()->setup())
@@ -78,6 +86,9 @@ void Game::cleanup()
 
 	// Dispose Graphics
 	Graphics::destroyInstance();
+
+	// Dispose Gizmos
+	Gizmos::destroyInstance();
 
 	// Dispost Input
 	Input::destroyInstance();

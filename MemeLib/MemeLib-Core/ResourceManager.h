@@ -4,7 +4,7 @@
 #include <cassert>
 #include "Dictionary.h"
 
-class Mesh;
+class Font;
 class Texture;
 class Texture2D;
 class Shader;
@@ -36,6 +36,10 @@ public:
 	bool setup();
 	void cleanup();
 
+	Font*		addFont(TKey key, const std::string& filename);
+	Font*		getFont(TKey key);
+	Font*		setFont(TKey key, const std::string& filename);
+
 	Texture*	addTexture(TKey key, const std::string& filename);
 	Texture*	getTexture(TKey key);
 	Texture*	setTexture(TKey key, const std::string& filename);
@@ -53,6 +57,7 @@ public:
 	Sprite*		setSprite(TKey key, Texture2D* texture2D);
 
 private:
+	Dictionary<TKey, Font>		m_fonts;
 	Dictionary<TKey, Texture>	m_textures;
 	Dictionary<TKey, Texture2D> m_texture2Ds;
 	Dictionary<TKey, Shader>	m_shaders;

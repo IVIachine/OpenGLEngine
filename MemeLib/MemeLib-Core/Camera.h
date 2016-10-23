@@ -20,8 +20,7 @@ public:
 	glm::vec3	getPos();
 	glm::vec3	getFowardVector();
 	glm::vec3	getUpVector();
-	void		setFront(glm::vec3 front);
-	
+	void		setFront(glm::vec3 front);	
 
 private:
 	glm::mat4	m_perspective;

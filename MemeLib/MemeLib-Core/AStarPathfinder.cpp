@@ -90,10 +90,10 @@ const Path & AStarPathfinder::findPath(Node * pFrom, Node * pTo)
 	{
 		while (currentNode->mpNode != pFrom)
 		{
-			mPath.addNode(currentNode->mpNode);
+			mPath.add(currentNode->mpNode);
 			currentNode = findNodeRecord(visitedNodes, currentNode->mpConnection->getFromNode());
 		}
-		mPath.reversePath();
+		mPath.reverse();
 	}
 
 	for (std::list<NodeRecord*>::const_iterator iterator = nodesToVisit.begin(), end = nodesToVisit.end(); iterator != end; ++iterator) //Clear lists

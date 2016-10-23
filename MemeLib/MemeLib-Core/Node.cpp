@@ -5,7 +5,6 @@ Node::Node()
 {
 }
 
-<<<<<<< HEAD
 Node::Node(const NODE_ID & id, const glm::vec3& pos)
 	: mId(id), mX(pos.x), mY(pos.y), mZ(pos.z)
 {
@@ -13,10 +12,6 @@ Node::Node(const NODE_ID & id, const glm::vec3& pos)
 
 Node::Node(const NODE_ID& id, float x, float y, float z)
 	: mId(id), mX(x), mY(y), mZ(z)
-=======
-Node::Node(const NODE_ID& id, glm::vec3 pos)
-	: mId(id), mPos(pos)
->>>>>>> 58c450c58599be32e2e224583775b33a58d99793
 {
 }
 

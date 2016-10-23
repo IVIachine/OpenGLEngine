@@ -38,7 +38,7 @@ void NavigationMesh::constructMesh(std::vector<glm::vec3> vertices, std::vector<
 		{
 			Node* pToNode = getOtherNode(knownConnections[k], pFromNode);//find to node
 			Connection* pConnection;
-			float dist = (pFromNode->getPos() - pToNode->getPos()).length();
+			float dist = (float)(pFromNode->getPosition() - pToNode->getPosition()).length();
 			pConnection = new Connection(pFromNode, pToNode, dist);
 
 			mConnections.push_back(pConnection);
@@ -171,11 +171,11 @@ std::vector<EdgeTemp> NavigationMesh::getKnownConnections(glm::vec3 key)
 
 Node * NavigationMesh::getOtherNode(EdgeTemp tmp, Node* key)
 {
-	if (key->getPos() == tmp.mFirst)
+	if (key->getPosition() == tmp.mFirst)
 	{
 		return getNode(tmp.mSecond);
 	}
-	else if (key->getPos() == tmp.mSecond)
+	else if (key->getPosition() == tmp.mSecond)
 	{
 		return getNode(tmp.mFirst);
 	}

@@ -58,7 +58,7 @@ Node * Graph::getNode(glm::vec3 pos)
 {
 	for (size_t i = 0; i < mNodes.size(); i++)
 	{
-		if (mNodes[i]->getPos() == pos)
+		if (mNodes[i]->getPosition() == pos)
 		{
 			return mNodes[i];
 		}

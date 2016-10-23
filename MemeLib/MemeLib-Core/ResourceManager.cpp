@@ -1,5 +1,5 @@
 #include "ResourceManager.h"
-#include "Mesh.h"
+#include "Font.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "Texture2D.h"
@@ -27,6 +27,8 @@ bool ResourceManager::setup()
 
 void ResourceManager::cleanup()
 {
+	m_fonts.cleanup();
+
 	m_shaders.cleanup();
 
 	m_textures.cleanup();
@@ -34,6 +36,22 @@ void ResourceManager::cleanup()
 	m_texture2Ds.cleanup();
 
 	m_sprites.cleanup();
+}
+
+
+Font* ResourceManager::addFont(TKey key, const std::string& filename)
+{
+	return m_fonts.addData(key, new Font(filename));
+}
+
+Font* ResourceManager::getFont(TKey key)
+{
+	return m_fonts.getData(key);
+}
+
+Font* ResourceManager::setFont(TKey key, const std::string& filename)
+{
+	return m_fonts.setData(key, new Font(filename));
 }
 
 

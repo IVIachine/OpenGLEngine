@@ -1,8 +1,0 @@
-﻿  NavigationMesh.cpp
-Transaction.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-NotificationQueue.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-NotificationProcessor.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-HalfEdge.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-Dictionary.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-  MemeLib-Core.vcxproj -> C:\Users\tcherms\Desktop\AI\Projects\Section 01\Advanced Pathfinding Groups\Chermely.Gurman\MemeLib\MemeLib-Core\Debug\MemeLib-Core.lib
-BSCMAKE : warning BK4503: minor error in .SBR file 'Debug\NavigationMesh.sbr' ignored

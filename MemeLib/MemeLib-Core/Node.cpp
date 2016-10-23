@@ -5,8 +5,8 @@ Node::Node()
 {
 }
 
-Node::Node(const NODE_ID& id)
-	: mId(id)
+Node::Node(const NODE_ID& id, glm::vec3 pos)
+	: mId(id), mPos(pos)
 {
 }
 

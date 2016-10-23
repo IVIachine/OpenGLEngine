@@ -1,6 +1,6 @@
 #include "NavigationMesh.h"
 #include <algorithm>
-
+#include "Connection.h"
 
 NavigationMesh::NavigationMesh()
 {
@@ -17,6 +17,36 @@ void NavigationMesh::constructMesh(std::vector<glm::vec3> vertices, std::vector<
 	splitTriangles(vertices, indices, edges, faceCount); //Split the intersections into multiple edges for accuracy
 	mVerts = vertices;
 	mEdges = edges;
+
+	mNodes.resize(mVerts.size(), NULL);
+
+	for (size_t i = 0; i < mVerts.size(); i++)
+	{
+		Node* pNode = new Node(i, mVerts[i]);
+		mNodes[i] = pNode;
+	}
+
+
+	for (size_t j = 0; j < mVerts.size(); j++)
+	{
+		Node* pFromNode = mNodes[j];
+		std::vector<Connection*> connections;
+
+		std::vector<EdgeTemp> knownConnections = getKnownConnections(mVerts[j]);
+
+		for (size_t k = 0; k < knownConnections.size(); k++)
+		{
+			Node* pToNode = getOtherNode(knownConnections[k], pFromNode);//find to node
+			Connection* pConnection;
+			float dist = (pFromNode->getPos() - pToNode->getPos()).length();
+			pConnection = new Connection(pFromNode, pToNode, dist);
+
+			mConnections.push_back(pConnection);
+			connections.push_back(pConnection);
+		}
+
+		mConnectionMap[j] = connections;
+	}
 }
 
 void NavigationMesh::splitTriangles(std::vector<glm::vec3>& vertices, std::vector<size_t> indices, std::vector<EdgeTemp>& edges, size_t faceCount)
@@ -66,36 +96,6 @@ void NavigationMesh::splitTriangles(std::vector<glm::vec3>& vertices, std::vecto
 						edges.push_back(third);
 						edges.push_back(fourth);
 						isChecking = true;
-				
-						/*std::vector<FaceTemp> firstFaces, secondFaces;
-						firstFaces = getEdgeFaces(faces, tmp1);
-						secondFaces = getEdgeFaces(faces, tmp2);
-
-						if (firstFaces.size() > 1 && secondFaces.size() > 1) //Edges to split has multiple faces
-						{
-							faceTmp1 = firstFaces[0];
-							faceTmp2 = firstFaces[1];
-							faceTmp3 = secondFaces[0];
-							faceTmp4 = secondFaces[1];
-
-							faces.erase(std::remove(faces.begin(), faces.end(), faceTmp1), faces.end());
-							faces.erase(std::remove(faces.begin(), faces.end(), faceTmp2), faces.end());
-							faces.erase(std::remove(faces.begin(), faces.end(), faceTmp3), faces.end());
-							faces.erase(std::remove(faces.begin(), faces.end(), faceTmp4), faces.end());
-						}
-						else if (firstFaces.size() == 1 && secondFaces.size() > 1) //Second edge has more than 1 face
-						{
-							faceTmp1 = firstFaces[0];
-							faceTmp3 = secondFaces[0];
-							faceTmp4 = secondFaces[1];
-						}
-						else if (firstFaces.size() > 1 && secondFaces.size() == 1) //First edge has more than 1 face
-						{
-							faceTmp1 = firstFaces[0];
-							faceTmp2 = firstFaces[1];
-							faceTmp3 = secondFaces[0];
-						}
-						*/
 					}
 				}
 			}
@@ -156,6 +156,30 @@ void NavigationMesh::gatherEdges(std::vector<EdgeTemp>& edges, std::vector<FaceT
 		faceTemp.edges.push_back(tmp3);
 		faces.push_back(faceTemp);
 	}
+}
+
+std::vector<EdgeTemp> NavigationMesh::getKnownConnections(glm::vec3 key)
+{
+	std::vector<EdgeTemp> result;
+	for (size_t i = 0; i < mEdges.size(); i++)
+	{
+		if (mEdges[i].mFirst == key || mEdges[i].mSecond == key)
+			result.push_back(mEdges[i]);
+	}
+	return result;
+}
+
+Node * NavigationMesh::getOtherNode(EdgeTemp tmp, Node* key)
+{
+	if (key->getPos() == tmp.mFirst)
+	{
+		return getNode(tmp.mSecond);
+	}
+	else if (key->getPos() == tmp.mSecond)
+	{
+		return getNode(tmp.mFirst);
+	}
+	return NULL;
 }
 
 //CITE: http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment

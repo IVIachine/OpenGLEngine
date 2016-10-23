@@ -53,3 +53,15 @@ Node* Graph::getNode(int index)
 		return NULL;
 	}
 }
+
+Node * Graph::getNode(glm::vec3 pos)
+{
+	for (size_t i = 0; i < mNodes.size(); i++)
+	{
+		if (mNodes[i]->getPos() == pos)
+		{
+			return mNodes[i];
+		}
+	}
+	return NULL;
+}

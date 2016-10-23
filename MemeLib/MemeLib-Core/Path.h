@@ -18,7 +18,7 @@ public:
 	Node*	peek(size_t index) const;
 	Node*	peekNext() const;
 	Node*	getAndRemoveNext();
-	size_t	getCount() const;
+	size_t	size() const;
 
 	void	add(Node* pNode);
 	void	clear();

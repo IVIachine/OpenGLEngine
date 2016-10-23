@@ -121,10 +121,10 @@ bool GameApp::loadResources()
 
 	m_graph = 
 	{
-		Node(0,{ 0.f, 0.f, 0.f }),
-		Node(0,{ 1.f, 0.f, 0.f }),
-		Node(0,{ 1.f, 1.f, 0.f }),
-		Node(0,{ 0.f, 1.f, 0.f })
+		Node(0, { 0.f, 0.f, 0.f }),
+		Node(1, { 1.f, 0.f, 0.f }),
+		Node(2, { 1.f, 1.f, 0.f }),
+		Node(3, { 0.f, 1.f, 0.f })
 	};
 
 	for (auto& i : m_graph)
@@ -208,7 +208,7 @@ void GameApp::draw()
 		mp_sprite2->setScale({ 1.f, 1.f });
 		mp_sprite2->draw(*cam);
 
-		for (size_t i = 0; i < m_path.getCount() - 1; i++)
+		for (size_t i = 0; i < m_path.size() - 1; i++)
 		{
 			Node* prev = m_path[i];
 			Node* next = m_path[i + 1];

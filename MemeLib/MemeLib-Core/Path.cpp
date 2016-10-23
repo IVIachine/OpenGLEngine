@@ -57,7 +57,7 @@ Node* Path::getAndRemoveNext()
 	}
 }
 
-size_t Path::getCount() const
+size_t Path::size() const
 {
 	return mNodes.size();
 }
@@ -92,7 +92,7 @@ void Path::resize(size_t size)
 {
 	std::vector<Node*> temp;
 
-	for (size_t i = 0; i < size && i < getCount(); i++)
+	for (size_t i = 0; i < size && i < size(); i++)
 	{
 		temp.push_back(mNodes[i]);
 	}
@@ -108,7 +108,7 @@ void Path::reverse()
 
 Node* Path::begin()
 {
-	if (getCount() > 0)
+	if (size() > 0)
 	{
 		return mNodes[0];
 	}
@@ -118,9 +118,9 @@ Node* Path::begin()
 
 Node* Path::end()
 {
-	if (getCount() > 0)
+	if (size() > 0)
 	{
-		return mNodes[getCount() - 1];
+		return mNodes[size() - 1];
 	}
 
 	return NULL;

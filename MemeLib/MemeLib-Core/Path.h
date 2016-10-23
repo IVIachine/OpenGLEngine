@@ -1,26 +1,39 @@
-#pragma once
+#ifndef _PATH_H_
+#define _PATH_H_
 
+#include <glm.hpp>
 #include <vector>
 #include <Trackable.h>
 #include "NodeRecord.h"
+
 class Node;
 
 class Path :public Trackable
 {
 public:
 	Path();
+	Path(const std::vector<Node*>& list);
 	~Path();
 
-	Node* peekNode(int index) const;
-	Node* peekNextNode() const;
-	Node* getAndRemoveNextNode();
-	bool containsNode(Node* pNode) const;
-	int getNumNodes() const { return mNodes.size(); };
+	Node*	peek(size_t index) const;
+	Node*	peekNext() const;
+	Node*	getAndRemoveNext();
+	size_t	getCount() const;
 
-	void addNode(Node* pNode);
-	void clear();//remove all nodes
-	void reversePath();
+	void	add(Node* pNode);
+	void	clear();
+	bool	contains(Node* pNode) const;
+	void	resize(size_t size);
+	void	reverse();
+
+	Node*	begin();
+	Node*	end();
+
+	Node* operator[](size_t index) const;
+
 private:
 	std::vector<Node*> mNodes;
 
 };
+
+#endif // !_PATH_H_

@@ -1,14 +1,25 @@
 #include "Path.h"
+#include "Node.h"
 #include <algorithm>
+
 Path::Path()
 {
+}
+
+Path::Path(const std::vector<Node*>& list)
+{
+	for (auto& i : list)
+	{
+		add(i);
+	}
 }
 
 Path::~Path()
 {
 }
 
-Node* Path::peekNode(int index) const
+
+Node* Path::peek(size_t index) const
 {
 	if ((unsigned int)index < mNodes.size())
 	{
@@ -20,7 +31,7 @@ Node* Path::peekNode(int index) const
 	}
 }
 
-Node* Path::peekNextNode() const
+Node* Path::peekNext() const
 {
 	if (mNodes.size() > 0)
 	{
@@ -32,7 +43,7 @@ Node* Path::peekNextNode() const
 	}
 }
 
-Node* Path::getAndRemoveNextNode()
+Node* Path::getAndRemoveNext()
 {
 	if (mNodes.size() > 0)
 	{
@@ -46,12 +57,23 @@ Node* Path::getAndRemoveNextNode()
 	}
 }
 
-void Path::addNode(Node* pNode)
+size_t Path::getCount() const
+{
+	return mNodes.size();
+}
+
+
+void Path::add(Node* pNode)
 {
 	mNodes.push_back(pNode);
 }
 
-bool Path::containsNode(Node* pNode) const
+void Path::clear()
+{
+	mNodes.clear();
+}
+
+bool Path::contains(Node* pNode) const
 {
 	bool retVal = false;
 
@@ -66,12 +88,46 @@ bool Path::containsNode(Node* pNode) const
 	return retVal;
 }
 
-void Path::clear()
+void Path::resize(size_t size)
 {
-	mNodes.clear();
+	std::vector<Node*> temp;
+
+	for (size_t i = 0; i < size && i < getCount(); i++)
+	{
+		temp.push_back(mNodes[i]);
+	}
+
+	mNodes = temp;
 }
 
-void Path::reversePath()
+void Path::reverse()
 {
 	std::reverse(mNodes.begin(), mNodes.end());
+}
+
+
+Node* Path::begin()
+{
+	if (getCount() > 0)
+	{
+		return mNodes[0];
+	}
+
+	return NULL;
+}
+
+Node* Path::end()
+{
+	if (getCount() > 0)
+	{
+		return mNodes[getCount() - 1];
+	}
+
+	return NULL;
+}
+
+
+Node* Path::operator[](size_t index) const
+{
+	return peek(index);
 }

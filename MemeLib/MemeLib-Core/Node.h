@@ -1,19 +1,33 @@
 #pragma once
 
+#include <glm.hpp>
 #include <Trackable.h>
+#include <vector>
 
-const int BAD_NODE_ID = -1;
-#define NODE_ID int
+typedef int NODE_ID;
+const NODE_ID BAD_NODE_ID = -1;
 
-class Node :public Trackable
+class Graph;
+
+class Node : public Trackable
 {
 public:
-	Node(const NODE_ID& id);
 	Node();
+	Node(const NODE_ID& id, const glm::vec3& pos);
+	Node(const NODE_ID& id, float x, float y, float z);
 	~Node();
 
-	const NODE_ID& getId() const { return mId; };
+	const NODE_ID& getId() const;
+
+	float	getX() const;
+	float	getY() const;
+	float	getZ() const;
+
+	glm::vec3	getPosition() const;
 
 private:
-	const NODE_ID mId;
+	const NODE_ID	mId;
+	const float	mX;
+	const float	mY;
+	const float mZ;
 };

@@ -109,6 +109,7 @@ bool GameApp::loadResources()
 	mp_sprite2 = RESOURCES->addSprite("sprite2", RESOURCES->getTexture2D("enemy"));
 
 	mp_volume = new Volume(p_shader, RESOURCES->getTexture("brick"), "../Assets/obj/test.obj", false, mNavMesh);
+	
 	mpPathfinder = new AStarPathfinder(mNavMesh);
 	Transform skyBoxTransform = Transform(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(500, 500, 500));
 	m_skybox = new Volume(
@@ -203,22 +204,14 @@ void GameApp::draw()
 		mp_sprite2->setScale({ 1.f, 1.f });
 		mp_sprite2->draw(*cam);
 
-		for (size_t i = 0; i < mNavMesh->getNodeCount() - 1; i++)
-		{
-			Node* prev = mNavMesh->getNode(i);
-			Node* next = mNavMesh->getNode(i + 1);
-
-			//GIZMOS->drawRay(prev->getPosition(), next->getPosition());
-			//GIZMOS->drawPoint(prev->getPosition());
-		}
-
 		for (size_t i = 0; i < mNavMesh->edgeCount(); i++)
 		{
-			EdgeTemp* e = mNavMesh->getEdge(i);
+			Edge* e = mNavMesh->getEdge(i);
 
-			GIZMOS->drawRay(e->mFirst, e->mSecond);
+			GIZMOS->drawRay(e->first, e->second);
 
-			GIZMOS->drawPoint(e->mFirst);
+			GIZMOS->drawPoint(e->first);
+			GIZMOS->drawPoint(e->second);
 		}
 
 		UNITS->drawAll();

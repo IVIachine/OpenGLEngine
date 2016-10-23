@@ -6,14 +6,14 @@ NavigationMesh::NavigationMesh()
 {
 }
 
-
 NavigationMesh::~NavigationMesh()
 {
 }
 
+
 void NavigationMesh::constructMesh(std::vector<glm::vec3> vertices, std::vector<size_t> indices, size_t faceCount)
 {
-	std::vector<EdgeTemp> edges;
+	std::vector<Edge> edges;
 	splitTriangles(vertices, indices, edges, faceCount); //Split the intersections into multiple edges for accuracy
 	mVerts = vertices;
 	mEdges = edges;
@@ -32,7 +32,7 @@ void NavigationMesh::constructMesh(std::vector<glm::vec3> vertices, std::vector<
 		Node* pFromNode = mNodes[j];
 		std::vector<Connection*> connections;
 
-		std::vector<EdgeTemp> knownConnections = getKnownConnections(mVerts[j]);
+		std::vector<Edge> knownConnections = getKnownConnections(mVerts[j]);
 
 		for (size_t k = 0; k < knownConnections.size(); k++)
 		{
@@ -49,7 +49,7 @@ void NavigationMesh::constructMesh(std::vector<glm::vec3> vertices, std::vector<
 	}
 }
 
-void NavigationMesh::splitTriangles(std::vector<glm::vec3>& vertices, std::vector<size_t> indices, std::vector<EdgeTemp>& edges, size_t faceCount)
+void NavigationMesh::splitTriangles(std::vector<glm::vec3>& vertices, std::vector<size_t> indices, std::vector<Edge>& edges, size_t faceCount)
 {
 	bool isChecking = true;
 	std::vector<FaceTemp> faces;
@@ -72,8 +72,12 @@ void NavigationMesh::splitTriangles(std::vector<glm::vec3>& vertices, std::vecto
 					{
 						splitCount++;
 						vertices.push_back(inter);
-						EdgeTemp first, second, third, fourth, tmp1, tmp2;
-						FaceTemp faceTmp1, faceTmp2, faceTmp3, faceTmp4, firstFace, secondFace, thirdFace, fourthFace;
+
+						Edge 
+							first, second, third, fourth, tmp1, tmp2;
+						FaceTemp 
+							faceTmp1, faceTmp2, faceTmp3, faceTmp4,
+							firstFace, secondFace, thirdFace, fourthFace;
 
 						tmp1 = edges[i];
 						tmp2 = edges[j];
@@ -81,15 +85,15 @@ void NavigationMesh::splitTriangles(std::vector<glm::vec3>& vertices, std::vecto
 						edges.erase(edges.begin() + i);
 						edges.erase(edges.begin() + j); //Remove the edges of the intersection
 
-						first.mFirst = inter;
-						second.mFirst = inter;
-						third.mFirst = inter;
-						fourth.mFirst = inter;
+						first.first = inter;
+						second.first = inter;
+						third.first = inter;
+						fourth.first = inter;
 
-						first.mSecond = tmp1.mFirst;
-						second.mSecond = tmp1.mSecond;
-						third.mSecond = tmp2.mFirst;
-						fourth.mSecond = tmp2.mSecond;
+						first.second = tmp1.first;
+						second.second = tmp1.second;
+						third.second = tmp2.first;
+						fourth.second = tmp2.second;
 
 						edges.push_back(first);
 						edges.push_back(second);
@@ -101,7 +105,9 @@ void NavigationMesh::splitTriangles(std::vector<glm::vec3>& vertices, std::vecto
 			}
 		}
 	}
+
 }
+
 
 bool NavigationMesh::containsVertice(std::vector<glm::vec3> vertices, glm::vec3 key)
 {
@@ -115,11 +121,11 @@ bool NavigationMesh::containsVertice(std::vector<glm::vec3> vertices, glm::vec3 
 	return false;
 }
 
-bool NavigationMesh::reverseExists(std::vector<EdgeTemp> edges, EdgeTemp key)
+bool NavigationMesh::reverseExists(std::vector<Edge> edges, Edge key)
 {
 	for (size_t i = 0; i < edges.size(); i++)
 	{
-		if ((edges[i].mFirst == key.mSecond && edges[i].mSecond == key.mFirst) || (edges[i].mFirst == key.mFirst && edges[i].mSecond == key.mSecond))
+		if ((edges[i].first == key.second && edges[i].second == key.first) || (edges[i].first == key.first && edges[i].second == key.second))
 		{
 			return true;
 		}
@@ -127,19 +133,20 @@ bool NavigationMesh::reverseExists(std::vector<EdgeTemp> edges, EdgeTemp key)
 	return false;
 }
 
-void NavigationMesh::gatherEdges(std::vector<EdgeTemp>& edges, std::vector<FaceTemp>& faces, std::vector<glm::vec3>& vertices, std::vector<size_t> indices, size_t faceCount)
+
+void NavigationMesh::gatherEdges(std::vector<Edge>& edges, std::vector<FaceTemp>& faces, std::vector<glm::vec3>& vertices, std::vector<size_t> indices, size_t faceCount)
 {
 	for (size_t i = 0; i < faceCount; i += 3)
 	{
-		EdgeTemp tmp, tmp2, tmp3;
-		tmp.mFirst = vertices[indices[i]];
-		tmp.mSecond = vertices[indices[i + 1]];
+		Edge tmp, tmp2, tmp3;
+		tmp.first = vertices[indices[i]];
+		tmp.second = vertices[indices[i + 1]];
 
-		tmp2.mFirst = vertices[indices[i + 1]];
-		tmp2.mSecond = vertices[indices[i + 2]];
+		tmp2.first = vertices[indices[i + 1]];
+		tmp2.second = vertices[indices[i + 2]];
 
-		tmp3.mFirst = vertices[indices[i + 2]];
-		tmp3.mSecond = vertices[indices[i]];
+		tmp3.first = vertices[indices[i + 2]];
+		tmp3.second = vertices[indices[i]];
 
 		if (!reverseExists(edges, tmp))
 			edges.push_back(tmp);
@@ -158,39 +165,40 @@ void NavigationMesh::gatherEdges(std::vector<EdgeTemp>& edges, std::vector<FaceT
 	}
 }
 
-std::vector<EdgeTemp> NavigationMesh::getKnownConnections(glm::vec3 key)
+
+std::vector<Edge> NavigationMesh::getKnownConnections(glm::vec3 key)
 {
-	std::vector<EdgeTemp> result;
+	std::vector<Edge> result;
 	for (size_t i = 0; i < mEdges.size(); i++)
 	{
-		if (mEdges[i].mFirst == key || mEdges[i].mSecond == key)
+		if (mEdges[i].first == key || mEdges[i].second == key)
 			result.push_back(mEdges[i]);
 	}
 	return result;
 }
 
-Node * NavigationMesh::getOtherNode(EdgeTemp tmp, Node* key)
+Node * NavigationMesh::getOtherNode(Edge tmp, Node* key)
 {
-	if (key->getPosition() == tmp.mFirst)
+	if (key->getPosition() == tmp.first)
 	{
-		return getNode(tmp.mSecond);
+		return getNode(tmp.second);
 	}
-	else if (key->getPosition() == tmp.mSecond)
+	else if (key->getPosition() == tmp.second)
 	{
-		return getNode(tmp.mFirst);
+		return getNode(tmp.first);
 	}
 	return NULL;
 }
 
 //CITE: http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment
-glm::vec3 NavigationMesh::getIntersection(EdgeTemp one, EdgeTemp two)
+glm::vec3 NavigationMesh::getIntersection(Edge one, Edge two)
 {
-	if (one.mFirst == two.mFirst || one.mFirst == two.mSecond || one.mSecond == two.mFirst || one.mFirst == two.mSecond) //edges share a point
+	if (one.first == two.first || one.first == two.second || one.second == two.first || one.first == two.second) //edges share a point
 		return glm::vec3(INFINITY, INFINITY, INFINITY);
 
-	glm::vec3 da = one.mSecond - one.mFirst;
-	glm::vec3 db = two.mSecond - two.mFirst;
-	glm::vec3 dc = two.mFirst - one.mFirst;
+	glm::vec3 da = one.second - one.first;
+	glm::vec3 db = two.second - two.first;
+	glm::vec3 dc = two.first - one.first;
 
 	if (glm::dot(dc, glm::cross(da, db)) != 0)
 		return glm::vec3(INFINITY, INFINITY, INFINITY);
@@ -199,12 +207,12 @@ glm::vec3 NavigationMesh::getIntersection(EdgeTemp one, EdgeTemp two)
 
 	if (s >= 0.0 && s <= 1.0)
 	{
-		return one.mFirst + da * glm::vec3(s, s, s);
+		return one.first + da * glm::vec3(s, s, s);
 	}
 	return glm::vec3(INFINITY, INFINITY, INFINITY);
 }
 
-std::vector<FaceTemp> NavigationMesh::getEdgeFaces(std::vector<FaceTemp>& faces, EdgeTemp key)
+std::vector<FaceTemp> NavigationMesh::getEdgeFaces(std::vector<FaceTemp>& faces, Edge key)
 {
 	std::vector<FaceTemp> faceResult;
 	bool exists = false;
@@ -212,8 +220,8 @@ std::vector<FaceTemp> NavigationMesh::getEdgeFaces(std::vector<FaceTemp>& faces,
 	{
 		for (size_t j = 0; j < faces[i].edges.size(); j++)
 		{
-			if ((faces[i].edges[j].mFirst == key.mFirst && faces[i].edges[j].mSecond == key.mSecond) ||
-				(faces[i].edges[j].mFirst.x == key.mSecond.x && faces[i].edges[j].mFirst.z == key.mSecond.z))
+			if ((faces[i].edges[j].first == key.first && faces[i].edges[j].second == key.second) ||
+				(faces[i].edges[j].first.x == key.second.x && faces[i].edges[j].first.z == key.second.z))
 			{
 				exists = false;
 
@@ -224,8 +232,8 @@ std::vector<FaceTemp> NavigationMesh::getEdgeFaces(std::vector<FaceTemp>& faces,
 
 					for (size_t f = 0; f < faces[i].edges.size(); f++)
 					{
-						if ((faces[i].edges[f].mFirst == faceResult[k].edges[f].mFirst && faces[i].edges[f].mSecond == faceResult[k].edges[f].mSecond) ||
-							(faces[i].edges[f].mSecond == faceResult[k].edges[f].mFirst && faces[i].edges[f].mFirst == faceResult[k].edges[f].mSecond))
+						if ((faces[i].edges[f].first == faceResult[k].edges[f].first && faces[i].edges[f].second == faceResult[k].edges[f].second) ||
+							(faces[i].edges[f].second == faceResult[k].edges[f].first && faces[i].edges[f].first == faceResult[k].edges[f].second))
 						{
 							exists = true;
 						}

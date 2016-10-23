@@ -9,13 +9,24 @@
 #include <cmath>
 #include "Graph.h"
 #include <detail\type_vec3.hpp>
-struct EdgeTemp
+
+struct Edge
 {
-	glm::vec3 mFirst, mSecond;
+	glm::vec3 first, second;
+
+	friend bool operator == (const Edge& lhs, const Edge& rhs)
+	{
+		return lhs.first == rhs.first && lhs.second == rhs.second;
+	}
+
+	friend bool operator != (const Edge& lhs, const Edge& rhs)
+	{
+		return lhs.first != rhs.first || lhs.second != rhs.second;
+	}
 };
 
 struct FaceTemp {
-	std::vector<EdgeTemp> edges;
+	std::vector<Edge> edges;
 
 	friend bool operator==(FaceTemp lhs, FaceTemp rhs)
 	{
@@ -25,7 +36,7 @@ struct FaceTemp {
 		}
 		for (size_t i = 0; i < lhs.edges.size(); i++)
 		{
-			if (lhs.edges[i].mFirst != rhs.edges[i].mFirst || lhs.edges[i].mSecond != rhs.edges[i].mSecond)
+			if (lhs.edges[i].first != rhs.edges[i].first || lhs.edges[i].second != rhs.edges[i].second)
 				return false;
 		}
 		return true;
@@ -33,33 +44,32 @@ struct FaceTemp {
 };
 
 
-
 class NavigationMesh :public Graph
 {
 private:
-	std::vector<EdgeTemp> mEdges;
+	std::vector<Edge> mEdges;
 	std::vector<glm::vec3> mVerts;
 public:
 	NavigationMesh();
 	~NavigationMesh();
 
 	void constructMesh(std::vector<glm::vec3> vertices, std::vector<size_t> indices, size_t faceCount);
-	void splitTriangles(std::vector<glm::vec3>& vertices, std::vector<size_t> indices, std::vector<EdgeTemp>& edges, size_t faceCount);
+	void splitTriangles(std::vector<glm::vec3>& vertices, std::vector<size_t> indices, std::vector<Edge>& edges, size_t faceCount);
 
 	bool containsVertice(std::vector<glm::vec3> vertices, glm::vec3 key);
-	bool reverseExists(std::vector<EdgeTemp> edges, EdgeTemp key);
+	bool reverseExists(std::vector<Edge> edges, Edge key);
 
-	void gatherEdges(std::vector<EdgeTemp>& edges, std::vector<FaceTemp>& faces, std::vector<glm::vec3>& vertices, std::vector<size_t> indices, size_t faceCount);
+	void gatherEdges(std::vector<Edge>& edges, std::vector<FaceTemp>& faces, std::vector<glm::vec3>& vertices, std::vector<size_t> indices, size_t faceCount);
 
-	std::vector<EdgeTemp> getKnownConnections(glm::vec3 key);
-	Node* getOtherNode(EdgeTemp tmp, Node* key);
-	glm::vec3 getIntersection(EdgeTemp one, EdgeTemp two);
-	std::vector<FaceTemp> getEdgeFaces(std::vector<FaceTemp>& faces, EdgeTemp key);
+	std::vector<Edge> getKnownConnections(glm::vec3 key);
+	Node* getOtherNode(Edge tmp, Node* key);
+	glm::vec3 getIntersection(Edge one, Edge two);
+	std::vector<FaceTemp> getEdgeFaces(std::vector<FaceTemp>& faces, Edge key);
 	float norm2(glm::vec3 v);
 
 	size_t vertCount() const { return mVerts.size(); };
 
 	size_t edgeCount() const { return mEdges.size(); };
-	EdgeTemp* getEdge(size_t index) { return &mEdges[index]; };
+	Edge* getEdge(size_t index) { return &mEdges[index]; };
 };
 #endif

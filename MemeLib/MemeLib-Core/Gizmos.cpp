@@ -38,14 +38,12 @@ void Gizmos::drawPoint(glm::vec3 pos)
 		y1 = pos.y,
 		z1 = pos.z;
 
-	glBegin(GL_POINTS);
+	glColor3f(0.0f, 0.0f, 1.0f); //blue color
 
 	glPointSize(10.0f);
-	
+
+	glBegin(GL_POINTS);	
 	glVertex3f(x1, y1, z1);
-
-	//glVertex3f(x1 - amt, y1 - amt, z1 - amt);
-
 	glEnd();
 }
 

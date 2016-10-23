@@ -83,6 +83,7 @@ void Graphics::moveCamera(Camera* camera)
 	{
 		camera->setPos(camera->getPos() + glm::normalize(glm::cross(camera->getFowardVector(), camera->getUpVector())) * cameraSpeed);
 	}
+
 }
 
 

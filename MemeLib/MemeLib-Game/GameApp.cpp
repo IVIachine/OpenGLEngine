@@ -3,6 +3,7 @@
 #include "GameController.h"
 #include "UnitManager.h"
 #include "ComponentManager.h"
+#include "Gizmos.h"
 
 GameApp::GameApp()
 {
@@ -183,6 +184,8 @@ void GameApp::draw()
 		m_skybox->draw(*cam);
 
 		mp_volume->draw(*cam);
+
+		GIZMOS->drawRay({ 0.0f, 0.0f, 0.0f }, { 50.0f, 50.0f, 50.0f });
 
 
 		mp_sprite1->setPosition({ -2.5f, 0 });

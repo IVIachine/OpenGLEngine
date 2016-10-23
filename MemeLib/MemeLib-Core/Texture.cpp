@@ -42,7 +42,7 @@ void Texture::generateNormal(const std::string& filename)
 	m_Map = new GLubyte[4 * m_width * m_height];
 	char*pixels = (char*)FreeImage_GetBits(image);
 
-	for (int j = 0; j < m_width*m_height; j++) 
+	for (size_t j = 0; j < m_width * m_height; j++) 
 	{
 		m_Map[j * 4 + 0] = pixels[j * 4 + 2];
 		m_Map[j * 4 + 1] = pixels[j * 4 + 1];

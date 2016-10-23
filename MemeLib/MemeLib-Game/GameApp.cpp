@@ -119,6 +119,19 @@ bool GameApp::loadResources()
 
 	m_skybox->setTransform(skyBoxTransform);
 
+	m_graph = 
+	{
+		Node(0,{ 0.f, 0.f, 0.f }),
+		Node(0,{ 1.f, 0.f, 0.f }),
+		Node(0,{ 1.f, 1.f, 0.f }),
+		Node(0,{ 0.f, 1.f, 0.f })
+	};
+
+	for (auto& i : m_graph)
+	{
+		m_path.add(&i);
+	}
+
 	return true;
 }
 
@@ -185,19 +198,23 @@ void GameApp::draw()
 
 		mp_volume->draw(*cam);
 
-		GIZMOS->drawRay({ 0.0f, 0.0f, 0.0f }, { 50.0f, 50.0f, 50.0f });
-
-
 		mp_sprite1->setPosition({ -2.5f, 0 });
 		mp_sprite1->setRotation(45.f * Maths::DEG_TO_RAD);
 		mp_sprite1->setScale({ 2.5f, 2.5f });
 		mp_sprite1->draw(*cam);
-
 		
 		mp_sprite2->setPosition({ 2.5f, 0 });
 		mp_sprite2->setRotation(0.f * Maths::DEG_TO_RAD);
 		mp_sprite2->setScale({ 1.f, 1.f });
 		mp_sprite2->draw(*cam);
+
+		for (size_t i = 0; i < m_path.getCount() - 1; i++)
+		{
+			Node* prev = m_path[i];
+			Node* next = m_path[i + 1];
+
+			GIZMOS->drawRay(prev->getPosition(), next->getPosition());
+		}
 
 		UNITS->drawAll();
 	}

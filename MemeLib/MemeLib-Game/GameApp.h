@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Game.h"
+#include "Path.h"
 
 const int MAX_UNITS = 500;
 
@@ -30,6 +31,9 @@ private:
 	Sprite*		mp_sprite1;
 	Sprite*		mp_sprite2;
 	Vector2		m_position;
+
+	std::vector<Node>	m_graph;
+	Path				m_path;
 };
 
 #endif // !_GAME_APP_H_

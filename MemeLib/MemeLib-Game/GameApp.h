@@ -4,6 +4,9 @@
 #include <iostream>
 #include "Game.h"
 #include "Path.h"
+#include "NavigationMesh.h"
+#include "Pathfinder.h"
+#include "Graph.h"
 
 const int MAX_UNITS = 500;
 
@@ -26,13 +29,13 @@ private:
 	float	m_counter;
 	Volume*	m_skybox;
 
+	Pathfinder* mpPathfinder;
 	Texture2D*	mp_texture;
 	Volume*		mp_volume;
 	Sprite*		mp_sprite1;
 	Sprite*		mp_sprite2;
+	NavigationMesh* mNavMesh;
 	Vector2		m_position;
-
-	std::vector<Node>	m_graph;
 	Path				m_path;
 };
 

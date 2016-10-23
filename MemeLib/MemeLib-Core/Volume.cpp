@@ -14,10 +14,10 @@ Volume::Volume(Shader* shader, Vertex* vertices, Texture* texture, unsigned int 
 	m_transform = Transform(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0));
 }
 
-Volume::Volume(Shader* shader, Texture* texture, const char * volumePath, bool isCubeMap)
+Volume::Volume(Shader* shader, Texture* texture, const char * volumePath, bool isCubeMap, NavigationMesh* nav)
 {
 	mp_shader = shader;
-	mp_mesh = new Mesh(volumePath);
+	mp_mesh = new Mesh(volumePath, nav);
 	mp_texture = texture;
 	m_transform = Transform(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0));
 	m_isCubeMap = isCubeMap;

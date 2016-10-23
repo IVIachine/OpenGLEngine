@@ -6,12 +6,12 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "Transform.h"
-
+#include "NavigationMesh.h"
 class Volume : public Serializable
 {
 public:
 	Volume(Shader* shader, Vertex* vertices, Texture* texture, unsigned int numVertices, unsigned int* indices, unsigned int numIndices, bool isCubeMap);
-	Volume(Shader* shader, Texture* texture, const char * volumePath, bool isCubeMap);
+	Volume(Shader* shader, Texture* texture, const char * volumePath, bool isCubeMap, NavigationMesh* nav);
 	Volume();
 	~Volume();
 	Transform& transform() { return m_transform; };

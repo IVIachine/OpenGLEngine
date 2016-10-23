@@ -88,11 +88,11 @@ bool Path::contains(Node* pNode) const
 	return retVal;
 }
 
-void Path::resize(size_t size)
+void Path::resize(size_t value)
 {
 	std::vector<Node*> temp;
 
-	for (size_t i = 0; i < size && i < size(); i++)
+	for (size_t i = 0; i < value && i < size(); i++)
 	{
 		temp.push_back(mNodes[i]);
 	}

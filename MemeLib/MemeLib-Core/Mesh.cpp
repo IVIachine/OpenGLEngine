@@ -1,6 +1,5 @@
 #include "Mesh.h"
 #include <vector>
-#include "NavigationMesh.h"
 
 Mesh::Mesh(Vertex* vertices, size_t numVertices, size_t* indices, size_t numIndices, bool isSkyBox)
 {
@@ -41,7 +40,7 @@ Mesh::Mesh(Vertex* vertices, size_t numVertices, size_t* indices, size_t numIndi
 	glBindVertexArray(0);
 }
 
-Mesh::Mesh(std::string fileName)
+Mesh::Mesh(std::string fileName, NavigationMesh* nav)
 {
 	m_isSkyBox = false;
 	glGenVertexArrays(1, &m_vertexArrayObject);
@@ -50,8 +49,7 @@ Mesh::Mesh(std::string fileName)
 	IndexedModel model = OBJModel(fileName).ToIndexedModel();
 
 	m_drawCount = model.indices.size();
-	NavigationMesh tmp;
-	tmp.constructMesh(model.actualPositions, model.actualIndices, m_drawCount);
+	nav->constructMesh(model.actualPositions, model.actualIndices, m_drawCount);
 	
 	glGenBuffers(NUM_BUFFERS, mVertexArrayBuffers); //Allocate space for the buffers
 	glBindBuffer(GL_ARRAY_BUFFER, mVertexArrayBuffers[POSITION_VB]); //Treat as an array

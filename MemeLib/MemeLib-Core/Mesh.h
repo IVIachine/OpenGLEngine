@@ -3,13 +3,14 @@
 
 #include "Vertex.h"
 #include "ObjLoader.h"
+#include "NavigationMesh.h"
 
 class Mesh : public Trackable
 {
 public:
 	Mesh() {};
 	Mesh(Vertex* vertices, size_t numVertices, size_t* indices, size_t numIndices, bool isSkyBox);
-	Mesh(std::string fileName);
+	Mesh(std::string fileName, NavigationMesh* nav);
 	Mesh(const Mesh& copy);
 	~Mesh();
 

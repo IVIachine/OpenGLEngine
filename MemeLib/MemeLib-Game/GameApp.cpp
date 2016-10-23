@@ -4,6 +4,7 @@
 #include "UnitManager.h"
 #include "ComponentManager.h"
 #include "Gizmos.h"
+#include "AStarPathfinder.h"
 
 GameApp::GameApp()
 {
@@ -43,6 +44,8 @@ bool GameApp::loadResources()
 	m_counter = 0.0f;
 
 	Transform tmp = Transform(glm::vec3(1.0, 1.0, 1.0), glm::vec3(45, 0, 0));
+
+	mNavMesh = new NavigationMesh();
 
 	Vertex vertices[] = {
 		//Vertices according to faces
@@ -105,8 +108,8 @@ bool GameApp::loadResources()
 	mp_sprite1 = RESOURCES->addSprite("sprite1", RESOURCES->getTexture2D("harambe"));
 	mp_sprite2 = RESOURCES->addSprite("sprite2", RESOURCES->getTexture2D("enemy"));
 
-	mp_volume = new Volume(p_shader, RESOURCES->getTexture("brick"), "../Assets/obj/test.obj", false);
-
+	mp_volume = new Volume(p_shader, RESOURCES->getTexture("brick"), "../Assets/obj/test.obj", false, mNavMesh);
+	mpPathfinder = new AStarPathfinder(mNavMesh);
 	Transform skyBoxTransform = Transform(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(500, 500, 500));
 	m_skybox = new Volume(
 		p_shader,
@@ -119,18 +122,7 @@ bool GameApp::loadResources()
 
 	m_skybox->setTransform(skyBoxTransform);
 
-	m_graph = 
-	{
-		Node(0, { 0.f, 0.f, 0.f }),
-		Node(1, { 1.f, 0.f, 0.f }),
-		Node(2, { 1.f, 1.f, 0.f }),
-		Node(3, { 0.f, 1.f, 0.f })
-	};
-
-	for (auto& i : m_graph)
-	{
-		m_path.add(&i);
-	}
+	m_path = mpPathfinder->findPath(mNavMesh->getNode(1), mNavMesh->getNode(5));
 
 	return true;
 }
@@ -145,6 +137,9 @@ void GameApp::unloadResources()
 
 	delete mp_volume;
 	mp_volume = NULL;
+
+	delete mNavMesh;
+	mNavMesh = NULL;
 }
 
 

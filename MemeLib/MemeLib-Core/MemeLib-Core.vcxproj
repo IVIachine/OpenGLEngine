@@ -122,6 +122,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AStarPathfinder.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Connection.h" />
@@ -138,6 +139,7 @@
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="HalfEdge.h" />
+    <ClInclude Include="Heuristic.h" />
     <ClInclude Include="NavigationMesh.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="NodeRecord.h" />
@@ -169,6 +171,7 @@
     <ClInclude Include="Volume.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AStarPathfinder.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Connection.cpp" />
@@ -184,6 +187,7 @@
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="HalfEdge.cpp" />
+    <ClCompile Include="Heuristic.cpp" />
     <ClCompile Include="NavigationMesh.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="NotificationProcessor.cpp" />

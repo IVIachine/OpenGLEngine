@@ -1,0 +1,26 @@
+﻿  Texture.cpp
+  ResourceManager.cpp
+  Graphics.cpp
+  Gizmos.cpp
+  Game.cpp
+  Font.cpp
+  AStarPathfinder.cpp
+  Generating Code...
+cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
+  Compiling...
+  Camera.cpp
+  GameMessageManager.cpp
+  Heuristic.cpp
+  Texture2D.cpp
+  Input.cpp
+  Keyboard.cpp
+  Shader.cpp
+  Sprite.cpp
+  Volume.cpp
+  Generating Code...
+Transaction.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+NotificationQueue.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+NotificationProcessor.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+HalfEdge.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+Dictionary.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+  MemeLib-Core.vcxproj -> C:\Users\tcherms\Desktop\RepoTemo\OpenGLEngine\MemeLib\MemeLib-Core\Debug\MemeLib-Core.lib

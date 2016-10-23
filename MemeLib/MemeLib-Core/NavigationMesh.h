@@ -7,6 +7,7 @@
 #include "Vertex.h"
 #include <vector>
 #include <cmath>
+#include "Graph.h"
 #include <detail\type_vec3.hpp>
 struct EdgeTemp
 {
@@ -33,10 +34,9 @@ struct FaceTemp {
 
 
 
-class NavigationMesh :public Trackable
+class NavigationMesh :public Graph
 {
 private:
-	
 	std::vector<EdgeTemp> mEdges;
 	std::vector<glm::vec3> mVerts;
 public:
@@ -51,6 +51,8 @@ public:
 
 	void gatherEdges(std::vector<EdgeTemp>& edges, std::vector<FaceTemp>& faces, std::vector<glm::vec3>& vertices, std::vector<size_t> indices, size_t faceCount);
 
+	std::vector<EdgeTemp> getKnownConnections(glm::vec3 key);
+	Node* getOtherNode(EdgeTemp tmp, Node* key);
 	glm::vec3 getIntersection(EdgeTemp one, EdgeTemp two);
 	std::vector<FaceTemp> getEdgeFaces(std::vector<FaceTemp>& faces, EdgeTemp key);
 	float norm2(glm::vec3 v);

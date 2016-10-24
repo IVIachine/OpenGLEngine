@@ -15,8 +15,8 @@ public:
 	{
 		Unknown = -1,
 		Left,
-		Right,
 		Middle,
+		Right,
 		ButtonCount
 	};
 

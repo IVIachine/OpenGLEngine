@@ -110,10 +110,6 @@ bool GameApp::loadResources()
 
 	mp_volume = new Volume(p_shader, RESOURCES->getTexture("brick"), "../Assets/obj/test.obj", false, mNavMesh);
 	
-	std::cout
-		<< "E: " << mNavMesh->edgeCount() << "\n"
-		<< "V: " << mNavMesh->vertCount() << "\n";
-
 	mpPathfinder = new AStarPathfinder(mNavMesh);
 	Transform skyBoxTransform = Transform(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(500, 500, 500));
 	m_skybox = new Volume(
@@ -127,7 +123,12 @@ bool GameApp::loadResources()
 
 	m_skybox->setTransform(skyBoxTransform);
 
-	m_path = mpPathfinder->findPath(mNavMesh->getNode(1), mNavMesh->getNode(5));
+	m_path = mpPathfinder->findPath(mNavMesh->getNode(20), mNavMesh->getNode(0));
+
+	std::cout
+		<< "E: " << mNavMesh->edgeCount() << "\n"
+		<< "V: " << mNavMesh->vertCount() << "\n"
+		<< "P: " << m_path.size() << "\n";
 
 	return true;
 }
@@ -172,7 +173,7 @@ void GameApp::update()
 		m_position += Vector2::RIGHT;
 	}
 
-	if (INPUT->getKeyDown(Keyboard::Space))
+	if (INPUT->getKeyDown(Keyboard::Enter))
 	{
 		GRAPHICS->enableMouseLook(!GRAPHICS->isMouseLookEnabled());
 	}
@@ -208,14 +209,38 @@ void GameApp::draw()
 		mp_sprite2->setScale({ 1.f, 1.f });
 		mp_sprite2->draw(*cam);
 
-		for (size_t i = 0; i < mNavMesh->edgeCount(); i++)
+		bool toggle = INPUT->getKey(Keyboard::Space);
+
+		float amt = 0.05f;
+		Point off = { 0.f, amt, 0.f };
+		Point pos = { 0.f, 0.f, 0.f };
+
+		for (size_t i = 0; i < m_path.size() - 1; i++)
 		{
-			Edge* e = mNavMesh->getEdge(i);
+			Node* prev = m_path[i];
+			Node* next = m_path[i + 1];
 
-			GIZMOS->drawRay(e->first, e->second);
+			Point p1 = prev->getPosition();
+			Point p2 = next->getPosition();
 
-			GIZMOS->drawPoint(e->first);
-			GIZMOS->drawPoint(e->second);
+			GIZMOS->drawRay(p1, p2);
+		}
+
+		for (Edge e : mNavMesh->getEdges())
+		{
+			//Edge* e = mNavMesh->getEdge(i);
+
+			if (!toggle)
+			{
+				pos = { 0, 0, 0 };
+			}
+
+			//GIZMOS->drawRay(e.first + pos, e.second + pos);
+			
+			pos += off;
+
+			GIZMOS->drawPoint(e.first);
+			GIZMOS->drawPoint(e.second);
 		}
 
 		UNITS->drawAll();

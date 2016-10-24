@@ -12,6 +12,8 @@
 
 typedef glm::vec3 Point;
 
+const static float TOLERANCE = 0.00005f;
+
 struct Edge
 {
 	Point first, second;
@@ -85,13 +87,23 @@ public:
 	std::vector<Edge> getKnownConnections(Point key);
 	Node* getOtherNode(Edge tmp, Node* key);
 	std::vector<Face> getEdgeFaces(std::vector<Face>& faces, Edge key);
-	float norm2(Point v);
+	float norm2(Point v) const;
 
 	size_t	vertCount() const { return m_vertices.size(); };
 	size_t	edgeCount() const { return m_edges.size(); };
 	Edge*	getEdge(size_t index) { return &m_edges[index]; };
 
-	bool getIntersection(Edge one, Edge two, Point& ip);
-	bool getIntersection(Edge edge, Point ip);
+	bool getIntersection(Edge one, Edge two, Point& ip) const;
+	bool getIntersection(Edge edge, Point ip) const;
+
+	std::vector<Edge> getEdges() const
+	{
+		return m_edges;
+	};
+
+	std::vector<Point> getVerts() const
+	{
+		return m_vertices;
+	};
 };
 #endif

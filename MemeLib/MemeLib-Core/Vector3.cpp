@@ -101,11 +101,7 @@ float Vector3::det(const Vector3& a, const Vector3& b)
 
 float Vector3::distance(const Vector3& a, const Vector3& b)
 {
-	float dx = powf((b.x - a.x), 2);
-	float dy = powf((b.y - a.y), 2);
-	float dz = powf((b.z - a.z), 2);
-
-	return sqrtf(dx + dy);
+	return (b - a).magnitude();
 }
 
 float Vector3::dot(const Vector3& a, const Vector3& b)

@@ -1,6 +1,7 @@
 #include "NavigationMesh.h"
 #include <algorithm>
 #include "Connection.h"
+#include "Vector3.h"
 
 NavigationMesh::NavigationMesh()
 {
@@ -55,12 +56,12 @@ void NavigationMesh::splitTriangles(
 	std::vector<Edge>& edges, 
 	size_t faceCount)
 {
-
 	std::vector<Face> faces;
-
 	gatherEdges(edges, faces, vertices, indices, faceCount);
 
-	// compare edges to each other
+	//std::vector<Edge>  copyEdges(edges);
+	//std::vector<Point> copyVerts(vertices);
+
 	size_t size = edges.size();
 	for (size_t i = 0; i < size; i++)
 	{
@@ -82,21 +83,43 @@ void NavigationMesh::splitTriangles(
 					vertices.push_back(ip);
 				}
 
-				// ignore if ip is first or second of edge
-				if (ip == edges[i].first || ip == edges[i].second)
+				// beginning or end of edges[i]
+				if (ip != edges[i].first && ip != edges[i].second)
 				{
-					continue;
+					Edge a{ edges[i].first, ip };
+					Edge b{ ip, edges[i].second };
+
+					edges[i] = a;
+					edges.push_back(b);
 				}
-
-				// add new edge
-				edges.push_back({ ip, edges[i].second });
-
-				// resize old edge
-				edges[i].second = ip;
 			}
 		}
 	}
 
+	// cleanup overlooked edges
+	size = edges.size();
+	for (size_t i = 0; i < size; i++)
+	{
+		for (size_t j = 0; j < vertices.size(); j++)
+		{
+			Point ip = vertices[j];
+
+			if (getIntersection(edges[i], ip))
+			{
+				Edge a{ edges[i].first, ip };
+				Edge b{ ip, edges[i].second };
+
+				if (std::find(edges.begin(), edges.end(), a) == edges.end())
+				{
+					if (std::find(edges.begin(), edges.end(), b) == edges.end())
+					{
+						edges[i] = a;
+						edges.push_back(b);
+					}
+				}
+			}
+		}
+	}
 }
 
 
@@ -217,16 +240,13 @@ std::vector<Face> NavigationMesh::getEdgeFaces(std::vector<Face>& faces, Edge ke
 	return faceResult;
 }
 
-float NavigationMesh::norm2(Point v)
+float NavigationMesh::norm2(Point v) const
 {
 	return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
-/*edges.erase(edges.begin() + i);
-edges.erase(edges.begin() + j); //Remove the edges of the intersection*/
 
-
-bool NavigationMesh::getIntersection(Edge one, Edge two, Point& ip)
+bool NavigationMesh::getIntersection(Edge one, Edge two, Point& ip) const
 {
 	//CITE: http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment
 
@@ -256,18 +276,26 @@ bool NavigationMesh::getIntersection(Edge one, Edge two, Point& ip)
 	return false;
 }
 
-const float EPSILON = 0.001f;
-bool NavigationMesh::getIntersection(Edge edge, Point point)
+bool NavigationMesh::getIntersection(Edge edge, Point point) const
 {
-	Point linePointA = edge.first;
-	Point linePointB = edge.second;
+	Point a = edge.first;
+	Point b = edge.second;
+	Point c = point;
 
-	float a = (linePointB.y - linePointA.y) / (linePointB.x - linePointB.x);
-	float b = linePointA.y - a * linePointA.x;
-	if (fabs(point.y - (a*point.x + b)) < EPSILON)
+	float dac = Vector3::distance(a, c);
+	float dbc = Vector3::distance(b, c);
+	float dab = Vector3::distance(a, b);
+	float sum = dac + dbc;
+
+	if (sum == dab)
+	{
+		return true;
+	}
+	else if (sum >= dab - TOLERANCE && sum < dab + TOLERANCE)
 	{
 		return true;
 	}
 
 	return false;
 }
+

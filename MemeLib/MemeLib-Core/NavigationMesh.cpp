@@ -11,28 +11,28 @@ NavigationMesh::~NavigationMesh()
 }
 
 
-void NavigationMesh::constructMesh(std::vector<glm::vec3> vertices, std::vector<size_t> indices, size_t faceCount)
+void NavigationMesh::constructMesh(std::vector<Point> vertices, std::vector<size_t> indices, size_t faceCount)
 {
 	std::vector<Edge> edges;
 	splitTriangles(vertices, indices, edges, faceCount); //Split the intersections into multiple edges for accuracy
-	mVerts = vertices;
-	mEdges = edges;
+	m_vertices = vertices;
+	m_edges = edges;
 
-	mNodes.resize(mVerts.size(), NULL);
+	mNodes.resize(m_vertices.size(), NULL);
 
-	for (size_t i = 0; i < mVerts.size(); i++)
+	for (size_t i = 0; i < m_vertices.size(); i++)
 	{
-		Node* pNode = new Node(i, mVerts[i]);
+		Node* pNode = new Node(i, m_vertices[i]);
 		mNodes[i] = pNode;
 	}
 
 
-	for (size_t j = 0; j < mVerts.size(); j++)
+	for (size_t j = 0; j < m_vertices.size(); j++)
 	{
 		Node* pFromNode = mNodes[j];
 		std::vector<Connection*> connections;
 
-		std::vector<Edge> knownConnections = getKnownConnections(mVerts[j]);
+		std::vector<Edge> knownConnections = getKnownConnections(m_vertices[j]);
 
 		for (size_t k = 0; k < knownConnections.size(); k++)
 		{
@@ -49,47 +49,58 @@ void NavigationMesh::constructMesh(std::vector<glm::vec3> vertices, std::vector<
 	}
 }
 
-void NavigationMesh::splitTriangles(std::vector<glm::vec3>& vertices, std::vector<size_t> indices, std::vector<Edge>& edges, size_t faceCount)
+void NavigationMesh::splitTriangles(
+	std::vector<Point>& vertices, 
+	std::vector<size_t> indices, 
+	std::vector<Edge>& edges, 
+	size_t faceCount)
 {
 
-	std::vector<FaceTemp> faces;
+	std::vector<Face> faces;
 
-	gatherEdges(edges, faces, vertices, indices, faceCount); //Generate basic edges
+	gatherEdges(edges, faces, vertices, indices, faceCount);
 
+	// compare edges to each other
 	size_t size = edges.size();
 	for (size_t i = 0; i < size; i++)
 	{
 		for (size_t j = 0; j < size; j++)
 		{
-			glm::vec3 ip;
+			// ignore if same edge
+			if (i == j)
+			{
+				continue;
+			}
+
+			// get intersection point
+			Point ip;
 			if (getIntersection(edges[i], edges[j], ip))
 			{
+				// add vertice if not exists
 				if (std::find(vertices.begin(), vertices.end(), ip) == vertices.end())
 				{
 					vertices.push_back(ip);
 				}
 
-				Edge a = edges[i];
-
-				if (ip == a.first || ip == a.second)
+				// ignore if ip is first or second of edge
+				if (ip == edges[i].first || ip == edges[i].second)
 				{
 					continue;
 				}
 
-				Edge b = Edge();
-				b.first = ip;
-				b.second = a.second;
-				a.second = ip;
+				// add new edge
+				edges.push_back({ ip, edges[i].second });
 
-				edges.push_back(b);
-				edges[i] = a;
+				// resize old edge
+				edges[i].second = ip;
 			}
 		}
 	}
+
 }
 
 
-bool NavigationMesh::containsVertice(std::vector<glm::vec3> vertices, glm::vec3 key)
+bool NavigationMesh::containsVertice(std::vector<Point> vertices, Point key)
 {
 	for (size_t i = 0; i < vertices.size(); i++)
 	{
@@ -114,7 +125,7 @@ bool NavigationMesh::reverseExists(std::vector<Edge> edges, Edge key)
 }
 
 
-void NavigationMesh::gatherEdges(std::vector<Edge>& edges, std::vector<FaceTemp>& faces, std::vector<glm::vec3>& vertices, std::vector<size_t> indices, size_t faceCount)
+void NavigationMesh::gatherEdges(std::vector<Edge>& edges, std::vector<Face>& faces, std::vector<Point>& vertices, std::vector<size_t> indices, size_t faceCount)
 {
 	for (size_t i = 0; i < faceCount; i += 3)
 	{
@@ -137,7 +148,7 @@ void NavigationMesh::gatherEdges(std::vector<Edge>& edges, std::vector<FaceTemp>
 		if (!reverseExists(edges, tmp3))
 			edges.push_back(tmp3);
 
-		FaceTemp faceTemp;
+		Face faceTemp;
 		faceTemp.edges.push_back(tmp);
 		faceTemp.edges.push_back(tmp2);
 		faceTemp.edges.push_back(tmp3);
@@ -146,13 +157,13 @@ void NavigationMesh::gatherEdges(std::vector<Edge>& edges, std::vector<FaceTemp>
 }
 
 
-std::vector<Edge> NavigationMesh::getKnownConnections(glm::vec3 key)
+std::vector<Edge> NavigationMesh::getKnownConnections(Point key)
 {
 	std::vector<Edge> result;
-	for (size_t i = 0; i < mEdges.size(); i++)
+	for (size_t i = 0; i < m_edges.size(); i++)
 	{
-		if (mEdges[i].first == key || mEdges[i].second == key)
-			result.push_back(mEdges[i]);
+		if (m_edges[i].first == key || m_edges[i].second == key)
+			result.push_back(m_edges[i]);
 	}
 	return result;
 }
@@ -170,39 +181,9 @@ Node * NavigationMesh::getOtherNode(Edge tmp, Node* key)
 	return NULL;
 }
 
-bool NavigationMesh::getIntersection(Edge one, Edge two, glm::vec3& ip)
+std::vector<Face> NavigationMesh::getEdgeFaces(std::vector<Face>& faces, Edge key)
 {
-	//CITE: http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment
-
-	if (one.first == two.first || one.first == two.second || one.second == two.first || one.first == two.second) //edges share a point
-	{
-		false;
-	}
-
-	glm::vec3 da = one.second - one.first;
-	glm::vec3 db = two.second - two.first;
-	glm::vec3 dc = two.first - one.first;
-
-	if (glm::dot(dc, glm::cross(da, db)) != 0.f)
-	{
-		return false;
-	}
-
-	float s = glm::dot(glm::cross(dc, db), glm::cross(da, db)) / norm2(glm::cross(da, db));
-
-	if (s >= 0.0f && s <= 1.0f)
-	{
-		ip = one.first + da * glm::vec3(s, s, s);
-
-		return true;
-	}
-	
-	return false;
-}
-
-std::vector<FaceTemp> NavigationMesh::getEdgeFaces(std::vector<FaceTemp>& faces, Edge key)
-{
-	std::vector<FaceTemp> faceResult;
+	std::vector<Face> faceResult;
 	bool exists = false;
 	for (size_t i = 0; i < faces.size(); i++)
 	{
@@ -236,10 +217,57 @@ std::vector<FaceTemp> NavigationMesh::getEdgeFaces(std::vector<FaceTemp>& faces,
 	return faceResult;
 }
 
-float NavigationMesh::norm2(glm::vec3 v)
+float NavigationMesh::norm2(Point v)
 {
 	return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
 /*edges.erase(edges.begin() + i);
 edges.erase(edges.begin() + j); //Remove the edges of the intersection*/
+
+
+bool NavigationMesh::getIntersection(Edge one, Edge two, Point& ip)
+{
+	//CITE: http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment
+
+	if (one.first == two.first || one.first == two.second || one.second == two.first || one.first == two.second) //edges share a point
+	{
+		false;
+	}
+
+	Point da = one.second - one.first;
+	Point db = two.second - two.first;
+	Point dc = two.first - one.first;
+
+	if (glm::dot(dc, glm::cross(da, db)) != 0.f)
+	{
+		return false;
+	}
+
+	float s = glm::dot(glm::cross(dc, db), glm::cross(da, db)) / norm2(glm::cross(da, db));
+
+	if (s >= 0.0f && s <= 1.0f)
+	{
+		ip = one.first + da * Point(s, s, s);
+
+		return true;
+	}
+
+	return false;
+}
+
+const float EPSILON = 0.001f;
+bool NavigationMesh::getIntersection(Edge edge, Point point)
+{
+	Point linePointA = edge.first;
+	Point linePointB = edge.second;
+
+	float a = (linePointB.y - linePointA.y) / (linePointB.x - linePointB.x);
+	float b = linePointA.y - a * linePointA.x;
+	if (fabs(point.y - (a*point.x + b)) < EPSILON)
+	{
+		return true;
+	}
+
+	return false;
+}

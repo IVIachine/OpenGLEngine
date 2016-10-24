@@ -111,8 +111,8 @@ bool GameApp::loadResources()
 	mp_volume = new Volume(p_shader, RESOURCES->getTexture("brick"), "../Assets/obj/test.obj", false, mNavMesh);
 	
 	std::cout
-		<< mNavMesh->edgeCount() << "\n"
-		<< mNavMesh->vertCount() << "\n";
+		<< "E: " << mNavMesh->edgeCount() << "\n"
+		<< "V: " << mNavMesh->vertCount() << "\n";
 
 	mpPathfinder = new AStarPathfinder(mNavMesh);
 	Transform skyBoxTransform = Transform(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(500, 500, 500));

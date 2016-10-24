@@ -1,7 +1,6 @@
 #include "NavigationMesh.h"
 #include <algorithm>
 #include "Connection.h"
-#include <set>
 
 NavigationMesh::NavigationMesh()
 {
@@ -52,64 +51,46 @@ void NavigationMesh::constructMesh(std::vector<glm::vec3> vertices, std::vector<
 
 void NavigationMesh::splitTriangles(std::vector<glm::vec3>& vertices, std::vector<size_t> indices, std::vector<Edge>& edges, size_t faceCount)
 {
-	bool isChecking = true;
+
 	std::vector<FaceTemp> faces;
 
 	gatherEdges(edges, faces, vertices, indices, faceCount); //Generate basic edges
-	size_t totalTraverse = edges.size();
+
 	int splitCount = 0;
 
-	while (isChecking)
+	size_t size = edges.size();
+	for (size_t i = 0; i < size; i++)
 	{
-		isChecking = false;
-		for (size_t i = 0; i < totalTraverse; i++)
+		for (size_t j = 0; j < size; j++)
 		{
-			for (size_t j = 0; j < totalTraverse; j++)
+			glm::vec3 ip = getIntersection(edges[i], edges[j]);
+
+			if (ip != glm::vec3(INFINITY, INFINITY, INFINITY))
 			{
-				glm::vec3 inter = getIntersection(edges[i], edges[j]);
-				if (inter != glm::vec3(INFINITY, INFINITY, INFINITY))
+				if (std::find(vertices.begin(), vertices.end(), ip) == vertices.end())
 				{
-					if (std::find(vertices.begin(), vertices.end(), inter) == vertices.end())
-					{
-						splitCount++;
-						vertices.push_back(inter);
-
-						Edge 
-							first, second, third, fourth, tmp1, tmp2;
-						FaceTemp 
-							faceTmp1, faceTmp2, faceTmp3, faceTmp4,
-							firstFace, secondFace, thirdFace, fourthFace;
-
-						tmp1 = edges[i];
-						tmp2 = edges[j];
-
-						//edges.erase(edges.begin() + i);
-						//edges.erase(edges.begin() + j); //Remove the edges of the intersection
-
-						first.first = inter;
-						second.first = inter;
-						third.first = inter;
-						fourth.first = inter;
-
-						first.second = tmp1.first;
-						second.second = tmp1.second;
-						third.second = tmp2.first;
-						fourth.second = tmp2.second;
-
-						edges.push_back(first);
-						edges.push_back(second);
-						edges.push_back(third);
-						edges.push_back(fourth);
-						isChecking = true;
-					}
+					vertices.push_back(ip);
 				}
+
+				Edge a = edges[i];
+
+				if (ip == a.first || ip == a.second)
+				{
+					continue;
+				}
+
+				splitCount++;
+
+				Edge b = Edge();
+				b.first = ip;
+				b.second = a.second;
+				a.second = ip;
+
+				edges.push_back(b);
+				edges[i] = a;
 			}
 		}
 	}
-
-	//std::set<Edge> s(edges.begin(), edges.end());
-	//edges.assign(s.begin(), s.end());
-
 }
 
 
@@ -257,20 +238,5 @@ float NavigationMesh::norm2(glm::vec3 v)
 	return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
-/*for each face F
-{
-for each edge (u,v) of F
-{
-Edges[ pair(u,v) ] = new HalfEdge();
-Edges[ pair(u,v) ]->face = F;
-}
-for each edge (u,v) of F
-{
-set Edges[ pair(u,v) ]->nextHalfEdge to next half-edge in F
-if ( Edges.find( pair(v,u) ) != Edges.end() )
-{
-Edges[ pair(u,v) ]->oppositeHalfEdge = Edges[ pair(v,u) ];
-Edges[ pair(v,u) ]->oppositeHalfEdge = Edges[ pair(u,v) ];
-}
-}
-}*/
+/*edges.erase(edges.begin() + i);
+edges.erase(edges.begin() + j); //Remove the edges of the intersection*/

@@ -83,7 +83,14 @@ void Graphics::moveCamera(Camera* camera)
 	{
 		camera->setPos(camera->getPos() + glm::normalize(glm::cross(camera->getFowardVector(), camera->getUpVector())) * cameraSpeed);
 	}
-
+	if (INPUT->getKey(Keyboard::Q))
+	{
+		camera->setPos(camera->getPos() + glm::vec3(0.f, 1.f, 0.f));
+	}
+	if (INPUT->getKey(Keyboard::Z))
+	{
+		camera->setPos(camera->getPos() - glm::vec3(0.f, 1.f, 0.f));
+	}
 }
 
 

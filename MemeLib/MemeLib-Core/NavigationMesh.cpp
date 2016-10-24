@@ -56,16 +56,13 @@ void NavigationMesh::splitTriangles(std::vector<glm::vec3>& vertices, std::vecto
 
 	gatherEdges(edges, faces, vertices, indices, faceCount); //Generate basic edges
 
-	int splitCount = 0;
-
 	size_t size = edges.size();
 	for (size_t i = 0; i < size; i++)
 	{
 		for (size_t j = 0; j < size; j++)
 		{
-			glm::vec3 ip = getIntersection(edges[i], edges[j]);
-
-			if (ip != glm::vec3(INFINITY, INFINITY, INFINITY))
+			glm::vec3 ip;
+			if (getIntersection(edges[i], edges[j], ip))
 			{
 				if (std::find(vertices.begin(), vertices.end(), ip) == vertices.end())
 				{
@@ -78,8 +75,6 @@ void NavigationMesh::splitTriangles(std::vector<glm::vec3>& vertices, std::vecto
 				{
 					continue;
 				}
-
-				splitCount++;
 
 				Edge b = Edge();
 				b.first = ip;
@@ -175,26 +170,34 @@ Node * NavigationMesh::getOtherNode(Edge tmp, Node* key)
 	return NULL;
 }
 
-//CITE: http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment
-glm::vec3 NavigationMesh::getIntersection(Edge one, Edge two)
+bool NavigationMesh::getIntersection(Edge one, Edge two, glm::vec3& ip)
 {
+	//CITE: http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment
+
 	if (one.first == two.first || one.first == two.second || one.second == two.first || one.first == two.second) //edges share a point
-		return glm::vec3(INFINITY, INFINITY, INFINITY);
+	{
+		false;
+	}
 
 	glm::vec3 da = one.second - one.first;
 	glm::vec3 db = two.second - two.first;
 	glm::vec3 dc = two.first - one.first;
 
-	if (glm::dot(dc, glm::cross(da, db)) != 0)
-		return glm::vec3(INFINITY, INFINITY, INFINITY);
+	if (glm::dot(dc, glm::cross(da, db)) != 0.f)
+	{
+		return false;
+	}
 
 	float s = glm::dot(glm::cross(dc, db), glm::cross(da, db)) / norm2(glm::cross(da, db));
 
-	if (s >= 0.0 && s <= 1.0)
+	if (s >= 0.0f && s <= 1.0f)
 	{
-		return one.first + da * glm::vec3(s, s, s);
+		ip = one.first + da * glm::vec3(s, s, s);
+
+		return true;
 	}
-	return glm::vec3(INFINITY, INFINITY, INFINITY);
+	
+	return false;
 }
 
 std::vector<FaceTemp> NavigationMesh::getEdgeFaces(std::vector<FaceTemp>& faces, Edge key)

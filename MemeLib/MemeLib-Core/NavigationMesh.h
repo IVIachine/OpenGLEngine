@@ -61,6 +61,9 @@ class NavigationMesh :public Graph
 private:
 	std::vector<Edge> mEdges;
 	std::vector<glm::vec3> mVerts;
+
+	
+
 public:
 	NavigationMesh();
 	~NavigationMesh();
@@ -75,7 +78,7 @@ public:
 
 	std::vector<Edge> getKnownConnections(glm::vec3 key);
 	Node* getOtherNode(Edge tmp, Node* key);
-	glm::vec3 getIntersection(Edge one, Edge two);
+	bool getIntersection(Edge one, Edge two, glm::vec3& ip);
 	std::vector<FaceTemp> getEdgeFaces(std::vector<FaceTemp>& faces, Edge key);
 	float norm2(glm::vec3 v);
 

@@ -23,6 +23,18 @@ struct Edge
 	{
 		return lhs.first != rhs.first || lhs.second != rhs.second;
 	}
+
+	friend bool operator < (const Edge& lhs, const Edge& rhs)
+	{
+		return 
+			lhs.first.x < rhs.first.x &&
+			lhs.first.y < rhs.first.y &&
+			lhs.first.z < rhs.first.z && 
+
+			lhs.second.x < rhs.second.x &&
+			lhs.second.y < rhs.second.y &&
+			lhs.second.z < rhs.second.z;
+	}
 };
 
 struct FaceTemp {

@@ -1,6 +1,7 @@
 #include "NavigationMesh.h"
 #include <algorithm>
 #include "Connection.h"
+#include <set>
 
 NavigationMesh::NavigationMesh()
 {
@@ -82,8 +83,8 @@ void NavigationMesh::splitTriangles(std::vector<glm::vec3>& vertices, std::vecto
 						tmp1 = edges[i];
 						tmp2 = edges[j];
 
-						edges.erase(edges.begin() + i);
-						edges.erase(edges.begin() + j); //Remove the edges of the intersection
+						//edges.erase(edges.begin() + i);
+						//edges.erase(edges.begin() + j); //Remove the edges of the intersection
 
 						first.first = inter;
 						second.first = inter;
@@ -105,6 +106,9 @@ void NavigationMesh::splitTriangles(std::vector<glm::vec3>& vertices, std::vecto
 			}
 		}
 	}
+
+	//std::set<Edge> s(edges.begin(), edges.end());
+	//edges.assign(s.begin(), s.end());
 
 }
 

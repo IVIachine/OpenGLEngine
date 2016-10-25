@@ -92,6 +92,7 @@ const Path & AStarPathfinder::findPath(Node * pFrom, Node * pTo)
 			mPath.add(currentNode->mpNode);
 			currentNode = findNodeRecord(visitedNodes, currentNode->mpConnection->getFromNode());
 		}
+		mPath.add(pFrom);
 		mPath.reverse();
 	}
 

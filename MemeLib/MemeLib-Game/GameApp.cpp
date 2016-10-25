@@ -123,7 +123,7 @@ bool GameApp::loadResources()
 
 	m_skybox->setTransform(skyBoxTransform);
 
-	m_path = mpPathfinder->findPath(mNavMesh->getNode(20), mNavMesh->getNode(0));
+	m_path = mpPathfinder->findPath(mNavMesh->getNode(0), mNavMesh->getNode(1));
 
 	std::cout
 		<< "E: " << mNavMesh->edgeCount() << "\n"
@@ -249,9 +249,10 @@ void GameApp::draw()
 		}*/
 
 
-		for (size_t i = 0; i < temp.size(); i++)
+		for (size_t i = 0; i < mNavMesh->getNodeCount(); i++)
 		{
-			GIZMOS->drawPoint(temp[i]);
+			//if(i != 0)
+				GIZMOS->drawPoint(mNavMesh->getNode(i)->getPosition());
 		}
 
 		UNITS->drawAll();

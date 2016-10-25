@@ -215,18 +215,23 @@ void GameApp::draw()
 		Point off = { 0.f, amt, 0.f };
 		Point pos = { 0.f, 0.f, 0.f };
 
-		for (size_t i = 0; i < m_path.size() - 1; i++)
+		std::vector<glm::vec3> temp = mNavMesh->getVerts();
+
+		//for (size_t j = 1; j < temp.size() - 1; j++)
 		{
-			Node* prev = m_path[i];
-			Node* next = m_path[i + 1];
+			//m_path = mpPathfinder->findPath(mNavMesh->getNode(j), mNavMesh->getNode(0));
+			for (size_t i = 0; i < m_path.size() - 1; i++)
+			{
+				Node* prev = m_path[i];
+				Node* next = m_path[i + 1];
 
-			Point p1 = prev->getPosition();
-			Point p2 = next->getPosition();
+				Point p1 = prev->getPosition();
+				Point p2 = next->getPosition();
 
-			GIZMOS->drawRay(p1, p2);
+				GIZMOS->drawRay(p1, p2);
+			}
 		}
-
-		for (Edge e : mNavMesh->getEdges())
+		/*for (Edge e : mNavMesh->getEdges())
 		{
 			//Edge* e = mNavMesh->getEdge(i);
 
@@ -241,6 +246,12 @@ void GameApp::draw()
 
 			GIZMOS->drawPoint(e.first);
 			GIZMOS->drawPoint(e.second);
+		}*/
+
+
+		for (size_t i = 0; i < temp.size(); i++)
+		{
+			GIZMOS->drawPoint(temp[i]);
 		}
 
 		UNITS->drawAll();

@@ -33,13 +33,19 @@ void NavigationMesh::constructMesh(std::vector<Point> vertices, std::vector<size
 		Node* pFromNode = mNodes[j];
 		std::vector<Connection*> connections;
 
-		std::vector<Edge> knownConnections = getKnownConnections(m_vertices[j]);
+		std::vector<Edge> knownConnections = getKnownConnections(mNodes[j]->getPosition());
 
 		for (size_t k = 0; k < knownConnections.size(); k++)
 		{
 			Node* pToNode = getOtherNode(knownConnections[k], pFromNode);//find to node
 			Connection* pConnection;
-			float dist = (float)(pFromNode->getPosition() - pToNode->getPosition()).length();
+			float dist;
+			float dx, dy, dz;
+			dx = pFromNode->getX() - pToNode->getX();
+			dy = pFromNode->getY() - pToNode->getY();
+			dz = pFromNode->getZ() - pToNode->getZ();
+			dist = sqrt(dx*dx + dy*dy + dz*dz);
+
 			pConnection = new Connection(pFromNode, pToNode, dist);
 
 			mConnections.push_back(pConnection);

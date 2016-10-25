@@ -32,7 +32,6 @@ const Path & AStarPathfinder::findPath(Node * pFrom, Node * pTo)
 
 	Heuristic theHeuristic(pTo);
 	startRecord->mEstimatedTotalCost = theHeuristic.getEstimate(startRecord);
-
 	while (nodesToVisit.size() > 0)
 	{
 		currentNode = getSmallestNode(nodesToVisit);

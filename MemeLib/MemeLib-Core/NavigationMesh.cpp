@@ -156,6 +156,13 @@ bool NavigationMesh::reverseExists(std::vector<Edge> edges, Edge key)
 
 void NavigationMesh::gatherEdges(std::vector<Edge>& edges, std::vector<Face>& faces, std::vector<Point>& vertices, std::vector<size_t> indices, size_t faceCount)
 {
+	for (size_t i = 0; i < vertices.size(); i++)
+	{
+		vertices[i].x = -vertices[i].x;
+		vertices[i].z = -vertices[i].z;
+		vertices[i].x += 2.5;
+	}
+
 	for (size_t i = 0; i < faceCount; i += 3)
 	{
 		Edge tmp, tmp2, tmp3;

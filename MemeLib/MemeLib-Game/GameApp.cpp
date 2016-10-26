@@ -108,8 +108,8 @@ bool GameApp::loadResources()
 	mp_sprite1 = RESOURCES->addSprite("sprite1", RESOURCES->getTexture2D("harambe"));
 	mp_sprite2 = RESOURCES->addSprite("sprite2", RESOURCES->getTexture2D("enemy"));
 
-	mp_volume = new Volume(p_shader, RESOURCES->getTexture("brick"), "../Assets/obj/test3.obj", false, mNavMesh);
-	
+	mp_volume = new Volume(p_shader, RESOURCES->getTexture("brick"), "../Assets/obj/test.obj", false);
+	mNavMesh->constructMesh(mp_volume->getMesh());
 	mpPathfinder = new AStarPathfinder(mNavMesh);
 	Transform skyBoxTransform = Transform(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(500, 500, 500));
 	m_skybox = new Volume(
@@ -123,7 +123,7 @@ bool GameApp::loadResources()
 
 	m_skybox->setTransform(skyBoxTransform);
 
-	m_path = mpPathfinder->findPath(mNavMesh->getNode(5), mNavMesh->getNode(2));
+	m_path = mpPathfinder->findPath(mNavMesh->getNode(1), mNavMesh->getNode(2));
 
 	std::cout
 		<< "E: " << mNavMesh->edgeCount() << "\n"
@@ -212,8 +212,8 @@ void GameApp::draw()
 		bool toggle = INPUT->getKey(Keyboard::Space);
 
 		float amt = 0.05f;
-		Point off = { 0.f, amt, 0.f };
-		Point pos = { 0.f, 0.f, 0.f };
+		_vec3 off = { 0.f, amt, 0.f };
+		_vec3 pos = { 0.f, 0.f, 0.f };
 
 		std::vector<glm::vec3> temp = mNavMesh->getVerts();
 
@@ -225,35 +225,17 @@ void GameApp::draw()
 				Node* prev = m_path[i];
 				Node* next = m_path[i + 1];
 
-				Point p1 = prev->getPosition();
-				Point p2 = next->getPosition();
+				_vec3 p1 = prev->getPosition();
+				_vec3 p2 = next->getPosition();
 				p1.y += .05;
 				p2.y += .05;
 				GIZMOS->drawRay(p1, p2);
 			}
 		}
-		/*for (Edge e : mNavMesh->getEdges())
-		{
-			//Edge* e = mNavMesh->getEdge(i);
-
-			if (!toggle)
-			{
-				pos = { 0, 0, 0 };
-			}
-
-			//GIZMOS->drawRay(e.first + pos, e.second + pos);
-			
-			pos += off;
-
-			GIZMOS->drawPoint(e.first);
-			GIZMOS->drawPoint(e.second);
-		}*/
-
 
 		for (size_t i = 0; i < mNavMesh->getNodeCount(); i++)
 		{
-			//if(i != 0)
-				GIZMOS->drawPoint(mNavMesh->getNode(i)->getPosition());
+			GIZMOS->drawPoint(mNavMesh->getNode(i)->getPosition());
 		}
 
 		UNITS->drawAll();

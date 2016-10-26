@@ -1,11 +1,13 @@
 #ifndef _VECTOR2_H_
 #define _VECTOR2_H_
 
+#include <glm.hpp>
 #include <functional>
 #include <iostream>
 #include <Trackable.h>
 #include "Maths.h"
 
+typedef glm::vec2 _vec2;
 class Vector2 : public Trackable
 {
 public:

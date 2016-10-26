@@ -40,7 +40,7 @@ Mesh::Mesh(Vertex* vertices, size_t numVertices, size_t* indices, size_t numIndi
 	glBindVertexArray(0);
 }
 
-Mesh::Mesh(std::string fileName, NavigationMesh* nav)
+Mesh::Mesh(std::string fileName)
 {
 	m_isSkyBox = false;
 	glGenVertexArrays(1, &m_vertexArrayObject);
@@ -49,7 +49,9 @@ Mesh::Mesh(std::string fileName, NavigationMesh* nav)
 	IndexedModel model = OBJModel(fileName).ToIndexedModel();
 
 	m_drawCount = model.indices.size();
-	nav->constructMesh(model.actualPositions, model.actualIndices, m_drawCount);
+	mNavVertices = model.actualPositions;
+	mNavIndices = model.actualIndices;
+	mNavFaceCount = m_drawCount;
 	
 	glGenBuffers(NUM_BUFFERS, mVertexArrayBuffers); //Allocate space for the buffers
 	glBindBuffer(GL_ARRAY_BUFFER, mVertexArrayBuffers[POSITION_VB]); //Treat as an array

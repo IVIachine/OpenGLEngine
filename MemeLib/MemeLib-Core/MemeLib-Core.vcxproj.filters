@@ -25,9 +25,6 @@
     <ClCompile Include="Gizmos.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Graph.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Volume.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
@@ -108,30 +105,6 @@
     </ClCompile>
     <ClCompile Include="NotificationProcessor.cpp">
       <Filter>Source Files\Messaging</Filter>
-    </ClCompile>
-    <ClCompile Include="Pathfinder.cpp">
-      <Filter>Source Files\Pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="AStarPathfinder.cpp">
-      <Filter>Source Files\Pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="Connection.cpp">
-      <Filter>Source Files\Pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="HalfEdge.cpp">
-      <Filter>Source Files\Pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="Heuristic.cpp">
-      <Filter>Source Files\Pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="NavigationMesh.cpp">
-      <Filter>Source Files\Pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="Node.cpp">
-      <Filter>Source Files\Pathfinding</Filter>
-    </ClCompile>
-    <ClCompile Include="Path.cpp">
-      <Filter>Source Files\Pathfinding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -243,38 +216,8 @@
     <ClInclude Include="GameMessage.h">
       <Filter>Header Files\Messaging</Filter>
     </ClInclude>
-    <ClInclude Include="AStarPathfinder.h">
-      <Filter>Header Files\Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="Connection.h">
-      <Filter>Header Files\Pathfinding</Filter>
-    </ClInclude>
     <ClInclude Include="GameMessageManager.h">
-      <Filter>Header Files\Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="Graph.h">
-      <Filter>Header Files\Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="HalfEdge.h">
-      <Filter>Header Files\Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="Heuristic.h">
-      <Filter>Header Files\Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="NavigationMesh.h">
-      <Filter>Header Files\Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>Header Files\Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeRecord.h">
-      <Filter>Header Files\Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="Path.h">
-      <Filter>Header Files\Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="Pathfinder.h">
-      <Filter>Header Files\Pathfinding</Filter>
+      <Filter>Header Files\Messaging</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -296,14 +239,8 @@
     <Filter Include="Header Files\Util">
       <UniqueIdentifier>{ee8defbe-d824-4c5c-947f-1467d098e708}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Pathfinding">
-      <UniqueIdentifier>{2720d219-7357-4cf9-bcfa-2d6ab48ba094}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Graphics">
       <UniqueIdentifier>{13bcd12c-f6a4-4d4a-af33-d28ae0d18c25}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Pathfinding">
-      <UniqueIdentifier>{7b237da8-312f-4263-970d-f4791f8b97d8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Util">
       <UniqueIdentifier>{a7bcb52b-4e76-4e29-999b-f9f979e6f4aa}</UniqueIdentifier>

@@ -122,10 +122,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AStarPathfinder.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Color.h" />
-    <ClInclude Include="Connection.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventListener.h" />
@@ -135,18 +133,10 @@
     <ClInclude Include="GameMessage.h" />
     <ClInclude Include="GameMessageManager.h" />
     <ClInclude Include="Gizmos.h" />
-    <ClInclude Include="Graph.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Dictionary.h" />
-    <ClInclude Include="HalfEdge.h" />
-    <ClInclude Include="Heuristic.h" />
-    <ClInclude Include="NavigationMesh.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="NodeRecord.h" />
     <ClInclude Include="NotificationProcessor.h" />
     <ClInclude Include="NotificationQueue.h" />
-    <ClInclude Include="Path.h" />
-    <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="Serializable.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="Input.h" />
@@ -171,10 +161,8 @@
     <ClInclude Include="Volume.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AStarPathfinder.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="Connection.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="EventListener.cpp" />
     <ClCompile Include="EventSystem.cpp" />
@@ -183,17 +171,10 @@
     <ClCompile Include="GameMessage.cpp" />
     <ClCompile Include="GameMessageManager.cpp" />
     <ClCompile Include="Gizmos.cpp" />
-    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Dictionary.cpp" />
-    <ClCompile Include="HalfEdge.cpp" />
-    <ClCompile Include="Heuristic.cpp" />
-    <ClCompile Include="NavigationMesh.cpp" />
-    <ClCompile Include="Node.cpp" />
     <ClCompile Include="NotificationProcessor.cpp" />
     <ClCompile Include="NotificationQueue.cpp" />
-    <ClCompile Include="Path.cpp" />
-    <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="Serializable.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="Input.cpp" />

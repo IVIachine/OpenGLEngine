@@ -4,6 +4,7 @@
 #include <glm.hpp>
 #include <Trackable.h>
 
+typedef glm::vec3 _vec3;
 class Vector3 : public Trackable
 {
 public:

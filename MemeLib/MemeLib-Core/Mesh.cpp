@@ -99,7 +99,7 @@ void Mesh::draw()
 	else
 	{
 		glCullFace(GL_BACK);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glDrawElements(GL_TRIANGLES, m_drawCount, GL_UNSIGNED_INT, 0);
 	}
 

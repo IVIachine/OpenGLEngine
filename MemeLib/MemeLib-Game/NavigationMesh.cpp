@@ -15,7 +15,7 @@ NavigationMesh::~NavigationMesh()
 void NavigationMesh::constructMesh(Mesh* mesh)
 {
 	std::vector<Edge> edges;
-	std::vector<_vec3> verts = mesh->getVerts();
+	std::vector<Vec3> verts = mesh->getVerts();
 	splitTriangles(verts, mesh->getIndices(), edges, mesh->getCount()); //Split the intersections into multiple edges for accuracy
 	m_vertices = verts;
 	m_edges = edges;
@@ -58,7 +58,7 @@ void NavigationMesh::constructMesh(Mesh* mesh)
 }
 
 void NavigationMesh::splitTriangles(
-	std::vector<_vec3>& vertices, 
+	std::vector<Vec3>& vertices, 
 	std::vector<size_t> indices, 
 	std::vector<Edge>& edges, 
 	size_t faceCount)
@@ -67,7 +67,7 @@ void NavigationMesh::splitTriangles(
 	gatherEdges(edges, faces, vertices, indices, faceCount);
 
 	//std::vector<Edge>  copyEdges(edges);
-	//std::vector<_vec3> copyVerts(vertices);
+	//std::vector<Vec3> copyVerts(vertices);
 
 	size_t size = edges.size();
 	for (size_t i = 0; i < size; i++)
@@ -81,7 +81,7 @@ void NavigationMesh::splitTriangles(
 			}
 
 			// get intersection point
-			_vec3 ip;
+			Vec3 ip;
 			if (getIntersection(edges[i], edges[j], ip))
 			{
 				// add vertice if not exists
@@ -109,7 +109,7 @@ void NavigationMesh::splitTriangles(
 	{
 		for (size_t j = 0; j < vertices.size(); j++)
 		{
-			_vec3 ip = vertices[j];
+			Vec3 ip = vertices[j];
 
 			if (getIntersection(edges[i], ip))
 			{
@@ -130,7 +130,7 @@ void NavigationMesh::splitTriangles(
 }
 
 
-bool NavigationMesh::containsVertice(std::vector<_vec3> vertices, _vec3 key)
+bool NavigationMesh::containsVertice(std::vector<Vec3> vertices, Vec3 key)
 {
 	for (size_t i = 0; i < vertices.size(); i++)
 	{
@@ -155,7 +155,7 @@ bool NavigationMesh::reverseExists(std::vector<Edge> edges, Edge key)
 }
 
 
-void NavigationMesh::gatherEdges(std::vector<Edge>& edges, std::vector<Face>& faces, std::vector<_vec3>& vertices, std::vector<size_t> indices, size_t faceCount)
+void NavigationMesh::gatherEdges(std::vector<Edge>& edges, std::vector<Face>& faces, std::vector<Vec3>& vertices, std::vector<size_t> indices, size_t faceCount)
 {
 	for (size_t i = 0; i < faceCount; i += 3)
 	{
@@ -187,7 +187,7 @@ void NavigationMesh::gatherEdges(std::vector<Edge>& edges, std::vector<Face>& fa
 }
 
 
-std::vector<Edge> NavigationMesh::getKnownConnections(_vec3 key)
+std::vector<Edge> NavigationMesh::getKnownConnections(Vec3 key)
 {
 	std::vector<Edge> result;
 	for (size_t i = 0; i < m_edges.size(); i++)
@@ -247,13 +247,13 @@ std::vector<Face> NavigationMesh::getEdgeFaces(std::vector<Face>& faces, Edge ke
 	return faceResult;
 }
 
-float NavigationMesh::norm2(_vec3 v) const
+float NavigationMesh::norm2(Vec3 v) const
 {
 	return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
 
-bool NavigationMesh::getIntersection(Edge one, Edge two, _vec3& ip) const
+bool NavigationMesh::getIntersection(Edge one, Edge two, Vec3& ip) const
 {
 	//CITE: http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment
 
@@ -262,9 +262,9 @@ bool NavigationMesh::getIntersection(Edge one, Edge two, _vec3& ip) const
 		false;
 	}
 
-	_vec3 da = one.second - one.first;
-	_vec3 db = two.second - two.first;
-	_vec3 dc = two.first - one.first;
+	Vec3 da = one.second - one.first;
+	Vec3 db = two.second - two.first;
+	Vec3 dc = two.first - one.first;
 
 	if (glm::dot(dc, glm::cross(da, db)) != 0.f)
 	{
@@ -275,7 +275,7 @@ bool NavigationMesh::getIntersection(Edge one, Edge two, _vec3& ip) const
 
 	if (s >= 0.0f && s <= 1.0f)
 	{
-		ip = one.first + da * _vec3(s, s, s);
+		ip = one.first + da * Vec3(s, s, s);
 
 		return true;
 	}
@@ -283,11 +283,11 @@ bool NavigationMesh::getIntersection(Edge one, Edge two, _vec3& ip) const
 	return false;
 }
 
-bool NavigationMesh::getIntersection(Edge edge, _vec3 point) const
+bool NavigationMesh::getIntersection(Edge edge, Vec3 point) const
 {
-	_vec3 a = edge.first;
-	_vec3 b = edge.second;
-	_vec3 c = point;
+	Vec3 a = edge.first;
+	Vec3 b = edge.second;
+	Vec3 c = point;
 
 	float dac = Vector3::distance(a, c);
 	float dbc = Vector3::distance(b, c);

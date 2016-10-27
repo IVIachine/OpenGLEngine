@@ -1,8 +1,7 @@
 #include "GameApp.h"
 #include "Input.h"
-#include "GameController.h"
-#include "UnitManager.h"
-#include "ComponentManager.h"
+//#include "UnitManager.h"
+//#include "ComponentManager.h"
 #include "Gizmos.h"
 #include "AStarPathfinder.h"
 
@@ -29,55 +28,59 @@ void GameApp::cleanup()
 
 bool GameApp::loadResources()
 {
+	/*
+	
 	if (!ComponentManager::createInstance(MAX_UNITS)->setup())
 	{
-		fprintf(stderr, "Failed to initialize ComponentManager.\n");
-		return false;
+	fprintf(stderr, "Failed to initialize ComponentManager.\n");
+	return false;
 	}
 
 	if (!UnitManager::createInstance(MAX_UNITS)->setup())
 	{
-		fprintf(stderr, "Failed to initialize UnitManager.\n");
-		return false;
+	fprintf(stderr, "Failed to initialize UnitManager.\n");
+	return false;
 	}
+	
+	*/
 
 	m_counter = 0.0f;
 
-	Transform tmp = Transform(glm::vec3(1.0, 1.0, 1.0), glm::vec3(45, 0, 0));
+	Transform tmp = Transform(Vec3(1.0, 1.0, 1.0), Vec3(45, 0, 0));
 
 	mNavMesh = new NavigationMesh();
 
 	Vertex vertices[] = {
 		//Vertices according to faces
-		Vertex(glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec2(0.25f, 0.3333f)), //Vertex 0
-		Vertex(glm::vec3(1.0f, -1.0f, 1.0f), glm::vec2(0.5f, 0.3333f)),  //v1
-		Vertex(glm::vec3(-1.0f, 1.0f, 1.0f), glm::vec2(0.25f, 0.6666f)),  //v2
-		Vertex(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.5f, 0.6666f)),   //v3
+		Vertex(Vec3(-1.0f, -1.0f, 1.0f), Vec2(0.25f, 0.3333f)), //Vertex 0
+		Vertex(Vec3(1.0f, -1.0f, 1.0f), Vec2(0.5f, 0.3333f)),  //v1
+		Vertex(Vec3(-1.0f, 1.0f, 1.0f), Vec2(0.25f, 0.6666f)),  //v2
+		Vertex(Vec3(1.0f, 1.0f, 1.0f), Vec2(0.5f, 0.6666f)),   //v3
 
-		Vertex(glm::vec3(1.0f, -1.0f, 1.0f), glm::vec2(0.5f, 0.3333f)),  //...
-		Vertex(glm::vec3(1.0f, -1.0f, -1.0f), glm::vec2(0.75f, 0.3333f)), //FIx bot coords here
-		Vertex(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.5f, 0.6666f)),
-		Vertex(glm::vec3(1.0f, 1.0f, -1.0f), glm::vec2(0.75f, 0.6666f)),
+		Vertex(Vec3(1.0f, -1.0f, 1.0f), Vec2(0.5f, 0.3333f)),  //...
+		Vertex(Vec3(1.0f, -1.0f, -1.0f), Vec2(0.75f, 0.3333f)), //FIx bot coords here
+		Vertex(Vec3(1.0f, 1.0f, 1.0f), Vec2(0.5f, 0.6666f)),
+		Vertex(Vec3(1.0f, 1.0f, -1.0f), Vec2(0.75f, 0.6666f)),
 
-		Vertex(glm::vec3(1.0f, -1.0f, -1.0f), glm::vec2(0.75f, 0.3333f)),
-		Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(1.0f, 0.3333f)),
-		Vertex(glm::vec3(1.0f, 1.0f, -1.0f), glm::vec2(0.75f, 0.6666f)),
-		Vertex(glm::vec3(-1.0f, 1.0f, -1.0f), glm::vec2(1.0f, 0.6666f)),
+		Vertex(Vec3(1.0f, -1.0f, -1.0f), Vec2(0.75f, 0.3333f)),
+		Vertex(Vec3(-1.0f, -1.0f, -1.0f), Vec2(1.0f, 0.3333f)),
+		Vertex(Vec3(1.0f, 1.0f, -1.0f), Vec2(0.75f, 0.6666f)),
+		Vertex(Vec3(-1.0f, 1.0f, -1.0f), Vec2(1.0f, 0.6666f)),
 
-		Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(0.0f, 0.3333f)),
-		Vertex(glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec2(0.25f, 0.3333f)),
-		Vertex(glm::vec3(-1.0f, 1.0f, -1.0f), glm::vec2(0.0f, 0.6666f)),
-		Vertex(glm::vec3(-1.0f, 1.0f, 1.0f), glm::vec2(0.25f, 0.6666f)),
+		Vertex(Vec3(-1.0f, -1.0f, -1.0f), Vec2(0.0f, 0.3333f)),
+		Vertex(Vec3(-1.0f, -1.0f, 1.0f), Vec2(0.25f, 0.3333f)),
+		Vertex(Vec3(-1.0f, 1.0f, -1.0f), Vec2(0.0f, 0.6666f)),
+		Vertex(Vec3(-1.0f, 1.0f, 1.0f), Vec2(0.25f, 0.6666f)),
 
-		Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(0.25f, 0.0f)),
-		Vertex(glm::vec3(1.0f, -1.0f, -1.0f), glm::vec2(0.5f, 0.0f)),
-		Vertex(glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec2(0.25f, 0.3333f)),
-		Vertex(glm::vec3(1.0f, -1.0f, 1.0f), glm::vec2(0.5f, 0.3333f)),
+		Vertex(Vec3(-1.0f, -1.0f, -1.0f), Vec2(0.25f, 0.0f)),
+		Vertex(Vec3(1.0f, -1.0f, -1.0f), Vec2(0.5f, 0.0f)),
+		Vertex(Vec3(-1.0f, -1.0f, 1.0f), Vec2(0.25f, 0.3333f)),
+		Vertex(Vec3(1.0f, -1.0f, 1.0f), Vec2(0.5f, 0.3333f)),
 
-		Vertex(glm::vec3(-1.0f, 1.0f, 1.0f), glm::vec2(0.25f, 0.6666f)),
-		Vertex(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.5f, 0.6666f)),
-		Vertex(glm::vec3(-1.0f, 1.0f, -1.0f), glm::vec2(0.25f, 1.0f)),
-		Vertex(glm::vec3(1.0f, 1.0f, -1.0f), glm::vec2(0.5f, 1.0f))
+		Vertex(Vec3(-1.0f, 1.0f, 1.0f), Vec2(0.25f, 0.6666f)),
+		Vertex(Vec3(1.0f, 1.0f, 1.0f), Vec2(0.5f, 0.6666f)),
+		Vertex(Vec3(-1.0f, 1.0f, -1.0f), Vec2(0.25f, 1.0f)),
+		Vertex(Vec3(1.0f, 1.0f, -1.0f), Vec2(0.5f, 1.0f))
 	};
 
 	size_t indices[]{
@@ -112,7 +115,7 @@ bool GameApp::loadResources()
 	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test4.obj", false);
 	mNavMesh->constructMesh(mp_volume->getMesh());
 	mpPathfinder = new AStarPathfinder(mNavMesh);
-	Transform skyBoxTransform = Transform(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(500, 500, 500));
+	Transform skyBoxTransform = Transform(Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(500, 500, 500));
 	m_skybox = new Volume(
 		p_shader,
 		vertices, 
@@ -136,8 +139,8 @@ bool GameApp::loadResources()
 
 void GameApp::unloadResources()
 {
-	UnitManager::disposeInstance();
-	ComponentManager::disposeInstance();
+	//UnitManager::disposeInstance();
+	//ComponentManager::disposeInstance();
 
 	delete m_skybox;
 	m_skybox = NULL;
@@ -159,19 +162,19 @@ void GameApp::update()
 
 	if (INPUT->getKey(Keyboard::Up))
 	{
-		m_position += Vector2::UP;
+		m_position += Vec3_Up;
 	}
 	if (INPUT->getKey(Keyboard::Down))
 	{
-		m_position += Vector2::DOWN;
+		m_position += Vec3_Down;
 	}
 	if (INPUT->getKey(Keyboard::Left))
 	{
-		m_position += Vector2::LEFT;
+		m_position += Vec3_Left;
 	}
 	if (INPUT->getKey(Keyboard::Right))
 	{
-		m_position += Vector2::RIGHT;
+		m_position += Vec3_Right;
 	}
 
 	if (INPUT->getKeyDown(Keyboard::Enter))
@@ -187,7 +190,7 @@ void GameApp::update()
 
 	GAME->step();
 
-	UNITS->updateAll(TARGET_ELAPSED_MS);
+	//UNITS->updateAll(TARGET_ELAPSED_MS);
 }
 
 void GameApp::draw()
@@ -200,11 +203,11 @@ void GameApp::draw()
 
 		mp_volume->draw(*cam);
 
-		std::vector<glm::vec3> temp = mNavMesh->getVerts();
+		std::vector<Vec3> temp = mNavMesh->getVerts();
 
 		for (size_t i = 0; i < mNavMesh->getNodeCount(); i++)
 		{
-			GIZMOS->drawPoint(mNavMesh->getNode(i)->getPosition(), *cam, Transform(mNavMesh->getNode(i)->getPosition(), glm::vec3(0, 0, 0), glm::vec3(0, 0, 0)));
+			GIZMOS->drawPoint(mNavMesh->getNode(i)->getPosition(), *cam, Transform(mNavMesh->getNode(i)->getPosition(), Vec3(0, 0, 0), Vec3(0, 0, 0)));
 		}
 
 		if (m_path.size() > 1)
@@ -214,40 +217,40 @@ void GameApp::draw()
 				Node* prev = m_path[i];
 				Node* next = m_path[i + 1];
 
-				_vec3 p1 = prev->getPosition();
-				_vec3 p2 = next->getPosition();
+				Vec3 p1 = prev->getPosition();
+				Vec3 p2 = next->getPosition();
 				p1.y += .05;
 				p2.y += .05;
-				GIZMOS->drawRay(p1, p2, *cam, Transform(glm::vec3((p1.x - p2.x)/cam->getFOV(), (p1.y - p2.y)/cam->getFOV(), (p1.z - p2.z)/cam->getFOV()), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1)));
+				GIZMOS->drawRay(p1, p2, *cam, Transform(Vec3((p1.x - p2.x)/cam->getFOV(), (p1.y - p2.y)/cam->getFOV(), (p1.z - p2.z)/cam->getFOV()), Vec3(0, 0, 0), Vec3(1, 1, 1)));
 			}
 		}
 
 		for (size_t i = 0; i < mNavMesh->edgeCount(); i++)
 		{
-			_vec3 p1 = mNavMesh->getEdge(i)->first;
-			_vec3 p2 = mNavMesh->getEdge(i)->second;
+			Vec3 p1 = mNavMesh->getEdge(i)->first;
+			Vec3 p2 = mNavMesh->getEdge(i)->second;
 			p1.y += .05;
 			p2.y += .05;
 			//GIZMOS->drawRay(p1, p2);
 		}
 
 		//mp_sprite1->setPosition({ -2.5f, 0.0f , 0.0f});
-		//mp_sprite1->setRotation(_vec3(0.0f, 45.f, 0.0f) * Maths::DEG_TO_RAD);
-		//mp_sprite1->setScale(_vec3(2.5f, 2.5f, 0.0f));
+		//mp_sprite1->setRotation(Vec3(0.0f, 45.f, 0.0f) * Maths::DEG_TO_RAD);
+		//mp_sprite1->setScale(Vec3(2.5f, 2.5f, 0.0f));
 		//mp_sprite1->draw(*cam);
 		
 		mp_sprite2->setPosition(mNavMesh->getNode(0)->getPosition());
-		mp_sprite2->setRotation(_vec3(180.0f, 0.0f, 0.0f) * Maths::DEG_TO_RAD);
-		mp_sprite2->setScale(_vec3(1.0f, 1.0f, 0.0f));
+		mp_sprite2->setRotation(Vec3(180.0f, 0.0f, 0.0f) * Maths::DEG_TO_RAD);
+		mp_sprite2->setScale(Vec3(1.0f, 1.0f, 0.0f));
 		mp_sprite2->draw(*cam);
 
 		bool toggle = INPUT->getKey(Keyboard::Space);
 
 		float amt = 0.05f;
-		_vec3 off = { 0.f, amt, 0.f };
-		_vec3 pos = { 0.f, 0.f, 0.f };
+		Vec3 off = { 0.f, amt, 0.f };
+		Vec3 pos = { 0.f, 0.f, 0.f };
 
-		UNITS->drawAll();
+		//UNITS->drawAll();
 	}
 	GRAPHICS->flip();
 }

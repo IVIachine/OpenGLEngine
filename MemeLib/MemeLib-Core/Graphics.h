@@ -50,7 +50,7 @@ public:
 	void		setWindowTitle(const std::string title);
 	void		flip();
 
-	glm::vec2	getWindowSize();
+	Vec2	getWindowSize();
 	std::string	getWindowTitle();
 	bool		exitWindow();
 
@@ -79,7 +79,7 @@ private:
 	std::string m_title;
 	int			m_width;
 	int			m_height;
-	glm::vec2	m_mousePosition;
+	Vec2	m_mousePosition;
 	bool		m_enableMouseLook = false;
 
 	

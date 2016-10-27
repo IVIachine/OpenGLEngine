@@ -1,7 +1,6 @@
 #ifndef _PATH_H_
 #define _PATH_H_
 
-#include <glm.hpp>
 #include <vector>
 #include <Trackable.h>
 #include "NodeRecord.h"

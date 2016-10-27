@@ -1,7 +1,7 @@
 #ifndef _GIZMOS_H_
 #define _GIZMOS_H_
 
-#include <glm.hpp>
+#include "Vector3.h"
 #include <GL\glew.h>
 #include <Trackable.h>
 #include <cassert>
@@ -34,8 +34,8 @@ public:
 
 	void setColor(Color color);
 
-	void drawPoint(glm::vec3 pos, Camera camera, Transform transform);
-	void drawRay(glm::vec3 start, glm::vec3 end, Camera camera, Transform transform);
+	void drawPoint(Vec3 pos, Camera camera, Transform transform);
+	void drawRay(Vec3 start, Vec3 end, Camera camera, Transform transform);
 
 private:
 	Gizmos();

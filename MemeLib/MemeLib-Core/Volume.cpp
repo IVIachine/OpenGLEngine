@@ -11,7 +11,7 @@ Volume::Volume(Shader* shader, Vertex* vertices, Texture* texture, unsigned int 
 	mp_shader = shader;
 	mp_mesh = new Mesh(m_vertices, numVertices, indices, numIndices, isCubeMap);
 	mp_texture = texture;
-	m_transform = Transform(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0));
+	m_transform = Transform(Vec3(0, 0, 0), Vec3(0, 0, 0));
 }
 
 Volume::Volume(Shader* shader, Texture* texture, const char * volumePath, bool isCubeMap)
@@ -19,7 +19,7 @@ Volume::Volume(Shader* shader, Texture* texture, const char * volumePath, bool i
 	mp_shader = shader;
 	mp_mesh = new Mesh(volumePath);
 	mp_texture = texture;
-	m_transform = Transform(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0));
+	m_transform = Transform(Vec3(0, 0, 0), Vec3(0, 0, 0));
 	m_isCubeMap = isCubeMap;
 }
 

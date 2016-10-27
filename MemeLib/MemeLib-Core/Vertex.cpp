@@ -1,6 +1,6 @@
 #include "Vertex.h"
 
-Vertex::Vertex(const glm::vec3 & pos, const glm::vec2 coord)
+Vertex::Vertex(const Vec3 & pos, const Vec2 coord)
 {
 	m_pos = pos;
 	m_textCoord = coord;
@@ -16,12 +16,12 @@ Vertex::Vertex()
 {
 }
 
-glm::vec3 * Vertex::getPos()
+Vec3 * Vertex::getPos()
 {
 	return &m_pos;
 }
 
-glm::vec2 * Vertex::getCoord()
+Vec2 * Vertex::getCoord()
 {
 	return &m_textCoord;
 }

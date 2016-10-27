@@ -4,7 +4,17 @@
 #include <glm.hpp>
 #include <Trackable.h>
 
-typedef glm::vec3 _vec3;
+typedef glm::vec3 Vec3;
+
+const static Vec3 Vec3_One	{ 1.f, 1.f, 1.f };
+const static Vec3 Vec3_Zero	{ 0.f, 0.f, 0.f };
+const static Vec3 Vec3_Up	{ 0.f, 1.f, 0.f };
+const static Vec3 Vec3_Down	{ 0.f, -1.f, 0.f };
+const static Vec3 Vec3_Right{ 1.f, 0.f, 0.f };
+const static Vec3 Vec3_Left	{ -1.f, 0.f, 0.f };
+const static Vec3 Vec3_Fwd	{ 0.f, 0.f, 1.f };
+const static Vec3 Vec3_Bkwd	{ 0.f, 0.f, -1.f };
+
 class Vector3 : public Trackable
 {
 public:
@@ -39,12 +49,12 @@ public:
 
 
 
-	glm::vec3 vec3() const
+	Vec3 vec3() const
 	{
 		return{ x, y, z };
 	};
 
-	Vector3(const glm::vec3& vec3)
+	Vector3(const Vec3& vec3)
 	{
 		x = vec3.x;
 		y = vec3.y;

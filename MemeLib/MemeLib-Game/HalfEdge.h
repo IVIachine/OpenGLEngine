@@ -2,7 +2,7 @@
 #define HALF_EDGE_H
 
 #include <Trackable.h>
-#include <glm.hpp>
+#include "Vector3.h"
 
 struct HE_Face;
 struct HE_Vert;
@@ -25,7 +25,7 @@ struct HE_Face
 
 struct HE_Vert
 {
-	glm::vec3 mPos;
+	Vec3 mPos;
 	HE_Edge* edge;
 };
 #endif

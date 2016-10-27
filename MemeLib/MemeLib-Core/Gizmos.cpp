@@ -33,7 +33,7 @@ void Gizmos::setColor(Color color)
 }
 
 
-void Gizmos::drawPoint(glm::vec3 pos, Camera camera, Transform transform)
+void Gizmos::drawPoint(Vec3 pos, Camera camera, Transform transform)
 {
 	mpShader->bind();
 	mpShader->update(transform, camera);
@@ -55,7 +55,7 @@ void Gizmos::drawPoint(glm::vec3 pos, Camera camera, Transform transform)
 	glEnd();
 }
 
-void Gizmos::drawRay(glm::vec3 start, glm::vec3 end, Camera camera, Transform transform)
+void Gizmos::drawRay(Vec3 start, Vec3 end, Camera camera, Transform transform)
 {
 	mpShader->bind();
 	mpShader->update(transform, camera);

@@ -1,6 +1,7 @@
 #pragma once
 #include "Trackable.h"
-#include <glm.hpp>
+#include "Vector3.h"
+
 class Node;
 
 class Heuristic :public Trackable

@@ -17,7 +17,7 @@ public:
 	std::vector<Connection*> getConnections(const Node& from);
 	std::vector<Connection*> getConnections(const NODE_ID& fromId);
 	Node* getNode(int index);
-	Node* getNode(glm::vec3 pos);
+	Node* getNode(Vec3 pos);
 	int getNodeCount() { return mNodes.size(); };
 
 protected:

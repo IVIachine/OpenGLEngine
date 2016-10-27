@@ -4,7 +4,7 @@ Transform::Transform()
 {
 }
 
-Transform::Transform(const glm::vec3 & pos, const glm::vec3 & rot, const glm::vec3 & scale)
+Transform::Transform(const Vec3 & pos, const Vec3 & rot, const Vec3 & scale)
 	: m_pos(pos), m_rot(rot), m_scale(scale)
 {
 }
@@ -24,9 +24,9 @@ Transform::~Transform()
 glm::mat4 Transform::getModel() const
 {
 	glm::mat4 posMatrix = glm::translate(m_pos);
-	glm::mat4 rotXMatrix = glm::rotate(m_rot.x, glm::vec3(1, 0, 0));
-	glm::mat4 rotYMatrix = glm::rotate(m_rot.y, glm::vec3(0, 1, 0));
-	glm::mat4 rotZMatrix = glm::rotate(m_rot.z, glm::vec3(0, 0, 1));
+	glm::mat4 rotXMatrix = glm::rotate(m_rot.x, Vec3(1, 0, 0));
+	glm::mat4 rotYMatrix = glm::rotate(m_rot.y, Vec3(0, 1, 0));
+	glm::mat4 rotZMatrix = glm::rotate(m_rot.z, Vec3(0, 0, 1));
 	glm::mat4 scaleMatrix = glm::scale(m_scale);
 
 	glm::mat4 rotMatrix = rotZMatrix * rotYMatrix * rotXMatrix;
@@ -34,10 +34,10 @@ glm::mat4 Transform::getModel() const
 	return posMatrix * rotMatrix * scaleMatrix;
 }
 
-glm::vec3& Transform::getPos() { return m_pos; };
-glm::vec3& Transform::getRot() { return m_rot; };
-glm::vec3& Transform::getScale() { return m_scale; };
+Vec3& Transform::getPos() { return m_pos; };
+Vec3& Transform::getRot() { return m_rot; };
+Vec3& Transform::getScale() { return m_scale; };
 
-void Transform::setPos(glm::vec3 pos) { m_pos = pos; };
-void Transform::setRot(glm::vec3 rot) { m_rot = rot; };
-void Transform::setScale(glm::vec3 scale) { m_scale = scale; };
+void Transform::setPos(Vec3 pos) { m_pos = pos; };
+void Transform::setRot(Vec3 rot) { m_rot = rot; };
+void Transform::setScale(Vec3 scale) { m_scale = scale; };

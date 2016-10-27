@@ -35,8 +35,8 @@ private:
 	Sprite*		mp_sprite1;
 	Sprite*		mp_sprite2;
 	NavigationMesh* mNavMesh;
-	Vector2		m_position;
-	Path				m_path;
+	Vec3		m_position;
+	Path		m_path;
 };
 
 #endif // !_GAME_APP_H_

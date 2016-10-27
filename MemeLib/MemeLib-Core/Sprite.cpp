@@ -27,34 +27,34 @@ Texture2D* Sprite::getTexture2D() const
 }
 
 
-_vec3 Sprite::getPosition() const
+Vec3 Sprite::getPosition() const
 {
 	return m_position;
 }
 
-void Sprite::setPosition(_vec3 value)
+void Sprite::setPosition(Vec3 value)
 {
 	m_position = value;
 }
 
 
-_vec3 Sprite::getRotation() const
+Vec3 Sprite::getRotation() const
 {
 	return m_rotation;
 }
 
-void Sprite::setRotation(_vec3 value)
+void Sprite::setRotation(Vec3 value)
 {
 	m_rotation = value;
 }
 
 
-_vec3 Sprite::getScale() const
+Vec3 Sprite::getScale() const
 {
 	return m_scale;
 }
 
-void Sprite::setScale(_vec3 value)
+void Sprite::setScale(Vec3 value)
 {
 	m_scale = value;
 }

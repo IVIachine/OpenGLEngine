@@ -13,7 +13,7 @@ public:
 	Mesh(std::string fileName);
 	Mesh(const Mesh& copy);
 	~Mesh();
-	std::vector<_vec3> getVerts() const { return mNavVertices; };
+	std::vector<Vec3> getVerts() const { return mNavVertices; };
 	std::vector<size_t> getIndices() const { return mNavIndices; };
 	size_t getCount() const { return mNavFaceCount; };
 	void draw();
@@ -30,7 +30,7 @@ private:
 	GLuint m_vertexArrayObject;
 	GLuint mVertexArrayBuffers[NUM_BUFFERS];
 	size_t m_drawCount;
-	std::vector<_vec3> mNavVertices;
+	std::vector<Vec3> mNavVertices;
 	std::vector<size_t> mNavIndices;
 	size_t mNavFaceCount;
 	bool m_isSkyBox;

@@ -22,10 +22,10 @@ struct Transaction : public Trackable
 
 struct PositionTransaction : public Transaction
 {
-	PositionTransaction(const Vector2& thePosMod, float theFacingMod) :Transaction(POSITION_TRANSACTION), posMod(thePosMod), facingMod(theFacingMod) {};
-	PositionTransaction() :Transaction(POSITION_TRANSACTION), posMod(Vector2::ZERO), facingMod(0.0f) {};
+	PositionTransaction(const Vec2& thePosMod, float theFacingMod) : Transaction(POSITION_TRANSACTION), posMod(thePosMod), facingMod(theFacingMod) {};
+	PositionTransaction() : Transaction(POSITION_TRANSACTION), posMod(Vec2_Zero), facingMod(0.0f) {};
 
-	Vector2 posMod;//how much do we change the position
+	Vec2 posMod;//how much do we change the position
 	float facingMod;//how much do we rotate
 };
 

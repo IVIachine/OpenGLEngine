@@ -1,5 +1,4 @@
 #include "Vector3.h"
-#include <glm.hpp>
 
 
 /*	Constructors

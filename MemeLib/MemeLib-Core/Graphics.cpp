@@ -33,7 +33,7 @@ void mouse_look(GLFWwindow * window, double xpos, double ypos)
 		pitch = -89.0f;
 	}
 
-	glm::vec3 front;
+	Vec3 front;
 	front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
 	front.y = sin(glm::radians(pitch));
 	front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
@@ -44,7 +44,7 @@ void mouse_look(GLFWwindow * window, double xpos, double ypos)
 	}
 	else
 	{
-		GRAPHICS->getCamera()->setFront(glm::vec3(0, 0, 1));
+		GRAPHICS->getCamera()->setFront(Vec3(0, 0, 1));
 	}
 }
 
@@ -85,18 +85,18 @@ void Graphics::moveCamera(Camera* camera)
 	}
 	if (INPUT->getKey(Keyboard::Q))
 	{
-		camera->setPos(camera->getPos() + glm::vec3(0.f, 1.f, 0.f));
+		camera->setPos(camera->getPos() + Vec3(0.f, 1.f, 0.f));
 	}
 	if (INPUT->getKey(Keyboard::Z))
 	{
-		camera->setPos(camera->getPos() - glm::vec3(0.f, 1.f, 0.f));
+		camera->setPos(camera->getPos() - Vec3(0.f, 1.f, 0.f));
 	}
 }
 
 
 bool Graphics::setup(int width, int height, std::string windowName)
 {
-	m_camera = new Camera(glm::vec3(0.f, 0.f, -10.f), 70.0f, float(width) / float(height), 0.01f, 1000.0f);
+	m_camera = new Camera(Vec3(0.f, 0.f, -10.f), 70.0f, float(width) / float(height), 0.01f, 1000.0f);
 
 	m_width = width;
 	m_height = height;
@@ -190,9 +190,9 @@ void Graphics::flip()
 }
 
 
-glm::vec2 Graphics::getWindowSize()
+Vec2 Graphics::getWindowSize()
 {
-	return glm::vec2((float)m_width, (float)m_height);
+	return Vec2((float)m_width, (float)m_height);
 }
 
 std::string Graphics::getWindowTitle()

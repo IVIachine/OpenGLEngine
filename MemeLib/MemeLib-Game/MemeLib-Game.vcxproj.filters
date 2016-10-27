@@ -13,53 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Steering">
-      <UniqueIdentifier>{dfb8a4fc-e6b1-4e25-878d-f2fef1c101e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Steering\Compound">
-      <UniqueIdentifier>{4d30cd96-29f0-4bc4-b42b-1bd9872fd4c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Steering\Flocking">
-      <UniqueIdentifier>{dbe809c1-a0e1-4a66-89ff-587ac9235fc6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Steering\Simple">
-      <UniqueIdentifier>{3bb68724-b612-4ef1-a5c5-aada72b50e01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Steering">
-      <UniqueIdentifier>{38e3dd32-df94-47f6-b4cd-e976359fd0a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Steering\Compound">
-      <UniqueIdentifier>{10247ee2-0e98-4bb3-ac96-1e71cdf0e6ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Steering\Flocking">
-      <UniqueIdentifier>{3ac81025-3965-4ed0-85b8-1a2c1111a449}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Steering\Simple">
-      <UniqueIdentifier>{92bab356-c47d-4d44-86f7-d6b7a2e18bec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Units">
-      <UniqueIdentifier>{1dd4d50d-68eb-4084-ada1-0e4425439568}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components">
-      <UniqueIdentifier>{9fc31b84-dbd1-4a3d-a654-e14d406a1932}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Util">
       <UniqueIdentifier>{a39d7bae-ffd3-4a84-b313-873d81bf865d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Components">
-      <UniqueIdentifier>{29cab22f-0b4a-479e-bae2-6928d084e4a2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Util">
       <UniqueIdentifier>{800ae4ef-76d8-48b6-bfff-479a5fcde153}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Messages">
-      <UniqueIdentifier>{6d3cd443-586d-4560-b1b6-fd775767dba5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Messaging">
-      <UniqueIdentifier>{2e3a17ae-a657-4497-b6df-48338500e8ec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Units">
-      <UniqueIdentifier>{30dfc08c-c3ff-44cc-a75b-638adc1ac3bf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Pathfinding">
       <UniqueIdentifier>{4ac574fa-72a7-42aa-9d49-b82a45f804da}</UniqueIdentifier>
@@ -69,80 +27,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AlignmentSteering.cpp">
-      <Filter>Source Files\Steering\Flocking</Filter>
-    </ClCompile>
-    <ClCompile Include="ArriveAndFaceSteering.cpp">
-      <Filter>Source Files\Steering\Compound</Filter>
-    </ClCompile>
-    <ClCompile Include="ArriveSteering.cpp">
-      <Filter>Source Files\Steering\Simple</Filter>
-    </ClCompile>
-    <ClCompile Include="CohesionSteering.cpp">
-      <Filter>Source Files\Steering\Flocking</Filter>
-    </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ComponentManager.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="FaceSteering.cpp">
-      <Filter>Source Files\Steering\Simple</Filter>
-    </ClCompile>
-    <ClCompile Include="FlockSteering.cpp">
-      <Filter>Source Files\Steering\Flocking</Filter>
-    </ClCompile>
     <ClCompile Include="GameApp.cpp">
       <Filter>Source Files\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="GameController.cpp">
-      <Filter>Source Files\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="Message_CreateUnit.cpp">
-      <Filter>Source Files\Messages</Filter>
-    </ClCompile>
-    <ClCompile Include="Message_DeleteUnit.cpp">
-      <Filter>Source Files\Messages</Filter>
-    </ClCompile>
-    <ClCompile Include="Message_ExitApplication.cpp">
-      <Filter>Source Files\Messages</Filter>
-    </ClCompile>
-    <ClCompile Include="Message_PlayerMoveTo.cpp">
-      <Filter>Source Files\Messages</Filter>
-    </ClCompile>
-    <ClCompile Include="Message_UpdateFlocking.cpp">
-      <Filter>Source Files\Messages</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="SeekSteering.cpp">
-      <Filter>Source Files\Steering\Simple</Filter>
-    </ClCompile>
-    <ClCompile Include="SeparationSteering.cpp">
-      <Filter>Source Files\Steering\Flocking</Filter>
-    </ClCompile>
-    <ClCompile Include="Steering.cpp">
-      <Filter>Source Files\Steering</Filter>
-    </ClCompile>
-    <ClCompile Include="SteeringComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="TransformComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit.cpp">
-      <Filter>Source Files\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="UnitManager.cpp">
-      <Filter>Source Files\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="WanderAndChaseSteering.cpp">
-      <Filter>Source Files\Steering\Compound</Filter>
-    </ClCompile>
-    <ClCompile Include="WanderSteering.cpp">
-      <Filter>Source Files\Steering\Compound</Filter>
     </ClCompile>
     <ClCompile Include="AStarPathfinder.cpp">
       <Filter>Source Files\Pathfinding</Filter>
@@ -176,83 +62,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AlignmentSteering.h">
-      <Filter>Header Files\Steering\Flocking</Filter>
-    </ClInclude>
-    <ClInclude Include="ArriveAndFaceSteering.h">
-      <Filter>Header Files\Steering\Compound</Filter>
-    </ClInclude>
-    <ClInclude Include="ArriveSteering.h">
-      <Filter>Header Files\Steering\Simple</Filter>
-    </ClInclude>
-    <ClInclude Include="CohesionSteering.h">
-      <Filter>Header Files\Steering\Flocking</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentManager.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentParent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="FaceSteering.h">
-      <Filter>Header Files\Steering\Simple</Filter>
-    </ClInclude>
-    <ClInclude Include="FlockSteering.h">
-      <Filter>Header Files\Steering\Flocking</Filter>
-    </ClInclude>
     <ClInclude Include="GameApp.h">
       <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="GameController.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Message_CreateUnit.h">
-      <Filter>Header Files\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="Message_DeleteUnit.h">
-      <Filter>Header Files\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="Message_ExitApplication.h">
-      <Filter>Header Files\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="Message_PlayerMoveTo.h">
-      <Filter>Header Files\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="Message_UpdateFlocking.h">
-      <Filter>Header Files\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="SeekSteering.h">
-      <Filter>Header Files\Steering\Simple</Filter>
-    </ClInclude>
-    <ClInclude Include="SeparationSteering.h">
-      <Filter>Header Files\Steering\Flocking</Filter>
-    </ClInclude>
-    <ClInclude Include="Steering.h">
-      <Filter>Header Files\Steering</Filter>
-    </ClInclude>
-    <ClInclude Include="SteeringComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Unit.h">
-      <Filter>Header Files\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="UnitManager.h">
-      <Filter>Header Files\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="WanderAndChaseSteering.h">
-      <Filter>Header Files\Steering\Compound</Filter>
-    </ClInclude>
-    <ClInclude Include="WanderSteering.h">
-      <Filter>Header Files\Steering\Compound</Filter>
     </ClInclude>
     <ClInclude Include="AStarPathfinder.h">
       <Filter>Header Files\Pathfinding</Filter>

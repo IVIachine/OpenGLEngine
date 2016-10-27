@@ -5,7 +5,7 @@ Node::Node()
 {
 }
 
-Node::Node(const NODE_ID & id, const glm::vec3& pos)
+Node::Node(const NODE_ID & id, const Vec3& pos)
 	: mId(id), mX(pos.x), mY(pos.y), mZ(pos.z)
 {
 }
@@ -40,7 +40,7 @@ float Node::getZ() const
 	return mZ;
 }
 
-_vec3 Node::getPosition() const
+Vec3 Node::getPosition() const
 {
 	return{ mX, mY, mZ };
 }

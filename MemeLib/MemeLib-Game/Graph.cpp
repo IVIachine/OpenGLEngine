@@ -54,7 +54,7 @@ Node* Graph::getNode(int index)
 	}
 }
 
-Node * Graph::getNode(glm::vec3 pos)
+Node * Graph::getNode(Vec3 pos)
 {
 	for (size_t i = 0; i < mNodes.size(); i++)
 	{

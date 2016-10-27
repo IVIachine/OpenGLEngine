@@ -16,10 +16,10 @@ Texture2D::Texture2D(Texture* texture, Shader* shader)
 	mp_shader = shader;
 
 	Vertex vertices[] = {
-		Vertex(glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec2(0.0f, 0.0f)),
-		Vertex(glm::vec3(1.0f, -1.0f, 1.0f), glm::vec2(1.0f, 0.0f)), 
-		Vertex(glm::vec3(-1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0f)),  
-		Vertex(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f)),
+		Vertex(Vec3(-1.0f, -1.0f, 1.0f), Vec2(0.0f, 0.0f)),
+		Vertex(Vec3(1.0f, -1.0f, 1.0f), Vec2(1.0f, 0.0f)), 
+		Vertex(Vec3(-1.0f, 1.0f, 1.0f), Vec2(0.0f, 1.0f)),  
+		Vertex(Vec3(1.0f, 1.0f, 1.0f), Vec2(1.0f, 1.0f)),
 
 	};
 	size_t indices[]{
@@ -37,7 +37,7 @@ Texture2D::Texture2D(Texture* texture, Shader* shader)
 
 	
 
-	m_transform = Transform(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0));
+	m_transform = Transform(Vec3(0, 0, 0), Vec3(0, 0, 0));
 }
 
 Texture2D::Texture2D(const Texture2D & copy)

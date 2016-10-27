@@ -15,22 +15,22 @@ public:
 
 	Texture2D*	getTexture2D() const;
 
-	_vec3		getPosition() const;
-	void		setPosition(_vec3 value);
+	Vec3		getPosition() const;
+	void		setPosition(Vec3 value);
 
-	_vec3		getRotation() const;
-	void		setRotation(_vec3 value);
+	Vec3		getRotation() const;
+	void		setRotation(Vec3 value);
 
-	_vec3		getScale() const;
-	void		setScale(_vec3 value);
+	Vec3		getScale() const;
+	void		setScale(Vec3 value);
 
 	void		draw(Camera& camera);
 
 private:
 	Texture2D*	mp_texture;
-	_vec3		m_position;
-	_vec3		m_scale;
-	_vec3		m_rotation;
+	Vec3		m_position;
+	Vec3		m_scale;
+	Vec3		m_rotation;
 
 	Sprite(Texture2D* texture2D);
 

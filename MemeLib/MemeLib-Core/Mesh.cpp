@@ -9,8 +9,8 @@ Mesh::Mesh(Vertex* vertices, size_t numVertices, size_t* indices, size_t numIndi
 	glBindVertexArray(m_vertexArrayObject);
 
 
-	std::vector<glm::vec3> positions;
-	std::vector<glm::vec2> coords;
+	std::vector<Vec3> positions;
+	std::vector<Vec2> coords;
 
 	positions.reserve(numVertices);
 	coords.reserve(numVertices);

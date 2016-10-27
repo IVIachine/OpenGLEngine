@@ -15,7 +15,7 @@ Heuristic::~Heuristic()
 
 float Heuristic::getEstimate(Node * testNode)
 {
-	glm::vec3 secondLoc = testNode->getPosition();
+	Vec3 secondLoc = testNode->getPosition();
 
 	return Vector3::distance(mpGoalNode->getPosition(), secondLoc);
 }

@@ -7,7 +7,15 @@
 #include <Trackable.h>
 #include "Maths.h"
 
-typedef glm::vec2 _vec2;
+typedef glm::vec2 Vec2;
+
+const static Vec2 Vec2_One	{ 1.f, 1.f };
+const static Vec2 Vec2_Zero { 0.f, 0.f };
+const static Vec2 Vec2_Up	{ 0.f, 1.f };
+const static Vec2 Vec2_Down	{ 0.f, -1.f };
+const static Vec2 Vec2_Left	{ -1.f, 0.f };
+const static Vec2 Vec2_Right{ 1.f, 0.f };
+
 class Vector2 : public Trackable
 {
 public:

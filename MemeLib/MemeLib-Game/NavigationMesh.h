@@ -10,18 +10,15 @@
 #include "Graph.h"
 #include "Mesh.h"
 #include <detail\type_vec3.hpp>
-#include "Vector3.h"
-#include "Vector2.h"
-#include <glm.hpp>
 
 const static float TOLERANCE = 0.00005f;
 
 struct Edge
 {
-	_vec3 first, second;
+	Vec3 first, second;
 
-	Edge() : first({ 0.f, 0.f, 0.f }), second({ 0.f, 0.f, 0.f }) {};
-	Edge(_vec3 a, _vec3 b) : first(a), second(b) { };
+	Edge() : first(Vec3_Zero), second(Vec3_Zero) {};
+	Edge(Vec3 a, Vec3 b) : first(a), second(b) { };
 
 	friend bool operator == (const Edge& lhs, const Edge& rhs)
 	{
@@ -70,7 +67,7 @@ class NavigationMesh :public Graph
 {
 private:
 	std::vector<Edge>		m_edges;
-	std::vector<_vec3>	m_vertices;
+	std::vector<Vec3>	m_vertices;
 
 	
 
@@ -79,31 +76,31 @@ public:
 	~NavigationMesh();
 
 	void constructMesh(Mesh* mesh);
-	void splitTriangles(std::vector<_vec3>& vertices, std::vector<size_t> indices, std::vector<Edge>& edges, size_t faceCount);
+	void splitTriangles(std::vector<Vec3>& vertices, std::vector<size_t> indices, std::vector<Edge>& edges, size_t faceCount);
 
-	bool containsVertice(std::vector<_vec3> vertices, _vec3 key);
+	bool containsVertice(std::vector<Vec3> vertices, Vec3 key);
 	bool reverseExists(std::vector<Edge> edges, Edge key);
 
-	void gatherEdges(std::vector<Edge>& edges, std::vector<Face>& faces, std::vector<_vec3>& vertices, std::vector<size_t> indices, size_t faceCount);
+	void gatherEdges(std::vector<Edge>& edges, std::vector<Face>& faces, std::vector<Vec3>& vertices, std::vector<size_t> indices, size_t faceCount);
 
-	std::vector<Edge> getKnownConnections(_vec3 key);
+	std::vector<Edge> getKnownConnections(Vec3 key);
 	Node* getOtherNode(Edge tmp, Node* key);
 	std::vector<Face> getEdgeFaces(std::vector<Face>& faces, Edge key);
-	float norm2(_vec3 v) const;
+	float norm2(Vec3 v) const;
 
 	size_t	vertCount() const { return m_vertices.size(); };
 	size_t	edgeCount() const { return m_edges.size(); };
 	Edge*	getEdge(size_t index) { return &m_edges[index]; };
 
-	bool getIntersection(Edge one, Edge two, _vec3& ip) const;
-	bool getIntersection(Edge edge, _vec3 ip) const;
+	bool getIntersection(Edge one, Edge two, Vec3& ip) const;
+	bool getIntersection(Edge edge, Vec3 ip) const;
 
 	std::vector<Edge> getEdges() const
 	{
 		return m_edges;
 	};
 
-	std::vector<_vec3> getVerts() const
+	std::vector<Vec3> getVerts() const
 	{
 		return m_vertices;
 	};

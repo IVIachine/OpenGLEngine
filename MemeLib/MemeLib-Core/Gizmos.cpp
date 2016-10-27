@@ -33,14 +33,17 @@ void Gizmos::setColor(Color color)
 }
 
 
-void Gizmos::drawPoint(Vec3 pos, Camera camera, Transform transform)
+void Gizmos::drawPoint(Vec3 pos)
 {
-	mpShader->bind();
-	mpShader->update(transform, camera);
 	float
 		x1 = pos.x,
 		y1 = pos.y,
 		z1 = pos.z;
+	Camera* camera = GRAPHICS->getCamera();
+	Transform transform = Transform(pos, Vec3(0, 0, 0), Vec3(0, 0, 0));
+	mpShader->bind();
+	mpShader->update(transform, *camera);
+	
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
@@ -55,20 +58,22 @@ void Gizmos::drawPoint(Vec3 pos, Camera camera, Transform transform)
 	glEnd();
 }
 
-void Gizmos::drawRay(Vec3 start, Vec3 end, Camera camera, Transform transform)
+void Gizmos::drawRay(Vec3 start, Vec3 end)
 {
-	mpShader->bind();
-	mpShader->update(transform, camera);
-
-	float 
-		x1 = start.x, 
+	Camera* camera = GRAPHICS->getCamera();
+	float
+		x1 = start.x,
 		y1 = start.y,
 		z1 = start.z;
 
-	float 
+	float
 		x2 = end.x,
 		y2 = end.y,
 		z2 = end.z;
+
+	Transform transform = Transform(Vec3((start.x - end.x) / camera->getFOV(), (start.y - end.y) / camera->getFOV(), (start.z - end.z) / camera->getFOV()), Vec3(0, 0, 0), Vec3(1, 1, 1));
+	mpShader->bind();
+	mpShader->update(transform, *camera);
 
 	glBegin(GL_LINES);
 	glVertex3f(x1, y1, z1);

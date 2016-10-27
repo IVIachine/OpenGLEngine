@@ -63,37 +63,6 @@ Graphics::~Graphics()
 	cleanup();
 }
 
-
-void Graphics::moveCamera(Camera* camera)
-{
-	float cameraSpeed = 0.1f;
-	if (INPUT->getKey(Keyboard::W))
-	{
-		camera->setPos(camera->getPos() + cameraSpeed * camera->getFowardVector());
-	}
-	if (INPUT->getKey(Keyboard::S))
-	{
-		camera->setPos(camera->getPos() - cameraSpeed * camera->getFowardVector());
-	}
-	if (INPUT->getKey(Keyboard::A))
-	{
-		camera->setPos(camera->getPos() - glm::normalize(glm::cross(camera->getFowardVector(), camera->getUpVector())) * cameraSpeed);
-	}
-	if (INPUT->getKey(Keyboard::D))
-	{
-		camera->setPos(camera->getPos() + glm::normalize(glm::cross(camera->getFowardVector(), camera->getUpVector())) * cameraSpeed);
-	}
-	if (INPUT->getKey(Keyboard::Q))
-	{
-		camera->setPos(camera->getPos() + Vec3(0.f, 1.f, 0.f));
-	}
-	if (INPUT->getKey(Keyboard::Z))
-	{
-		camera->setPos(camera->getPos() - Vec3(0.f, 1.f, 0.f));
-	}
-}
-
-
 bool Graphics::setup(int width, int height, std::string windowName)
 {
 	m_camera = new Camera(Vec3(0.f, 0.f, -10.f), 70.0f, float(width) / float(height), 0.01f, 1000.0f);

@@ -26,6 +26,35 @@ void GameApp::cleanup()
 }
 
 
+void GameApp::moveCamera(Camera* camera)
+{
+	float cameraSpeed = 0.1f;
+	if (INPUT->getKey(Keyboard::W))
+	{
+		camera->setPos(camera->getPos() + cameraSpeed * camera->getFowardVector());
+	}
+	if (INPUT->getKey(Keyboard::S))
+	{
+		camera->setPos(camera->getPos() - cameraSpeed * camera->getFowardVector());
+	}
+	if (INPUT->getKey(Keyboard::A))
+	{
+		camera->setPos(camera->getPos() - glm::normalize(glm::cross(camera->getFowardVector(), camera->getUpVector())) * cameraSpeed);
+	}
+	if (INPUT->getKey(Keyboard::D))
+	{
+		camera->setPos(camera->getPos() + glm::normalize(glm::cross(camera->getFowardVector(), camera->getUpVector())) * cameraSpeed);
+	}
+	if (INPUT->getKey(Keyboard::Q))
+	{
+		camera->setPos(camera->getPos() + Vec3(0.f, 1.f, 0.f));
+	}
+	if (INPUT->getKey(Keyboard::Z))
+	{
+		camera->setPos(camera->getPos() - Vec3(0.f, 1.f, 0.f));
+	}
+}
+
 bool GameApp::loadResources()
 {
 	/*
@@ -158,7 +187,7 @@ const float TARGET_ELAPSED_MS = LOOP_TARGET_TIME / 1000.0f;
 void GameApp::update()
 {
 	GAME->beginStep();
-	GRAPHICS->moveCamera(GRAPHICS->getCamera());
+	moveCamera(GRAPHICS->getCamera());
 
 	if (INPUT->getKey(Keyboard::Up))
 	{
@@ -207,7 +236,7 @@ void GameApp::draw()
 
 		for (size_t i = 0; i < mNavMesh->getNodeCount(); i++)
 		{
-			GIZMOS->drawPoint(mNavMesh->getNode(i)->getPosition(), *cam, Transform(mNavMesh->getNode(i)->getPosition(), Vec3(0, 0, 0), Vec3(0, 0, 0)));
+			GIZMOS->drawPoint(mNavMesh->getNode(i)->getPosition());
 		}
 
 		if (m_path.size() > 1)
@@ -221,7 +250,7 @@ void GameApp::draw()
 				Vec3 p2 = next->getPosition();
 				p1.y += .05;
 				p2.y += .05;
-				GIZMOS->drawRay(p1, p2, *cam, Transform(Vec3((p1.x - p2.x)/cam->getFOV(), (p1.y - p2.y)/cam->getFOV(), (p1.z - p2.z)/cam->getFOV()), Vec3(0, 0, 0), Vec3(1, 1, 1)));
+				//GIZMOS->drawRay(p1, p2);
 			}
 		}
 
@@ -231,7 +260,7 @@ void GameApp::draw()
 			Vec3 p2 = mNavMesh->getEdge(i)->second;
 			p1.y += .05;
 			p2.y += .05;
-			//GIZMOS->drawRay(p1, p2);
+			GIZMOS->drawRay(p1, p2);
 		}
 
 		//mp_sprite1->setPosition({ -2.5f, 0.0f , 0.0f});

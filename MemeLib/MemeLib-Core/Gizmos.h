@@ -34,8 +34,8 @@ public:
 
 	void setColor(Color color);
 
-	void drawPoint(Vec3 pos, Camera camera, Transform transform);
-	void drawRay(Vec3 start, Vec3 end, Camera camera, Transform transform);
+	void drawPoint(Vec3 pos);
+	void drawRay(Vec3 start, Vec3 end);
 
 private:
 	Gizmos();

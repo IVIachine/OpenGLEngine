@@ -19,6 +19,8 @@ public:
 	bool setup(size_t width, size_t height);
 	void cleanup();
 
+	void moveCamera(Camera * camera);
+
 	bool loadResources();
 	void unloadResources();
 

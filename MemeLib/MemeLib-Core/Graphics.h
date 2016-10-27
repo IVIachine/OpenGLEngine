@@ -54,8 +54,6 @@ public:
 	std::string	getWindowTitle();
 	bool		exitWindow();
 
-	void moveCamera(Camera* camera);
-
 	GLfloat getLastY() { return m_lastY; };
 	GLfloat getLastX() { return m_lastX; };
 

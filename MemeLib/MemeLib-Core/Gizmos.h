@@ -6,6 +6,7 @@
 #include <Trackable.h>
 #include <cassert>
 #include "Color.h"
+#include "Shader.h"
 
 #define GIZMOS Gizmos::getInstance()
 
@@ -28,19 +29,20 @@ public:
 		sp_instance = NULL;
 	};
 
-	bool setup();
+	bool setup(Shader* shader);
 	void cleanup();
 
 	void setColor(Color color);
 
-	void drawPoint(glm::vec3 pos);
-	void drawRay(glm::vec3 start, glm::vec3 end);
+	void drawPoint(glm::vec3 pos, Camera camera, Transform transform);
+	void drawRay(glm::vec3 start, glm::vec3 end, Camera camera, Transform transform);
 
 private:
 	Gizmos();
 	~Gizmos();
 
 	static Gizmos* sp_instance;
+	Shader* mpShader;
 };
 
 

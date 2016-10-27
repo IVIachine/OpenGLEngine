@@ -91,6 +91,7 @@ bool GameApp::loadResources()
 	};
 
 	Shader* p_shader = RESOURCES->addShader("basic", "../Assets/shaders/basicShader");
+	Shader* p_shader2 = RESOURCES->addShader("advanced", "../Assets/shaders/basicShader2");
 
 	RESOURCES->addTexture("box", "../Assets/textures/box.png");
 	RESOURCES->addTexture("brick", "../Assets/textures/Brick-Texture-1.jpg");
@@ -108,7 +109,7 @@ bool GameApp::loadResources()
 	mp_sprite1 = RESOURCES->addSprite("sprite1", RESOURCES->getTexture2D("harambe"));
 	mp_sprite2 = RESOURCES->addSprite("sprite2", RESOURCES->getTexture2D("enemy"));
 
-	mp_volume = new Volume(p_shader, RESOURCES->getTexture("brick"), "../Assets/obj/test4.obj", false);
+	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test4.obj", false);
 	mNavMesh->constructMesh(mp_volume->getMesh());
 	mpPathfinder = new AStarPathfinder(mNavMesh);
 	Transform skyBoxTransform = Transform(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(500, 500, 500));
@@ -199,38 +200,27 @@ void GameApp::draw()
 
 		mp_volume->draw(*cam);
 
-		mp_sprite1->setPosition({ -2.5f, 0 });
-		mp_sprite1->setRotation(45.f * Maths::DEG_TO_RAD);
-		mp_sprite1->setScale({ 2.5f, 2.5f });
-		mp_sprite1->draw(*cam);
-		
-		mp_sprite2->setPosition({ 2.5f, 0 });
-		mp_sprite2->setRotation(0.f * Maths::DEG_TO_RAD);
-		mp_sprite2->setScale({ 1.f, 1.f });
-		mp_sprite2->draw(*cam);
-
-		bool toggle = INPUT->getKey(Keyboard::Space);
-
-		float amt = 0.05f;
-		_vec3 off = { 0.f, amt, 0.f };
-		_vec3 pos = { 0.f, 0.f, 0.f };
-
 		std::vector<glm::vec3> temp = mNavMesh->getVerts();
 
-			if (m_path.size() > 1)
-			{
-				for (size_t i = 0; i < m_path.size() - 1; i++)
-				{
-					Node* prev = m_path[i];
-					Node* next = m_path[i + 1];
+		for (size_t i = 0; i < mNavMesh->getNodeCount(); i++)
+		{
+			GIZMOS->drawPoint(mNavMesh->getNode(i)->getPosition(), *cam, Transform(mNavMesh->getNode(i)->getPosition(), glm::vec3(0, 0, 0), glm::vec3(0, 0, 0)));
+		}
 
-					_vec3 p1 = prev->getPosition();
-					_vec3 p2 = next->getPosition();
-					p1.y += .05;
-					p2.y += .05;
-					GIZMOS->drawRay(p1, p2);
-				}
+		if (m_path.size() > 1)
+		{
+			for (size_t i = 0; i < m_path.size() - 1; i++)
+			{
+				Node* prev = m_path[i];
+				Node* next = m_path[i + 1];
+
+				_vec3 p1 = prev->getPosition();
+				_vec3 p2 = next->getPosition();
+				p1.y += .05;
+				p2.y += .05;
+				GIZMOS->drawRay(p1, p2, *cam, Transform(glm::vec3((p1.x - p2.x)/cam->getFOV(), (p1.y - p2.y)/cam->getFOV(), (p1.z - p2.z)/cam->getFOV()), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1)));
 			}
+		}
 
 		for (size_t i = 0; i < mNavMesh->edgeCount(); i++)
 		{
@@ -241,10 +231,21 @@ void GameApp::draw()
 			//GIZMOS->drawRay(p1, p2);
 		}
 
-		for (size_t i = 0; i < mNavMesh->getNodeCount(); i++)
-		{
-			GIZMOS->drawPoint(mNavMesh->getNode(i)->getPosition());
-		}
+		//mp_sprite1->setPosition({ -2.5f, 0.0f , 0.0f});
+		//mp_sprite1->setRotation(_vec3(0.0f, 45.f, 0.0f) * Maths::DEG_TO_RAD);
+		//mp_sprite1->setScale(_vec3(2.5f, 2.5f, 0.0f));
+		//mp_sprite1->draw(*cam);
+		
+		mp_sprite2->setPosition(mNavMesh->getNode(0)->getPosition());
+		mp_sprite2->setRotation(_vec3(180.0f, 0.0f, 0.0f) * Maths::DEG_TO_RAD);
+		mp_sprite2->setScale(_vec3(1.0f, 1.0f, 0.0f));
+		mp_sprite2->draw(*cam);
+
+		bool toggle = INPUT->getKey(Keyboard::Space);
+
+		float amt = 0.05f;
+		_vec3 off = { 0.f, amt, 0.f };
+		_vec3 pos = { 0.f, 0.f, 0.f };
 
 		UNITS->drawAll();
 	}

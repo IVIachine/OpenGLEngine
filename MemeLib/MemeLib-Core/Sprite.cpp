@@ -27,34 +27,34 @@ Texture2D* Sprite::getTexture2D() const
 }
 
 
-Vector2 Sprite::getPosition() const
+_vec3 Sprite::getPosition() const
 {
 	return m_position;
 }
 
-void Sprite::setPosition(Vector2 value)
+void Sprite::setPosition(_vec3 value)
 {
 	m_position = value;
 }
 
 
-float Sprite::getRotation() const
+_vec3 Sprite::getRotation() const
 {
 	return m_rotation;
 }
 
-void Sprite::setRotation(float value)
+void Sprite::setRotation(_vec3 value)
 {
 	m_rotation = value;
 }
 
 
-Vector2 Sprite::getScale() const
+_vec3 Sprite::getScale() const
 {
 	return m_scale;
 }
 
-void Sprite::setScale(Vector2 value)
+void Sprite::setScale(_vec3 value)
 {
 	m_scale = value;
 }
@@ -63,13 +63,13 @@ void Sprite::setScale(Vector2 value)
 void Sprite::draw(Camera& camera)
 {
 	// set position
-	mp_texture->transform().setPos({ m_position.x, m_position.y, 0.f });
+	mp_texture->transform().setPos(m_position);
 
 	// set rotation
-	mp_texture->transform().setRot({ 0.f, yRot, m_rotation });
+	mp_texture->transform().setRot(m_rotation);
 
 	// set scale
-	mp_texture->transform().setScale({ m_scale.x, m_scale.y, 1.f });
+	mp_texture->transform().setScale(m_scale);
 
 	// draw
 	mp_texture->draw(camera);

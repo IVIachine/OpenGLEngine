@@ -45,7 +45,8 @@ bool Game::setup(int width, int height)
 	}
 
 	// Setup Gizmos
-	if (!Gizmos::createInstance()->setup())
+	Shader* p_shader3 = RESOURCES->addShader("gizmos", "../Assets/shaders/basicShader3");
+	if (!Gizmos::createInstance()->setup(p_shader3))
 	{
 		fprintf(stderr, "Failed to initialize Gizmos.\n");
 		return false;

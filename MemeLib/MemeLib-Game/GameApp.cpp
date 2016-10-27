@@ -108,7 +108,7 @@ bool GameApp::loadResources()
 	mp_sprite1 = RESOURCES->addSprite("sprite1", RESOURCES->getTexture2D("harambe"));
 	mp_sprite2 = RESOURCES->addSprite("sprite2", RESOURCES->getTexture2D("enemy"));
 
-	mp_volume = new Volume(p_shader, RESOURCES->getTexture("brick"), "../Assets/obj/test.obj", false);
+	mp_volume = new Volume(p_shader, RESOURCES->getTexture("brick"), "../Assets/obj/test4.obj", false);
 	mNavMesh->constructMesh(mp_volume->getMesh());
 	mpPathfinder = new AStarPathfinder(mNavMesh);
 	Transform skyBoxTransform = Transform(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(500, 500, 500));
@@ -123,7 +123,7 @@ bool GameApp::loadResources()
 
 	m_skybox->setTransform(skyBoxTransform);
 
-	m_path = mpPathfinder->findPath(mNavMesh->getNode(1), mNavMesh->getNode(2));
+	m_path = mpPathfinder->findPath(mNavMesh->getNode(5), mNavMesh->getNode(0));
 
 	std::cout
 		<< "E: " << mNavMesh->edgeCount() << "\n"
@@ -217,20 +217,28 @@ void GameApp::draw()
 
 		std::vector<glm::vec3> temp = mNavMesh->getVerts();
 
-		//for (size_t j = 1; j < temp.size() - 1; j++)
-		{
-			//m_path = mpPathfinder->findPath(mNavMesh->getNode(j), mNavMesh->getNode(0));
-			for (size_t i = 0; i < m_path.size() - 1; i++)
+			if (m_path.size() > 1)
 			{
-				Node* prev = m_path[i];
-				Node* next = m_path[i + 1];
+				for (size_t i = 0; i < m_path.size() - 1; i++)
+				{
+					Node* prev = m_path[i];
+					Node* next = m_path[i + 1];
 
-				_vec3 p1 = prev->getPosition();
-				_vec3 p2 = next->getPosition();
-				p1.y += .05;
-				p2.y += .05;
-				GIZMOS->drawRay(p1, p2);
+					_vec3 p1 = prev->getPosition();
+					_vec3 p2 = next->getPosition();
+					p1.y += .05;
+					p2.y += .05;
+					GIZMOS->drawRay(p1, p2);
+				}
 			}
+
+		for (size_t i = 0; i < mNavMesh->edgeCount(); i++)
+		{
+			_vec3 p1 = mNavMesh->getEdge(i)->first;
+			_vec3 p2 = mNavMesh->getEdge(i)->second;
+			p1.y += .05;
+			p2.y += .05;
+			//GIZMOS->drawRay(p1, p2);
 		}
 
 		for (size_t i = 0; i < mNavMesh->getNodeCount(); i++)

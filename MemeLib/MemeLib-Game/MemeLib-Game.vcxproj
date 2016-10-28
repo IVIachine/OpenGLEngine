@@ -125,6 +125,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ArriveSteering.cpp" />
     <ClCompile Include="AStarPathfinder.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
@@ -148,6 +149,7 @@
     <ClCompile Include="UnitManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArriveSteering.h" />
     <ClInclude Include="AStarPathfinder.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />

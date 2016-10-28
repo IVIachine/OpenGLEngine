@@ -3,13 +3,14 @@
 #include "Node.h"
 
 PathFollowSteering::PathFollowSteering(const UnitID& ownerID, const Vec3& targetLoc, const UnitID& targetID, float switchRadius)
-:Steering()
+	:Steering()
 {
 	setOwnerID(ownerID);
 	setTargetID(targetID);
 	setTargetLoc(targetLoc);
 
 	mpSeekSteering = new SeekSteering(ownerID, targetLoc, targetID, false);
+	mpArriveSteering = new ArriveSteering(ownerID, targetLoc, targetID, .015f, .5, .1);
 	mSwitchRadius = switchRadius;
 	mCurrentIndex = 1;
 	mFollowing = false;
@@ -35,36 +36,44 @@ Steering* PathFollowSteering::getSteering()
 		Vec3 diff;
 		Unit* pOwner = UNITS->getUnit(mOwnerID);
 
-		bool checkForSwitch = true;
-		while (checkForSwitch) //Loop until there is a target far enough a way to travel to
+		diff = mpFollowPath.peek(mCurrentIndex)->getPosition() - pOwner->getPositionComponent()->getPosition();
+		if (glm::length(diff) < mSwitchRadius)
 		{
-			diff = mpFollowPath.peek(mCurrentIndex)->getPosition() - pOwner->getPositionComponent()->getPosition();
-			if (glm::length(diff) < mSwitchRadius)
-			{ 
-				if (mCurrentIndex + 1 != mpFollowPath.size())
-				{
-					mCurrentIndex++;
-				}
-				else
-				{
-					mCurrentIndex = 0;
-					mpFollowPath.clear();
-					mFollowing = false;
-					return nullptr;
-				}
+			if (mCurrentIndex + 1 != mpFollowPath.size())
+			{
+				mCurrentIndex++;
 			}
-			else
-				checkForSwitch = false;
+		}
+		if (mCurrentIndex + 1 == mpFollowPath.size() && glm::length(diff) < .15f)
+		{
+			mCurrentIndex = 0;
+			mpFollowPath.clear();
+			mFollowing = false;
+			this->mData.acc = Vec3(0, 0, 0);
+			this->mData.vel = Vec3(0, 0, 0);
+			return this;
 		}
 
-		mpSeekSteering->setTargetLoc(mpFollowPath.peek(mCurrentIndex)->getPosition());
-		Steering *pTemp = mpSeekSteering->getSteering();
-		if (pTemp != NULL)
+		if (mCurrentIndex + 1 != mpFollowPath.size())
 		{
-			this->mData = pTemp->getData();
-			std::cout << mData.vel.x << " " << mData.vel.y << " " << mData.vel.z << std::endl;
+			mpSeekSteering->setTargetLoc(mpFollowPath.peek(mCurrentIndex)->getPosition());
+			Steering *pTemp = mpSeekSteering->getSteering();
+			if (pTemp != NULL)
+			{
+				this->mData = pTemp->getData();
+			}
+			return this;
 		}
-		return this;
+		else
+		{
+			mpArriveSteering->setTargetLoc(mpFollowPath.peek(mCurrentIndex)->getPosition());
+			Steering *pTemp = mpArriveSteering->getSteering();
+			if (pTemp != NULL)
+			{
+				this->mData = pTemp->getData();
+			}
+			return this;
+		}
 	}
 	return nullptr;
 }

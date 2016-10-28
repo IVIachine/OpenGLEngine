@@ -25,13 +25,14 @@ public:
 	void		setScale(Vec3 value);
 
 	void		draw(Camera& camera);
-
+	void		setFacing(float face) { mFacing = face; };
+	float		getFacing()const { return mFacing; };
 private:
 	Texture2D*	mp_texture;
 	Vec3		m_position;
 	Vec3		m_scale;
 	Vec3		m_rotation;
-
+	float		mFacing;
 	Sprite(Texture2D* texture2D);
 
 	friend class ResourceManager;

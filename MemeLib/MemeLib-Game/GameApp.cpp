@@ -1,7 +1,5 @@
 #include "GameApp.h"
 #include "Input.h"
-//#include "UnitManager.h"
-//#include "ComponentManager.h"
 #include "Gizmos.h"
 #include "AStarPathfinder.h"
 
@@ -57,25 +55,19 @@ void GameApp::moveCamera(Camera* camera)
 
 bool GameApp::loadResources()
 {
-	/*
-	
-	if (!ComponentManager::createInstance(MAX_UNITS)->setup())
+	if (!ComponentManager::createInstance(100)->setup())
 	{
-	fprintf(stderr, "Failed to initialize ComponentManager.\n");
-	return false;
+		fprintf(stderr, "Failed to initialize Time.\n");
+		return false;
 	}
 
-	if (!UnitManager::createInstance(MAX_UNITS)->setup())
+	if (!UnitManager::createInstance(100)->setup())
 	{
-	fprintf(stderr, "Failed to initialize UnitManager.\n");
-	return false;
+		fprintf(stderr, "Failed to initialize Time.\n");
+		return false;
 	}
-	
-	*/
 
 	m_counter = 0.0f;
-
-	Transform tmp = Transform(Vec3(1.0, 1.0, 1.0), Vec3(45, 0, 0));
 
 	mNavMesh = new NavigationMesh();
 
@@ -121,7 +113,6 @@ bool GameApp::loadResources()
 		16,17,19, 16,19,18,
 		20,21,23, 20,23,22,
 	};
-
 	Shader* p_shader = RESOURCES->addShader("basic", "../Assets/shaders/basicShader");
 	Shader* p_shader2 = RESOURCES->addShader("advanced", "../Assets/shaders/basicShader2");
 
@@ -138,11 +129,13 @@ bool GameApp::loadResources()
 	RESOURCES->addTexture2D("enemy", RESOURCES->getTexture("enemy"), p_shader);
 	RESOURCES->addTexture2D("kappa", RESOURCES->getTexture("kappa"), p_shader);
 	
-	mp_sprite1 = RESOURCES->addSprite("sprite1", RESOURCES->getTexture2D("harambe"));
-	mp_sprite2 = RESOURCES->addSprite("sprite2", RESOURCES->getTexture2D("enemy"));
-
+	Sprite* mp_sprite2 = RESOURCES->addSprite("sprite2", RESOURCES->getTexture2D("enemy"));
+	RESOURCES->getSprite("sprite2")->setScale(Vec3(.1f,.1f,.1f));
+	RESOURCES->getSprite("sprite2")->setRotation(Vec3(270,0,0) * Maths::DEG_TO_RAD);
 	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test4.obj", false);
 	mNavMesh->constructMesh(mp_volume->getMesh());
+	Unit* pUnit = UNITS->createUnit(*mp_sprite2, mNavMesh, true, PositionData(mNavMesh->getNode(0)->getPosition(), 0));
+	pUnit->setSteering(Steering::PATH_FOLLOW, Vec3(0, 0, 0));
 	mpPathfinder = new AStarPathfinder(mNavMesh);
 	Transform skyBoxTransform = Transform(Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(500, 500, 500));
 	m_skybox = new Volume(
@@ -168,8 +161,8 @@ bool GameApp::loadResources()
 
 void GameApp::unloadResources()
 {
-	//UnitManager::disposeInstance();
-	//ComponentManager::disposeInstance();
+	UnitManager::disposeInstance();
+	ComponentManager::disposeInstance();
 
 	delete m_skybox;
 	m_skybox = NULL;
@@ -219,7 +212,8 @@ void GameApp::update()
 
 	GAME->step();
 
-	//UNITS->updateAll(TARGET_ELAPSED_MS);
+	COMPONENTS->update(TARGET_ELAPSED_MS);
+	UNITS->updateAll(TARGET_ELAPSED_MS);
 }
 
 void GameApp::draw()
@@ -262,16 +256,11 @@ void GameApp::draw()
 			p2.y += .05;
 			GIZMOS->drawRay(p1, p2);
 		}
-
-		//mp_sprite1->setPosition({ -2.5f, 0.0f , 0.0f});
-		//mp_sprite1->setRotation(Vec3(0.0f, 45.f, 0.0f) * Maths::DEG_TO_RAD);
-		//mp_sprite1->setScale(Vec3(2.5f, 2.5f, 0.0f));
-		//mp_sprite1->draw(*cam);
 		
-		mp_sprite2->setPosition(mNavMesh->getNode(0)->getPosition());
-		mp_sprite2->setRotation(Vec3(180.0f, 0.0f, 0.0f) * Maths::DEG_TO_RAD);
-		mp_sprite2->setScale(Vec3(1.0f, 1.0f, 0.0f));
-		mp_sprite2->draw(*cam);
+		//mp_sprite2->setPosition(mNavMesh->getNode(0)->getPosition());
+		//mp_sprite2->setRotation(Vec3(180.0f, 0.0f, 0.0f) * Maths::DEG_TO_RAD);
+		//mp_sprite2->setScale(Vec3(1.0f, 1.0f, 0.0f));
+		//mp_sprite2->draw(*cam);
 
 		bool toggle = INPUT->getKey(Keyboard::Space);
 
@@ -279,7 +268,7 @@ void GameApp::draw()
 		Vec3 off = { 0.f, amt, 0.f };
 		Vec3 pos = { 0.f, 0.f, 0.f };
 
-		//UNITS->drawAll();
+		UNITS->drawAll();
 	}
 	GRAPHICS->flip();
 }

@@ -7,6 +7,8 @@
 #include "NavigationMesh.h"
 #include "Pathfinder.h"
 #include "Graph.h"
+#include "ComponentManager.h"
+#include "UnitManager.h"
 
 const int MAX_UNITS = 500;
 
@@ -30,12 +32,9 @@ public:
 private:
 	float	m_counter;
 	Volume*	m_skybox;
-
 	Pathfinder* mpPathfinder;
 	Texture2D*	mp_texture;
 	Volume*		mp_volume;
-	Sprite*		mp_sprite1;
-	Sprite*		mp_sprite2;
 	NavigationMesh* mNavMesh;
 	Vec3		m_position;
 	Path		m_path;

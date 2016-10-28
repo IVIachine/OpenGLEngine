@@ -46,10 +46,10 @@ public:
 	Timer*	getMasterTimer() { return mp_masterTimer; };
 	double	getCurrentTime() { return mp_masterTimer->getElapsedTime(); };
 
-private:
+protected:
 	Game();
 	~Game();
-	
+private:
 	float	m_fps = Time::FPS_60;
 	bool 	m_isRunning;
 	bool	m_stopRequested = false;

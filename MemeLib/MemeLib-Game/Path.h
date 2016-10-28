@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <Trackable.h>
-#include "NodeRecord.h"
 
 class Node;
 
@@ -31,7 +30,7 @@ public:
 	Node* operator[](size_t index) const;
 
 private:
-	std::vector<Node*> mNodes;
+	std::vector<Node*> m_nodeList;
 
 };
 

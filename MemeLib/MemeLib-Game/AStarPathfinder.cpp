@@ -1,12 +1,17 @@
 #include "AStarPathfinder.h"
 #include "Path.h"
 #include "Connection.h"
+#include "Graph.h"
 #include "Game.h"
 #include <PerformanceTracker.h>
-#include "Graph.h"
+#include <list>
+#include <vector>
+#include <algorithm>
+#include <map>
+#include "Vector3.h"
 
-AStarPathfinder::AStarPathfinder(Graph * pGraph)
-	:Pathfinder(pGraph)
+AStarPathfinder::AStarPathfinder(Graph* pGraph)
+	: Pathfinder(dynamic_cast<Graph*>(pGraph))
 {
 }
 
@@ -14,127 +19,125 @@ AStarPathfinder::~AStarPathfinder()
 {
 }
 
-const Path & AStarPathfinder::findPath(Node * pFrom, Node * pTo)
+
+const Path& AStarPathfinder::findPath(Node* pSource, Node* pTarget)
 {
-	//allocate nodes to visit list and place starting node in it
-	std::vector<Connection*> connections;
-	std::list<NodeRecord*> nodesToVisit;
-	std::list<NodeRecord*> visitedNodes;
-	NodeRecord* endNodeRecord;
-	NodeRecord* startRecord = new NodeRecord();
-	startRecord->mpNode = pFrom;
-	startRecord->mpConnection = NULL;
-	startRecord->mCostSoFar = 0;
-	nodesToVisit.push_back(startRecord);
-	NodeRecord* currentNode = NULL;
-	float endNodeHeuristic = 0.0f;
+	// Clear path
 	mPath.clear();
 
-	Heuristic theHeuristic(pTo);
-	startRecord->mEstimatedTotalCost = theHeuristic.getEstimate(startRecord);
-	while (nodesToVisit.size() > 0)
+	std::map<Node*, float> distMap;
+	std::map<Node*, Node*> prevMap;
+	std::list<Node*> unvisitedList;
+
+	distMap[pSource] = 0.0f;
+	prevMap[pSource] = NULL;
+
+	// Get all nodes
+	for (Node* node : mpGraph->getNodes())
 	{
-		currentNode = getSmallestNode(nodesToVisit);
-		if (currentNode->mpNode == pTo)
+		if (node != pSource)
+		{
+			distMap[node] = UNWALKABLE;
+			prevMap[node] = NULL;
+		}
+
+		unvisitedList.push_back(node);
+	}
+
+	while (unvisitedList.size() > 0)
+	{
+		// Get unvisited with smallest distance
+		Node* unvisitedNode = NULL;
+		for (Node* possible : unvisitedList)
+		{
+			if (!unvisitedNode || distMap[possible] < distMap[unvisitedNode])
+			{
+				unvisitedNode = possible;
+			}
+		}
+
+		// At target
+		if (unvisitedNode == pTarget)
+		{
 			break;
+		}
 
-		connections = mpGraph->getConnections(currentNode->mpNode->getId());
+		// Mark the node as 'visited'
+		unvisitedList.remove(unvisitedNode);
 
-		for (size_t i = 0; i < connections.size(); i++)
+		// Get neighbor nodes
+		std::vector<Node*> neighborList =
+			mpGraph->getNeighbors(*unvisitedNode, m_options.enableDiagonals);
+
+		// Check for alternate path
+		for (Node* neighborNode : neighborList)
 		{
-			Node* endNode = connections[i]->getToNode();
-			float endNodeCost = currentNode->mCostSoFar + connections[i]->getCost();
+			// Get cost
+			float costToEnter = costToEnterNode(
+				unvisitedNode,
+				neighborNode);
 
-			if (containsNode(visitedNodes, endNode))
+			float altDist = distMap[unvisitedNode] + costToEnter;
+
+			if (altDist < distMap[neighborNode])
 			{
-				endNodeRecord = findNodeRecord(visitedNodes, endNode);
-
-				if (endNodeRecord->mCostSoFar <= endNodeCost)
-					continue;
-
-				visitedNodes.remove(endNodeRecord);
-				endNodeHeuristic = endNodeRecord->mEstimatedTotalCost - endNodeRecord->mCostSoFar;
-			}
-			else if (containsNode(nodesToVisit, endNode))
-			{
-				endNodeRecord = findNodeRecord(nodesToVisit, endNode);
-
-				if (endNodeRecord->mCostSoFar <= endNodeCost)
-					continue;
-
-				endNodeHeuristic = endNodeRecord->mpConnection->getCost() - endNodeRecord->mCostSoFar;
-			}
-			else
-			{
-				endNodeRecord = new NodeRecord();
-				endNodeRecord->mpNode = endNode;
-
-				endNodeHeuristic = theHeuristic.getEstimate(endNode);
-			}
-
-			endNodeRecord->mCostSoFar = endNodeCost;
-			endNodeRecord->mpConnection = connections[i];
-			endNodeRecord->mEstimatedTotalCost = endNodeCost + endNodeHeuristic;
-
-			if (!(containsNode(nodesToVisit, endNode)))
-			{
-				nodesToVisit.push_back(endNodeRecord);
+				distMap[neighborNode] = altDist;
+				prevMap[neighborNode] = unvisitedNode;
 			}
 		}
-		nodesToVisit.remove(currentNode);
-		visitedNodes.push_back(currentNode);
 	}
 
-	if (currentNode->mpNode == pTo)
+	// No path found
+	if (prevMap[pTarget] == NULL)
 	{
-		while (currentNode->mpNode != pFrom)
-		{
-			mPath.add(currentNode->mpNode);
-			currentNode = findNodeRecord(visitedNodes, currentNode->mpConnection->getFromNode());
-		}
-		mPath.add(pFrom);
-		mPath.reverse();
+		return mPath;
 	}
 
-	for (std::list<NodeRecord*>::const_iterator iterator = nodesToVisit.begin(), end = nodesToVisit.end(); iterator != end; ++iterator) //Clear lists
+	// Build path
+	Node* currentNode = pTarget;
+	while (currentNode != NULL)
 	{
-		delete *(iterator);
+		mPath.add(currentNode);
+		currentNode = prevMap[currentNode];
 	}
 
-	for (std::list<NodeRecord*>::const_iterator iterator = visitedNodes.begin(), end = visitedNodes.end(); iterator != end; ++iterator)
+	// Reverse the path
+	mPath.reverse();
+
+	// Resize the path
+	if (m_options.maxDistance > 0)
 	{
-		delete *(iterator);
+		mPath.resize(m_options.maxDistance);
 	}
 
 	return mPath;
 }
 
-NodeRecord* AStarPathfinder::getSmallestNode(std::list<NodeRecord*> workingList)
-{
-	return *std::min_element(workingList.begin(), workingList.end(), [](NodeRecord* const& s1, NodeRecord* const& s2) {return s1->mEstimatedTotalCost < s2->mEstimatedTotalCost; }); //Using lambdas easilly iterate through the list
-}
 
-bool AStarPathfinder::containsNode(std::list<NodeRecord*> theList, Node * key)
+float AStarPathfinder::costToEnterNode(Node* pSource, Node* pTarget)
 {
-	for (std::list<NodeRecord*>::const_iterator iterator = theList.begin(), end = theList.end(); iterator != end; ++iterator)
+	// Get connection
+	Connection* pConnection = mpGraph->getConnection(*pSource, *pTarget);
+
+	// No connection or unwalkable
+	if (!pConnection || !pConnection->isWalkable())
 	{
-		if ((*iterator)->mpNode == key)
+		return UNWALKABLE;
+	}
+
+	// Get move cost
+	float cost = 1.0f;
+
+	// Use heuristic
+	if (m_options.enableHeuristic)	
+	{
+		cost = pConnection->moveCost();
+
+		if (pConnection->isDiagonal())
 		{
-			return true;
+			cost += DIAGONAL;
 		}
 	}
-	return false;
-}
 
-NodeRecord * AStarPathfinder::findNodeRecord(std::list<NodeRecord*> theList, Node * key)
-{
-	for (std::list<NodeRecord*>::const_iterator iterator = theList.begin(), end = theList.end(); iterator != end; ++iterator)
-	{
-		if ((*iterator)->mpNode == key)
-		{
-			return *iterator;
-		}
-	}
-	return nullptr;
+	return cost;
 }
-

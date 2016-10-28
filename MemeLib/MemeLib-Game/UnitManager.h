@@ -24,7 +24,7 @@ public:
 	static void			disposeInstance();
 	static UnitManager*	createInstance(Uint32 maxSize);
 
-	Unit* createUnit(const Sprite& sprite, NavigationMesh* graph, bool shouldWrap = true, const PositionData& posData = ZERO_POSITION_DATA, const PhysicsData& physicsData = ZERO_PHYSICS_DATA, const UnitID& id = INVALID_UNIT_ID);
+	Unit* createUnit(const Sprite& sprite, NavMesh* graph, bool shouldWrap = true, const PositionData& posData = ZERO_POSITION_DATA, const PhysicsData& physicsData = ZERO_PHYSICS_DATA, const UnitID& id = INVALID_UNIT_ID);
 
 	Unit* getUnit(const UnitID& id) const;
 	void deleteUnit(const UnitID& id);

@@ -63,17 +63,11 @@ struct Face
 };
 
 
-class NavigationMesh :public Graph
+class NavMesh : public Graph
 {
-private:
-	std::vector<Edge>		m_edges;
-	std::vector<Vec3>	m_vertices;
-
-	
-
 public:
-	NavigationMesh();
-	~NavigationMesh();
+	NavMesh();
+	~NavMesh();
 
 	void constructMesh(Mesh* mesh);
 	void splitTriangles(std::vector<Vec3>& vertices, std::vector<size_t> indices, std::vector<Edge>& edges, size_t faceCount);
@@ -104,5 +98,9 @@ public:
 	{
 		return m_vertices;
 	};
+
+private:
+	std::vector<Edge>	m_edges;
+	std::vector<Vec3>	m_vertices;
 };
 #endif

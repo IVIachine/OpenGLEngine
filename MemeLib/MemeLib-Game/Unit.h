@@ -5,7 +5,7 @@
 #include <limits>
 #include "Vector3.h"
 #include "Pathfinder.h"
-#include "NavigationMesh.h"
+#include "NavMesh.h"
 #include "Component.h"
 #include "Sprite.h"
 #include "Steering.h"
@@ -58,7 +58,7 @@ private:
 	bool mShowTarget;
 	bool mExpectingPath;
 	Pathfinder* mpPathfinder;
-	Unit(const Sprite& sprite, NavigationMesh* graph);
+	Unit(const Sprite& sprite, NavMesh* graph);
 	virtual ~Unit();
 
 	Unit(Unit&);//invalidate copy constructor

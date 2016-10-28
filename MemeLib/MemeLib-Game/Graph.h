@@ -7,24 +7,36 @@
 
 class Connection;
 
-class Graph :public Trackable
+typedef std::vector<Node*> NodeList;
+typedef std::vector<Connection*> ConnectionList;
+typedef std::map<NODE_ID, ConnectionList> ConnectionMap;
+
+class Graph : public Trackable
 {
 public:
 	Graph();
 	virtual ~Graph();
 
 	virtual void init();
-	std::vector<Connection*> getConnections(const Node& from);
-	std::vector<Connection*> getConnections(const NODE_ID& fromId);
-	Node* getNode(int index);
-	Node* getNode(Vec3 pos);
-	int getNodeCount() { return mNodes.size(); };
+
+	Node*			getNode(size_t index);
+	Node*			getNode(Vec3 pos);
+	NodeList		getNodes() const;
+	size_t			size() const;
+
+	ConnectionList	getConnections(const Node& pSource);
+	ConnectionList	getConnections(const NODE_ID& sourceID);
+
+	Connection*		getConnection(const Node& pSource, const Node& pTarget);
+	Connection*		getConnection(const NODE_ID& sourceID, const NODE_ID& targetID);
+
+	NodeList		getNeighbors(const Node& pSource, bool diagonals);
+	NodeList		getNeighbors(const NODE_ID& sourceID, bool diagonals);
+
+	Node*			operator[](size_t index);
 
 protected:
-	//a vector of Node pointers
-	std::vector<Node*> mNodes;
-	//a vector of Connection pointers
-	std::vector<Connection*> mConnections;
-	//a map of Connection&'s vectors indexed on Node id
-	std::map< NODE_ID, std::vector<Connection*> > mConnectionMap;
+	NodeList		m_nodeList;
+	ConnectionList	m_connectionList;
+	ConnectionMap	m_connectionMap;
 };

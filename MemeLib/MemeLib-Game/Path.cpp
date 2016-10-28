@@ -21,9 +21,9 @@ Path::~Path()
 
 Node* Path::peek(size_t index) const
 {
-	if ((unsigned int)index < mNodes.size())
+	if ((unsigned int)index < m_nodeList.size())
 	{
-		return mNodes[index];
+		return m_nodeList[index];
 	}
 	else
 	{
@@ -33,9 +33,9 @@ Node* Path::peek(size_t index) const
 
 Node* Path::peekNext() const
 {
-	if (mNodes.size() > 0)
+	if (m_nodeList.size() > 0)
 	{
-		return mNodes.back();
+		return m_nodeList.back();
 	}
 	else
 	{
@@ -45,10 +45,10 @@ Node* Path::peekNext() const
 
 Node* Path::getAndRemoveNext()
 {
-	if (mNodes.size() > 0)
+	if (m_nodeList.size() > 0)
 	{
-		Node* pNode = mNodes.back();
-		mNodes.pop_back();
+		Node* pNode = m_nodeList.back();
+		m_nodeList.pop_back();
 		return pNode;
 	}
 	else
@@ -59,27 +59,27 @@ Node* Path::getAndRemoveNext()
 
 size_t Path::size() const
 {
-	return mNodes.size();
+	return m_nodeList.size();
 }
 
 
 void Path::add(Node* pNode)
 {
-	mNodes.push_back(pNode);
+	m_nodeList.push_back(pNode);
 }
 
 void Path::clear()
 {
-	mNodes.clear();
+	m_nodeList.clear();
 }
 
 bool Path::contains(Node* pNode) const
 {
 	bool retVal = false;
 
-	for (unsigned int i = 0; i<mNodes.size(); i++)
+	for (unsigned int i = 0; i<m_nodeList.size(); i++)
 	{
-		if (mNodes[i] == pNode)
+		if (m_nodeList[i] == pNode)
 		{
 			retVal = true;
 			break;
@@ -94,15 +94,15 @@ void Path::resize(size_t value)
 
 	for (size_t i = 0; i < value && i < size(); i++)
 	{
-		temp.push_back(mNodes[i]);
+		temp.push_back(m_nodeList[i]);
 	}
 
-	mNodes = temp;
+	m_nodeList = temp;
 }
 
 void Path::reverse()
 {
-	std::reverse(mNodes.begin(), mNodes.end());
+	std::reverse(m_nodeList.begin(), m_nodeList.end());
 }
 
 
@@ -110,7 +110,7 @@ Node* Path::begin()
 {
 	if (size() > 0)
 	{
-		return mNodes[0];
+		return m_nodeList[0];
 	}
 
 	return NULL;
@@ -120,7 +120,7 @@ Node* Path::end()
 {
 	if (size() > 0)
 	{
-		return mNodes[size() - 1];
+		return m_nodeList[size() - 1];
 	}
 
 	return NULL;

@@ -1,18 +1,18 @@
-#include "NavigationMesh.h"
+#include "NavMesh.h"
 #include <algorithm>
 #include "Connection.h"
 #include "Vector3.h"
 
-NavigationMesh::NavigationMesh()
+NavMesh::NavMesh()
 {
 }
 
-NavigationMesh::~NavigationMesh()
+NavMesh::~NavMesh()
 {
 }
 
 
-void NavigationMesh::constructMesh(Mesh* mesh)
+void NavMesh::constructMesh(Mesh* mesh)
 {
 	std::vector<Edge> edges;
 	std::vector<Vec3> verts = mesh->getVerts();
@@ -20,44 +20,46 @@ void NavigationMesh::constructMesh(Mesh* mesh)
 	m_vertices = verts;
 	m_edges = edges;
 
-	mNodes.resize(m_vertices.size(), NULL);
+	m_nodeList.resize(m_vertices.size(), NULL);
 
 	for (size_t i = 0; i < m_vertices.size(); i++)
 	{
 		Node* pNode = new Node(i, m_vertices[i]);
-		mNodes[i] = pNode;
+		m_nodeList[i] = pNode;
 	}
 
 
-	for (size_t j = 0; j < m_vertices.size(); j++)
+	for (size_t i = 0; i < m_vertices.size(); i++)
 	{
-		Node* pFromNode = mNodes[j];
-		std::vector<Connection*> connections;
+		Node* pSource = m_nodeList[i];
+		ConnectionList connections;
+		std::vector<Edge> knownConnections = getKnownConnections(pSource->getPosition());
 
-		std::vector<Edge> knownConnections = getKnownConnections(pFromNode->getPosition());
-
-		for (size_t k = 0; k < knownConnections.size(); k++)
+		for (size_t j = 0; j < knownConnections.size(); j++)
 		{
-			Node* pToNode = getOtherNode(knownConnections[k], pFromNode);//find to node
-			Connection* pConnection;
-			float dist;
-			float dx, dy, dz;
-			dx = pFromNode->getX() - pToNode->getX();
-			dy = pFromNode->getY() - pToNode->getY();
-			dz = pFromNode->getZ() - pToNode->getZ();
-			dist = sqrt(dx*dx + dy*dy + dz*dz);
+			Node* pTarget = getOtherNode(knownConnections[j], pSource);
 
-			pConnection = new Connection(pFromNode, pToNode, dist);
+			float	moveCost = Vector3::distance(pSource->getPosition(), pTarget->getPosition());
+			bool	isWalkable = true;
 
-			mConnections.push_back(pConnection);
-			connections.push_back(pConnection);
+			if (isWalkable)
+			{
+				Connection* pConnection = new Connection(
+					pSource, 
+					pTarget, 
+					moveCost,
+					isWalkable);
+
+				m_connectionList.push_back(pConnection);
+				connections.push_back(pConnection);
+			}
 		}
 
-		mConnectionMap[j] = connections;
+		m_connectionMap[i] = connections;
 	}
 }
 
-void NavigationMesh::splitTriangles(
+void NavMesh::splitTriangles(
 	std::vector<Vec3>& vertices, 
 	std::vector<size_t> indices, 
 	std::vector<Edge>& edges, 
@@ -130,7 +132,7 @@ void NavigationMesh::splitTriangles(
 }
 
 
-bool NavigationMesh::containsVertice(std::vector<Vec3> vertices, Vec3 key)
+bool NavMesh::containsVertice(std::vector<Vec3> vertices, Vec3 key)
 {
 	for (size_t i = 0; i < vertices.size(); i++)
 	{
@@ -142,7 +144,7 @@ bool NavigationMesh::containsVertice(std::vector<Vec3> vertices, Vec3 key)
 	return false;
 }
 
-bool NavigationMesh::reverseExists(std::vector<Edge> edges, Edge key)
+bool NavMesh::reverseExists(std::vector<Edge> edges, Edge key)
 {
 	for (size_t i = 0; i < edges.size(); i++)
 	{
@@ -155,7 +157,7 @@ bool NavigationMesh::reverseExists(std::vector<Edge> edges, Edge key)
 }
 
 
-void NavigationMesh::gatherEdges(std::vector<Edge>& edges, std::vector<Face>& faces, std::vector<Vec3>& vertices, std::vector<size_t> indices, size_t faceCount)
+void NavMesh::gatherEdges(std::vector<Edge>& edges, std::vector<Face>& faces, std::vector<Vec3>& vertices, std::vector<size_t> indices, size_t faceCount)
 {
 	for (size_t i = 0; i < faceCount; i += 3)
 	{
@@ -187,7 +189,7 @@ void NavigationMesh::gatherEdges(std::vector<Edge>& edges, std::vector<Face>& fa
 }
 
 
-std::vector<Edge> NavigationMesh::getKnownConnections(Vec3 key)
+std::vector<Edge> NavMesh::getKnownConnections(Vec3 key)
 {
 	std::vector<Edge> result;
 	for (size_t i = 0; i < m_edges.size(); i++)
@@ -198,7 +200,7 @@ std::vector<Edge> NavigationMesh::getKnownConnections(Vec3 key)
 	return result;
 }
 
-Node * NavigationMesh::getOtherNode(Edge tmp, Node* key)
+Node * NavMesh::getOtherNode(Edge tmp, Node* key)
 {
 	if (key->getPosition() == tmp.first)
 	{
@@ -211,7 +213,7 @@ Node * NavigationMesh::getOtherNode(Edge tmp, Node* key)
 	return NULL;
 }
 
-std::vector<Face> NavigationMesh::getEdgeFaces(std::vector<Face>& faces, Edge key)
+std::vector<Face> NavMesh::getEdgeFaces(std::vector<Face>& faces, Edge key)
 {
 	std::vector<Face> faceResult;
 	bool exists = false;
@@ -247,13 +249,13 @@ std::vector<Face> NavigationMesh::getEdgeFaces(std::vector<Face>& faces, Edge ke
 	return faceResult;
 }
 
-float NavigationMesh::norm2(Vec3 v) const
+float NavMesh::norm2(Vec3 v) const
 {
 	return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
 
-bool NavigationMesh::getIntersection(Edge one, Edge two, Vec3& ip) const
+bool NavMesh::getIntersection(Edge one, Edge two, Vec3& ip) const
 {
 	//CITE: http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment
 
@@ -283,7 +285,7 @@ bool NavigationMesh::getIntersection(Edge one, Edge two, Vec3& ip) const
 	return false;
 }
 
-bool NavigationMesh::getIntersection(Edge edge, Vec3 point) const
+bool NavMesh::getIntersection(Edge edge, Vec3 point) const
 {
 	Vec3 a = edge.first;
 	Vec3 b = edge.second;

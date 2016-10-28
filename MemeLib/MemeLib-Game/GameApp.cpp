@@ -69,7 +69,7 @@ bool GameApp::loadResources()
 
 	m_counter = 0.0f;
 
-	mNavMesh = new NavigationMesh();
+	mNavMesh = new NavMesh();
 
 	Vertex vertices[] = {
 		//Vertices according to faces
@@ -228,7 +228,7 @@ void GameApp::draw()
 
 		std::vector<Vec3> temp = mNavMesh->getVerts();
 
-		for (size_t i = 0; i < mNavMesh->getNodeCount(); i++)
+		for (size_t i = 0; i < mNavMesh->size(); i++)
 		{
 			GIZMOS->drawPoint(mNavMesh->getNode(i)->getPosition());
 		}
@@ -242,8 +242,8 @@ void GameApp::draw()
 
 				Vec3 p1 = prev->getPosition();
 				Vec3 p2 = next->getPosition();
-				p1.y += .05;
-				p2.y += .05;
+				p1.y += 0.05f;
+				p2.y += 0.05f;
 				//GIZMOS->drawRay(p1, p2);
 			}
 		}
@@ -252,8 +252,8 @@ void GameApp::draw()
 		{
 			Vec3 p1 = mNavMesh->getEdge(i)->first;
 			Vec3 p2 = mNavMesh->getEdge(i)->second;
-			p1.y += .05;
-			p2.y += .05;
+			p1.y += 0.05f;
+			p2.y += 0.05f;
 			GIZMOS->drawRay(p1, p2);
 		}
 		

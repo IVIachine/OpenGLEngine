@@ -10,7 +10,7 @@
 #include "ResourceManager.h"
 #include "AStarPathfinder.h"
 
-Unit::Unit(const Sprite& sprite, NavigationMesh* graph)
+Unit::Unit(const Sprite& sprite, NavMesh* graph)
 	:mSprite(sprite)
 	,mPositionComponentID(INVALID_COMPONENT_ID)
 	,mPhysicsComponentID(INVALID_COMPONENT_ID)
@@ -18,6 +18,15 @@ Unit::Unit(const Sprite& sprite, NavigationMesh* graph)
 	,mShowTarget(false)
 {
 	mpPathfinder = new AStarPathfinder(graph);
+
+	if (AStarPathfinder* pAstar = static_cast<AStarPathfinder*>(mpPathfinder))
+	{
+		AStarOptions* pOpt = pAstar->getOptions();
+		pOpt->enableDiagonals = false;
+		pOpt->enableHeuristic = true;
+		pOpt->maxDistance = 0;
+	}
+
 	mpPathfinder->findPath(graph->getNode(0), graph->getNode(5));
 	mExpectingPath = true;
 }

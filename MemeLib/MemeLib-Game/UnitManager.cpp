@@ -39,7 +39,7 @@ UnitManager* UnitManager::createInstance(Uint32 maxSize)
 	return getInstance();
 }
 
-Unit* UnitManager::createUnit(const Sprite& sprite, NavigationMesh* graph, bool shouldWrap, const PositionData& posData /*= ZERO_POSITION_DATA*/, const PhysicsData& physicsData /*= ZERO_PHYSICS_DATA*/, const UnitID& id)
+Unit* UnitManager::createUnit(const Sprite& sprite, NavMesh* graph, bool shouldWrap, const PositionData& posData /*= ZERO_POSITION_DATA*/, const PhysicsData& physicsData /*= ZERO_PHYSICS_DATA*/, const UnitID& id)
 {
 	Unit* pUnit = NULL;
 

@@ -1,21 +1,43 @@
+#ifndef _ASTAR_PATHFINDER_H_
+#define _ASTAR_PATHFINDER_H_
+
 #include <list>
-#include "Heuristic.h"
 #include "Pathfinder.h"
+
 class Path;
 class Graph;
-class GraphicsBuffer;
-class Grid;
 
-class AStarPathfinder :public Pathfinder 
+#define UNWALKABLE FLT_MAX
+#define DIAGONAL 0.1f
+
+struct AStarOptions
+{
+	bool	enableHeuristic;
+	bool	enableDiagonals;
+	size_t	maxDistance;
+
+	AStarOptions()
+	{
+		enableDiagonals = true;
+		enableHeuristic = true;
+		maxDistance = 0;
+	};
+};
+
+class AStarPathfinder : public Pathfinder
 {
 public:
 	AStarPathfinder(Graph* pGraph);
 	~AStarPathfinder();
 
-	const Path& findPath(Node* pFrom, Node* pTo);
+	const Path& findPath(Node* pSource, Node* pTarget) override;
 
-	NodeRecord* getSmallestNode(std::list<NodeRecord*> workingList);
-	bool containsNode(std::list<NodeRecord*> theList, Node * key);
-	NodeRecord* findNodeRecord(std::list<NodeRecord*> theList, Node* key);
+	AStarOptions* getOptions() { return &m_options; }
+
+private:
+	AStarOptions m_options;
+
+	float	costToEnterNode(Node* pSource, Node* pTarget);
 };
 
+#endif // !_ASTAR_PATHFINDER_H_

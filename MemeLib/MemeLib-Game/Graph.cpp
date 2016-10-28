@@ -7,32 +7,68 @@ Graph::Graph()
 
 Graph::~Graph()
 {
-	for (unsigned int i = 0; i<mNodes.size(); i++)
+	for (unsigned int i = 0; i<m_nodeList.size(); i++)
 	{
-		delete mNodes[i];
+		delete m_nodeList[i];
 	}
 
-	for (unsigned int i = 0; i<mConnections.size(); i++)
+	for (unsigned int i = 0; i<m_connectionList.size(); i++)
 	{
-		delete mConnections[i];
+		delete m_connectionList[i];
 	}
 }
+
 
 void Graph::init()
 {
 }
 
-std::vector<Connection*> Graph::getConnections(const Node& from)
+
+Node* Graph::getNode(size_t index)
 {
-	return getConnections(from.getId());
+	if (index < m_nodeList.size())
+	{
+		return m_nodeList[index];
+	}
+
+	return NULL;
 }
 
-std::vector<Connection*> Graph::getConnections(const NODE_ID& fromId)
+Node * Graph::getNode(Vec3 pos)
 {
-	static std::vector<Connection*> sEmpty;
+	for (size_t i = 0; i < m_nodeList.size(); i++)
+	{
+		if (m_nodeList[i]->getPosition() == pos)
+		{
+			return m_nodeList[i];
+		}
+	}
+	return NULL;
+}
 
-	std::map< NODE_ID, std::vector<Connection*> >::iterator iter = mConnectionMap.find(fromId);
-	if (iter == mConnectionMap.end())
+NodeList Graph::getNodes() const
+{
+	return m_nodeList;
+}
+
+size_t Graph::size() const
+{
+	return m_nodeList.size();
+}
+
+
+ConnectionList Graph::getConnections(const Node& pSource)
+{
+	return getConnections(pSource.getId());
+}
+
+ConnectionList Graph::getConnections(const NODE_ID& sourceID)
+{
+	static ConnectionList sEmpty;
+
+	ConnectionMap::iterator iter = m_connectionMap.find(sourceID);
+
+	if (iter == m_connectionMap.end())
 	{
 		return sEmpty;
 	}
@@ -42,26 +78,55 @@ std::vector<Connection*> Graph::getConnections(const NODE_ID& fromId)
 	}
 }
 
-Node* Graph::getNode(int index)
+
+Connection* Graph::getConnection(const Node& pSource, const Node& pTarget)
 {
-	if (index < (int)mNodes.size())
-	{
-		return mNodes[index];
-	}
-	else
-	{
-		return NULL;
-	}
+	return getConnection(pSource.getId(), pTarget.getId());
 }
 
-Node * Graph::getNode(Vec3 pos)
+Connection* Graph::getConnection(const NODE_ID& sourceID, const NODE_ID& targetID)
 {
-	for (size_t i = 0; i < mNodes.size(); i++)
+	ConnectionList connections = getConnections(sourceID);
+
+	for (Connection* c : connections)
 	{
-		if (mNodes[i]->getPosition() == pos)
+		if (c->getTarget()->getId() == targetID)
 		{
-			return mNodes[i];
+			return c;
 		}
 	}
+
 	return NULL;
+}
+
+
+NodeList Graph::getNeighbors(const Node& pSource, bool diagonals)
+{
+	return getNeighbors(pSource.getId(), diagonals);
+}
+
+NodeList Graph::getNeighbors(const NODE_ID& sourceID, bool diagonals)
+{
+	NodeList		neighbors;
+	ConnectionList	connections = getConnections(sourceID);
+
+	for (size_t i = 0; i < connections.size(); i++)
+	{
+		Connection* pConnection = connections[i];
+
+		if (!pConnection->isDiagonal() || diagonals)
+		{
+			Node* pTarget = pConnection->getTarget();
+
+			neighbors.push_back(pTarget);
+		}
+	}
+
+	return neighbors;
+}
+
+
+Node* Graph::operator[](size_t index)
+{
+	return getNode(index);
 }

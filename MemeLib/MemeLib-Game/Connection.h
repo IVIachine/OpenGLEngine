@@ -6,15 +6,21 @@ class Node;
 class Connection :public Trackable
 {
 public:
-	Connection(Node* pFrom, Node* pTo, float cost);
+	Connection(Node* pSource, Node* pTarget);
+	Connection(Node* pSource, Node* pTarget, float moveCost, bool isWalkable);
 	~Connection();
 
-	inline Node* getFromNode() const { return mpFrom; };
-	inline Node* getToNode() const { return mpTo; };
-	inline float getCost() const { return mCost; };
+	Node*	getSource() const;
+	Node*	getTarget() const;
+
+	float	moveCost();
+	bool	isWalkable();
+	bool	isDiagonal();
 
 private:
-	Node* mpFrom;
-	Node* mpTo;
-	float mCost;
+	Node*	mpSource;
+	Node*	mpTarget;
+
+	float	mMoveCost;
+	bool	mIsWalkable;
 };

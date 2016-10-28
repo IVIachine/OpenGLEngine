@@ -4,7 +4,7 @@
 #include <iostream>
 #include "Game.h"
 #include "Path.h"
-#include "NavigationMesh.h"
+#include "NavMesh.h"
 #include "Pathfinder.h"
 #include "Graph.h"
 #include "ComponentManager.h"
@@ -35,7 +35,7 @@ private:
 	Pathfinder* mpPathfinder;
 	Texture2D*	mp_texture;
 	Volume*		mp_volume;
-	NavigationMesh* mNavMesh;
+	NavMesh* mNavMesh;
 	Vec3		m_position;
 	Path		m_path;
 };

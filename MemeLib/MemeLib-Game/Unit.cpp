@@ -48,7 +48,9 @@ void Unit::update(float elapsedTime)
 	{
 		if (mpPathfinder->endStep() == PathFound)
 		{
-			getSteeringComponent()->setData(getSteeringComponent()->getData(), mpPathfinder->getPath());
+			getSteeringComponent()->setData(
+				getSteeringComponent()->getData(), 
+				mpPathfinder->getPath());
 		}
 		else
 		{

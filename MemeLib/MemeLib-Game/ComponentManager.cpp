@@ -14,10 +14,10 @@ ComponentManager* ComponentManager::sp_instance = NULL;
 using namespace std;
 
 
-ComponentManager::ComponentManager(Uint32 maxSize)
-	:m_positionPool(maxSize, sizeof(PositionComponent))
-	, m_physicsPool(maxSize, sizeof(PhysicsComponent))
-	, m_steeringPool(maxSize, sizeof(SteeringComponent))
+ComponentManager::ComponentManager(Uint32 maxSize) : 
+	m_positionPool(maxSize, sizeof(PositionComponent)), 
+	m_physicsPool(maxSize, sizeof(PhysicsComponent)), 
+	m_steeringPool(maxSize, sizeof(SteeringComponent))
 {
 }
 

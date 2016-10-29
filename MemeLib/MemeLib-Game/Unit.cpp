@@ -36,30 +36,38 @@ Unit::~Unit()
 
 void Unit::update(float elapsedTime)
 {
-	AStarState state = mpPathfinder->getState();
-	if (state == Idle)
+	AStarState pathState = mpPathfinder->getState();
+	switch (pathState)
+	{
+	case Idle:
 	{
 		Vec3 source = getPositionComponent()->getPosition();
 		Vec3 target = mp_navMesh->getNode(5)->getPosition();
-
 		findPath(source, target);
 	}
-	else if (state == Working)
+	break;
+	case Working:
 	{
 		mpPathfinder->step();
 	}
-	else if (state == Done)
+	break;
+	case Done:
 	{
 		if (mpPathfinder->endStep() == PathFound)
 		{
-			getSteeringComponent()->setData(
-				getSteeringComponent()->getData(), 
-				mpPathfinder->getPath());
+			SteeringData data = getSteeringComponent()->getData();
+			Path path = mpPathfinder->getPath();
+
+			getSteeringComponent()->setData(data, path);
 		}
 		else
 		{
 			std::cout << "No path found.\n";
 		}
+	}
+	break;
+	default:
+		break;
 	}
 }
 

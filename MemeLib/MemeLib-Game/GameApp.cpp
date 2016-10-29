@@ -132,7 +132,7 @@ bool GameApp::loadResources()
 	RESOURCES->addTexture2D("enemy", RESOURCES->getTexture("enemy"), p_shader);
 	RESOURCES->addTexture2D("kappa", RESOURCES->getTexture("kappa"), p_shader);
 	
-	Sprite* mp_sprite2 = RESOURCES->addSprite("sprite2", RESOURCES->getTexture2D("enemy"));
+	Sprite* mp_sprite2 = RESOURCES->addSprite("sprite2", RESOURCES->getTexture2D("harambe"));
 	RESOURCES->getSprite("sprite2")->setScale(Vec3(.1f,.1f,.1f));
 	RESOURCES->getSprite("sprite2")->setRotation(Vec3(270,0,0) * Maths::DEG_TO_RAD);
 	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test4.obj", false);

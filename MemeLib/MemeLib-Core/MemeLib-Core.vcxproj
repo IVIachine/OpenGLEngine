@@ -176,9 +176,6 @@
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="Gizmos.cpp" />
     <ClCompile Include="Graphics.cpp" />
-    <ClCompile Include="Dictionary.cpp" />
-    <ClCompile Include="NotificationProcessor.cpp" />
-    <ClCompile Include="NotificationQueue.cpp" />
     <ClCompile Include="Serializable.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -194,7 +191,6 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Time.cpp" />
-    <ClCompile Include="Transaction.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />

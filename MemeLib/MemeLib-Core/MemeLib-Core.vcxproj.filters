@@ -91,19 +91,7 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Dictionary.cpp">
-      <Filter>Source Files\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="Transaction.cpp">
-      <Filter>Source Files\Messaging</Filter>
-    </ClCompile>
-    <ClCompile Include="NotificationQueue.cpp">
-      <Filter>Source Files\Messaging</Filter>
-    </ClCompile>
     <ClCompile Include="Notification.cpp">
-      <Filter>Source Files\Messaging</Filter>
-    </ClCompile>
-    <ClCompile Include="NotificationProcessor.cpp">
       <Filter>Source Files\Messaging</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">

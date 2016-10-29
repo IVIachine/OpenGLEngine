@@ -37,13 +37,12 @@ Unit::~Unit()
 void Unit::update(float elapsedTime)
 {
 	AStarState state = mpPathfinder->getState();
-
 	if (state == Idle)
 	{
-		Vec3 pos = getPositionComponent()->getPosition();
-		mpPathfinder->setSource(mp_navMesh->findNearestNode(pos));
-		mpPathfinder->setTarget(mp_navMesh->getNode(5));
-		mpPathfinder->beginStep();
+		Vec3 source = getPositionComponent()->getPosition();
+		Vec3 target = mp_navMesh->getNode(5)->getPosition();
+
+		findPath(source, target);
 	}
 	else if (state == Working)
 	{
@@ -98,6 +97,13 @@ void Unit::setSteering(Steering::SteeringType type, Vec3 targetLoc /*= ZERO_VECT
 	{
 		pSteeringComponent->setData(SteeringData(type, targetLoc, mID, targetUnitID));
 	}
+}
+
+void Unit::findPath(Vec3 source, Vec3 target)
+{
+	mpPathfinder->setSource(mp_navMesh->findNearestNode(source));
+	mpPathfinder->setTarget(mp_navMesh->findNearestNode(target));
+	mpPathfinder->beginStep();
 }
 
 float Unit::getFacing() const

@@ -2,13 +2,14 @@
 #define _MOUSE_STATE_H_
 
 
+#include <Trackable.h>
 #include <cassert>
 
 #define MOUSE Mouse::getInstance()
 
 class Input;
 
-class Mouse
+class Mouse : public Trackable
 {
 public:
 	enum Buttons : int

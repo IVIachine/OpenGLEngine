@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _GRAPH_H_
+#define _GRAPH_H_
 
 #include <vector>
 #include <map>
@@ -17,7 +18,7 @@ public:
 	Graph();
 	virtual ~Graph();
 
-	virtual void init();
+	virtual void beginStep();
 
 	Node*			getNode(size_t index);
 	Node*			getNode(Vec3 pos);
@@ -40,3 +41,5 @@ protected:
 	ConnectionList	m_connectionList;
 	ConnectionMap	m_connectionMap;
 };
+
+#endif // !_GRAPH_H_H

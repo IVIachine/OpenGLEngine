@@ -1,4 +1,5 @@
 #include "AStarPathfinder.h"
+#include <cassert>
 #include "Path.h"
 #include "Connection.h"
 #include "Graph.h"
@@ -113,7 +114,6 @@ const Path& AStarPathfinder::findPath(Node* pSource, Node* pTarget)
 	return mPath;
 }
 
-
 float AStarPathfinder::costToEnterNode(Node* pSource, Node* pTarget)
 {
 	// Get connection
@@ -140,4 +140,143 @@ float AStarPathfinder::costToEnterNode(Node* pSource, Node* pTarget)
 	}
 
 	return cost;
+}
+
+
+
+void AStarPathfinder::setSource(Node* pSource)
+{
+	mp_source = pSource;
+}
+
+void AStarPathfinder::setTarget(Node* pTarget)
+{
+	mp_target = pTarget;
+}
+
+
+AStarState AStarPathfinder::getState() const
+{
+	return m_state;
+}
+
+void AStarPathfinder::setState(AStarState value)
+{
+	m_state = value;
+}
+
+
+void AStarPathfinder::beginStep()
+{
+	assert(mp_source != NULL);
+	assert(mp_target != NULL);
+
+	// Set state
+	setState(Working);
+
+	// Clear path
+	mPath.clear();
+	m_distMap.clear();
+	m_prevMap.clear();
+	m_unvisitedList.clear();
+
+	m_distMap[mp_source] = 0.0f;
+	m_prevMap[mp_source] = NULL;
+
+	// Get all nodes
+	for (Node* node : mpGraph->getNodes())
+	{
+		if (node != mp_source)
+		{
+			m_distMap[node] = UNWALKABLE;
+			m_prevMap[node] = NULL;
+		}
+
+		m_unvisitedList.push_back(node);
+	}
+}
+
+void AStarPathfinder::step()
+{
+	if (m_state != Working)
+	{
+		return;
+	}
+
+	if (m_unvisitedList.size() > 0)
+	{
+		// Get unvisited with smallest distance
+		Node* unvisitedNode = NULL;
+		for (Node* possible : m_unvisitedList)
+		{
+			if (!unvisitedNode || m_distMap[possible] < m_distMap[unvisitedNode])
+			{
+				unvisitedNode = possible;
+			}
+		}
+
+		// At target
+		if (unvisitedNode == mp_target)
+		{
+			setState(Done);
+			return;
+		}
+
+		// Mark the node as 'visited'
+		m_unvisitedList.remove(unvisitedNode);
+
+		// Get neighbor nodes
+		std::vector<Node*> neighborList =
+			mpGraph->getNeighbors(*unvisitedNode, m_options.enableDiagonals);
+
+		// Check for alternate path
+		for (Node* neighborNode : neighborList)
+		{
+			// Get cost
+			float costToEnter = costToEnterNode(
+				unvisitedNode,
+				neighborNode);
+
+			float altDist = m_distMap[unvisitedNode] + costToEnter;
+
+			if (altDist < m_distMap[neighborNode])
+			{
+				m_distMap[neighborNode] = altDist;
+				m_prevMap[neighborNode] = unvisitedNode;
+			}
+		}
+	}
+}
+
+AStarState AStarPathfinder::endStep()
+{
+	if (m_prevMap[mp_target] == NULL)
+	{
+		// No path found
+		setState(NoPathFound);
+	}
+	else
+	{
+		// Path found
+		setState(PathFound);
+
+		// Build path
+		Node* currentNode = mp_target;
+		while (currentNode != NULL)
+		{
+			mPath.add(currentNode);
+			currentNode = m_prevMap[currentNode];
+		}
+
+		// Reverse the path
+		mPath.reverse();
+
+		// Resize the path
+		if (m_options.maxDistance > 0)
+		{
+			mPath.resize(m_options.maxDistance);
+		}
+	}
+
+	return m_state;
 }

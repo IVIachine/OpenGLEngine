@@ -1,9 +1,11 @@
-#pragma once
+#ifndef _CONNECTION_H_
+#define _CONNECTION_H_
 
 #include <Trackable.h>
+
 class Node;
 
-class Connection :public Trackable
+class Connection : public Trackable
 {
 public:
 	Connection(Node* pSource, Node* pTarget);
@@ -24,3 +26,5 @@ private:
 	float	mMoveCost;
 	bool	mIsWalkable;
 };
+
+#endif // !_CONNECTION_H_

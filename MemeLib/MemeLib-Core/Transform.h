@@ -4,7 +4,7 @@
 #include "Vector3.h"
 #include <gtx\transform.hpp>
 
-class Transform
+class Transform : public Trackable
 {
 public:
 	Transform();

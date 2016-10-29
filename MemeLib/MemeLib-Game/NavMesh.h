@@ -1,5 +1,5 @@
-#ifndef NAVIGATION_MESH_H
-#define NAVIGATION_MESH_H
+#ifndef _NAV_MESH_H_
+#define _NAV_MESH_H_
 
 #include <map>
 #include <Trackable.h>
@@ -9,59 +9,9 @@
 #include <cmath>
 #include "Graph.h"
 #include "Mesh.h"
-#include <detail\type_vec3.hpp>
+#include "Face.h"
 
 const static float TOLERANCE = 0.00005f;
-
-struct Edge
-{
-	Vec3 first, second;
-
-	Edge() : first(Vec3_Zero), second(Vec3_Zero) {};
-	Edge(Vec3 a, Vec3 b) : first(a), second(b) { };
-
-	friend bool operator == (const Edge& lhs, const Edge& rhs)
-	{
-		return lhs.first == rhs.first && lhs.second == rhs.second;
-	}
-
-	friend bool operator != (const Edge& lhs, const Edge& rhs)
-	{
-		return lhs.first != rhs.first || lhs.second != rhs.second;
-	}
-
-	friend bool operator < (const Edge& lhs, const Edge& rhs)
-	{
-		return 
-			lhs.first.x < rhs.first.x &&
-			lhs.first.y < rhs.first.y &&
-			lhs.first.z < rhs.first.z && 
-
-			lhs.second.x < rhs.second.x &&
-			lhs.second.y < rhs.second.y &&
-			lhs.second.z < rhs.second.z;
-	}
-};
-
-struct Face
-{
-	std::vector<Edge> edges;
-
-	friend bool operator==(Face lhs, Face rhs)
-	{
-		if (lhs.edges.size() != rhs.edges.size())
-		{
-			return false;
-		}
-		for (size_t i = 0; i < lhs.edges.size(); i++)
-		{
-			if (lhs.edges[i].first != rhs.edges[i].first || lhs.edges[i].second != rhs.edges[i].second)
-				return false;
-		}
-		return true;
-	}
-};
-
 
 class NavMesh : public Graph
 {

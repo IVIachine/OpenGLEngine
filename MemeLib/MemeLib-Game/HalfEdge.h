@@ -1,5 +1,5 @@
-#ifndef HALF_EDGE_H
-#define HALF_EDGE_H
+#ifndef _HALF_EDGE_H_
+#define _HALF_EDGE_H_
 
 #include <Trackable.h>
 #include "Vector3.h"
@@ -10,8 +10,6 @@ struct HE_Edge;
 
 struct HE_Edge
 {
-
-
 	HE_Vert* vert;
 	HE_Edge* opposite;
 	HE_Face* face;

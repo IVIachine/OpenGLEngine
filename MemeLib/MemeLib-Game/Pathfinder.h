@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _PATHFINDER_H_
+#define _PATHFINDER_H_
 
 #include <vector>
 #include <Trackable.h>
@@ -21,3 +22,5 @@ protected:
 	Graph*	mpGraph;
 	Path	mPath;
 };
+
+#endif // !_PATHFINDER_H_

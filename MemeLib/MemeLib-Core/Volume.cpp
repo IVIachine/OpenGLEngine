@@ -37,14 +37,3 @@ void Volume::draw(Camera& camera)
 	mp_shader->update(m_transform, camera);
 	mp_mesh->draw();
 }
-
-
-void Volume::deserialize(std::istream & in)
-{
-
-}
-
-void Volume::serialize(std::ostream & out) const
-{
-
-}

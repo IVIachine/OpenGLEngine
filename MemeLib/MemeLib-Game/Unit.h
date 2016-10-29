@@ -1,10 +1,11 @@
-#pragma once
+#ifndef _UNIT_H_
+#define _UNIT_H_
 
 #include <Trackable.h>
 #include <DeanLibDefines.h>
 #include <limits>
 #include "Vector3.h"
-#include "Pathfinder.h"
+#include "AStarPathfinder.h"
 #include "NavMesh.h"
 #include "Component.h"
 #include "Sprite.h"
@@ -20,7 +21,6 @@ class Sprite;
 class UnitManager;
 
 const Uint32 DEFAULT_QUEUE_CAPACITY = 8;
-
 
 //class Unit : public TransactionProcessor
 class Unit : public Trackable
@@ -42,7 +42,7 @@ public:
 
 	void setShowTarget(bool val) { mShowTarget = val; };
 
-	void setSteering(Steering::SteeringType type, Vec3 targetLoc = Vec3(0,0,0), UnitID targetUnitID = INVALID_UNIT_ID);
+	void setSteering(Steering::SteeringType type, Vec3 targetLoc = Vec3(0, 0, 0), UnitID targetUnitID = INVALID_UNIT_ID);
 
 private:
 	UnitID mID;
@@ -56,8 +56,8 @@ private:
 	float mMaxRotAcc;
 	float mMaxRotVel;
 	bool mShowTarget;
-	bool mExpectingPath;
-	Pathfinder* mpPathfinder;
+
+	AStarPathfinder* mpPathfinder;
 	Unit(const Sprite& sprite, NavMesh* graph);
 	virtual ~Unit();
 
@@ -68,3 +68,4 @@ private:
 	friend class UnitManager;
 };
 
+#endif

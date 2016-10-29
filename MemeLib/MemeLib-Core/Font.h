@@ -2,8 +2,9 @@
 #define _FONT_H_
 
 #include <string>
+#include <Trackable.h>
 
-class Font
+class Font : public Trackable
 {
 public:
 	Font();

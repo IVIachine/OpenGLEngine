@@ -14,7 +14,7 @@ class Sprite;
 
 typedef std::string TKey;
 
-class ResourceManager
+class ResourceManager : public Trackable
 {
 public:
 	static ResourceManager*	getInstance()

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _NODE_H_
+#define _NODE_H_
 
 #include <Trackable.h>
 #include <vector>
@@ -31,3 +32,5 @@ private:
 	const float	mY;
 	const float mZ;
 };
+
+#endif

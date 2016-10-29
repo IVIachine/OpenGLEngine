@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _UNIT_MANAGER_H_
+#define _UNIT_MANAGER_H_
 
 #include <Trackable.h>
 #include <DeanLibDefines.h>
@@ -47,3 +48,4 @@ private:
 	static UnitManager* sp_instance;
 };
 
+#endif

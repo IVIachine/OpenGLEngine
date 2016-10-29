@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include <cassert>
 
 #include "Keyboard.h"
 #include "Mouse.h"
@@ -12,7 +11,7 @@
 #define INPUT Input::getInstance()
 #endif // !INPUT
 
-class Input
+class Input : public Trackable
 {
 public:
 	static Input*	getInstance()

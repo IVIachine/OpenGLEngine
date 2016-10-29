@@ -2,6 +2,7 @@
 #define _KEYBOARD_H_
 
 #include <cassert>
+#include <Trackable.h>
 #include "Graphics.h"
 #include <GLFW\glfw3.h>
 
@@ -9,7 +10,7 @@
 
 class Input;
 
-class Keyboard
+class Keyboard : public Trackable
 {
 public:
 	enum KeyCode : int

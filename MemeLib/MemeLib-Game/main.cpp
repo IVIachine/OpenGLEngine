@@ -41,7 +41,7 @@ int main()
 	EventSystem::destroyInstance();
 	
 	gMemoryTracker.reportAllocations(std::cout);
-	//system("pause");
+	system("pause");
 
 	return 0;
 }

@@ -19,7 +19,7 @@ Graph::~Graph()
 }
 
 
-void Graph::init()
+void Graph::beginStep()
 {
 }
 

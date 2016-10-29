@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _ARRIVE_STEERING_H_
+#define _ARRIVE_STEERING_H_
+
 #include "Steering.h"
 class ArriveSteering :public Steering
 {
@@ -11,3 +13,4 @@ public:
 	virtual Steering* getSteering();
 };
 
+#endif

@@ -51,6 +51,12 @@
     <Filter Include="Header Files\Pathfinding\Core">
       <UniqueIdentifier>{171496ae-61c9-4158-96c9-6158268b0a85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Pathfinding\NavMesh">
+      <UniqueIdentifier>{95f9080a-cecf-491d-afa3-0ba8ade7c9a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Pathfinding\NavMesh">
+      <UniqueIdentifier>{fb304150-4d7e-47d5-9d33-db36f035bc13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameApp.cpp">
@@ -114,7 +120,7 @@
       <Filter>Source Files\Pathfinding\Core</Filter>
     </ClCompile>
     <ClCompile Include="NavMesh.cpp">
-      <Filter>Source Files\Pathfinding</Filter>
+      <Filter>Source Files\Pathfinding\NavMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -176,7 +182,13 @@
       <Filter>Header Files\Pathfinding\Core</Filter>
     </ClInclude>
     <ClInclude Include="NavMesh.h">
-      <Filter>Header Files\Pathfinding</Filter>
+      <Filter>Header Files\Pathfinding\NavMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Face.h">
+      <Filter>Header Files\Pathfinding\NavMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Edge.h">
+      <Filter>Header Files\Pathfinding\NavMesh</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

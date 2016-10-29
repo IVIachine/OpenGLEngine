@@ -2,12 +2,11 @@
 #define VOLUME_H
 
 #include "Shader.h"
-#include "Serializable.h"
 #include "Mesh.h"
 #include "Texture.h"
 #include "Transform.h"
 
-class Volume : public Serializable
+class Volume : public Trackable
 {
 public:
 	Volume(Shader* shader, Vertex* vertices, Texture* texture, unsigned int numVertices, unsigned int* indices, unsigned int numIndices, bool isCubeMap);
@@ -18,9 +17,8 @@ public:
 	void draw(Camera& camera);
 	void setTransform(Transform transform) { m_transform = transform; };
 
-	void deserialize(std::istream& in) override;
-	void serialize(std::ostream& out) const override;
 	Mesh* getMesh() { return mp_mesh; };
+
 private:
 	Mesh* mp_mesh;
 	Shader* mp_shader;

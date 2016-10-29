@@ -153,6 +153,8 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="Connection.h" />
+    <ClInclude Include="Edge.h" />
+    <ClInclude Include="Face.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="HalfEdge.h" />

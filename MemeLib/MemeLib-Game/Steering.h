@@ -1,14 +1,10 @@
-#pragma once
-
-/*Steering - implementation of Steering class from "Artificial Intelligence for Games" - Millington and Funge
-*/
+#ifndef _STEERING_H_
+#define _STEERING_H_
 
 #include "Vector3.h"
 #include <Trackable.h>
 #include "defines.h"
 #include "PhysicsComponent.h"
-
-
 
 class Steering : public Trackable
 {
@@ -24,7 +20,7 @@ public:
 	};
 
 	//constructors and destructors
-	Steering(SteeringType type = INVALID_TYPE) :mType(type), mTargetLoc(Vec3(0,0,0)), mTargetID(INVALID_UNIT_ID), mOwnerID(INVALID_UNIT_ID), mData(ZERO_PHYSICS_DATA) {};
+	Steering(SteeringType type = INVALID_TYPE) :mType(type), mTargetLoc(Vec3(0, 0, 0)), mTargetID(INVALID_UNIT_ID), mOwnerID(INVALID_UNIT_ID), mData(ZERO_PHYSICS_DATA) {};
 	virtual ~Steering() {};
 
 	//accessors
@@ -48,3 +44,5 @@ protected:
 	virtual Steering* getSteering() { return this; };//overridden by sub-classes
 
 };
+
+#endif

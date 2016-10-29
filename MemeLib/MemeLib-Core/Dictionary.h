@@ -1,11 +1,12 @@
 #ifndef _MEMORY_MANAGER_H_
 #define _MEMORY_MANAGER_H_
 
+#include <Trackable.h>
 #include <iterator>
 #include <map>
 
 template <class TKey, class TValue>
-class Dictionary
+class Dictionary : public Trackable
 {
 public:
 	Dictionary();

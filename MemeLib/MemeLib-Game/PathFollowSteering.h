@@ -2,12 +2,14 @@
 #include "Steering.h"
 #include "SeekSteering.h"
 #include "ArriveSteering.h"
+#include "FaceSteering.h"
 #include "Path.h"
 class PathFollowSteering: public Steering
 {
 private:
 	SeekSteering* mpSeekSteering;
 	ArriveSteering* mpArriveSteering;
+	FaceSteering* mpFaceSteering;
 	Path mpFollowPath;
 	float mSwitchRadius;
 	int mCurrentIndex;

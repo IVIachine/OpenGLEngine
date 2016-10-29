@@ -22,7 +22,7 @@ Unit::Unit(const Sprite& sprite, NavMesh* graph)
 	if (AStarPathfinder* pAstar = static_cast<AStarPathfinder*>(mpPathfinder))
 	{
 		AStarOptions* pOpt = pAstar->getOptions();
-		pOpt->enableDiagonals = false;
+		pOpt->enableDiagonals = true;
 		pOpt->enableHeuristic = true;
 		pOpt->maxDistance = 0;
 	}
@@ -42,6 +42,7 @@ void Unit::draw()
 {
 	PositionComponent* pTransform = getPositionComponent();
 	mSprite.setPosition(pTransform->getPosition());
+	mSprite.setYRotation(pTransform->getFacing());
 	mSprite.draw(*GRAPHICS->getCamera());
 }
 

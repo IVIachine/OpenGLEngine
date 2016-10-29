@@ -122,6 +122,9 @@
     <ClCompile Include="NavMesh.cpp">
       <Filter>Source Files\Pathfinding\NavMesh</Filter>
     </ClCompile>
+    <ClCompile Include="FaceSteering.cpp">
+      <Filter>Source Files\Steering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -189,6 +192,9 @@
     </ClInclude>
     <ClInclude Include="Edge.h">
       <Filter>Header Files\Pathfinding\NavMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="FaceSteering.h">
+      <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

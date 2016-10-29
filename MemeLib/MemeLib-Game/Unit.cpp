@@ -18,9 +18,9 @@ Unit::Unit(const Sprite& sprite, NavMesh* graph)
 	,mShowTarget(false)
 {
 	mpPathfinder = new AStarPathfinder(graph);
-	AStarOptions* pOpt = mpPathfinder->getOptions();
 
-	pOpt->enableDiagonals = false;
+	AStarOptions* pOpt = mpPathfinder->getOptions();
+	pOpt->enableDiagonals = true;
 	pOpt->enableHeuristic = true;
 	pOpt->maxDistance = 0;
 

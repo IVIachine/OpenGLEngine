@@ -5,13 +5,13 @@
 #include "Graphics.h"
 #include "Sprite.h"
 #include "Texture2D.h"
-#include "Time.h"
+#include "GameTime.h"
 #include "Volume.h"
 #include "ResourceManager.h"
 
 #define GAME Game::getInstance()
 
-const float LOOP_TARGET_TIME = Time::FPS_60;
+const float LOOP_TARGET_TIME = GameTime::FPS_60;
 
 class Game : public EventListener
 {
@@ -45,7 +45,7 @@ protected:
 	Game();
 	~Game();
 private:
-	float	m_fps = Time::FPS_60;
+	float	m_fps = GameTime::FPS_60;
 	bool 	m_isRunning;
 	bool	m_stopRequested = false;
 

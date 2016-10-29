@@ -11,6 +11,7 @@ PathFollowSteering::PathFollowSteering(const UnitID& ownerID, const Vec3& target
 
 	mpSeekSteering = new SeekSteering(ownerID, targetLoc, targetID, false);
 	mpArriveSteering = new ArriveSteering(ownerID, targetLoc, targetID, .015f, .5, .1);
+	mpFaceSteering = new FaceSteering(ownerID, targetLoc, targetID, .005f, 5.0f);
 	mSwitchRadius = switchRadius;
 	mCurrentIndex = 1;
 	mFollowing = false;
@@ -21,6 +22,12 @@ PathFollowSteering::~PathFollowSteering()
 {
 	delete mpSeekSteering;
 	mpSeekSteering = NULL;
+
+	delete mpArriveSteering;
+	mpArriveSteering = NULL;
+
+	delete mpFaceSteering;
+	mpFaceSteering = NULL;
 }
 
 Steering* PathFollowSteering::getSteering()
@@ -54,10 +61,20 @@ Steering* PathFollowSteering::getSteering()
 			return this;
 		}
 
+
+		Steering *pTemp;
+		mpFaceSteering->setTargetLoc(mpFollowPath.peek(mCurrentIndex)->getPosition());
+		pTemp = mpFaceSteering->getSteering();
+
+		if (pTemp != NULL)
+		{
+			pOwner->getPhysicsComponent()->setData(pTemp->getData());
+		}
+
 		if (mCurrentIndex + 1 != mpFollowPath.size())
 		{
 			mpSeekSteering->setTargetLoc(mpFollowPath.peek(mCurrentIndex)->getPosition());
-			Steering *pTemp = mpSeekSteering->getSteering();
+			pTemp = mpSeekSteering->getSteering();
 			if (pTemp != NULL)
 			{
 				this->mData = pTemp->getData();
@@ -67,7 +84,7 @@ Steering* PathFollowSteering::getSteering()
 		else
 		{
 			mpArriveSteering->setTargetLoc(mpFollowPath.peek(mCurrentIndex)->getPosition());
-			Steering *pTemp = mpArriveSteering->getSteering();
+			pTemp = mpArriveSteering->getSteering();
 			if (pTemp != NULL)
 			{
 				this->mData = pTemp->getData();

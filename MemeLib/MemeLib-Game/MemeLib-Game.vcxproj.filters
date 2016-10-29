@@ -57,6 +57,12 @@
     <Filter Include="Source Files\Pathfinding\NavMesh">
       <UniqueIdentifier>{fb304150-4d7e-47d5-9d33-db36f035bc13}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Events">
+      <UniqueIdentifier>{0edaa927-84f9-48aa-8b1d-aa516592d84d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{bc37ea0e-e5ac-428b-88df-b02c79f4c9ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameApp.cpp">
@@ -121,6 +127,12 @@
     </ClCompile>
     <ClCompile Include="NavMesh.cpp">
       <Filter>Source Files\Pathfinding\NavMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="FaceSteering.cpp">
+      <Filter>Source Files\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnEvent.cpp">
+      <Filter>Source Files\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +201,12 @@
     </ClInclude>
     <ClInclude Include="Edge.h">
       <Filter>Header Files\Pathfinding\NavMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="FaceSteering.h">
+      <Filter>Header Files\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnEvent.h">
+      <Filter>Header Files\Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

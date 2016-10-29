@@ -6,15 +6,15 @@
 #include "Graphics.h"
 #include "MemoryTracker.h"
 #include <sstream>
+#include <time.h>
 
 const int DISPLAY_WIDTH = 1280, DISPLAY_HEIGHT = 720;
 
 int main()
 {
-	GameApp gameApp;
-
+	srand(time(NULL));
 	EventSystem::createInstance();
-
+	GameApp gameApp;
 	if(!Game::createInstance()->setup(DISPLAY_WIDTH, DISPLAY_HEIGHT))
 	{
 		std::cout << "Failed to create game instance.\n";
@@ -37,10 +37,9 @@ int main()
 
 		gameApp.cleanup();
 	}
-	Game::destroyInstance();
 
+	Game::destroyInstance();
 	EventSystem::destroyInstance();
-	
 	std::stringstream stream;
 	gMemoryTracker.reportAllocations(stream);
 	if (stream.str().size() > 0)

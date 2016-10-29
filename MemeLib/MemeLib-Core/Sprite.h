@@ -9,7 +9,7 @@ const float yRot = 180.f * Maths::DEG_TO_RAD;
 class Sprite : public Trackable
 {
 public:
-	Sprite() {};	
+	Sprite() {};
 	Sprite(const Sprite& copy);
 	~Sprite();
 
@@ -20,6 +20,7 @@ public:
 
 	Vec3		getRotation() const;
 	void		setRotation(Vec3 value);
+	void		setYRotation(float value);
 
 	Vec3		getScale() const;
 	void		setScale(Vec3 value);

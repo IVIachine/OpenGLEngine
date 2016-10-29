@@ -8,6 +8,7 @@ enum EventType
 {
 	INVALID_EVENT_TYPE = -1,
 	EV_CHAT_MESSAGE,
+	SPAWN_EVENT,
 	NUM_EVENT_TYPES
 };
 

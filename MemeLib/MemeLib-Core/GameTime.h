@@ -5,14 +5,14 @@
 #include <Trackable.h>
 #include <Timer.h>
 
-#define TIME Time::getInstance()
+#define TIME GameTime::getInstance()
 
 typedef unsigned int uint;
 
-class Time : public Trackable
+class GameTime : public Trackable
 {
 public:
-	static Time*	getInstance()
+	static GameTime*	getInstance()
 	{
 		assert(sp_instance != NULL);
 		return sp_instance;
@@ -22,9 +22,9 @@ public:
 		delete sp_instance;
 		sp_instance = NULL;
 	};
-	static Time*	createInstance()
+	static GameTime*	createInstance()
 	{
-		sp_instance = new Time();
+		sp_instance = new GameTime();
 		return getInstance();
 	};
 
@@ -50,8 +50,8 @@ public:
 	static const float FPS_60;
 
 private:
-	Time();
-	~Time();
+	GameTime();
+	~GameTime();
 
 	Timer*	mp_loopTimer;
 	Timer*	mp_masterTimer;
@@ -62,7 +62,7 @@ private:
 		endTime,
 		delta;
 
-	static Time* sp_instance;
+	static GameTime* sp_instance;
 };
 
 #endif // !_TIME_H_

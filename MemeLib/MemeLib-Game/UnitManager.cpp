@@ -143,6 +143,14 @@ void UnitManager::deleteRandomUnit()
 	}
 }
 
+void UnitManager::deleteAll()
+{
+	for (std::map<UnitID, Unit*>::iterator itr = mUnitMap.begin(); itr != mUnitMap.end(); itr++)
+	{
+		delete itr->second;
+	}
+}
+
 void UnitManager::drawAll() const
 {
 	for (auto it = mUnitMap.begin(); it != mUnitMap.end(); ++it)

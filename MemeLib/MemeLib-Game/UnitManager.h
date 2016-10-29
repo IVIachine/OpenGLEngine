@@ -30,7 +30,7 @@ public:
 	Unit* getUnit(const UnitID& id) const;
 	void deleteUnit(const UnitID& id);
 	void deleteRandomUnit();
-
+	void deleteAll();
 	void drawAll() const;
 	void updateAll(float elapsedTime);
 

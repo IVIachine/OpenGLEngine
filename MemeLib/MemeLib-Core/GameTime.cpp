@@ -1,8 +1,8 @@
-#include "Time.h"
+#include "GameTime.h"
 
-Time* Time::sp_instance = NULL;
+GameTime* GameTime::sp_instance = NULL;
 
-Time::Time()
+GameTime::GameTime()
 {
 	startTime = 0;
 	totalTime = 0;
@@ -16,18 +16,18 @@ Time::Time()
 	mp_masterTimer->start();
 }
 
-Time::~Time()
+GameTime::~GameTime()
 {
 	cleanup();
 }
 
 
-bool Time::setup()
+bool GameTime::setup()
 {
 	return true;
 }
 
-void Time::cleanup()
+void GameTime::cleanup()
 {
 	delete mp_loopTimer;
 	mp_loopTimer = NULL;
@@ -37,17 +37,17 @@ void Time::cleanup()
 }
 
 
-void Time::beginStep()
+void GameTime::beginStep()
 {
 	startTime = endTime;
 }
 
-void Time::step()
+void GameTime::step()
 {
 	totalTime += mp_loopTimer->getElapsedTime();
 }
 
-void Time::endStep()
+void GameTime::endStep()
 {
 	endTime = mp_loopTimer->getElapsedTime();
 
@@ -55,17 +55,17 @@ void Time::endStep()
 }
 
 
-float Time::deltaTime()
+float GameTime::deltaTime()
 {
 	return delta;
 }
 
-int Time::elapsedMilliseconds()
+int GameTime::elapsedMilliseconds()
 {
 	return int(deltaTime());
 }
 
-uint Time::frameRate()
+uint GameTime::frameRate()
 {
 	/*
 	http://en.sfml-dev.org/forums/index.php?topic=6090.0
@@ -100,6 +100,6 @@ uint Time::frameRate()
 
 /*	Constants
 * * * * * * * * * * * * */
-const float Time::FPS_15 = 66.666f;
-const float Time::FPS_30 = 33.333f;	// 30fps = 33.3ms/frame
-const float Time::FPS_60 = 16.666f;
+const float GameTime::FPS_15 = 66.666f;
+const float GameTime::FPS_30 = 33.333f;	// 30fps = 33.3ms/frame
+const float GameTime::FPS_60 = 16.666f;

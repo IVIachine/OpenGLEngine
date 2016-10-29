@@ -130,6 +130,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="Connection.cpp" />
+    <ClCompile Include="FaceSteering.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="HalfEdge.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PositionComponent.cpp" />
     <ClCompile Include="SeekSteering.cpp" />
+    <ClCompile Include="SpawnEvent.cpp" />
     <ClCompile Include="Steering.cpp" />
     <ClCompile Include="SteeringComponent.cpp" />
     <ClCompile Include="Unit.cpp" />
@@ -155,6 +157,7 @@
     <ClInclude Include="Connection.h" />
     <ClInclude Include="Edge.h" />
     <ClInclude Include="Face.h" />
+    <ClInclude Include="FaceSteering.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="HalfEdge.h" />
@@ -166,6 +169,7 @@
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="SeekSteering.h" />
+    <ClInclude Include="SpawnEvent.h" />
     <ClInclude Include="Steering.h" />
     <ClInclude Include="SteeringComponent.h" />
     <ClInclude Include="Unit.h" />

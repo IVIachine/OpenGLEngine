@@ -31,7 +31,7 @@ bool Game::setup(int width, int height)
 	}
 
 	// Setup Time
-	if (!Time::createInstance()->setup())
+	if (!GameTime::createInstance()->setup())
 	{
 		fprintf(stderr, "Failed to initialize Time.\n");
 		return false;
@@ -83,7 +83,7 @@ void Game::cleanup()
 	ResourceManager::destroyInstance();
 
 	// Dispose Time
-	Time::destroyInstance();
+	GameTime::destroyInstance();
 
 	// Dispose Graphics
 	Graphics::destroyInstance();

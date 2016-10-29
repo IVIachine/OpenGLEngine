@@ -12,7 +12,7 @@
 
 const int MAX_UNITS = 500;
 
-class GameApp
+class GameApp: public EventListener
 {
 public:
 	GameApp();
@@ -25,7 +25,7 @@ public:
 
 	bool loadResources();
 	void unloadResources();
-
+	virtual void handleEvent(const Event& ev);
 	void update();
 	void draw();
 

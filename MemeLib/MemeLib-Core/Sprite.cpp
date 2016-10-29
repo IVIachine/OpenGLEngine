@@ -2,7 +2,6 @@
 #include "Texture2D.h"
 #include "Graphics.h"
 
-
 Sprite::Sprite(Texture2D* texture2D)
 {
 	mp_texture = texture2D;
@@ -22,8 +21,8 @@ Sprite::~Sprite()
 
 
 Texture2D* Sprite::getTexture2D() const
-{ 
-	return mp_texture; 
+{
+	return mp_texture;
 }
 
 
@@ -48,6 +47,12 @@ void Sprite::setRotation(Vec3 value)
 	m_rotation = value;
 }
 
+void Sprite::setYRotation(float value)
+{
+	setRotation(Vec3(getRotation().x, -value, getRotation().z));
+}
+
+
 
 Vec3 Sprite::getScale() const
 {
@@ -58,7 +63,6 @@ void Sprite::setScale(Vec3 value)
 {
 	m_scale = value;
 }
-
 
 void Sprite::draw(Camera& camera)
 {

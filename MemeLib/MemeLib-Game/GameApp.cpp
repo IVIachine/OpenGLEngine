@@ -2,9 +2,12 @@
 #include "Input.h"
 #include "Gizmos.h"
 #include "AStarPathfinder.h"
+#include "EventSystem.h"
+#include "SpawnEvent.h"
 
 GameApp::GameApp()
 {
+	EVENT_SYSTEM->addListener(SPAWN_EVENT, this);
 }
 
 GameApp::~GameApp()
@@ -134,8 +137,6 @@ bool GameApp::loadResources()
 	RESOURCES->getSprite("sprite2")->setRotation(Vec3(270,0,0) * Maths::DEG_TO_RAD);
 	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test4.obj", false);
 	mNavMesh->constructMesh(mp_volume->getMesh());
-	Unit* pUnit = UNITS->createUnit(*mp_sprite2, mNavMesh, true, PositionData(mNavMesh->getNode(0)->getPosition(), 0));
-	pUnit->setSteering(Steering::PATH_FOLLOW, Vec3(0, 0, 0));
 	mpPathfinder = new AStarPathfinder(mNavMesh);
 	Transform skyBoxTransform = Transform(Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(500, 500, 500));
 	m_skybox = new Volume(
@@ -205,6 +206,10 @@ void GameApp::update()
 		GRAPHICS->enableMouseLook(!GRAPHICS->isMouseLookEnabled());
 	}
 
+	if (INPUT->getKeyDown(Keyboard::S))
+	{
+		EVENT_SYSTEM->fireEvent(SpawnEvent());
+	}
 	//GameController::processInput();
 
 	m_skybox->transform().setPos(GRAPHICS->getCamera()->getPos());
@@ -272,4 +277,19 @@ void GameApp::draw()
 		UNITS->drawAll();
 	}
 	GRAPHICS->flip();
+}
+
+void GameApp::handleEvent(const Event & ev)
+{
+	if (ev.getType() == SPAWN_EVENT)
+	{
+		UNITS->deleteAll();
+		for (int i = 0; i < 10; i++)
+		{
+			int randIndex;
+			randIndex = rand() % (mNavMesh->getVerts().size() - 1);
+			Unit* pUnit = UNITS->createUnit(*RESOURCES->getSprite("sprite2"), mNavMesh, true, PositionData(mNavMesh->getNode(randIndex)->getPosition(), 0));
+			pUnit->setSteering(Steering::PATH_FOLLOW, Vec3(0, 0, 0));
+		}
+	}
 }

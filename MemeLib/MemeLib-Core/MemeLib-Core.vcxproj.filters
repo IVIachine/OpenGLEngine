@@ -64,9 +64,6 @@
     <ClCompile Include="Vector2.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>Source Files\Util</Filter>
-    </ClCompile>
     <ClCompile Include="Serializable.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
@@ -99,6 +96,9 @@
     </ClCompile>
     <ClCompile Include="GameObjectManager.cpp">
       <Filter>Source Files\Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTime.cpp">
+      <Filter>Source Files\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -180,9 +180,6 @@
     <ClInclude Include="Vector2.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
     <ClInclude Include="Serializable.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
@@ -218,6 +215,9 @@
     </ClInclude>
     <ClInclude Include="GameObjectManager.h">
       <Filter>Header Files\Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

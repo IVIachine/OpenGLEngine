@@ -63,6 +63,7 @@ void Unit::draw()
 {
 	PositionComponent* pTransform = getPositionComponent();
 	mSprite.setPosition(pTransform->getPosition());
+	mSprite.setYRotation(pTransform->getFacing());
 	mSprite.draw(*GRAPHICS->getCamera());
 }
 

@@ -15,12 +15,18 @@ EventSystem::~EventSystem()
 
 EventSystem* EventSystem::getInstance()
 {
-	assert(sp_instance != NULL);
-	return sp_instance;
+	if (sp_instance != NULL)
+	{
+		return sp_instance;
+	}
+
+	return NULL;
 }
 
 void EventSystem::destroyInstance()
 {
+	assert(sp_instance);
+
 	delete sp_instance;
 	sp_instance = NULL;
 }

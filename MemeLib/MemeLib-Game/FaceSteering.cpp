@@ -46,10 +46,10 @@ Steering* FaceSteering::getSteering()
 
 	//Cite: jdhaan, http://stackoverflow.com/questions/4633177/c-how-to-wrap-a-float-to-the-interval-pi-pi
 
-	if (rotation>0)
-		rotation = fmod(rotation + M_PI, 2.0*M_PI) - M_PI;
+	if (rotation>0.f)
+		rotation = fmod(rotation + M_PI, 2.0f*M_PI) - M_PI;
 	else
-		rotation = fmod(rotation - M_PI, 2.0*M_PI) + M_PI;
+		rotation = fmod(rotation - M_PI, 2.0f*M_PI) + M_PI;
 
 	float rotationSize = abs(rotation);
 

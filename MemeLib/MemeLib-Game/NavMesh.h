@@ -13,44 +13,45 @@
 
 const static float TOLERANCE = 0.00005f;
 
+typedef std::vector<Edge> EdgeList;
+typedef std::vector<Face> FaceList;
+typedef std::vector<Vec3> VertList;
+
 class NavMesh : public Graph
 {
 public:
 	NavMesh();
 	~NavMesh();
 
-	void constructMesh(Mesh* mesh);
-	void splitTriangles(std::vector<Vec3>& vertices, std::vector<size_t> indices, std::vector<Edge>& edges, size_t faceCount);
+	void	constructMesh(Mesh* mesh);
+	void	gatherEdges(EdgeList& edges, FaceList& faces, VertList& vertices, std::vector<size_t> indices, size_t faceCount);
+	void	splitTriangles(VertList& vertices, std::vector<size_t> indices, EdgeList& edges, size_t faceCount);
 
-	bool containsVertice(std::vector<Vec3> vertices, Vec3 key);
-	bool reverseExists(std::vector<Edge> edges, Edge key);
+	bool	containsVertice(std::vector<Vec3> vertices, Vec3 key);
+	bool	getIntersection(Edge one, Edge two, Vec3& ip) const;
+	bool	getIntersection(Edge edge, Vec3 ip) const;
+	bool	reverseExists(std::vector<Edge> edges, Edge key);
 
-	void gatherEdges(std::vector<Edge>& edges, std::vector<Face>& faces, std::vector<Vec3>& vertices, std::vector<size_t> indices, size_t faceCount);
+	EdgeList	getEdges() const;
+	EdgeList	getKnownConnections(Vec3 key);
+	FaceList	getEdgeFaces(std::vector<Face>& faces, Edge key);
+	VertList	getVerts() const;
 
-	std::vector<Edge> getKnownConnections(Vec3 key);
-	Node* getOtherNode(Edge tmp, Node* key);
-	std::vector<Face> getEdgeFaces(std::vector<Face>& faces, Edge key);
-	float norm2(Vec3 v) const;
+	Edge*		getEdge(size_t index);
+	Node*		getOtherNode(Edge tmp, Node* key);
 
-	size_t	vertCount() const { return m_vertices.size(); };
-	size_t	edgeCount() const { return m_edges.size(); };
-	Edge*	getEdge(size_t index) { return &m_edges[index]; };
+	size_t		vertCount() const;
+	size_t		edgeCount() const;
 
-	bool getIntersection(Edge one, Edge two, Vec3& ip) const;
-	bool getIntersection(Edge edge, Vec3 ip) const;
-
-	std::vector<Edge> getEdges() const
-	{
-		return m_edges;
-	};
-
-	std::vector<Vec3> getVerts() const
-	{
-		return m_vertices;
-	};
+	Node*	findNearestNode(const Vec3& position);
 
 private:
 	std::vector<Edge>	m_edges;
 	std::vector<Vec3>	m_vertices;
+
+	inline float norm2(Vec3 v) const
+	{
+		return v.x * v.x + v.y * v.y + v.z * v.z;
+	};
 };
 #endif

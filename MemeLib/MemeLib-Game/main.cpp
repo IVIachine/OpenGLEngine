@@ -12,7 +12,7 @@ const int DISPLAY_WIDTH = 1280, DISPLAY_HEIGHT = 720;
 
 int main()
 {
-	srand(time(NULL));
+	srand((unsigned)time(NULL));
 	EventSystem::createInstance();
 	GameApp gameApp;
 	if(!Game::createInstance()->setup(DISPLAY_WIDTH, DISPLAY_HEIGHT))

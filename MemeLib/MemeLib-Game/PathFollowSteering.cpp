@@ -10,8 +10,8 @@ PathFollowSteering::PathFollowSteering(const UnitID& ownerID, const Vec3& target
 	setTargetLoc(targetLoc);
 
 	mpSeekSteering = new SeekSteering(ownerID, targetLoc, targetID, false);
-	mpArriveSteering = new ArriveSteering(ownerID, targetLoc, targetID, .015f, .5, .1);
-	mpFaceSteering = new FaceSteering(ownerID, targetLoc, targetID, .005f, 5.0f);
+	mpArriveSteering = new ArriveSteering(ownerID, targetLoc, targetID, 0.015f, 0.5f, 0.1f);
+	mpFaceSteering = new FaceSteering(ownerID, targetLoc, targetID, 0.005f, 5.0f);
 	mSwitchRadius = switchRadius;
 	mCurrentIndex = 1;
 	mFollowing = false;

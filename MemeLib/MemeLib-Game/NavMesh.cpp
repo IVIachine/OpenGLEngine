@@ -59,17 +59,43 @@ void NavMesh::constructMesh(Mesh* mesh)
 	}
 }
 
+void NavMesh::gatherEdges(
+	EdgeList& edges, FaceList& faces, VertList& vertices, std::vector<size_t> indices, size_t faceCount)
+{
+	for (size_t i = 0; i < faceCount; i += 3)
+	{
+		Edge tmp, tmp2, tmp3;
+		tmp.first = vertices[indices[i]];
+		tmp.second = vertices[indices[i + 1]];
+
+		tmp2.first = vertices[indices[i + 1]];
+		tmp2.second = vertices[indices[i + 2]];
+
+		tmp3.first = vertices[indices[i + 2]];
+		tmp3.second = vertices[indices[i]];
+
+		if (!reverseExists(edges, tmp))
+			edges.push_back(tmp);
+
+		if (!reverseExists(edges, tmp2))
+			edges.push_back(tmp2);
+
+		if (!reverseExists(edges, tmp3))
+			edges.push_back(tmp3);
+
+		Face faceTemp;
+		faceTemp.edges.push_back(tmp);
+		faceTemp.edges.push_back(tmp2);
+		faceTemp.edges.push_back(tmp3);
+		faces.push_back(faceTemp);
+	}
+}
+
 void NavMesh::splitTriangles(
-	std::vector<Vec3>& vertices, 
-	std::vector<size_t> indices, 
-	std::vector<Edge>& edges, 
-	size_t faceCount)
+	VertList& vertices, std::vector<size_t> indices, EdgeList& edges, size_t faceCount)
 {
 	std::vector<Face> faces;
 	gatherEdges(edges, faces, vertices, indices, faceCount);
-
-	//std::vector<Edge>  copyEdges(edges);
-	//std::vector<Vec3> copyVerts(vertices);
 
 	size_t size = edges.size();
 	for (size_t i = 0; i < size; i++)
@@ -144,117 +170,6 @@ bool NavMesh::containsVertice(std::vector<Vec3> vertices, Vec3 key)
 	return false;
 }
 
-bool NavMesh::reverseExists(std::vector<Edge> edges, Edge key)
-{
-	for (size_t i = 0; i < edges.size(); i++)
-	{
-		if ((edges[i].first == key.second && edges[i].second == key.first) || (edges[i].first == key.first && edges[i].second == key.second))
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-
-void NavMesh::gatherEdges(std::vector<Edge>& edges, std::vector<Face>& faces, std::vector<Vec3>& vertices, std::vector<size_t> indices, size_t faceCount)
-{
-	for (size_t i = 0; i < faceCount; i += 3)
-	{
-		Edge tmp, tmp2, tmp3;
-		tmp.first = vertices[indices[i]];
-		tmp.second = vertices[indices[i + 1]];
-
-		tmp2.first = vertices[indices[i + 1]];
-		tmp2.second = vertices[indices[i + 2]];
-
-		tmp3.first = vertices[indices[i + 2]];
-		tmp3.second = vertices[indices[i]];
-
-		if (!reverseExists(edges, tmp))
-			edges.push_back(tmp);
-
-		if (!reverseExists(edges, tmp2))
-			edges.push_back(tmp2);
-
-		if (!reverseExists(edges, tmp3))
-			edges.push_back(tmp3);
-
-		Face faceTemp;
-		faceTemp.edges.push_back(tmp);
-		faceTemp.edges.push_back(tmp2);
-		faceTemp.edges.push_back(tmp3);
-		faces.push_back(faceTemp);
-	}
-}
-
-
-std::vector<Edge> NavMesh::getKnownConnections(Vec3 key)
-{
-	std::vector<Edge> result;
-	for (size_t i = 0; i < m_edges.size(); i++)
-	{
-		if (m_edges[i].first == key || m_edges[i].second == key)
-			result.push_back(m_edges[i]);
-	}
-	return result;
-}
-
-Node * NavMesh::getOtherNode(Edge tmp, Node* key)
-{
-	if (key->getPosition() == tmp.first)
-	{
-		return getNode(tmp.second);
-	}
-	else if (key->getPosition() == tmp.second)
-	{
-		return getNode(tmp.first);
-	}
-	return NULL;
-}
-
-std::vector<Face> NavMesh::getEdgeFaces(std::vector<Face>& faces, Edge key)
-{
-	std::vector<Face> faceResult;
-	bool exists = false;
-	for (size_t i = 0; i < faces.size(); i++)
-	{
-		for (size_t j = 0; j < faces[i].edges.size(); j++)
-		{
-			if ((faces[i].edges[j].first == key.first && faces[i].edges[j].second == key.second) ||
-				(faces[i].edges[j].first.x == key.second.x && faces[i].edges[j].first.z == key.second.z))
-			{
-				exists = false;
-
-				for (size_t k = 0; k < faceResult.size(); k++)
-				{
-					if (faces[i].edges.size() != faceResult[k].edges.size())
-						break;
-
-					for (size_t f = 0; f < faces[i].edges.size(); f++)
-					{
-						if ((faces[i].edges[f].first == faceResult[k].edges[f].first && faces[i].edges[f].second == faceResult[k].edges[f].second) ||
-							(faces[i].edges[f].second == faceResult[k].edges[f].first && faces[i].edges[f].first == faceResult[k].edges[f].second))
-						{
-							exists = true;
-						}
-					}
-				}
-
-				if (!exists)
-					faceResult.push_back(faces[i]);
-			}
-		}
-	}
-	return faceResult;
-}
-
-float NavMesh::norm2(Vec3 v) const
-{
-	return v.x * v.x + v.y * v.y + v.z * v.z;
-}
-
-
 bool NavMesh::getIntersection(Edge one, Edge two, Vec3& ip) const
 {
 	//CITE: http://stackoverflow.com/questions/2316490/the-algorithm-to-find-the-point-of-intersection-of-two-3d-line-segment
@@ -308,3 +223,120 @@ bool NavMesh::getIntersection(Edge edge, Vec3 point) const
 	return false;
 }
 
+bool NavMesh::reverseExists(std::vector<Edge> edges, Edge key)
+{
+	for (size_t i = 0; i < edges.size(); i++)
+	{
+		if ((edges[i].first == key.second && edges[i].second == key.first) || (edges[i].first == key.first && edges[i].second == key.second))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+
+EdgeList NavMesh::getEdges() const
+{
+	return m_edges;
+}
+
+EdgeList NavMesh::getKnownConnections(Vec3 key)
+{
+	std::vector<Edge> result;
+	for (size_t i = 0; i < m_edges.size(); i++)
+	{
+		if (m_edges[i].first == key || m_edges[i].second == key)
+			result.push_back(m_edges[i]);
+	}
+	return result;
+}
+
+FaceList NavMesh::getEdgeFaces(std::vector<Face>& faces, Edge key)
+{
+	std::vector<Face> faceResult;
+	bool exists = false;
+	for (size_t i = 0; i < faces.size(); i++)
+	{
+		for (size_t j = 0; j < faces[i].edges.size(); j++)
+		{
+			if ((faces[i].edges[j].first == key.first && faces[i].edges[j].second == key.second) ||
+				(faces[i].edges[j].first.x == key.second.x && faces[i].edges[j].first.z == key.second.z))
+			{
+				exists = false;
+
+				for (size_t k = 0; k < faceResult.size(); k++)
+				{
+					if (faces[i].edges.size() != faceResult[k].edges.size())
+						break;
+
+					for (size_t f = 0; f < faces[i].edges.size(); f++)
+					{
+						if ((faces[i].edges[f].first == faceResult[k].edges[f].first && faces[i].edges[f].second == faceResult[k].edges[f].second) ||
+							(faces[i].edges[f].second == faceResult[k].edges[f].first && faces[i].edges[f].first == faceResult[k].edges[f].second))
+						{
+							exists = true;
+						}
+					}
+				}
+
+				if (!exists)
+					faceResult.push_back(faces[i]);
+			}
+		}
+	}
+	return faceResult;
+}
+
+VertList NavMesh::getVerts() const
+{
+	return m_vertices;
+}
+
+
+Edge * NavMesh::getEdge(size_t index)
+{
+	return &m_edges[index];
+}
+
+Node * NavMesh::getOtherNode(Edge tmp, Node* key)
+{
+	if (key->getPosition() == tmp.first)
+	{
+		return getNode(tmp.second);
+	}
+	else if (key->getPosition() == tmp.second)
+	{
+		return getNode(tmp.first);
+	}
+	return NULL;
+}
+
+size_t NavMesh::vertCount() const
+{
+	return m_vertices.size();
+}
+
+size_t NavMesh::edgeCount() const
+{
+	return m_edges.size();
+}
+
+Node* NavMesh::findNearestNode(const Vec3 & position)
+{
+	Node* result = NULL;
+	float smallest = FLT_MAX;
+
+	for (Node* pNode : m_nodeList)
+	{
+		float dist = glm::distance(position, pNode->getPosition());
+
+		if (dist < smallest)
+		{
+			result = pNode;
+			smallest = dist;
+		}
+	}
+
+	return result;
+}

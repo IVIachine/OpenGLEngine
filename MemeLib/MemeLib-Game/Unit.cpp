@@ -10,23 +10,21 @@
 #include "ResourceManager.h"
 #include "AStarPathfinder.h"
 
-Unit::Unit(const Sprite& sprite, NavMesh* graph)
+Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 	:mSprite(sprite)
 	,mPositionComponentID(INVALID_COMPONENT_ID)
 	,mPhysicsComponentID(INVALID_COMPONENT_ID)
 	,mSteeringComponentID(INVALID_COMPONENT_ID)
 	,mShowTarget(false)
 {
-	mpPathfinder = new AStarPathfinder(graph);
+	mp_navMesh = navMesh;
+
+	mpPathfinder = new AStarPathfinder(mp_navMesh);
 
 	AStarOptions* pOpt = mpPathfinder->getOptions();
 	pOpt->enableDiagonals = true;
 	pOpt->enableHeuristic = true;
 	pOpt->maxDistance = 0;
-
-	mpPathfinder->setSource(graph->getNode(0));
-	mpPathfinder->setTarget(graph->getNode(5));
-	mpPathfinder->beginStep();
 }
 
 Unit::~Unit()
@@ -40,7 +38,14 @@ void Unit::update(float elapsedTime)
 {
 	AStarState state = mpPathfinder->getState();
 
-	if (state == Working)
+	if (state == Idle)
+	{
+		Vec3 pos = getPositionComponent()->getPosition();
+		mpPathfinder->setSource(mp_navMesh->findNearestNode(pos));
+		mpPathfinder->setTarget(mp_navMesh->getNode(5));
+		mpPathfinder->beginStep();
+	}
+	else if (state == Working)
 	{
 		mpPathfinder->step();
 	}

@@ -32,9 +32,10 @@ public:
 	float getFacing() const;
 	void update(float elapsedTime);
 
-	PositionComponent* getPositionComponent() const;
-	PhysicsComponent* getPhysicsComponent() const;
-	SteeringComponent* getSteeringComponent() const;
+	PositionComponent*	getPositionComponent() const;
+	PhysicsComponent*	getPhysicsComponent() const;
+	SteeringComponent*	getSteeringComponent() const;
+
 	float getMaxAcc() const { return mMaxAcc; };
 	float getMaxSpeed() const { return mMaxSpeed; };
 	float getMaxRotAcc() const { return mMaxRotAcc; };
@@ -57,8 +58,10 @@ private:
 	float mMaxRotVel;
 	bool mShowTarget;
 
+	NavMesh* mp_navMesh;
+
 	AStarPathfinder* mpPathfinder;
-	Unit(const Sprite& sprite, NavMesh* graph);
+	Unit(const Sprite& sprite, NavMesh* navMesh);
 	virtual ~Unit();
 
 	Unit(Unit&);//invalidate copy constructor

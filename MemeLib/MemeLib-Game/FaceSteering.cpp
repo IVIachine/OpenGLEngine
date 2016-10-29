@@ -3,8 +3,7 @@
 #include "Game.h"
 #include "UnitManager.h"
 #include "Unit.h"
-#include <math.h>
-#include <cmath>
+#include "Maths.h"
 
 const double M_PI = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348;
 
@@ -15,14 +14,14 @@ FaceSteering::FaceSteering(const UnitID& ownerID, const Vec3& targetLoc, const U
 	setTargetLoc(targetLoc);
 	mTargetRadius = theRadius;
 	mSlowRadius = theSlowRadius;
-	mTimeToTarget = .1;
+	mTimeToTarget = 0.1f;
 }
 
 
 Steering* FaceSteering::getSteering()
 {
 	float rotation;
-	float mTargetSteer = 0;
+	float mTargetSteer = 0.0f;
 	Unit* pOwner = UNITS->getUnit(mOwnerID);
 	if (mTargetID != INVALID_UNIT_ID)
 	{
@@ -36,7 +35,7 @@ Steering* FaceSteering::getSteering()
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 	Vec3 direction2 = mTargetLoc - pOwner->getPositionComponent()->getPosition();
 
-	if (glm::length(direction2) == 0)
+	if (glm::length(direction2) == 0.0f)
 	{
 		return nullptr;
 	}
@@ -46,10 +45,14 @@ Steering* FaceSteering::getSteering()
 
 	//Cite: jdhaan, http://stackoverflow.com/questions/4633177/c-how-to-wrap-a-float-to-the-interval-pi-pi
 
-	if (rotation>0.f)
-		rotation = fmod(rotation + M_PI, 2.0f*M_PI) - M_PI;
+	if (rotation > 0.0f)
+	{
+		rotation = fmod(rotation + Maths::PI, 2.0f * Maths::PI) - Maths::PI;
+	}
 	else
-		rotation = fmod(rotation - M_PI, 2.0f*M_PI) + M_PI;
+	{
+		rotation = fmod(rotation - Maths::PI, 2.0f * Maths::PI) + Maths::PI;
+	}
 
 	float rotationSize = abs(rotation);
 

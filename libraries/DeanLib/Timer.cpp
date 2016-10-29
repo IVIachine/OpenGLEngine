@@ -47,7 +47,7 @@ void Timer::pause(bool shouldPause)
 }
 
 
-double Timer::getElapsedTime() const
+float Timer::getElapsedTime() const
 {
 	//if we have an end time then the timer isn't running and we can just return the elapsed time
 	if (mEndTime.QuadPart != 0)
@@ -62,29 +62,29 @@ double Timer::getElapsedTime() const
 	}
 }
 
-void Timer::sleepUntilElapsed(double ms)
+void Timer::sleepUntilElapsed(float ms)
 {
 	LARGE_INTEGER currentTime, lastTime;
 	QueryPerformanceCounter(&currentTime);
-	double timeToSleep = ms - calcDifferenceInMS(mStartTime, currentTime);
+	float timeToSleep = ms - calcDifferenceInMS(mStartTime, currentTime);
 
-	while (timeToSleep > 0.0)
+	while (timeToSleep > 0.0f)
 	{
 		lastTime = currentTime;
 		QueryPerformanceCounter(&currentTime);
-		double timeElapsed = calcDifferenceInMS(lastTime, currentTime);
+		float timeElapsed = calcDifferenceInMS(lastTime, currentTime);
 		timeToSleep -= timeElapsed;
-		if (timeToSleep > 10.0)//if we are going to be in this loop for a long time - 
+		if (timeToSleep > 10.0f)//if we are going to be in this loop for a long time - 
 		{						//Sleep to relinquish back to Windows
 			Sleep(10);
 		}
 	}
 }
 
-double Timer::calcDifferenceInMS(LARGE_INTEGER from, LARGE_INTEGER to) const
+float Timer::calcDifferenceInMS(LARGE_INTEGER from, LARGE_INTEGER to) const
 {
-	double difference = 
-		(double)(to.QuadPart - from.QuadPart) / (double)mTimerFrequency.QuadPart;
+	float difference =
+		(float)(to.QuadPart - from.QuadPart) / (float)mTimerFrequency.QuadPart;
 
 	difference *= mFactor;
 	return difference * 1000;

@@ -21,13 +21,13 @@ public:
 	GameMessage(MessageType type);
 	~GameMessage();
 
-	double getSubmittedTime() const { return mSubmittedTime; };
-	double getScheduledTime() const { return mScheduledTime; };
+	float getSubmittedTime() const { return mSubmittedTime; };
+	float getScheduledTime() const { return mScheduledTime; };
 
 protected:
 	MessageType mType;
-	double mSubmittedTime;
-	double mScheduledTime;
+	float mSubmittedTime;
+	float mScheduledTime;
 
 private:
 	virtual void process() = 0;

@@ -46,7 +46,7 @@ void PerformanceTracker::stopTracking( const string& trackerName )
 
 }
 
-double PerformanceTracker::getElapsedTime( const string& trackerName )
+float PerformanceTracker::getElapsedTime( const string& trackerName )
 {
 	//make sure timer already exists
 	map<string,Timer*>::iterator iter = mTimers.find( trackerName );

@@ -36,9 +36,12 @@ public:
 	void	step();
 	void	endStep();
 
-	double	deltaTime();
+	float	deltaTime();
 	int		elapsedMilliseconds();
 	uint	frameRate();
+
+	Timer*	getMasterTimer() { return mp_masterTimer; };
+	float	getCurrentTime() { return mp_masterTimer->getElapsedTime(); };
 
 	/*	Constants
 	* * * * * * * * * * * * */
@@ -50,8 +53,10 @@ private:
 	Time();
 	~Time();
 
-	Timer m_timer;
-	double
+	Timer*	mp_loopTimer;
+	Timer*	mp_masterTimer;
+
+	float
 		startTime,
 		totalTime,
 		endTime,

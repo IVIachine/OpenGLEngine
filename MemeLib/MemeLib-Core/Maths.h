@@ -2,6 +2,7 @@
 #define _MATHS_H_
 
 #include <math.h>
+#include <random>
 
 class Maths
 {
@@ -12,6 +13,25 @@ public:
 
 	static float clamp(float value, float min, float max);
 	static float mapToRange(float value, float min, float max);
+
+	static float genRandomFloat()
+	{
+		float r = (float)rand() / (float)RAND_MAX;
+		return r;
+	}
+
+	static float genRandomBinomial()
+	{
+		return genRandomFloat() - genRandomFloat();
+	}
+
+	static float genRandomFloat(float a, float b)
+	{
+		float random = ((float)rand()) / (float)RAND_MAX;
+		float diff = b - a;
+		float r = random * diff;
+		return a + r;
+	}
 };
 
 #endif // !_MATHS_H_

@@ -5,6 +5,7 @@
 #include "Shader.h"
 #include "Graphics.h"
 #include "MemoryTracker.h"
+#include <sstream>
 
 const int DISPLAY_WIDTH = 1280, DISPLAY_HEIGHT = 720;
 
@@ -40,8 +41,21 @@ int main()
 
 	EventSystem::destroyInstance();
 	
-	gMemoryTracker.reportAllocations(std::cout);
-	system("pause");
+	std::stringstream stream;
+	gMemoryTracker.reportAllocations(stream);
+	if (stream.str().size() > 0)
+	{
+		std::cout
+			<< "Current memory allocations:\n"
+			<< stream.str();
+
+		system("pause");
+	}
+	else
+	{
+		std::cout 
+			<< "There are no memory allocations.\n";
+	}
 
 	return 0;
 }

@@ -36,7 +36,7 @@ void GameMessageManager::cleanup()
 
 void GameMessageManager::processMessagesForThisframe()
 {
-	double currentTime = GAME->getCurrentTime();
+	float currentTime = TIME->getCurrentTime();
 
 	list<GameMessage*>::iterator iter = mMessages.begin();
 	while( iter != mMessages.end() )
@@ -56,7 +56,7 @@ void GameMessageManager::processMessagesForThisframe()
 
 void GameMessageManager::addMessage( GameMessage* pMessage, int delay )
 {
-	double currentTime = GAME->getCurrentTime();
+	float currentTime = TIME->getCurrentTime();
 
 	//set frame numbers
 	pMessage->mSubmittedTime = currentTime;

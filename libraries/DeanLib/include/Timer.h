@@ -21,25 +21,25 @@ public:
 	void stop();
 	void pause(bool shouldPause);
 
-	double getElapsedTime() const;//returns how much time has elapsed since start
-	void sleepUntilElapsed(double ms);
+	float getElapsedTime() const;//returns how much time has elapsed since start
+	void sleepUntilElapsed(float ms);
 	
-	inline double getFactor() const { return mFactor; };
-	inline void multFactor(double mult) { mLastFactor = mFactor; mFactor *= mult; };
-	inline void setFactor(double theFactor) { mLastFactor = mFactor; mFactor = theFactor; };
+	inline float getFactor() const { return mFactor; };
+	inline void multFactor(float mult) { mLastFactor = mFactor; mFactor *= mult; };
+	inline void setFactor(float theFactor) { mLastFactor = mFactor; mFactor = theFactor; };
 	inline void restoreLastFactor() { mFactor = mLastFactor; };
 
 private:
 	LARGE_INTEGER mStartTime;
 	LARGE_INTEGER mEndTime;
 	LARGE_INTEGER mTimerFrequency;
-	double mElapsedTime;
-	double mFactor;
-	double mLastFactor;
+	float mElapsedTime;
+	float mFactor;
+	float mLastFactor;
 	bool mPaused;
 
 	//helper function - uses current frequency for the Timer
-	double calcDifferenceInMS(LARGE_INTEGER from, LARGE_INTEGER to) const;
+	float calcDifferenceInMS(LARGE_INTEGER from, LARGE_INTEGER to) const;
 
 };
 

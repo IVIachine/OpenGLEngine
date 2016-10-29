@@ -62,8 +62,6 @@ void MemoryTracker::removeAllocation(Trackable* ptr)
 
 void MemoryTracker::reportAllocations(std::ostream& stream)
 {
-	stream << "Current memory allocations:\n";
-
 	map<Trackable*, AllocationRecord>::iterator iter;
 	for (iter = mAllocations.begin(); iter != mAllocations.end(); ++iter)
 	{

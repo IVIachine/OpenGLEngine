@@ -37,14 +37,9 @@ public:
 	
 	void	beginStep();
 	void	step();
-	bool	endStep();
-
-	
+	bool	endStep();	
 
 	virtual void handleEvent(const Event& ev);
-
-	Timer*	getMasterTimer() { return mp_masterTimer; };
-	double	getCurrentTime() { return mp_masterTimer->getElapsedTime(); };
 
 protected:
 	Game();
@@ -57,28 +52,9 @@ private:
 	Timer*	mp_loopTimer;
 	Timer*	mp_masterTimer;
 
-	
-
 	static Game* sp_instance;
 };
 
-inline float genRandomFloat()
-{
-	float r = (float)rand() / (float)RAND_MAX;
-	return r;
-}
 
-inline float genRandomBinomial()
-{
-	return genRandomFloat() - genRandomFloat();
-}
-
-inline float genRandomFloat(float a, float b)
-{
-	float random = ((float)rand()) / (float)RAND_MAX;
-	float diff = b - a;
-	float r = random * diff;
-	return a + r;
-}
 
 #endif

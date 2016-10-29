@@ -9,8 +9,11 @@ Time::Time()
 	endTime = 0;
 	delta = 0;
 
-	m_timer = Timer();
-	m_timer.start();
+	mp_loopTimer = new Timer();
+	mp_loopTimer->start();
+
+	mp_masterTimer = new Timer();
+	mp_masterTimer->start();
 }
 
 Time::~Time()
@@ -26,7 +29,11 @@ bool Time::setup()
 
 void Time::cleanup()
 {
+	delete mp_loopTimer;
+	mp_loopTimer = NULL;
 
+	delete mp_masterTimer;
+	mp_masterTimer = NULL;
 }
 
 
@@ -37,18 +44,18 @@ void Time::beginStep()
 
 void Time::step()
 {
-	totalTime = m_timer.getElapsedTime();
+	totalTime += mp_loopTimer->getElapsedTime();
 }
 
 void Time::endStep()
 {
-	endTime = m_timer.getElapsedTime();
+	endTime = mp_loopTimer->getElapsedTime();
 
 	delta = (endTime - startTime);
 }
 
 
-double Time::deltaTime()
+float Time::deltaTime()
 {
 	return delta;
 }

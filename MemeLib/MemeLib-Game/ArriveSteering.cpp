@@ -4,14 +4,14 @@
 #include "UnitManager.h"
 #include "Unit.h"
 
-ArriveSteering::ArriveSteering(const UnitID& ownerID, const Vec3& targetLoc, const UnitID& targetID, float theRadius, float theSlowRadius, double arriveTime)
+ArriveSteering::ArriveSteering(const UnitID& ownerID, const Vec3& targetLoc, const UnitID& targetID, float theRadius, float theSlowRadius, float arriveTime)
 {
 	setOwnerID(ownerID);
 	setTargetID(targetID);
 	setTargetLoc(targetLoc);
 	mRadius = theRadius;
 	mSlowRadius = theSlowRadius;
-	mTimeToTarget = .1;
+	mTimeToTarget = 0.1f;
 }
 Steering* ArriveSteering::getSteering()
 {

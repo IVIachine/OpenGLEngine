@@ -7,9 +7,9 @@ class ArriveSteering :public Steering
 private:
 	float mRadius;
 	float mSlowRadius;
-	double mTimeToTarget;
+	float mTimeToTarget;
 public:
-	ArriveSteering(const UnitID& ownerID, const Vec3& targetLoc, const UnitID& targetID, float theRadius, float theSlowRadius, double arriveTime);
+	ArriveSteering(const UnitID& ownerID, const Vec3& targetLoc, const UnitID& targetID, float theRadius, float theSlowRadius, float arriveTime);
 	virtual Steering* getSteering();
 };
 

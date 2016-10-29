@@ -20,19 +20,9 @@ Unit::Unit(const Sprite& sprite, NavMesh* graph)
 	mpPathfinder = new AStarPathfinder(graph);
 	AStarOptions* pOpt = mpPathfinder->getOptions();
 
-<<<<<<< HEAD
 	pOpt->enableDiagonals = false;
 	pOpt->enableHeuristic = true;
 	pOpt->maxDistance = 0;
-=======
-	if (AStarPathfinder* pAstar = static_cast<AStarPathfinder*>(mpPathfinder))
-	{
-		AStarOptions* pOpt = pAstar->getOptions();
-		pOpt->enableDiagonals = true;
-		pOpt->enableHeuristic = true;
-		pOpt->maxDistance = 0;
-	}
->>>>>>> 4a5592d5a831d5336f3a6fa74d039cca880907fb
 
 	mpPathfinder->setSource(graph->getNode(0));
 	mpPathfinder->setTarget(graph->getNode(5));
@@ -45,23 +35,6 @@ Unit::~Unit()
 	mpPathfinder = NULL;
 }
 
-<<<<<<< HEAD
-=======
-void Unit::draw() 
-{
-	PositionComponent* pTransform = getPositionComponent();
-	mSprite.setPosition(pTransform->getPosition());
-	mSprite.setYRotation(pTransform->getFacing());
-	mSprite.draw(*GRAPHICS->getCamera());
-}
-
-float Unit::getFacing() const
-{
-	PositionComponent* pPosition = getPositionComponent();
-	assert(pPosition != NULL);
-	return pPosition->getFacing();
-}
->>>>>>> 4a5592d5a831d5336f3a6fa74d039cca880907fb
 
 void Unit::update(float elapsedTime)
 {

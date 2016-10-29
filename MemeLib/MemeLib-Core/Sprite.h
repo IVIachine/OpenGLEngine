@@ -20,7 +20,6 @@ public:
 
 	Vec3		getRotation() const;
 	void		setRotation(Vec3 value);
-	void		setYRotation(float value);
 
 	Vec3		getScale() const;
 	void		setScale(Vec3 value);

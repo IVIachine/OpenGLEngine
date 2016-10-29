@@ -258,7 +258,7 @@ void GameApp::draw()
 		}
 		
 		//mp_sprite2->setPosition(mNavMesh->getNode(0)->getPosition());
-		//mp_sprite2->setRotation(Vec3(180.0f * Maths::DEG_TO_RAD, 0.0f, 0.0f));
+		//mp_sprite2->setRotation(Vec3(180.0f, 0.0f, 0.0f) * Maths::DEG_TO_RAD);
 		//mp_sprite2->setScale(Vec3(1.0f, 1.0f, 0.0f));
 		//mp_sprite2->draw(*cam);
 

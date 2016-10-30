@@ -29,12 +29,10 @@ public:
 	void draw();
 
 private:
-	float		m_counter;
 	Volume*		m_skybox;
 	Texture2D*	mp_texture;
 	Volume*		mp_volume;
 	NavMesh*	mp_navMesh;
-	Path		m_path;
 
 	GameController m_controller;
 	

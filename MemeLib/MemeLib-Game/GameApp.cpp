@@ -42,8 +42,6 @@ bool GameApp::loadResources()
 		return false;
 	}
 
-	m_counter = 0.0f;
-
 	mp_navMesh = new NavMesh();
 
 	Vertex vertices[] = {
@@ -149,7 +147,6 @@ void GameApp::update()
 	GAME->beginStep();
 
 	m_skybox->transform().setPos(GRAPHICS->getCamera()->getPos());
-	m_counter += 0.0001f;
 
 	m_controller.update(mp_navMesh);
 

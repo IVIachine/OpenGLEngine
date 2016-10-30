@@ -94,7 +94,7 @@ bool GameApp::setup()
 	RESOURCES->addTexture2D("enemy",	RESOURCES->getTexture("enemy"),		p_shader);
 	RESOURCES->addTexture2D("kappa",	RESOURCES->getTexture("kappa"),		p_shader);
 
-	Sprite* pSpr1 = RESOURCES->addSprite("sprite2", RESOURCES->getTexture2D("harambe"));
+	Sprite* pSpr1 = RESOURCES->addSprite("sprite2", RESOURCES->getTexture2D("enemy"));
 	pSpr1->setScale(Vec3(.1f, .1f, .1f));
 	pSpr1->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
 

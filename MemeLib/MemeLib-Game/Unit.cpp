@@ -63,7 +63,7 @@ void Unit::update(float elapsedTime)
 		}
 		else
 		{
-			std::cout << "No path found.\n";
+			//std::cout << "No path found.\n";
 		}
 	}
 	break;

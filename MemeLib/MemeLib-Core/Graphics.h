@@ -78,7 +78,7 @@ private:
 	int			m_width;
 	int			m_height;
 	Vec2	m_mousePosition;
-	bool		m_enableMouseLook = false;
+	bool		m_enableMouseLook = true;
 
 	
 	static Graphics* sp_instance;

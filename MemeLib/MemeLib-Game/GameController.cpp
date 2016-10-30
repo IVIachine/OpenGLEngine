@@ -12,7 +12,7 @@ void GameController::update(NavMesh* pNavMesh)
 {
 	if (INPUT->getKeyDown(Keyboard::Up))
 	{
-		if (m_index + 1 > pNavMesh->size())
+		if (m_index + 1 > int(pNavMesh->size()))
 		{
 			m_index = 0;
 		}
@@ -25,7 +25,7 @@ void GameController::update(NavMesh* pNavMesh)
 	{
 		if (m_index - 1 < 0)
 		{
-			m_index = pNavMesh->size() - 1;
+			m_index = int(pNavMesh->size()) - 1;
 		}
 		else
 		{

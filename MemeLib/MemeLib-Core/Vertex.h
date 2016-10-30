@@ -13,7 +13,7 @@ public:
 	Vertex(const Vec3& pos, const Vec2 coord);
 	Vertex(const Vertex& copy);
 
-	Vec3* getPos();
+	Vec3* getPosition();
 	Vec2* getCoord();
 
 private:

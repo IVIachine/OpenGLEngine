@@ -63,6 +63,7 @@ bool Game::setup(int width, int height, Application* pApp)
 		return false;
 	}
 
+	// Setup Application
 	mp_app = pApp;
 	if (!mp_app || !mp_app->setup())
 	{

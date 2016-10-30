@@ -1,3 +1,5 @@
+// NYI
+
 #ifndef _GAME_OBJECT_H_
 #define _GAME_OBJECT_H_
 
@@ -6,7 +8,6 @@ class GameObjectManager;
 class GameObject
 {
 public:
-	
 
 private:
 	GameObject();

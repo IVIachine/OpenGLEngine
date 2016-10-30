@@ -226,5 +226,8 @@
     <ClInclude Include="GameController.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>Header Files\Units</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

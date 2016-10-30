@@ -3,7 +3,7 @@
 
 #include "Vector3.h"
 #include <Trackable.h>
-#include "defines.h"
+#include "Defines.h"
 #include "PhysicsComponent.h"
 
 class Steering : public Trackable

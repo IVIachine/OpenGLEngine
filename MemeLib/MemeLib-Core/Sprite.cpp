@@ -67,7 +67,7 @@ void Sprite::setScale(Vec3 value)
 void Sprite::draw(Camera& camera)
 {
 	// set position
-	mp_texture->transform().setPos(m_position);
+	mp_texture->transform().setPosition(m_position);
 
 	// set rotation
 	mp_texture->transform().setRot(m_rotation);

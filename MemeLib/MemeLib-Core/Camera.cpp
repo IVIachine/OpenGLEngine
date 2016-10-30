@@ -14,43 +14,45 @@ Camera::~Camera()
 }
 
 
-glm::mat4 Camera::getViewProjection() const
+Matrix Camera::getViewProjection() const
 {
 	return m_perspective * glm::lookAt(m_pos, m_pos + m_forward, m_up);
 }
 
-glm::mat4 Camera::getPerspective() const
+Matrix Camera::getPerspective() const
 {
 	return m_perspective;
 }
+
 
 float Camera::getFOV() const
 {
 	return m_fov;
 }
 
-void Camera::setPos(Vec3 pos)
-{
-	m_pos = pos;
-}
 
-Vec3 Camera::getPos()
+Vec3 Camera::getPosition() const
 {
 	return m_pos;
 }
 
-Vec3 Camera::getFowardVector()
+Vec3 Camera::getFoward() const
 {
 	return m_forward;
 }
 
-Vec3 Camera::getUpVector()
+Vec3 Camera::getUp() const
 {
 	return m_up;
 }
 
-void Camera::setFront(Vec3 front)
+
+void Camera::setForward(Vec3 front)
 {
 	m_forward = front;
 }
 
+void Camera::setPosition(Vec3 pos)
+{
+	m_pos = pos;
+}

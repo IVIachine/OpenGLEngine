@@ -16,7 +16,7 @@ Vertex::Vertex()
 {
 }
 
-Vec3 * Vertex::getPos()
+Vec3 * Vertex::getPosition()
 {
 	return &m_pos;
 }

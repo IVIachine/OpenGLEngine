@@ -61,7 +61,7 @@ private:
 		m_startTime,
 		m_totalTime,
 		m_endTime,
-		m_delta;
+		m_delta = 0.16f;
 
 	static GameTime* sp_instance;
 };

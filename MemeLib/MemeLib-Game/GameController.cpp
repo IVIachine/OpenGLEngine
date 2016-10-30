@@ -88,26 +88,26 @@ void GameController::moveCamera(Camera* camera)
 	float cameraSpeed = 0.1f;
 	if (INPUT->getKey(Keyboard::W))
 	{
-		camera->setPos(camera->getPos() + cameraSpeed * camera->getFowardVector());
+		camera->setPosition(camera->getPosition() + cameraSpeed * camera->getFoward());
 	}
 	if (INPUT->getKey(Keyboard::S))
 	{
-		camera->setPos(camera->getPos() - cameraSpeed * camera->getFowardVector());
+		camera->setPosition(camera->getPosition() - cameraSpeed * camera->getFoward());
 	}
 	if (INPUT->getKey(Keyboard::A))
 	{
-		camera->setPos(camera->getPos() - glm::normalize(glm::cross(camera->getFowardVector(), camera->getUpVector())) * cameraSpeed);
+		camera->setPosition(camera->getPosition() - glm::normalize(glm::cross(camera->getFoward(), camera->getUp())) * cameraSpeed);
 	}
 	if (INPUT->getKey(Keyboard::D))
 	{
-		camera->setPos(camera->getPos() + glm::normalize(glm::cross(camera->getFowardVector(), camera->getUpVector())) * cameraSpeed);
+		camera->setPosition(camera->getPosition() + glm::normalize(glm::cross(camera->getFoward(), camera->getUp())) * cameraSpeed);
 	}
 	if (INPUT->getKey(Keyboard::Q))
 	{
-		camera->setPos(camera->getPos() + Vec3(0.f, 1.f, 0.f));
+		camera->setPosition(camera->getPosition() + Vec3(0.f, 1.f, 0.f));
 	}
 	if (INPUT->getKey(Keyboard::Z))
 	{
-		camera->setPos(camera->getPos() - Vec3(0.f, 1.f, 0.f));
+		camera->setPosition(camera->getPosition() - Vec3(0.f, 1.f, 0.f));
 	}
 }

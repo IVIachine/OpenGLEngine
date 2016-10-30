@@ -13,8 +13,8 @@ const int DISPLAY_WIDTH = 1280, DISPLAY_HEIGHT = 720;
 int main()
 {
 	srand((unsigned)time(NULL));
-	EventSystem::createInstance();
-	
+
+	EventSystem::createInstance();	
 	GameApp gameApp;
 	bool isRunning = Game::createInstance()->setup(DISPLAY_WIDTH, DISPLAY_HEIGHT, &gameApp);
 	
@@ -24,13 +24,16 @@ int main()
 		system("pause");
 		return EXIT_FAILURE;
 	}	
+	
 	while (isRunning)
 	{
 		GAME->beginStep();
 		GAME->step();
 		isRunning = GAME->endStep();
 	}
+	
 	UNITS->deleteAll();
+
 	Game::destroyInstance();
 	EventSystem::destroyInstance();
 
@@ -42,7 +45,6 @@ int main()
 		std::cout
 			<< "Current memory allocations:\n"
 			<< stream.str();
-
 		system("pause");
 	}
 	else

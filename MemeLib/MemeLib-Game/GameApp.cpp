@@ -77,21 +77,22 @@ bool GameApp::setup()
 		16,17,19,	16,19,18,
 		20,21,23,	20,23,22,
 	};
+
 	Shader* p_shader = RESOURCES->addShader("basic", "../Assets/shaders/basicShader");
 	Shader* p_shader2 = RESOURCES->addShader("advanced", "../Assets/shaders/basicShader2");
 
-	RESOURCES->addTexture("box", "../Assets/textures/box.png");
-	RESOURCES->addTexture("brick", "../Assets/textures/Brick-Texture-1.jpg");
-	RESOURCES->addTexture("harambe", "../Assets/textures/Harambe.jpg");
-	RESOURCES->addTexture("player", "../Assets/textures/player.png");
-	RESOURCES->addTexture("enemy", "../Assets/textures/enemy.png");
-	RESOURCES->addTexture("kappa", "../Assets/textures/kappa.png");
+	RESOURCES->addTexture("box",		"../Assets/textures/box.png");
+	RESOURCES->addTexture("brick",		"../Assets/textures/Brick-Texture-1.jpg");
+	RESOURCES->addTexture("harambe",	"../Assets/textures/Harambe.jpg");
+	RESOURCES->addTexture("player",		"../Assets/textures/player.png");
+	RESOURCES->addTexture("enemy",		"../Assets/textures/enemy.png");
+	RESOURCES->addTexture("kappa",		"../Assets/textures/kappa.png");
 
-	RESOURCES->addTexture2D("harambe", RESOURCES->getTexture("harambe"), p_shader);
-	RESOURCES->addTexture2D("brick", RESOURCES->getTexture("brick"), p_shader);
-	RESOURCES->addTexture2D("player", RESOURCES->getTexture("player"), p_shader);
-	RESOURCES->addTexture2D("enemy", RESOURCES->getTexture("enemy"), p_shader);
-	RESOURCES->addTexture2D("kappa", RESOURCES->getTexture("kappa"), p_shader);
+	RESOURCES->addTexture2D("harambe",	RESOURCES->getTexture("harambe"),	p_shader);
+	RESOURCES->addTexture2D("brick",	RESOURCES->getTexture("brick"),		p_shader);
+	RESOURCES->addTexture2D("player",	RESOURCES->getTexture("player"),	p_shader);
+	RESOURCES->addTexture2D("enemy",	RESOURCES->getTexture("enemy"),		p_shader);
+	RESOURCES->addTexture2D("kappa",	RESOURCES->getTexture("kappa"),		p_shader);
 
 	Sprite* pSpr1 = RESOURCES->addSprite("sprite2", RESOURCES->getTexture2D("harambe"));
 	pSpr1->setScale(Vec3(.1f, .1f, .1f));
@@ -136,7 +137,7 @@ void GameApp::update()
 {
 	//GAME->beginStep();
 
-	m_skybox->transform().setPos(GRAPHICS->getCamera()->getPos());
+	m_skybox->transform().setPosition(GRAPHICS->getCamera()->getPosition());
 
 	m_controller.update(mp_navMesh);
 

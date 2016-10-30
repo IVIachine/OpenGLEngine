@@ -4,16 +4,6 @@ GameTime* GameTime::sp_instance = NULL;
 
 GameTime::GameTime()
 {
-	m_startTime = 0;
-	m_totalTime = 0;
-	m_endTime = 0;
-	m_delta = 0;
-
-	mp_loopTimer = new Timer();
-	mp_loopTimer->start();
-
-	mp_masterTimer = new Timer();
-	mp_masterTimer->start();
 }
 
 GameTime::~GameTime()
@@ -24,6 +14,17 @@ GameTime::~GameTime()
 
 bool GameTime::setup()
 {
+	m_startTime = 0;
+	m_totalTime = 0;
+	m_endTime = 0;
+	m_delta = 0;
+
+	mp_loopTimer = new Timer();
+	mp_loopTimer->start();
+
+	mp_masterTimer = new Timer();
+	mp_masterTimer->start();
+
 	return true;
 }
 
@@ -46,7 +47,7 @@ void GameTime::beginStep()
 
 void GameTime::step()
 {
-	m_totalTime += mp_loopTimer->getElapsedTime();
+	m_totalTime = mp_masterTimer->getElapsedTime();
 }
 
 void GameTime::endStep()
@@ -55,7 +56,7 @@ void GameTime::endStep()
 
 	m_delta = (m_endTime - m_startTime);
 
-	mp_loopTimer->sleepUntilElapsed(m_fps);
+	//mp_loopTimer->sleepUntilElapsed(m_fps);
 }
 
 

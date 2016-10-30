@@ -2,7 +2,7 @@
 #define TRANSFORM_H
 
 #include "Vector3.h"
-#include <gtx\transform.hpp>
+#include "Matrix.h"
 
 class Transform : public Trackable
 {
@@ -15,13 +15,13 @@ public:
 	Transform(const Transform& copy);
 	~Transform();
 
-	glm::mat4 getModel() const;
+	Matrix getModel() const;
 
-	Vec3& getPos();
+	Vec3& getPosition();
 	Vec3& getRot();
 	Vec3& getScale();
 
-	void setPos(Vec3 pos);
+	void setPosition(Vec3 pos);
 	void setRot(Vec3 rot);
 	void setScale(Vec3 scale);
 	

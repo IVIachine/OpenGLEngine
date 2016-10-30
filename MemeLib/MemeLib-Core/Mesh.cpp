@@ -17,7 +17,7 @@ Mesh::Mesh(Vertex* vertices, size_t numVertices, size_t* indices, size_t numIndi
 
 	for (size_t i = 0; i < numVertices; i++)
 	{
-		positions.push_back(*vertices[i].getPos());
+		positions.push_back(*vertices[i].getPosition());
 		coords.push_back(*vertices[i].getCoord());
 	}
 

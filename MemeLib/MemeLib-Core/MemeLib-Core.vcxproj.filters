@@ -156,9 +156,6 @@
     <ClInclude Include="EventSystem.h">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Defines.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
     <ClInclude Include="Dictionary.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
@@ -224,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

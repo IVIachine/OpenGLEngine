@@ -40,11 +40,11 @@ void mouse_look(GLFWwindow * window, double xpos, double ypos)
 
 	if (GRAPHICS->isMouseLookEnabled())
 	{
-		GRAPHICS->getCamera()->setFront(glm::normalize(front));
+		GRAPHICS->getCamera()->setForward(glm::normalize(front));
 	}
 	else
 	{
-		GRAPHICS->getCamera()->setFront(Vec3(0, 0, 1));
+		GRAPHICS->getCamera()->setForward(Vec3(0, 0, 1));
 	}
 }
 

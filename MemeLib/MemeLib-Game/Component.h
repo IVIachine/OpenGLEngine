@@ -4,8 +4,8 @@
 #include <DeanLibDefines.h>
 #include <limits>
 
-typedef Uint32 ComponentID;
-const Uint32 INVALID_COMPONENT_ID = UINT_MAX;
+typedef size_t ComponentID;
+const ComponentID INVALID_COMPONENT_ID = UINT_MAX;
 
 class Component :public Trackable
 {

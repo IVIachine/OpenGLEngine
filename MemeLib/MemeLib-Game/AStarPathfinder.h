@@ -66,6 +66,7 @@ private:
 	std::map<Node*, float> m_distMap;
 	std::map<Node*, Node*> m_prevMap;
 	std::list<Node*> m_unvisitedList;
+
 };
 
 #endif // !_ASTAR_PATHFINDER_H_

@@ -30,14 +30,16 @@ public:
 	void draw();
 
 private:
-	float	m_counter;
-	Volume*	m_skybox;
+	float		m_counter;
+	Volume*		m_skybox;
 	Pathfinder* mpPathfinder;
 	Texture2D*	mp_texture;
 	Volume*		mp_volume;
-	NavMesh* mNavMesh;
-	Vec3		m_position;
+	NavMesh*	mNavMesh;
 	Path		m_path;
+
+	size_t	m_index = 0;
+	Node*	mp_target;
 };
 
 #endif // !_GAME_APP_H_

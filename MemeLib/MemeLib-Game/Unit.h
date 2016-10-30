@@ -45,7 +45,8 @@ public:
 
 	void setSteering(Steering::SteeringType type, Vec3 targetLoc = Vec3(0, 0, 0), UnitID targetUnitID = INVALID_UNIT_ID);
 
-	void findPath(Vec3 from, Vec3 to);
+	void findPath(Vec3 source, Vec3 target);
+	void findPath(Vec3 target);
 
 private:
 	UnitID mID;

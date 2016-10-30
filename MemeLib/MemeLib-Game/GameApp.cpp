@@ -184,21 +184,32 @@ void GameApp::update()
 	GAME->beginStep();
 	moveCamera(GRAPHICS->getCamera());
 
-	if (INPUT->getKey(Keyboard::Up))
+	if (INPUT->getKeyDown(Keyboard::Up))
 	{
-		m_position += Vec3_Up;
+		if (m_index + 1 > mNavMesh->size())
+		{
+			m_index = 0;
+		}
+		else
+		{
+			m_index++;
+		}
 	}
-	if (INPUT->getKey(Keyboard::Down))
+	if (INPUT->getKeyDown(Keyboard::Down))
 	{
-		m_position += Vec3_Down;
+		if (m_index - 1 < 0)
+		{
+			m_index = mNavMesh->size() - 1;
+		}
+		else
+		{
+			m_index--;
+		}
 	}
-	if (INPUT->getKey(Keyboard::Left))
+
+	if (INPUT->getKeyDown(Keyboard::Space))
 	{
-		m_position += Vec3_Left;
-	}
-	if (INPUT->getKey(Keyboard::Right))
-	{
-		m_position += Vec3_Right;
+		
 	}
 
 	if (INPUT->getKeyDown(Keyboard::Enter))
@@ -206,7 +217,7 @@ void GameApp::update()
 		GRAPHICS->enableMouseLook(!GRAPHICS->isMouseLookEnabled());
 	}
 
-	if (INPUT->getKeyDown(Keyboard::S))
+	if (INPUT->getKeyDown(Keyboard::P))
 	{
 		EVENT_SYSTEM->fireEvent(SpawnEvent());
 	}
@@ -262,17 +273,12 @@ void GameApp::draw()
 			p2.y += 0.05f;
 			GIZMOS->drawRay(p1, p2);
 		}
-		
-		//mp_sprite2->setPosition(mNavMesh->getNode(0)->getPosition());
-		//mp_sprite2->setRotation(Vec3(180.0f, 0.0f, 0.0f) * Maths::DEG_TO_RAD);
-		//mp_sprite2->setScale(Vec3(1.0f, 1.0f, 0.0f));
-		//mp_sprite2->draw(*cam);
 
-		bool toggle = INPUT->getKey(Keyboard::Space);
-
-		float amt = 0.05f;
-		Vec3 off = { 0.f, amt, 0.f };
-		Vec3 pos = { 0.f, 0.f, 0.f };
+		mp_target = mNavMesh->getNode(m_index);
+		if (mp_target)
+		{
+			GIZMOS->drawPoint(mp_target->getPosition() + Vec3(0.f, 0.5f, 0.f));
+		}
 
 		UNITS->drawAll();
 	}
@@ -289,7 +295,9 @@ void GameApp::handleEvent(const Event & ev)
 			int randIndex;
 			randIndex = rand() % (mNavMesh->getVerts().size() - 1);
 			Unit* pUnit = UNITS->createUnit(*RESOURCES->getSprite("sprite2"), mNavMesh, true, PositionData(mNavMesh->getNode(randIndex)->getPosition(), 0));
-			pUnit->setSteering(Steering::PATH_FOLLOW, Vec3(0, 0, 0));
+			
+			pUnit->setSteering(Steering::PATH_FOLLOW);
+			pUnit->findPath(mp_target->getPosition());
 		}
 	}
 }

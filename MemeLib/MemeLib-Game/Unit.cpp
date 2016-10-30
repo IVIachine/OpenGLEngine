@@ -41,9 +41,7 @@ void Unit::update(float elapsedTime)
 	{
 	case Idle:
 	{
-		Vec3 source = getPositionComponent()->getPosition();
-		Vec3 target = mp_navMesh->getNode(5)->getPosition();
-		findPath(source, target);
+		//findPath(mp_navMesh->getNode(5)->getPosition());
 	}
 	break;
 	case Working:
@@ -112,6 +110,11 @@ void Unit::findPath(Vec3 source, Vec3 target)
 	mpPathfinder->setSource(mp_navMesh->findNearestNode(source));
 	mpPathfinder->setTarget(mp_navMesh->findNearestNode(target));
 	mpPathfinder->beginStep();
+}
+
+void Unit::findPath(Vec3 target)
+{
+	findPath(getPositionComponent()->getPosition(), target);
 }
 
 float Unit::getFacing() const

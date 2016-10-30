@@ -9,6 +9,9 @@
 #include "SteeringComponent.h"
 #include "ResourceManager.h"
 #include "AStarPathfinder.h"
+#include "EventSystem.h"
+#include "BeginPathingEvent.h"
+#include "ChangeTargetEvent.h"
 
 Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 	:mSprite(sprite)
@@ -25,6 +28,9 @@ Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 	pOpt->enableDiagonals = true;
 	pOpt->enableHeuristic = true;
 	pOpt->maxDistance = 0;
+	mp_currentTarget = Vec3(0, 0, 0);
+	EVENT_SYSTEM->addListener(PATH_EVENT, this);
+	EVENT_SYSTEM->addListener(TARGET_EVENT, this);
 }
 
 Unit::~Unit()
@@ -127,4 +133,17 @@ float Unit::getFacing() const
 	PositionComponent* pPosition = getPositionComponent();
 	assert(pPosition != NULL);
 	return pPosition->getFacing();
+}
+
+void Unit::handleEvent(const Event & ev)
+{
+	if (ev.getType() == PATH_EVENT)
+	{
+		findPath(mp_currentTarget);
+	}
+	else if (ev.getType() == TARGET_EVENT)
+	{
+		const ChangeTargetEvent& changeEvent = static_cast<const ChangeTargetEvent&>(ev);
+		mp_currentTarget = changeEvent.getTarg();
+	}
 }

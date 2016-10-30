@@ -4,7 +4,8 @@
 #include "AStarPathfinder.h"
 #include "EventSystem.h"
 #include "SpawnEvent.h"
-
+#include "ChangeTargetEvent.h"
+#include "BeginPathingEvent.h"
 GameApp::GameApp()
 {
 	EVENT_SYSTEM->addListener(SPAWN_EVENT, this);
@@ -198,7 +199,10 @@ void GameApp::update()
 			m_index--;
 		}
 	}
-
+	if (INPUT->getKeyDown(Keyboard::F))
+	{
+		EVENT_SYSTEM->fireEvent(BeginPathingEvent());
+	}
 	if (INPUT->getKeyDown(Keyboard::Space))
 	{
 		
@@ -252,6 +256,7 @@ void GameApp::draw()
 		}
 
 		mp_target = mNavMesh->getNode(m_index);
+		EVENT_SYSTEM->fireEvent(ChangeTargetEvent(mp_target->getPosition()));
 		if (mp_target)
 		{
 			GIZMOS->drawPoint(mp_target->getPosition() + Vec3(0.f, 0.5f, 0.f));
@@ -272,9 +277,7 @@ void GameApp::handleEvent(const Event & ev)
 			int randIndex;
 			randIndex = rand() % (mNavMesh->getVerts().size() - 1);
 			Unit* pUnit = UNITS->createUnit(*RESOURCES->getSprite("sprite2"), mNavMesh, true, PositionData(mNavMesh->getNode(randIndex)->getPosition(), 0));
-			
 			pUnit->setSteering(Steering::PATH_FOLLOW);
-			pUnit->findPath(mp_target->getPosition());
 		}
 	}
 }

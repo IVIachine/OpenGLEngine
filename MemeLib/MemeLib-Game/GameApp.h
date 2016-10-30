@@ -22,7 +22,6 @@ public:
 	void cleanup();
 
 	void moveCamera(Camera * camera);
-
 	bool loadResources();
 	void unloadResources();
 	virtual void handleEvent(const Event& ev);

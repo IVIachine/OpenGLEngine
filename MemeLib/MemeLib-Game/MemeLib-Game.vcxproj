@@ -127,6 +127,8 @@
   <ItemGroup>
     <ClCompile Include="ArriveSteering.cpp" />
     <ClCompile Include="AStarPathfinder.cpp" />
+    <ClCompile Include="BeginPathingEvent.cpp" />
+    <ClCompile Include="ChangeTargetEvent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="Connection.cpp" />
@@ -152,6 +154,8 @@
   <ItemGroup>
     <ClInclude Include="ArriveSteering.h" />
     <ClInclude Include="AStarPathfinder.h" />
+    <ClInclude Include="BeginPathingEvent.h" />
+    <ClInclude Include="ChangeTargetEvent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="Connection.h" />

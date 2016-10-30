@@ -10,9 +10,8 @@
 #include "Component.h"
 #include "Sprite.h"
 #include "Steering.h"
-//#include "CircularQueue.h"
-//#include "Transaction.h"
-//#include "TransactionProcessor.h"
+#include "Event.h"
+#include "EventListener.h"
 
 class PositionComponent;
 class PhysicsComponent;
@@ -23,7 +22,7 @@ class UnitManager;
 const Uint32 DEFAULT_QUEUE_CAPACITY = 8;
 
 //class Unit : public TransactionProcessor
-class Unit : public Trackable
+class Unit : public EventListener
 {
 public:
 	//void postTransaction(const Transaction& transaction);
@@ -48,6 +47,7 @@ public:
 	void findPath(Vec3 source, Vec3 target);
 	void findPath(Vec3 target);
 	void cleanup();
+	virtual void handleEvent(const Event& ev);
 private:
 	UnitID mID;
 	ComponentID mPhysicsComponentID;
@@ -62,7 +62,7 @@ private:
 	bool mShowTarget;
 
 	NavMesh* mp_navMesh;
-
+	Vec3 mp_currentTarget;
 	AStarPathfinder* mpPathfinder;
 	Unit(const Sprite& sprite, NavMesh* navMesh);
 	virtual ~Unit();

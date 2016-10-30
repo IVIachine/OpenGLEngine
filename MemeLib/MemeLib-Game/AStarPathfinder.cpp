@@ -271,7 +271,7 @@ AStarState AStarPathfinder::endStep()
 
 		// Reverse the path
 		mPath.reverse();
-
+		std::cout << mPath.size() << std::endl;
 		// Resize the path
 		if (m_options.maxDistance > 0)
 		{

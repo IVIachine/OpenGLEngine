@@ -8,6 +8,7 @@
 #include "PositionComponent.h"
 #include "PhysicsComponent.h"
 #include "Unit.h"
+#include "EventListener.h"
 
 class Unit;
 class Sprite;
@@ -18,7 +19,7 @@ const UnitID PLAYER_UNIT_ID = 0;
 
 #define UNITS UnitManager::getInstance()
 
-class UnitManager : public Trackable
+class UnitManager: public EventListener
 {
 public:
 	static UnitManager*	getInstance();
@@ -35,7 +36,7 @@ public:
 	void updateAll(float elapsedTime);
 
 	Unit* getPlayerUnit() const { return getUnit(PLAYER_UNIT_ID); };
-
+	virtual void handleEvent(const Event& ev);
 	bool setup();
 private:
 	UnitManager(Uint32 maxSize);

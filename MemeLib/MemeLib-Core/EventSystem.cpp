@@ -102,5 +102,4 @@ void EventSystem::dispatchAllEvents(const Event& ev)
 	{
 		iter->second->handleEvent(ev);
 	}
-
 }

@@ -135,10 +135,10 @@
       <Filter>Source Files\Events</Filter>
     </ClCompile>
     <ClCompile Include="BeginPathingEvent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Events</Filter>
     </ClCompile>
     <ClCompile Include="ChangeTargetEvent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,10 +215,10 @@
       <Filter>Header Files\Events</Filter>
     </ClInclude>
     <ClInclude Include="BeginPathingEvent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Events</Filter>
     </ClInclude>
     <ClInclude Include="ChangeTargetEvent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,6 +5,9 @@
 #include "Game.h"
 #include "GameApp.h"
 #include "Graphics.h"
+#include "EventSystem.h"
+#include "ChangeTargetEvent.h"
+#include "BeginPathingEvent.h"
 
 UnitID UnitManager::msNextUnitID = PLAYER_UNIT_ID + 1;
 UnitManager* UnitManager::sp_instance = NULL;
@@ -19,6 +22,8 @@ bool UnitManager::setup()
 UnitManager::UnitManager(Uint32 maxSize)
 	:mPool(maxSize, sizeof(Unit))
 {
+	EVENT_SYSTEM->addListener(PATH_EVENT, this);
+	EVENT_SYSTEM->addListener(TARGET_EVENT, this);
 }
 
 UnitManager* UnitManager::getInstance()
@@ -181,5 +186,24 @@ void UnitManager::updateAll(float elapsedTime)
 	for (auto it = mUnitMap.begin(); it != mUnitMap.end(); ++it)
 	{
 		it->second->update(elapsedTime);
+	}
+}
+
+void UnitManager::handleEvent(const Event & ev)
+{
+	if (ev.getType() == PATH_EVENT)
+	{
+		for (std::map<UnitID, Unit*>::iterator MapItor = mUnitMap.begin(); MapItor != mUnitMap.end(); ++MapItor)
+		{
+			MapItor->second->findPath(MapItor->second->getTarget());
+		}
+	}
+	else if (ev.getType() == TARGET_EVENT)
+	{
+		const ChangeTargetEvent& changeEvent = static_cast<const ChangeTargetEvent&>(ev);
+		for (std::map<UnitID, Unit*>::iterator MapItor = mUnitMap.begin(); MapItor != mUnitMap.end(); ++MapItor)
+		{
+			MapItor->second->changeTarg(changeEvent.getTarg());
+		}
 	}
 }

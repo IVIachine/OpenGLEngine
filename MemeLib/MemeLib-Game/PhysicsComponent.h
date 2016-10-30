@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _PHYSICS_COMPONENT_H_
+#define _PHYSICS_COMPONENT_H_
 
 #include "Component.h"
 #include "Vector3.h"
@@ -34,7 +35,7 @@ struct PhysicsData : public Trackable
 	{};
 
 	PhysicsData()
-		:vel(Vec3(0,0,0))
+		:vel(Vec3(0, 0, 0))
 		, acc(Vec3(0, 0, 0))
 		, rotVel(0.0f)
 		, rotAcc(0.0f)
@@ -79,3 +80,5 @@ private:
 
 	friend class ComponentManager;
 };
+
+#endif // !_PHYSICS_COMPONENT_H_

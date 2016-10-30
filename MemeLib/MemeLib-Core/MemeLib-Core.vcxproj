@@ -128,6 +128,7 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventListener.h" />
     <ClInclude Include="EventSystem.h" />
+    <ClInclude Include="TextAsset.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMessage.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Gizmos.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Serializable.cpp" />
+    <ClCompile Include="TextAsset.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Keyboard.cpp" />

@@ -1,7 +1,10 @@
-#pragma once
+
+#ifndef _CHANGE_TARGET_EVENT_H_
+#define _CHANGE_TARGET_EVENT_H_
+
 #include "Event.h"
 #include "Vector3.h"
-class ChangeTargetEvent:public Event
+class ChangeTargetEvent :public Event
 {
 private:
 	Vec3 mTarg;
@@ -12,3 +15,4 @@ public:
 	Vec3 getTarg() const { return mTarg; };
 };
 
+#endif // !_CHANGE_TARGET_EVENT_H_

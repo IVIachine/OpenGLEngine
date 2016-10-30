@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _POSITION_COMPONENT_H_
+#define _POSITION_COMPONENT_H_
 
 #include <Trackable.h>
 #include "Vector3.h"
@@ -6,7 +7,7 @@
 
 struct PositionData :public Trackable
 {
-	PositionData() :pos(Vec3(0,0,0)), facing(0.0f) {};
+	PositionData() :pos(Vec3(0, 0, 0)), facing(0.0f) {};
 	PositionData(const Vec3& thePos, float theFacing) :pos(thePos), facing(theFacing) {};
 
 	Vec3 pos;
@@ -37,3 +38,5 @@ private:
 
 	friend class ComponentManager;
 };
+
+#endif

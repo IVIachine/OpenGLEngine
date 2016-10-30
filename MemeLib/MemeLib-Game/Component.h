@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _COMPONENT_H_
+#define _COMPONENT_H_
 
 #include <Trackable.h>
 #include <DeanLibDefines.h>
@@ -17,3 +18,5 @@ public:
 private:
 	ComponentID mID;
 };
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _STEERING_COMPONENT_H_
+#define _STEERING_COMPONENT_H_
 
 #include <Trackable.h>
 #include "Vector3.h"
@@ -11,8 +12,8 @@ enum Steering::SteeringType;
 
 struct SteeringData : public Trackable
 {
-	SteeringData() :type(Steering::INVALID_TYPE), targetLoc(Vec3(0,0,0)), ownerID(INVALID_UNIT_ID), targetID(INVALID_UNIT_ID) {};
-	SteeringData(Steering::SteeringType theType, const Vec3& theTargetLoc = Vec3(0,0,0), UnitID theOwner = INVALID_UNIT_ID, UnitID theTarget = INVALID_UNIT_ID)
+	SteeringData() :type(Steering::INVALID_TYPE), targetLoc(Vec3(0, 0, 0)), ownerID(INVALID_UNIT_ID), targetID(INVALID_UNIT_ID) {};
+	SteeringData(Steering::SteeringType theType, const Vec3& theTargetLoc = Vec3(0, 0, 0), UnitID theOwner = INVALID_UNIT_ID, UnitID theTarget = INVALID_UNIT_ID)
 		:type(theType), targetLoc(theTargetLoc), ownerID(theOwner), targetID(theTarget) {};
 	Steering::SteeringType type;
 	Vec3 targetLoc;
@@ -46,3 +47,5 @@ private:
 
 	friend class ComponentManager;
 };
+
+#endif // !_STEERING_COMPONENT_H_

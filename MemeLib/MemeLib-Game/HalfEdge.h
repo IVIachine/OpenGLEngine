@@ -26,4 +26,5 @@ struct HE_Vert
 	Vec3 mPos;
 	HE_Edge* edge;
 };
+
 #endif

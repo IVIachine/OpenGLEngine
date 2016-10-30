@@ -116,8 +116,6 @@ bool GameApp::setup()
 
 void GameApp::cleanup()
 {
-	UNITS->deleteAll();
-
 	UnitManager::disposeInstance();
 	ComponentManager::disposeInstance();
 

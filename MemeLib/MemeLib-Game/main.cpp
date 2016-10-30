@@ -30,7 +30,7 @@ int main()
 		GAME->step();
 		isRunning = GAME->endStep();
 	}
-
+	UNITS->deleteAll();
 	Game::destroyInstance();
 	EventSystem::destroyInstance();
 

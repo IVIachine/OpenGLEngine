@@ -13,6 +13,8 @@
 
 const float LOOP_TARGET_TIME = GameTime::FPS_60;
 
+class Application;
+
 class Game : public EventListener
 {
 public:
@@ -32,14 +34,18 @@ public:
 		sp_instance = NULL;
 	};
 
-	bool	setup(int width, int height);
+	bool	setup(int width, int height, Application* pApp);
 	void	cleanup();
 	
 	void	beginStep();
 	void	step();
 	bool	endStep();	
 
-	virtual void handleEvent(const Event& ev);
+	void handleEvent(const Event& ev) override;
+
+	void stop() { m_stopRequested = true; }
+
+	Application* getApp() const { return mp_app; };
 
 protected:
 	Game();
@@ -48,6 +54,8 @@ private:
 	float	m_fps = GameTime::FPS_60;
 	bool 	m_isRunning;
 	bool	m_stopRequested = false;
+
+	Application* mp_app;
 
 	static Game* sp_instance;
 };

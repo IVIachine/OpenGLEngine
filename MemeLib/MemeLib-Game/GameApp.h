@@ -10,23 +10,21 @@
 #include "ComponentManager.h"
 #include "UnitManager.h"
 #include "GameController.h"
+#include "Application.h"
 
 const int MAX_UNITS = 500;
 
-class GameApp: public EventListener
+class GameApp : public Application
 {
 public:
 	GameApp();
 	~GameApp();
 
-	bool setup(size_t width, size_t height);
-	void cleanup();
-
-	bool loadResources();
-	void unloadResources();
-	virtual void handleEvent(const Event& ev);
-	void update();
-	void draw();
+	bool setup() override;
+	void cleanup() override;
+	void update() override;
+	void draw() override;
+	void handleEvent(const Event& ev) override;
 
 private:
 	Volume*		m_skybox;

@@ -1,4 +1,5 @@
 #include "GameController.h"
+#include "Game.h"
 #include "Input.h"
 #include "EventSystem.h"
 #include "SpawnEvent.h"
@@ -32,6 +33,11 @@ void GameController::update(NavMesh* pNavMesh)
 		}
 	}
 
+	if (INPUT->getKeyDown(Keyboard::KeyCode::Escape))
+	{
+		GAME->stop();
+	}
+
 	mp_target = pNavMesh->getNode(m_index);
 
 	if (INPUT->getKeyDown(Keyboard::F))
@@ -52,6 +58,8 @@ void GameController::update(NavMesh* pNavMesh)
 
 void GameController::draw(NavMesh* pNavMesh)
 {
+	// draw verts, edges, and target node
+
 	for (size_t i = 0; i < pNavMesh->size(); i++)
 	{
 		GIZMOS->drawPoint(pNavMesh->getNode(i)->getPosition());

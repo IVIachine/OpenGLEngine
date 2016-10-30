@@ -14,33 +14,25 @@ int main()
 {
 	srand((unsigned)time(NULL));
 	EventSystem::createInstance();
+	
 	GameApp gameApp;
-	if(!Game::createInstance()->setup(DISPLAY_WIDTH, DISPLAY_HEIGHT))
+	bool isRunning = Game::createInstance()->setup(DISPLAY_WIDTH, DISPLAY_HEIGHT, &gameApp);
+	
+	if(!isRunning)
 	{
 		std::cout << "Failed to create game instance.\n";
 		system("pause");
 		return EXIT_FAILURE;
-	}
-	else
+	}	
+	while (isRunning)
 	{
-		gameApp.setup(DISPLAY_WIDTH, DISPLAY_HEIGHT);
-
-		bool isRunning = gameApp.loadResources();
-		while (isRunning)
-		{
-			gameApp.update();
-
-			gameApp.draw();
-
-			isRunning = GAME->endStep();
-		}
-		UNITS->deleteAll();
-		gameApp.cleanup();
+		GAME->beginStep();
+		GAME->step();
+		isRunning = GAME->endStep();
 	}
 
 	Game::destroyInstance();
 	EventSystem::destroyInstance();
-
 
 	// Don't pause unless there're leaks
 	std::stringstream stream;

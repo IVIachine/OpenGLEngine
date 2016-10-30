@@ -85,9 +85,6 @@
     <ClCompile Include="Input.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files\Util</Filter>
-    </ClCompile>
     <ClCompile Include="Notification.cpp">
       <Filter>Source Files\Messaging</Filter>
     </ClCompile>
@@ -99,6 +96,12 @@
     </ClCompile>
     <ClCompile Include="GameTime.cpp">
       <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,9 +162,6 @@
     <ClInclude Include="Dictionary.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
@@ -219,6 +219,12 @@
     <ClInclude Include="GameTime.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -256,6 +262,12 @@
     </Filter>
     <Filter Include="Source Files\Game Objects">
       <UniqueIdentifier>{5ddc2858-0885-471e-b0c4-4ad83652cb74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{5385a185-83b4-4eda-b73e-dd6e5b37c4a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{f4a33f15-b51b-4126-8fc9-40defb7f2a46}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@
 
 GameApp::GameApp()
 {
-	EVENT_SYSTEM->addListener(SPAWN_EVENT, this);
+	
 }
 
 GameApp::~GameApp()
@@ -17,19 +17,10 @@ GameApp::~GameApp()
 }
 
 
-bool GameApp::setup(size_t width, size_t height)
+bool GameApp::setup()
 {
-	return true;
-}
+	EVENT_SYSTEM->addListener(SPAWN_EVENT, this);
 
-void GameApp::cleanup()
-{
-	unloadResources();
-}
-
-
-bool GameApp::loadResources()
-{
 	if (!ComponentManager::createInstance(100)->setup())
 	{
 		fprintf(stderr, "Failed to initialize Time.\n");
@@ -95,39 +86,40 @@ bool GameApp::loadResources()
 	RESOURCES->addTexture("player", "../Assets/textures/player.png");
 	RESOURCES->addTexture("enemy", "../Assets/textures/enemy.png");
 	RESOURCES->addTexture("kappa", "../Assets/textures/kappa.png");
-	
+
 	RESOURCES->addTexture2D("harambe", RESOURCES->getTexture("harambe"), p_shader);
 	RESOURCES->addTexture2D("brick", RESOURCES->getTexture("brick"), p_shader);
 	RESOURCES->addTexture2D("player", RESOURCES->getTexture("player"), p_shader);
 	RESOURCES->addTexture2D("enemy", RESOURCES->getTexture("enemy"), p_shader);
 	RESOURCES->addTexture2D("kappa", RESOURCES->getTexture("kappa"), p_shader);
-	
+
 	Sprite* pSpr1 = RESOURCES->addSprite("sprite2", RESOURCES->getTexture2D("harambe"));
-	pSpr1->setScale(Vec3(.1f,.1f,.1f));
-	pSpr1->setRotation(Vec3(270,0,0) * Maths::DEG_TO_RAD);
+	pSpr1->setScale(Vec3(.1f, .1f, .1f));
+	pSpr1->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
 
 	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test4.obj", false);
 	mp_navMesh->constructMesh(mp_volume->getMesh());
-	
+
 	Transform skyBoxTransform = Transform(Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(500, 500, 500));
 	m_skybox = new Volume(
 		p_shader,
-		vertices, 
+		vertices,
 		RESOURCES->getTexture("box"),
-		sizeof(vertices) / sizeof(vertices[0]), 
-		indices, 
-		sizeof(indices) / sizeof(indices[0]), 
+		sizeof(vertices) / sizeof(vertices[0]),
+		indices,
+		sizeof(indices) / sizeof(indices[0]),
 		true);
 	m_skybox->setTransform(skyBoxTransform);
 
 	return true;
 }
 
-void GameApp::unloadResources()
+void GameApp::cleanup()
 {
+	UNITS->deleteAll();
+
 	UnitManager::disposeInstance();
 	ComponentManager::disposeInstance();
-	Input::destroyInstance();
 
 	delete m_skybox;
 	m_skybox = NULL;
@@ -144,13 +136,13 @@ const float TARGET_ELAPSED_MS = LOOP_TARGET_TIME / 1000.0f;
 
 void GameApp::update()
 {
-	GAME->beginStep();
+	//GAME->beginStep();
 
 	m_skybox->transform().setPos(GRAPHICS->getCamera()->getPos());
 
 	m_controller.update(mp_navMesh);
 
-	GAME->step();
+	//GAME->step();
 
 	COMPONENTS->update(TARGET_ELAPSED_MS);
 	UNITS->updateAll(TARGET_ELAPSED_MS);

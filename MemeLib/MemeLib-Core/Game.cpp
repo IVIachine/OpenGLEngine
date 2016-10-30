@@ -3,6 +3,7 @@
 #include "GameMessageManager.h"
 #include "Input.h"
 #include "Gizmos.h"
+#include "Application.h"
 
 Game* Game::sp_instance = NULL;
 
@@ -17,7 +18,7 @@ Game::~Game()
 }
 
 
-bool Game::setup(int width, int height)
+bool Game::setup(int width, int height, Application* pApp)
 {
 	// Setup ResourceManager
 	if (!ResourceManager::createInstance()->setup())
@@ -60,7 +61,14 @@ bool Game::setup(int width, int height)
 	{
 		fprintf(stderr, "Failed to initialize GameMessageManager.\n");
 		return false;
-	}	
+	}
+
+	mp_app = pApp;
+	if (!mp_app || !mp_app->setup())
+	{
+		fprintf(stderr, "Failed to initialize Application.\n");
+		return false;
+	}
 
 	m_isRunning = true;
 	return m_isRunning;
@@ -68,6 +76,8 @@ bool Game::setup(int width, int height)
 
 void Game::cleanup()
 {
+	mp_app->cleanup();
+
 	// Dispose ResourceManager
 	ResourceManager::destroyInstance();
 
@@ -100,16 +110,9 @@ void Game::step()
 
 	MESSAGES->processMessagesForThisframe();
 
-	if (INPUT->getKeyDown(Keyboard::KeyCode::Escape))
-	{
-		m_stopRequested = true;
-	}
+	mp_app->update();
 
-	// Exit application if stop requested
-	if (m_stopRequested)
-	{
-		m_isRunning = false;
-	}
+	mp_app->draw();
 }
 
 bool Game::endStep()
@@ -117,6 +120,12 @@ bool Game::endStep()
 	GRAPHICS->pollEvents();
 	INPUT->endStep();
 	TIME->endStep();
+
+	// Exit application if stop requested
+	if (m_stopRequested)
+	{
+		m_isRunning = false;
+	}
 
 	return m_isRunning;
 }

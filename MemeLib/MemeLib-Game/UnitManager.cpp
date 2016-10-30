@@ -145,9 +145,26 @@ void UnitManager::deleteRandomUnit()
 
 void UnitManager::deleteAll()
 {
-	for (std::map<UnitID, Unit*>::iterator itr = mUnitMap.begin(); itr != mUnitMap.end(); itr++)
+	if (mUnitMap.size() > 0)
 	{
-		delete itr->second;
+		for (std::map<UnitID, Unit*>::iterator MapItor = mUnitMap.begin(); MapItor != mUnitMap.end(); ++MapItor)
+		{
+			Unit* pUnit = (*MapItor).second;
+			
+			//remove components
+			ComponentManager* pComponentManager = COMPONENTS;
+
+			pComponentManager->deallocatePhysicsComponent(pUnit->mPhysicsComponentID);
+			pComponentManager->deallocatePositionComponent(pUnit->mPositionComponentID);
+			pComponentManager->deallocateSteeringComponent(pUnit->mSteeringComponentID);
+
+			//call destructor
+			pUnit->~Unit();
+
+			//free the object in the pool
+			mPool.freeObject((Byte*)pUnit);
+		}
+		mUnitMap.clear();
 	}
 }
 

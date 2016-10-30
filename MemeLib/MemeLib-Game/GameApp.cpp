@@ -137,7 +137,6 @@ bool GameApp::loadResources()
 	RESOURCES->getSprite("sprite2")->setRotation(Vec3(270,0,0) * Maths::DEG_TO_RAD);
 	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test4.obj", false);
 	mNavMesh->constructMesh(mp_volume->getMesh());
-	mpPathfinder = new AStarPathfinder(mNavMesh);
 	Transform skyBoxTransform = Transform(Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(500, 500, 500));
 	m_skybox = new Volume(
 		p_shader,
@@ -149,13 +148,6 @@ bool GameApp::loadResources()
 		true);
 
 	m_skybox->setTransform(skyBoxTransform);
-
-	m_path = mpPathfinder->findPath(mNavMesh->getNode(5), mNavMesh->getNode(0));
-
-	std::cout
-		<< "E: " << mNavMesh->edgeCount() << "\n"
-		<< "V: " << mNavMesh->vertCount() << "\n"
-		<< "P: " << m_path.size() << "\n";
 
 	return true;
 }
@@ -248,21 +240,6 @@ void GameApp::draw()
 		for (size_t i = 0; i < mNavMesh->size(); i++)
 		{
 			GIZMOS->drawPoint(mNavMesh->getNode(i)->getPosition());
-		}
-
-		if (m_path.size() > 1)
-		{
-			for (size_t i = 0; i < m_path.size() - 1; i++)
-			{
-				Node* prev = m_path[i];
-				Node* next = m_path[i + 1];
-
-				Vec3 p1 = prev->getPosition();
-				Vec3 p2 = next->getPosition();
-				p1.y += 0.05f;
-				p2.y += 0.05f;
-				//GIZMOS->drawRay(p1, p2);
-			}
 		}
 
 		for (size_t i = 0; i < mNavMesh->edgeCount(); i++)

@@ -47,7 +47,7 @@ public:
 
 	void findPath(Vec3 source, Vec3 target);
 	void findPath(Vec3 target);
-
+	void cleanup();
 private:
 	UnitID mID;
 	ComponentID mPhysicsComponentID;

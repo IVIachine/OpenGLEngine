@@ -18,6 +18,7 @@ AStarPathfinder::AStarPathfinder(Graph* pGraph)
 
 AStarPathfinder::~AStarPathfinder()
 {
+
 }
 
 
@@ -277,6 +278,5 @@ AStarState AStarPathfinder::endStep()
 			mPath.resize(m_options.maxDistance);
 		}
 	}
-
 	return m_state;
 }

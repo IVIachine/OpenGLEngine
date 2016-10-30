@@ -29,8 +29,7 @@ Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 
 Unit::~Unit()
 {
-	delete mpPathfinder;
-	mpPathfinder = NULL;
+	cleanup();
 }
 
 
@@ -115,6 +114,12 @@ void Unit::findPath(Vec3 source, Vec3 target)
 void Unit::findPath(Vec3 target)
 {
 	findPath(getPositionComponent()->getPosition(), target);
+}
+
+void Unit::cleanup()
+{
+	delete mpPathfinder;
+	mpPathfinder = NULL;
 }
 
 float Unit::getFacing() const

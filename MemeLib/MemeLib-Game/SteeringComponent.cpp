@@ -13,6 +13,7 @@ SteeringComponent::SteeringComponent(const ComponentID& id, const ComponentID& p
 SteeringComponent::~SteeringComponent()
 {
 	delete mpSteering;
+	mpSteering = NULL;
 }
 
 void SteeringComponent::applySteering(PhysicsComponent& physicsComponent)
@@ -38,6 +39,7 @@ void SteeringComponent::setData(const SteeringData& data, Path path)
 	{
 		//cleanup old steering - todo: check for already existing steering and reuse if possible
 		delete mpSteering;
+		mpSteering = NULL;
 		//create new steering
 		mpSteering = new PathFollowSteering(data.ownerID, data.targetLoc, data.targetID, .25f);
 		dynamic_cast<PathFollowSteering*>(mpSteering)->setPath(path);
@@ -45,6 +47,7 @@ void SteeringComponent::setData(const SteeringData& data, Path path)
 	}
 	case Steering::FLEE:
 	{
+		delete mpSteering;
 		mpSteering = new SeekSteering(data.ownerID, data.targetLoc, data.targetID, true);
 		break;
 	}

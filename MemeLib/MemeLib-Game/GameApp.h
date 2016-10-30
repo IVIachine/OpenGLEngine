@@ -32,7 +32,6 @@ public:
 private:
 	float		m_counter;
 	Volume*		m_skybox;
-	Pathfinder* mpPathfinder;
 	Texture2D*	mp_texture;
 	Volume*		mp_volume;
 	NavMesh*	mNavMesh;

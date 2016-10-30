@@ -7,9 +7,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 
-#ifndef INPUT
 #define INPUT Input::getInstance()
-#endif // !INPUT
 
 class Input : public Trackable
 {

@@ -49,9 +49,6 @@ private:
 	bool 	m_isRunning;
 	bool	m_stopRequested = false;
 
-	Timer*	mp_loopTimer;
-	Timer*	mp_masterTimer;
-
 	static Game* sp_instance;
 };
 

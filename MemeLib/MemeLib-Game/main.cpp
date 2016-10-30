@@ -40,6 +40,9 @@ int main()
 
 	Game::destroyInstance();
 	EventSystem::destroyInstance();
+
+
+	// Don't pause unless there're leaks
 	std::stringstream stream;
 	gMemoryTracker.reportAllocations(stream);
 	if (stream.str().size() > 0)

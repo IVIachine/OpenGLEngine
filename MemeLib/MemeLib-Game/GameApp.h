@@ -9,6 +9,7 @@
 #include "Graph.h"
 #include "ComponentManager.h"
 #include "UnitManager.h"
+#include "GameController.h"
 
 const int MAX_UNITS = 500;
 
@@ -21,7 +22,6 @@ public:
 	bool setup(size_t width, size_t height);
 	void cleanup();
 
-	void moveCamera(Camera * camera);
 	bool loadResources();
 	void unloadResources();
 	virtual void handleEvent(const Event& ev);
@@ -33,11 +33,11 @@ private:
 	Volume*		m_skybox;
 	Texture2D*	mp_texture;
 	Volume*		mp_volume;
-	NavMesh*	mNavMesh;
+	NavMesh*	mp_navMesh;
 	Path		m_path;
 
-	int	m_index = 0;
-	Node*	mp_target;
+	GameController m_controller;
+	
 };
 
 #endif // !_GAME_APP_H_

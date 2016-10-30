@@ -134,6 +134,7 @@
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="FaceSteering.cpp" />
     <ClCompile Include="GameApp.cpp" />
+    <ClCompile Include="GameController.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="HalfEdge.cpp" />
     <ClCompile Include="main.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Face.h" />
     <ClInclude Include="FaceSteering.h" />
     <ClInclude Include="GameApp.h" />
+    <ClInclude Include="GameController.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="HalfEdge.h" />
     <ClInclude Include="NavMesh.h" />

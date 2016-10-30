@@ -19,10 +19,6 @@ Game::~Game()
 
 bool Game::setup(int width, int height)
 {
-	// Setup Timers
-	mp_loopTimer = new Timer;
-	mp_masterTimer = new Timer;
-
 	// Setup ResourceManager
 	if (!ResourceManager::createInstance()->setup())
 	{
@@ -72,13 +68,6 @@ bool Game::setup(int width, int height)
 
 void Game::cleanup()
 {
-	// Dispose timers
-	delete mp_loopTimer;
-	mp_loopTimer = NULL;
-
-	delete mp_masterTimer;
-	mp_masterTimer = NULL;
-
 	// Dispose ResourceManager
 	ResourceManager::destroyInstance();
 
@@ -103,8 +92,6 @@ void Game::beginStep()
 {
 	INPUT->beginStep();
 	TIME->beginStep();
-
-	mp_loopTimer->start();
 }
 
 void Game::step()
@@ -130,8 +117,6 @@ bool Game::endStep()
 	GRAPHICS->pollEvents();
 	INPUT->endStep();
 	TIME->endStep();
-
-	mp_loopTimer->sleepUntilElapsed(m_fps);
 
 	return m_isRunning;
 }

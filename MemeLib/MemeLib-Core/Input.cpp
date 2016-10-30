@@ -6,8 +6,7 @@ Input* Input::sp_instance = NULL;
 
 
 Input::Input()
-{
-	setup();
+{	
 }
 
 Input::~Input()

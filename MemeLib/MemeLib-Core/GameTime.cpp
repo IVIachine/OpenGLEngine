@@ -4,10 +4,10 @@ GameTime* GameTime::sp_instance = NULL;
 
 GameTime::GameTime()
 {
-	startTime = 0;
-	totalTime = 0;
-	endTime = 0;
-	delta = 0;
+	m_startTime = 0;
+	m_totalTime = 0;
+	m_endTime = 0;
+	m_delta = 0;
 
 	mp_loopTimer = new Timer();
 	mp_loopTimer->start();
@@ -39,25 +39,29 @@ void GameTime::cleanup()
 
 void GameTime::beginStep()
 {
-	startTime = endTime;
+	m_startTime = m_endTime;
+
+	mp_loopTimer->start();
 }
 
 void GameTime::step()
 {
-	totalTime += mp_loopTimer->getElapsedTime();
+	m_totalTime += mp_loopTimer->getElapsedTime();
 }
 
 void GameTime::endStep()
 {
-	endTime = mp_loopTimer->getElapsedTime();
+	m_endTime = mp_loopTimer->getElapsedTime();
 
-	delta = (endTime - startTime);
+	m_delta = (m_endTime - m_startTime);
+
+	mp_loopTimer->sleepUntilElapsed(m_fps);
 }
 
 
 float GameTime::deltaTime()
 {
-	return delta;
+	return m_delta;
 }
 
 int GameTime::elapsedMilliseconds()

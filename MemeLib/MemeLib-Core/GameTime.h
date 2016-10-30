@@ -57,10 +57,11 @@ private:
 	Timer*	mp_masterTimer;
 
 	float
-		startTime,
-		totalTime,
-		endTime,
-		delta;
+		m_fps = FPS_60,
+		m_startTime,
+		m_totalTime,
+		m_endTime,
+		m_delta;
 
 	static GameTime* sp_instance;
 };

@@ -156,7 +156,7 @@ void GameApp::unloadResources()
 {
 	UnitManager::disposeInstance();
 	ComponentManager::disposeInstance();
-	
+	Input::destroyInstance();
 
 	delete m_skybox;
 	m_skybox = NULL;

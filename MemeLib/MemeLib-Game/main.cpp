@@ -34,7 +34,7 @@ int main()
 
 			isRunning = GAME->endStep();
 		}
-
+		UNITS->deleteAll();
 		gameApp.cleanup();
 	}
 

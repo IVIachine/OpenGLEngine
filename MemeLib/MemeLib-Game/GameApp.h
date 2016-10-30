@@ -36,7 +36,7 @@ private:
 	NavMesh*	mNavMesh;
 	Path		m_path;
 
-	size_t	m_index = 0;
+	int	m_index = 0;
 	Node*	mp_target;
 };
 

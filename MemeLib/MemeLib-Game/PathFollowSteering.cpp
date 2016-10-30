@@ -13,7 +13,7 @@ PathFollowSteering::PathFollowSteering(const UnitID& ownerID, const Vec3& target
 	mpArriveSteering = new ArriveSteering(ownerID, targetLoc, targetID, 0.015f, 0.5f, 0.1f);
 	mpFaceSteering = new FaceSteering(ownerID, targetLoc, targetID, 0.005f, 5.0f);
 	mSwitchRadius = switchRadius;
-	mCurrentIndex = 1;
+	mCurrentIndex = 0;
 	mFollowing = false;
 }
 
@@ -51,6 +51,8 @@ Steering* PathFollowSteering::getSteering()
 				mCurrentIndex++;
 			}
 		}
+
+		diff = mpFollowPath.peek(mCurrentIndex)->getPosition() - pOwner->getPositionComponent()->getPosition();
 		if (mCurrentIndex + 1 == mpFollowPath.size() && glm::length(diff) < .15f)
 		{
 			mCurrentIndex = 0;

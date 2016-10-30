@@ -256,10 +256,11 @@ void GameApp::draw()
 		}
 
 		mp_target = mNavMesh->getNode(m_index);
-		EVENT_SYSTEM->fireEvent(ChangeTargetEvent(mp_target->getPosition()));
+	
 		if (mp_target)
 		{
 			GIZMOS->drawPoint(mp_target->getPosition() + Vec3(0.f, 0.5f, 0.f));
+			EVENT_SYSTEM->fireEvent(ChangeTargetEvent(mp_target->getPosition()));
 		}
 
 		UNITS->drawAll();

@@ -17,7 +17,9 @@ int main()
 	EventSystem::createInstance();	
 	GameApp gameApp;
 	bool isRunning = Game::createInstance()->setup(DISPLAY_WIDTH, DISPLAY_HEIGHT, &gameApp);
-	std::cout << "\t\t\tCONTROLS\nPress Enter key to unlock and lock camera\nUse mouse to look around(only when camera is unlocked)\nWASD to move\nQ and Z to move directly up and down\nP to delete units(if applicable) and spawn 10 new ones randomly\nF to have all units path to the target(floating dot)\nUp and Down arrow keys to change target location\n";
+	std::cout << "\t\t\tCONTROLS\nPress Enter key to unlock and lock camera\nUse mouse to look around(only when camera is unlocked)\nWASD " << 
+		"to move\nQ and Z to move directly up and down\nP to delete units(if applicable) and spawn 10 new ones randomly\nF to have all units " <<
+		"path to the target(floating dot)\nUp and Down arrow keys to change target location\nPress G to toggle debug mode\n";
 	if(!isRunning)
 	{
 		std::cout << "Failed to create game instance.\n";

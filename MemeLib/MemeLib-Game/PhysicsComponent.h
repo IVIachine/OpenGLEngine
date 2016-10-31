@@ -10,8 +10,8 @@ class PositionComponent;
 
 static const float MAX_ACC = 2.f;
 static const float MAX_SPEED = .65f;
-static const float MAX_ROT_ACC = 200.0f;
-static const float MAX_ROT_VEL = 300.0f;
+static const float MAX_ROT_ACC = 150.0f;
+static const float MAX_ROT_VEL = 200.0f;
 
 struct PhysicsData : public Trackable
 {

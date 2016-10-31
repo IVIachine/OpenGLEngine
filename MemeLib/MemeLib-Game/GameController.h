@@ -19,6 +19,7 @@ public:
 private:
 	int			m_index = 0;
 	Node*		mp_target;
+	bool		mDebugMode = false;
 };
 
 #endif // !_GAME_CONTROLLER_H_

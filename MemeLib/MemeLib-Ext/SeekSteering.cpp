@@ -1,7 +1,6 @@
 #include "Steering.h"
 #include "SeekSteering.h"
 #include "Game.h"
-#include "GameApp.h"
 #include "UnitManager.h"
 #include "Unit.h"
 

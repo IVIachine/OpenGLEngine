@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{CE9DB759-318D-4923-91A8-EA64F48BA027}</ProjectGuid>
-    <RootNamespace>MemeLibGame</RootNamespace>
+    <ProjectGuid>{8BD8497C-38C0-4600-8A57-D5BF06403071}</ProjectGuid>
+    <RootNamespace>MemeLibExt</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -35,7 +35,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -70,25 +70,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>..\MemeLib-Core;..\MemeLib-Ext;..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;$(IncludePath)</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\MemeLib-Core;..\..\libraries\RakNet\Includes\RakNet;$(IncludePath)</IncludePath>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\MemeLib-Core;..\MemeLib-Ext;..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>MemeLib-Core.lib;MemeLib-Ext.lib;DeanLibDebug.lib;FreeImage.lib;glew32.lib;glew32s.lib;glfw3.lib;opengl32.lib;RakNet.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\MemeLib-Core\Debug;..\MemeLib-Ext\Debug;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\lib\Release\Win32;..\..\libraries\glfw-3.2.1\lib-vc2015;..\..\libraries\DeanLib\lib;..\..\libraries\RakNet\Libs\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
-    <Bscmake>
-      <PreserveSbr>true</PreserveSbr>
-    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -108,7 +97,6 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>MemeLib-Core.lib;RakNet.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -125,13 +113,57 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GameApp.cpp" />
-    <ClCompile Include="GameController.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ArriveSteering.cpp" />
+    <ClCompile Include="AStarPathfinder.cpp" />
+    <ClCompile Include="BeginPathingEvent.cpp" />
+    <ClCompile Include="ChangeTargetEvent.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ComponentManager.cpp" />
+    <ClCompile Include="Connection.cpp" />
+    <ClCompile Include="FaceSteering.cpp" />
+    <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="HalfEdge.cpp" />
+    <ClCompile Include="NavMesh.cpp" />
+    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Path.cpp" />
+    <ClCompile Include="Pathfinder.cpp" />
+    <ClCompile Include="PathFollowSteering.cpp" />
+    <ClCompile Include="PhysicsComponent.cpp" />
+    <ClCompile Include="PositionComponent.cpp" />
+    <ClCompile Include="SeekSteering.cpp" />
+    <ClCompile Include="SpawnEvent.cpp" />
+    <ClCompile Include="Steering.cpp" />
+    <ClCompile Include="SteeringComponent.cpp" />
+    <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="UnitManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameApp.h" />
-    <ClInclude Include="GameController.h" />
+    <ClInclude Include="ArriveSteering.h" />
+    <ClInclude Include="AStarPathfinder.h" />
+    <ClInclude Include="BeginPathingEvent.h" />
+    <ClInclude Include="ChangeTargetEvent.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="ComponentManager.h" />
+    <ClInclude Include="Connection.h" />
+    <ClInclude Include="Defines.h" />
+    <ClInclude Include="Edge.h" />
+    <ClInclude Include="Face.h" />
+    <ClInclude Include="FaceSteering.h" />
+    <ClInclude Include="Graph.h" />
+    <ClInclude Include="HalfEdge.h" />
+    <ClInclude Include="NavMesh.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="Path.h" />
+    <ClInclude Include="Pathfinder.h" />
+    <ClInclude Include="PathFollowSteering.h" />
+    <ClInclude Include="PhysicsComponent.h" />
+    <ClInclude Include="PositionComponent.h" />
+    <ClInclude Include="SeekSteering.h" />
+    <ClInclude Include="SpawnEvent.h" />
+    <ClInclude Include="Steering.h" />
+    <ClInclude Include="SteeringComponent.h" />
+    <ClInclude Include="Unit.h" />
+    <ClInclude Include="UnitManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,11 +3,11 @@
 #include "UnitManager.h"
 #include "Unit.h"
 #include "Game.h"
-#include "GameApp.h"
 #include "Graphics.h"
 #include "EventSystem.h"
 #include "ChangeTargetEvent.h"
 #include "BeginPathingEvent.h"
+#include "ComponentManager.h"
 
 UnitID UnitManager::msNextUnitID = PLAYER_UNIT_ID + 1;
 UnitManager* UnitManager::sp_instance = NULL;

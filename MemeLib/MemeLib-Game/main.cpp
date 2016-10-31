@@ -8,6 +8,8 @@
 #include <sstream>
 #include <time.h>
 
+// Cairo
+
 const int DISPLAY_WIDTH = 1280, DISPLAY_HEIGHT = 720;
 
 int main()

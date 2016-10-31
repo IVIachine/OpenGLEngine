@@ -1,6 +1,5 @@
 #include "Unit.h"
 #include <assert.h>
-#include "GameApp.h"
 #include "Game.h"
 #include "Graphics.h"
 #include "Component.h"
@@ -12,6 +11,7 @@
 #include "EventSystem.h"
 #include "BeginPathingEvent.h"
 #include "ChangeTargetEvent.h"
+#include "ComponentManager.h"
 
 Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 	:mSprite(sprite)

@@ -1,6 +1,8 @@
 #include <iostream>
 #include "MemoryTracker.h"
 #include <Trackable.h>
+#include <sstream>
+#include <string>
 
 using namespace std;
 
@@ -13,8 +15,7 @@ MemoryTracker::MemoryTracker()
 
 MemoryTracker::~MemoryTracker()
 {
-	cout << "MemoryTracker being deleted: final allocations follow:\n";
-	reportAllocations(cout);
+	reportFinalAllocations(std::cout);
 }
 
 
@@ -60,16 +61,38 @@ void MemoryTracker::removeAllocation(Trackable* ptr)
 	}
 }
 
-void MemoryTracker::reportAllocations(std::ostream& stream)
+void MemoryTracker::reportAllocations(std::ostream& out)
 {
 	map<Trackable*, AllocationRecord>::iterator iter;
 	for (iter = mAllocations.begin(); iter != mAllocations.end(); ++iter)
 	{
-		stream
+		out
 			<< " (" + iter->first->toString() + ")"
 			<< " addr:" << iter->first
 			<< " size:" << iter->second.size
 			<< " num:" << iter->second.num
 			<< "\n";
+	}
+}
+
+
+void MemoryTracker::reportFinalAllocations(std::ostream& out)
+{
+	out << "MemoryTracker being deleted: final allocations follow:\n";
+
+	std::stringstream sstream;
+	reportAllocations(sstream);
+
+	if (sstream.str().size() > 0)
+	{
+		std::cout
+			<< "Current memory allocations:\n"
+			<< sstream.str();
+
+		system("pause");
+	}
+	else
+	{
+		std::cout << "There are no memory allocations.\n";
 	}
 }

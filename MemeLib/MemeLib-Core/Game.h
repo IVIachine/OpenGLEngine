@@ -8,6 +8,7 @@
 #include "GameTime.h"
 #include "Volume.h"
 #include "ResourceManager.h"
+#include "Maths.h"
 
 #define GAME Game::getInstance()
 

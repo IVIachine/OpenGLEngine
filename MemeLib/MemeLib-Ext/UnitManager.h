@@ -2,7 +2,7 @@
 #define _UNIT_MANAGER_H_
 
 #include <Trackable.h>
-#include <DeanLibDefines.h>
+
 #include <MemoryPool.h>
 #include <map>
 #include "PositionComponent.h"
@@ -16,6 +16,7 @@ struct PositionData;
 struct PhysicsData;
 
 const UnitID PLAYER_UNIT_ID = 0;
+//const UnitID INVALID_UNIT_ID = UINT_MAX;
 
 #define UNITS UnitManager::getInstance()
 

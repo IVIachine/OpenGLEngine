@@ -2,7 +2,6 @@
 #define _CIRCULAR_QUEUE_H_
 
 #include <Trackable.h>
-#include <DeanLibDefines.h>
 
 template <class T, size_t SIZE>
 class CircularQueue : public Trackable

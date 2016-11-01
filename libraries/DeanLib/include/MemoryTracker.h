@@ -24,6 +24,8 @@ public:
 	void		removeAllocation(Trackable* ptr);
 	void		reportAllocations(std::ostream& stream);
 
+	void		reportFinalAllocations(std::ostream& stream);
+
 private:
 	//copying not allowed
 	MemoryTracker(const MemoryTracker&);

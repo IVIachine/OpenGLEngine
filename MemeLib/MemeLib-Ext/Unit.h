@@ -2,7 +2,7 @@
 #define _UNIT_H_
 
 #include <Trackable.h>
-#include <DeanLibDefines.h>
+#include "MemeLib.h"
 #include <limits>
 #include "Vector3.h"
 #include "AStarPathfinder.h"
@@ -17,14 +17,12 @@ class SteeringComponent;
 class Sprite;
 class UnitManager;
 
+typedef Uint32 UnitID;
 const Uint32 DEFAULT_QUEUE_CAPACITY = 8;
 
-//class Unit : public TransactionProcessor
 class Unit
 {
 public:
-	//void postTransaction(const Transaction& transaction);
-	//void processTransactions();
 	void draw();
 	float getFacing() const;
 	void update(float elapsedTime);
@@ -47,12 +45,13 @@ public:
 	void cleanup();
 	void changeTarg(Vec3 targ) { m_currentTarget = targ; };
 	Vec3 getTarget() { return m_currentTarget; };
+
 private:
 	UnitID mID;
 	ComponentID mPhysicsComponentID;
 	ComponentID mPositionComponentID;
 	ComponentID mSteeringComponentID;
-	//CircularQueue<PositionTransaction, DEFAULT_QUEUE_CAPACITY> mPositionTransactionQueue;
+
 	Sprite mSprite;
 	float mMaxAcc;
 	float mMaxSpeed;

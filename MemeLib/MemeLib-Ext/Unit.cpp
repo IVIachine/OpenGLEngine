@@ -99,7 +99,7 @@ SteeringComponent* Unit::getSteeringComponent() const
 	return pComponent;
 }
 
-void Unit::setSteering(Steering::SteeringType type, Vec3 targetLoc /*= ZERO_VECTOR2D*/, UnitID targetUnitID /*= INVALID_UNIT_ID*/)
+void Unit::setSteering(Steering::SteeringType type, Vec3 targetLoc, UnitID targetUnitID)
 {
 	SteeringComponent* pSteeringComponent = getSteeringComponent();
 	if (pSteeringComponent != NULL)

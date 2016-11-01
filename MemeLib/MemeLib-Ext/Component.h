@@ -2,7 +2,6 @@
 #define _COMPONENT_H_
 
 #include <Trackable.h>
-#include <DeanLibDefines.h>
 #include <limits>
 
 typedef size_t ComponentID;

@@ -86,7 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\CircularQueue.h" />
-    <ClInclude Include="include\DeanLibDefines.h" />
     <ClInclude Include="include\MemoryPool.h" />
     <ClInclude Include="include\MemoryTracker.h" />
     <ClInclude Include="include\PerformanceTracker.h" />

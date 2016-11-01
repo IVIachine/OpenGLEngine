@@ -28,9 +28,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\DeanLibDefines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\MemoryPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>

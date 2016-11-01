@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include <random>
+#include <time.h>
 
 class Maths
 {
@@ -13,6 +14,11 @@ public:
 
 	static float clamp(float value, float min, float max);
 	static float mapToRange(float value, float min, float max);
+
+	static void seedRandom()
+	{
+		srand((unsigned)time(NULL));
+	};
 
 	static float genRandomFloat()
 	{

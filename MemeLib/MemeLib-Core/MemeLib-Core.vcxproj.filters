@@ -231,6 +231,9 @@
     <ClInclude Include="TextAsset.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="MemeLib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

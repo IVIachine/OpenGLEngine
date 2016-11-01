@@ -57,6 +57,12 @@
     <Filter Include="Source Files\Steering">
       <UniqueIdentifier>{5ef97c2e-7fdf-4470-ae04-c21890e5eb02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Net">
+      <UniqueIdentifier>{76d12083-3a8d-4102-8dcf-50202cbc1fc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Net">
+      <UniqueIdentifier>{eb12f046-88db-420a-984e-a14722420d70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UnitManager.cpp">
@@ -127,6 +133,15 @@
     </ClCompile>
     <ClCompile Include="HalfEdge.cpp">
       <Filter>Source Files\Pathfinding\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="NetClient.cpp">
+      <Filter>Source Files\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="NetServer.cpp">
+      <Filter>Source Files\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="User.cpp">
+      <Filter>Source Files\Net</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,8 +220,14 @@
     <ClInclude Include="Path.h">
       <Filter>Header Files\Pathfinding\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Defines.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="NetClient.h">
+      <Filter>Header Files\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="NetServer.h">
+      <Filter>Header Files\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="User.h">
+      <Filter>Header Files\Net</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

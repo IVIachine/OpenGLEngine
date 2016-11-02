@@ -2,6 +2,10 @@
 #define _NET_SERVER_H_
 
 #include <cassert>
+#include <RakPeerInterface.h>
+#include <MessageIdentifiers.h>
+#include <RakNetTypes.h>
+#include <BitStream.h>
 
 #define SERVER NetServer::getInstance()
 

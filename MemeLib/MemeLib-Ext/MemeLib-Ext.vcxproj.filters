@@ -149,9 +149,6 @@
     <ClCompile Include="ObjectCreationRegistry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Network.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UnitManager.h">
@@ -242,10 +239,7 @@
       <Filter>Header Files\Net</Filter>
     </ClInclude>
     <ClInclude Include="ObjectCreationRegistry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Network.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Net</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

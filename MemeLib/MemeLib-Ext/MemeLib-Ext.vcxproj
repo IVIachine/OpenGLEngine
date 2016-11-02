@@ -127,7 +127,6 @@
     <ClCompile Include="NavMesh.cpp" />
     <ClCompile Include="NetClient.cpp" />
     <ClCompile Include="NetServer.cpp" />
-    <ClCompile Include="Network.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="ObjectCreationRegistry.cpp" />
     <ClCompile Include="Path.cpp" />
@@ -160,7 +159,6 @@
     <ClInclude Include="NavMesh.h" />
     <ClInclude Include="NetClient.h" />
     <ClInclude Include="NetServer.h" />
-    <ClInclude Include="Network.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="ObjectCreationRegistry.h" />
     <ClInclude Include="Path.h" />

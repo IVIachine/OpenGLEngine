@@ -2,6 +2,10 @@
 #define _NET_CLIENT_H_
 
 #include <cassert>
+#include <RakPeerInterface.h>
+#include <MessageIdentifiers.h>
+#include <RakNetTypes.h>
+#include <BitStream.h>
 
 #define CLIENT NetClient::getInstance()
 

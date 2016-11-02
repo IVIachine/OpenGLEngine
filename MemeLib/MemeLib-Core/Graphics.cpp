@@ -63,6 +63,7 @@ Graphics::~Graphics()
 	cleanup();
 }
 
+
 bool Graphics::setup(int width, int height, std::string windowName)
 {
 	m_camera = new Camera(Vec3(0.f, 0.f, -10.f), 70.0f, float(width) / float(height), 0.01f, 1000.0f);
@@ -81,10 +82,8 @@ bool Graphics::setup(int width, int height, std::string windowName)
 
 	if (!m_window)
 	{
-		glfwTerminate();
-		std::cout << "Failed to load the window, exiting...\n";
-		system("pause");
-		exit(1);
+		fprintf(stderr, "Failed to initialize GLFW\n");
+		return false;
 	}
 
 	glfwMakeContextCurrent(m_window);

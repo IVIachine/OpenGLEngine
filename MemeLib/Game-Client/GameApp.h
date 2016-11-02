@@ -32,8 +32,9 @@ private:
 	Volume*		mp_volume;
 	NavMesh*	mp_navMesh;
 
-	GameController m_controller;
-	
+	GLuint tex;
+
+	GameController m_controller;	
 };
 
 #endif // !_GAME_APP_H_

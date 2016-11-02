@@ -3,8 +3,8 @@
 
 #include <cassert>
 #include "Dictionary.h"
+#include "Font.h"
 
-class Font;
 class Texture;
 class Texture2D;
 class Shader;
@@ -27,7 +27,7 @@ public:
 		sp_instance = new ResourceManager();
 		return getInstance();
 	};
-	static void		destroyInstance()
+	static void				destroyInstance()
 	{
 		delete sp_instance;
 		sp_instance = NULL;
@@ -36,7 +36,7 @@ public:
 	bool setup();
 	void cleanup();
 
-	Font*		addFont(TKey key, const std::string& filename);
+	Font*		addFont(TKey key, const std::string& filename, size_t size = 12);
 	Font*		getFont(TKey key);
 	Font*		setFont(TKey key, const std::string& filename);
 
@@ -62,6 +62,8 @@ private:
 	Dictionary<TKey, Texture2D> m_texture2Ds;
 	Dictionary<TKey, Shader>	m_shaders;
 	Dictionary<TKey, Sprite>	m_sprites;
+
+	FT_Library  m_ft_library;
 
 	ResourceManager();
 	~ResourceManager();

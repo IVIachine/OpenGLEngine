@@ -70,7 +70,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
-    <IncludePath>..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>..\..\libraries\RakNet\Includes\RakNet;$(IncludePath)</IncludePath>
@@ -80,7 +80,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Bscmake>

@@ -112,6 +112,10 @@ bool GameApp::setup()
 		true);
 	m_skybox->setTransform(skyBoxTransform);
 
+	// https://en.wikibooks.org/wiki/OpenGL_Programming/Modern_OpenGL_Tutorial_Text_Rendering_01#The_FreeType_library
+	RESOURCES->addShader("text", "../Assets/shaders/text");
+	RESOURCES->addFont("cour", "../Assets/fonts/cour.ttf", 24);
+
 	return true;
 }
 
@@ -160,6 +164,7 @@ void GameApp::draw()
 		m_controller.draw(mp_navMesh);
 
 		UNITS->drawAll();
+
 	}
 	GRAPHICS->flip();
 }

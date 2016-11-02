@@ -10,6 +10,8 @@
 #include "DS_BytePool.h"
 #include "Camera.h"
 
+#include "Font.h"
+
 #define GRAPHICS Graphics::getInstance()
 
 struct GLFWwindow;
@@ -50,7 +52,7 @@ public:
 	void		setWindowTitle(const std::string title);
 	void		flip();
 
-	Vec2	getWindowSize();
+	Vec2		getWindowSize();
 	std::string	getWindowTitle();
 	bool		exitWindow();
 
@@ -77,9 +79,9 @@ private:
 	std::string m_title;
 	int			m_width;
 	int			m_height;
-	Vec2	m_mousePosition;
+	Vec2		m_mousePosition;
 	bool		m_enableMouseLook = true;
-
+	
 	
 	static Graphics* sp_instance;
 

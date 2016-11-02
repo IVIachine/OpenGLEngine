@@ -63,6 +63,12 @@
     <Filter Include="Source Files\Net">
       <UniqueIdentifier>{eb12f046-88db-420a-984e-a14722420d70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game Objects">
+      <UniqueIdentifier>{36e42803-7d85-4212-b653-9835ea3d46ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Objects">
+      <UniqueIdentifier>{46fb2e4d-efed-4c64-b79d-c088184dfc32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UnitManager.cpp">
@@ -134,20 +140,17 @@
     <ClCompile Include="HalfEdge.cpp">
       <Filter>Source Files\Pathfinding\Core</Filter>
     </ClCompile>
-    <ClCompile Include="NetClient.cpp">
-      <Filter>Source Files\Net</Filter>
-    </ClCompile>
-    <ClCompile Include="NetServer.cpp">
-      <Filter>Source Files\Net</Filter>
-    </ClCompile>
-    <ClCompile Include="User.cpp">
-      <Filter>Source Files\Net</Filter>
-    </ClCompile>
     <ClCompile Include="LinkingContext.cpp">
       <Filter>Source Files\Net</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectManager.cpp">
+      <Filter>Source Files\Game Objects</Filter>
+    </ClCompile>
     <ClCompile Include="ObjectCreationRegistry.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Net</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -226,20 +229,17 @@
     <ClInclude Include="Path.h">
       <Filter>Header Files\Pathfinding\Core</Filter>
     </ClInclude>
-    <ClInclude Include="NetClient.h">
-      <Filter>Header Files\Net</Filter>
-    </ClInclude>
-    <ClInclude Include="NetServer.h">
-      <Filter>Header Files\Net</Filter>
-    </ClInclude>
-    <ClInclude Include="User.h">
-      <Filter>Header Files\Net</Filter>
-    </ClInclude>
     <ClInclude Include="LinkingContext.h">
       <Filter>Header Files\Net</Filter>
     </ClInclude>
     <ClInclude Include="ObjectCreationRegistry.h">
       <Filter>Header Files\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.h">
+      <Filter>Header Files\Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\Game Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

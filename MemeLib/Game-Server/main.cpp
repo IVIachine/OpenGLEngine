@@ -1,7 +1,4 @@
-#include "Game.h"
-#include "EventSystem.h"
-#include "NetServer.h"
-#include "Input.h"
+#include "Common.h"
 
 int main()
 {

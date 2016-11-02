@@ -88,12 +88,6 @@
     <ClCompile Include="Notification.cpp">
       <Filter>Source Files\Messaging</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjectManager.cpp">
-      <Filter>Source Files\Game Objects</Filter>
-    </ClCompile>
     <ClCompile Include="GameTime.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
@@ -210,12 +204,6 @@
     <ClInclude Include="GameMessageManager.h">
       <Filter>Header Files\Messaging</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files\Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjectManager.h">
-      <Filter>Header Files\Game Objects</Filter>
-    </ClInclude>
     <ClInclude Include="GameTime.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
@@ -265,12 +253,6 @@
     </Filter>
     <Filter Include="Source Files\Events">
       <UniqueIdentifier>{842793ba-fe57-4f1e-80e0-8f7591777634}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game Objects">
-      <UniqueIdentifier>{0f8950fc-2ea6-4621-9661-70f0c21c9326}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game Objects">
-      <UniqueIdentifier>{5ddc2858-0885-471e-b0c4-4ad83652cb74}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{5385a185-83b4-4eda-b73e-dd6e5b37c4a6}</UniqueIdentifier>

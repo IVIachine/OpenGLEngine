@@ -69,7 +69,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\MemeLib-Core;..\MemeLib-Ext;..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\MemeLib-Core;..\MemeLib-Ext;..\Common;..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>..\MemeLib-Core;..\..\libraries\RakNet\Includes\RakNet;$(IncludePath)</IncludePath>
@@ -79,12 +79,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\MemeLib-Core;..\MemeLib-Ext;..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\MemeLib-Core;..\MemeLib-Ext;..\Common;..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>MemeLib-Core.lib;MemeLib-Ext.lib;DeanLibDebug.lib;FreeImage.lib;glew32.lib;glew32s.lib;glfw3.lib;opengl32.lib;RakNet.lib;freetype27d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\MemeLib-Core\Debug;..\MemeLib-Ext\Debug;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\lib\Release\Win32;..\..\libraries\glfw-3.2.1\lib-vc2015;..\..\libraries\DeanLib\lib;..\..\libraries\RakNet\Libs\Debug;..\..\libraries\freetype-2.7\objs\vc2010\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Common.lib;MemeLib-Core.lib;MemeLib-Ext.lib;DeanLibDebug.lib;FreeImage.lib;glew32.lib;glew32s.lib;glfw3.lib;opengl32.lib;RakNet.lib;freetype27d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\MemeLib-Core\Debug;..\MemeLib-Ext\Debug;..\Common\Debug;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\lib\Release\Win32;..\..\libraries\glfw-3.2.1\lib-vc2015;..\..\libraries\DeanLib\lib;..\..\libraries\RakNet\Libs\Debug;..\..\libraries\freetype-2.7\objs\vc2010\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>

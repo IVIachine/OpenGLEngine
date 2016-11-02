@@ -77,7 +77,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -121,12 +125,12 @@
     <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="FaceSteering.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="HalfEdge.cpp" />
     <ClCompile Include="LinkingContext.cpp" />
     <ClCompile Include="NavMesh.cpp" />
-    <ClCompile Include="NetClient.cpp" />
-    <ClCompile Include="NetServer.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="ObjectCreationRegistry.cpp" />
     <ClCompile Include="Path.cpp" />
@@ -140,7 +144,6 @@
     <ClCompile Include="SteeringComponent.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitManager.cpp" />
-    <ClCompile Include="User.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArriveSteering.h" />
@@ -153,12 +156,12 @@
     <ClInclude Include="Edge.h" />
     <ClInclude Include="Face.h" />
     <ClInclude Include="FaceSteering.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="HalfEdge.h" />
     <ClInclude Include="LinkingContext.h" />
     <ClInclude Include="NavMesh.h" />
-    <ClInclude Include="NetClient.h" />
-    <ClInclude Include="NetServer.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="ObjectCreationRegistry.h" />
     <ClInclude Include="Path.h" />
@@ -172,7 +175,6 @@
     <ClInclude Include="SteeringComponent.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitManager.h" />
-    <ClInclude Include="User.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

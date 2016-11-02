@@ -17,6 +17,10 @@ bool NetClient::setup()
 {
 	std::cout << "Starting client.\n";
 
+	RakNet::SocketDescriptor socketDesc;
+	mp_peer = RakNet::RakPeerInterface::GetInstance();
+	mp_peer->Startup(1, &socketDesc, 1);
+
 	return true;
 }
 
@@ -26,13 +30,18 @@ void NetClient::cleanup()
 
 void NetClient::update()
 {
-	for (packet = peer->Receive(); packet; peer->DeallocatePacket(packet), packet = peer->Receive())
+	if (!m_isConnected)
+		return;
+
+	for (mp_packet = mp_peer->Receive(); mp_packet; mp_peer->DeallocatePacket(mp_packet), mp_packet = mp_peer->Receive())
 	{
-		switch (packet->data[0])
+		switch (mp_packet->data[0])
 		{
 		case ID_REMOTE_DISCONNECTION_NOTIFICATION:
+		{
 			printf("Another client has disconnected.\n");
-			break;
+		}
+		break;
 		case ID_REMOTE_CONNECTION_LOST:
 		{
 			printf("Another client has lost the connection.\n");
@@ -68,7 +77,7 @@ void NetClient::update()
 		}
 			break;
 		default:
-			printf("Message with identifier %i has arrived.\n", packet->data[0]);
+			printf("Message with identifier %i has arrived.\n", mp_packet->data[0]);
 			break;
 		}
 	}

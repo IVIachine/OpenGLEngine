@@ -1,12 +1,5 @@
-#include <iostream>
 #include "GameApp.h"
-#include "EventSystem.h"
-#include "Mesh.h"
-#include "Shader.h"
-#include "Graphics.h"
-#include "MemoryTracker.h"
-#include <sstream>
-#include "NetClient.h"
+#include "Common.h"
 
 const int DISPLAY_WIDTH = 1280, DISPLAY_HEIGHT = 720;
 

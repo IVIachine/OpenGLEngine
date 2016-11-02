@@ -1,7 +1,6 @@
 #ifndef _NET_CLIENT_H_
 #define _NET_CLIENT_H_
 
-#include "User.h"
 #include <cassert>
 #include <string>
 #include <RakPeerInterface.h>
@@ -10,8 +9,6 @@
 #include <BitStream.h>
 
 #define CLIENT NetClient::getInstance()
-
-static const User LOCAL("System");
 
 class NetClient
 {
@@ -36,6 +33,9 @@ public:
 	void cleanup();
 	void update();
 
+	void connect(const std::string address);
+	bool isConnected() const;
+
 private:
 	NetClient();
 	~NetClient();
@@ -43,7 +43,6 @@ private:
 	RakNet::RakPeerInterface* mp_peer;
 	RakNet::Packet*	mp_packet;
 
-	User	m_user;
 	bool	m_isConnected;
 
 	static NetClient* sp_instance;

@@ -39,12 +39,18 @@ int main()
 	
 	while (isRunning)
 	{
-		GAME->beginStep();
-		
+		GAME->beginStep();		
 		GAME->step();
 
-		CLIENT->update();
+		if (!CLIENT->isConnected())
+		{
+			if (INPUT->getKeyDown(Keyboard::C))
+			{
+				CLIENT->connect("127.0.0.1");
+			}
+		}
 
+		CLIENT->update();
 		isRunning = GAME->endStep();
 	}
 	

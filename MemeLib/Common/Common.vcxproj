@@ -120,12 +120,10 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="NetClient.h" />
     <ClInclude Include="NetServer.h" />
-    <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NetClient.cpp" />
     <ClCompile Include="NetServer.cpp" />
-    <ClCompile Include="User.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

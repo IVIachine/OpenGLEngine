@@ -2,6 +2,7 @@
 #define _COMMON_H_
 
 #include "Game.h"
+#include "Input.h"
 #include "EventSystem.h"
 #include "NetServer.h"
 #include "NetClient.h"

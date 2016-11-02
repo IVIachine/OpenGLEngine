@@ -24,8 +24,6 @@ bool NetServer::setup()
 
 	mp_peer->SetMaximumIncomingConnections(MAX_CLIENTS);
 
-	m_users[REMOTE] = mp_peer->GetMyGUID();
-
 	return true;
 }
 

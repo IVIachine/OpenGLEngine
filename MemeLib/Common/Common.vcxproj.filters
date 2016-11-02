@@ -29,18 +29,12 @@
     <ClInclude Include="NetServer.h">
       <Filter>Header Files\Net</Filter>
     </ClInclude>
-    <ClInclude Include="User.h">
-      <Filter>Header Files\Net</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NetServer.cpp">
       <Filter>Source Files\Net</Filter>
     </ClCompile>
     <ClCompile Include="NetClient.cpp">
-      <Filter>Source Files\Net</Filter>
-    </ClCompile>
-    <ClCompile Include="User.cpp">
       <Filter>Source Files\Net</Filter>
     </ClCompile>
   </ItemGroup>

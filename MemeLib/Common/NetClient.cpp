@@ -1,5 +1,6 @@
 #include "NetClient.h"
 #include <iostream>
+#include "NetServer.h"
 
 NetClient* NetClient::sp_instance = NULL;
 
@@ -81,4 +82,20 @@ void NetClient::update()
 			break;
 		}
 	}
+}
+
+void NetClient::connect(const std::string address)
+{
+	RakNet::SocketDescriptor socketDesc;
+	mp_peer = RakNet::RakPeerInterface::GetInstance();
+	mp_peer->Startup(1, &socketDesc, 1);
+
+	RakNet::ConnectionAttemptResult res = mp_peer->Connect(address.c_str(), SERVER_PORT, 0, 0);
+
+	m_isConnected = true;
+}
+
+bool NetClient::isConnected() const
+{
+	return m_isConnected;
 }

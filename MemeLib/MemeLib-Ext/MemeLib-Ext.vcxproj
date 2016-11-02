@@ -123,10 +123,12 @@
     <ClCompile Include="FaceSteering.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="HalfEdge.cpp" />
+    <ClCompile Include="LinkingContext.cpp" />
     <ClCompile Include="NavMesh.cpp" />
     <ClCompile Include="NetClient.cpp" />
     <ClCompile Include="NetServer.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="ObjectCreationRegistry.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="PathFollowSteering.cpp" />
@@ -153,10 +155,12 @@
     <ClInclude Include="FaceSteering.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="HalfEdge.h" />
+    <ClInclude Include="LinkingContext.h" />
     <ClInclude Include="NavMesh.h" />
     <ClInclude Include="NetClient.h" />
     <ClInclude Include="NetServer.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="ObjectCreationRegistry.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="PathFollowSteering.h" />

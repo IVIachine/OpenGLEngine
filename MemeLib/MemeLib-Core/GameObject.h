@@ -13,6 +13,10 @@ public:
 	virtual void update();
 	virtual void draw();
 	virtual void handleEvent(const Event& ev);
+	
+	enum { mClassId = 'GOBJ' };
+	virtual uint32_t GetClassId() const { return mClassId; };
+	static GameObject* CreateInstance() { return new GameObject(); };
 
 private:
 	GameObject();

@@ -2,7 +2,6 @@
 #define _UNIT_H_
 
 #include <Trackable.h>
-#include "MemeLib.h"
 #include <limits>
 #include "Vector3.h"
 #include "AStarPathfinder.h"
@@ -24,6 +23,7 @@ class Unit
 {
 public:
 	void draw();
+
 	float getFacing() const;
 	void update(float elapsedTime);
 

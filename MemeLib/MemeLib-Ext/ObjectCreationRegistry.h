@@ -7,6 +7,7 @@
 #include <cassert>
 
 typedef GameObject* (*GameObjectCreationFunc)();
+#define REGISTRY ObjectCreationRegistry::getInstance()
 
 class ObjectCreationRegistry : public Trackable
 {

@@ -134,21 +134,15 @@ void GameApp::cleanup()
 	mp_navMesh = NULL;
 }
 
-
-const float TARGET_ELAPSED_MS = LOOP_TARGET_TIME / 1000.0f;
-
 void GameApp::update()
 {
-	//GAME->beginStep();
-
 	m_skybox->transform().setPosition(GRAPHICS->getCamera()->getPosition());
 
 	m_controller.update(mp_navMesh);
 
-	//GAME->step();
+	COMPONENTS->update(FIXED_UPDATE_DELTA);
 
-	COMPONENTS->update(TARGET_ELAPSED_MS);
-	UNITS->updateAll(TARGET_ELAPSED_MS);
+	UNITS->updateAll(FIXED_UPDATE_DELTA);
 }
 
 void GameApp::draw()
@@ -164,7 +158,6 @@ void GameApp::draw()
 		m_controller.draw(mp_navMesh);
 
 		UNITS->drawAll();
-
 	}
 	GRAPHICS->flip();
 }

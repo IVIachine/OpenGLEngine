@@ -13,6 +13,7 @@
 #define GAME Game::getInstance()
 
 const float LOOP_TARGET_TIME = GameTime::FPS_60;
+const float FIXED_UPDATE_DELTA = LOOP_TARGET_TIME / 1000.0f;
 
 class Application;
 

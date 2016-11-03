@@ -7,6 +7,11 @@
 #include <MessageIdentifiers.h>
 #include <RakNetTypes.h>
 #include <BitStream.h>
+#include "LinkingContext.h"
+#include "ObjectCreationRegistry.h"
+#include "GameObjectManager.h"
+#include "Archer.h"
+#include "TownCenter.h"
 
 #define SERVER NetServer::getInstance()
 
@@ -42,6 +47,8 @@ private:
 
 	RakNet::RakPeerInterface* mp_peer;
 	RakNet::Packet*	mp_packet;
+	LinkingContext* mLinkContext;
+	GameObjectManager* mManager;
 
 	static NetServer* sp_instance;
 };

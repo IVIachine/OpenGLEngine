@@ -15,20 +15,25 @@ NetServer::~NetServer()
 bool NetServer::setup()
 {
 	std::cout << "Starting server.\n";
-
+	ObjectCreationRegistry::createInstance();
+	LinkingContext::createInstance();
+	REGISTRY->RegisterCreationFunction<GameObject>();
+	REGISTRY->RegisterCreationFunction<Archer>();
+	REGISTRY->RegisterCreationFunction<TownCenter>();
 	RakNet::SocketDescriptor socketDesc(SERVER_PORT, 0);
-
 	mp_peer = RakNet::RakPeerInterface::GetInstance();
-
 	mp_peer->Startup(MAX_CLIENTS, &socketDesc, 1);
-
 	mp_peer->SetMaximumIncomingConnections(MAX_CLIENTS);
-
+	mManager = new GameObjectManager();
 	return true;
 }
 
 void NetServer::cleanup()
 {
+	LINKING->destroyInstance();
+	REGISTRY->destroyInstance();
+	delete mManager;
+	mManager = NULL;
 }
 
 void NetServer::update()
@@ -61,6 +66,18 @@ void NetServer::update()
 		case ID_NEW_INCOMING_CONNECTION:
 		{
 			printf("A connection is incoming.\n");
+			TownCenter* cent = new TownCenter();
+			cent->setHealth(200);
+			cent->setLoc(Vec3(20, 40, 10));
+			cent->setType(MonsterType::ELVES);
+			cent->send(mp_peer);
+
+			Archer* arch = new Archer();
+			arch->setCenter(cent);
+			arch->setHealth(100);
+			arch->setAction(CurrentAction::WALKING);
+			arch->send(mp_peer);
+
 		}
 		break;
 		case ID_NO_FREE_INCOMING_CONNECTIONS:

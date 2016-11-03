@@ -17,16 +17,24 @@ NetClient::~NetClient()
 bool NetClient::setup()
 {
 	std::cout << "Starting client.\n";
-
+	ObjectCreationRegistry::createInstance();
+	LinkingContext::createInstance();
+	REGISTRY->RegisterCreationFunction<GameObject>();
+	REGISTRY->RegisterCreationFunction<Archer>();
+	REGISTRY->RegisterCreationFunction<TownCenter>();
 	RakNet::SocketDescriptor socketDesc;
 	mp_peer = RakNet::RakPeerInterface::GetInstance();
 	mp_peer->Startup(1, &socketDesc, 1);
-
+	mManager = new GameObjectManager();
 	return true;
 }
 
 void NetClient::cleanup()
 {
+	LINKING->destroyInstance();
+	REGISTRY->destroyInstance();
+	delete mManager;
+	mManager = NULL;
 }
 
 void NetClient::update()
@@ -76,7 +84,18 @@ void NetClient::update()
 		{
 				printf("Connection lost.\n");
 		}
-			break;
+		break;
+		case REPLICATION_PACKET:
+		{
+			RakNet::BitStream bsIn(mp_packet->data, mp_packet->length, false);
+			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+			uint32_t netId, classId;
+			bsIn >> netId;
+			bsIn >> classId;
+			GameObject* tmp = LINKING->getGameObject(netId, true, classId);
+			tmp->read(bsIn);
+		}
+		break;
 		default:
 			printf("Message with identifier %i has arrived.\n", mp_packet->data[0]);
 			break;

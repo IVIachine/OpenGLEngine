@@ -7,6 +7,9 @@
 #include <MessageIdentifiers.h>
 #include <RakNetTypes.h>
 #include <BitStream.h>
+#include "LinkingContext.h"
+#include "ObjectCreationRegistry.h"
+#include "GameObjectManager.h"
 
 #define CLIENT NetClient::getInstance()
 
@@ -42,9 +45,9 @@ private:
 
 	RakNet::RakPeerInterface* mp_peer;
 	RakNet::Packet*	mp_packet;
-
+	LinkingContext* mLinkContext;
 	bool	m_isConnected;
-
+	GameObjectManager* mManager;
 	static NetClient* sp_instance;
 };
 

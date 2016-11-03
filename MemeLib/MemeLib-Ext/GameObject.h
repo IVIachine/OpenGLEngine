@@ -2,6 +2,8 @@
 #define _GAME_OBJECT_H_
 
 #include "EventListener.h"
+#include <BitStream.h>
+#include <RakPeerInterface.h>
 
 class GameObjectManager;
 
@@ -17,10 +19,13 @@ public:
 	enum { mClassId = 'GOBJ' };
 	virtual uint32_t GetClassId() const { return mClassId; };
 	static GameObject* CreateInstance() { return new GameObject(); };
-
-private:
+	virtual void send(RakNet::RakPeerInterface * peer);
+	virtual void write(RakNet::BitStream& stream);
+	virtual void read(RakNet::BitStream& stream);
 	GameObject();
 	~GameObject();
+private:
+
 
 	friend class GameObjectManager;
 };

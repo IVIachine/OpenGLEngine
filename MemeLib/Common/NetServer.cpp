@@ -65,10 +65,18 @@ void NetServer::update()
 		break;
 		case ID_NEW_INCOMING_CONNECTION:
 		{
+			RakNet::BitStream stream;
+			stream.Write((RakNet::MessageID)REPLICATION_PACKET);
 			for (size_t i = 0; i < OBJECT_MANAGER->getNumUnits(); i++)
 			{
-				OBJECT_MANAGER->getAtIndex(i)->send(mp_peer);
+				OBJECT_MANAGER->getAtIndex(i)->send(stream);
 			}
+			mp_peer->Send(&stream, HIGH_PRIORITY, UNRELIABLE, 0, mp_packet->systemAddress, false);
+
+			RakNet::BitStream stream2;
+			stream2.Write((RakNet::MessageID)REQUEST_WRITE_PACKET);
+			stream2.Write(mp_peer->GetIndexFromSystemAddress(mp_packet->systemAddress));
+			mp_peer->Send(&stream2, HIGH_PRIORITY, UNRELIABLE, 0, mp_packet->systemAddress, false);
 		}
 		break;
 		case ID_NO_FREE_INCOMING_CONNECTIONS:
@@ -132,42 +140,49 @@ void NetServer::generateState()
 	elf1->setCenter(elfCent1);
 	elf1->setHealth(100);
 	elf1->setAction(CurrentAction::WALKING);
+	elf1->setLoc(Vec3(20, 40, 10));
 	OBJECT_MANAGER->addObject(elf1);
 
 	Archer* elf2 = new Archer();
 	elf2->setCenter(elfCent1);
 	elf2->setHealth(100);
 	elf2->setAction(CurrentAction::WALKING);
+	elf2->setLoc(Vec3(20, 40, 10));
 	OBJECT_MANAGER->addObject(elf2);
 
 	Archer* were1 = new Archer();
 	were1->setCenter(wereCent1);
 	were1->setHealth(100);
 	were1->setAction(CurrentAction::WALKING);
+	were1->setLoc(Vec3(20, 40, 10));
 	OBJECT_MANAGER->addObject(were1);
 
 	Archer* vamp1 = new Archer();
 	vamp1->setCenter(vampCent1);
 	vamp1->setHealth(100);
 	vamp1->setAction(CurrentAction::WALKING);
+	vamp1->setLoc(Vec3(20, 40, 10));
 	OBJECT_MANAGER->addObject(vamp1);
 
 	Archer* orc1 = new Archer();
 	orc1->setCenter(orcCent1);
 	orc1->setHealth(100);
 	orc1->setAction(CurrentAction::WALKING);
+	orc1->setLoc(Vec3(20, 40, 10));
 	OBJECT_MANAGER->addObject(orc1);
 
 	Archer* orc2 = new Archer();
 	orc2->setCenter(orcCent1);
 	orc2->setHealth(100);
 	orc2->setAction(CurrentAction::WALKING);
+	orc2->setLoc(Vec3(20, 40, 10));
 	OBJECT_MANAGER->addObject(orc2);
 
 	Archer* orc3 = new Archer();
 	orc3->setCenter(orcCent2);
 	orc3->setHealth(100);
 	orc3->setAction(CurrentAction::WALKING);
+	orc3->setLoc(Vec3(20, 40, 10));
 	OBJECT_MANAGER->addObject(orc3);
 
 	std::cout << "State Generated\n";

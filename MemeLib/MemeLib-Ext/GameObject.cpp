@@ -4,6 +4,10 @@ void GameObject::send(RakNet::RakPeerInterface * peer)
 {
 }
 
+void GameObject::send(RakNet::BitStream & stream)
+{
+}
+
 void GameObject::write(RakNet::BitStream & stream)
 {
 }

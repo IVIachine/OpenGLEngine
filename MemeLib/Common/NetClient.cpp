@@ -88,11 +88,23 @@ void NetClient::update()
 		{
 			RakNet::BitStream bsIn(mp_packet->data, mp_packet->length, false);
 			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
-			uint32_t netId, classId;
-			bsIn >> netId;
-			bsIn >> classId;
-			GameObject* tmp = LINKING->getGameObject(netId, true, classId);
-			tmp->read(bsIn);
+			while (bsIn.GetNumberOfUnreadBits() > 0)
+			{
+				uint32_t netId, classId;
+				bsIn >> netId;
+				bsIn >> classId;
+				GameObject* tmp = LINKING->getGameObject(netId, true, classId);
+				tmp->read(bsIn);
+			}
+		}
+		break;
+		case REQUEST_WRITE_PACKET:
+		{
+			RakNet::BitStream bsIn(mp_packet->data, mp_packet->length, false);
+			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+			int index;
+			bsIn >> index;
+			writeStateToFile(index);
 		}
 		break;
 		default:
@@ -116,4 +128,20 @@ void NetClient::connect(const std::string address)
 bool NetClient::isConnected() const
 {
 	return m_isConnected;
+}
+
+void NetClient::writeStateToFile(int clientNum)
+{
+	std::ofstream of("CurrentState" + std::to_string(clientNum) + ".txt");
+	if (!of.fail())
+	{
+		for (size_t i = 0; i < OBJECT_MANAGER->getNumUnits(); i++)
+		{
+			OBJECT_MANAGER->getAtIndex(i)->writeToFile(of);
+		}
+	}
+	else
+	{
+		std::cout << "Failed to open state file\n";
+	}
 }

@@ -4,6 +4,7 @@
 #include "EventListener.h"
 #include <BitStream.h>
 #include <RakPeerInterface.h>
+#include <fstream>
 
 class GameObjectManager;
 
@@ -20,8 +21,11 @@ public:
 	virtual uint32_t GetClassId() const { return mClassId; };
 	static GameObject* CreateInstance() { return new GameObject(); };
 	virtual void send(RakNet::RakPeerInterface * peer);
+	virtual void send(RakNet::BitStream& stream);
 	virtual void write(RakNet::BitStream& stream);
 	virtual void read(RakNet::BitStream& stream);
+
+	virtual void writeToFile(std::ofstream& of) {};
 	GameObject();
 	~GameObject();
 private:

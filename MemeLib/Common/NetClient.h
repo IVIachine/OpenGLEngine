@@ -38,7 +38,7 @@ public:
 
 	void connect(const std::string address);
 	bool isConnected() const;
-
+	void writeStateToFile(int clientNum);
 private:
 	NetClient();
 	~NetClient();

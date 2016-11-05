@@ -10,6 +10,7 @@
 enum GameMessages
 {
 	REPLICATION_PACKET = ID_USER_PACKET_ENUM + 1,
+	REQUEST_WRITE_PACKET = ID_USER_PACKET_ENUM + 2
 };
 
 #define LINKING LinkingContext::getInstance()

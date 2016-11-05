@@ -26,19 +26,26 @@ public:
 	static GameObject* CreateInstance() { return new Archer(); };
 
 	TownCenter* getTownCenter() { return mTownCenter; };
+	Vec3 getLoc() { return mLoc; };
 	CurrentAction getCurrentAction() { return mCurrentAction; };
 	int getHealth() { return mHealth; };
 
 	void setCenter(TownCenter* center) { mTownCenter = center; };
 	void setHealth(int health) { mHealth = health; };
+	void setLoc(Vec3 loc) { mLoc = loc; };
 	void setAction(CurrentAction action) { mCurrentAction = action; };
 
 	virtual void write(RakNet::BitStream& stream) const;
-	virtual void send(RakNet::RakPeerInterface* peer);
+	virtual void send(RakNet::BitStream & stream);
+	virtual void send(RakNet::RakPeerInterface * peer);
 	virtual void read(RakNet::BitStream& stream);
+	virtual void writeToFile(std::ofstream& of);
+
+	std::string enumToString(CurrentAction action);
 private:
 	CurrentAction mCurrentAction;
 	int mHealth;
+	Vec3 mLoc;
 	TownCenter* mTownCenter;
 };
 #endif

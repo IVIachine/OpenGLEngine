@@ -35,7 +35,11 @@ public:
 
 	virtual void write(RakNet::BitStream& stream) const;
 	virtual void send(RakNet::RakPeerInterface* peer);
+	virtual void send(RakNet::BitStream& stream);
 	virtual void read(RakNet::BitStream& stream);
+	virtual void writeToFile(std::ofstream& of);
+
+	std::string enumToString(MonsterType monster);
 private:
 	MonsterType mType;
 	Vec3 mLoc;

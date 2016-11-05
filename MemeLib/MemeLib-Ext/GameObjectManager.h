@@ -42,5 +42,4 @@ private:
 
 	static GameObjectManager* sp_instance;
 };
-
 #endif // !_GAME_OBJECT_MANAGER_H_

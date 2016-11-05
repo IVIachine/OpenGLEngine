@@ -1,6 +1,6 @@
 #include "LinkingContext.h"
 #include "ObjectCreationRegistry.h"
-
+#include "GameObjectManager.h"
 LinkingContext* LinkingContext::sp_instance = NULL;
 
 uint32_t LinkingContext::GetNetworkId(GameObject * inGameObject, bool inShouldCreateIfNotFound)
@@ -25,6 +25,8 @@ void LinkingContext::AddGameObject(GameObject * inGameObject, uint32_t inNetwork
 {
 	mNetworkIdToGameObjectMap[inNetworkId] = inGameObject;
 	mGameObjectToNetworkIdMap[inGameObject] = inNetworkId;
+	if(!OBJECT_MANAGER->objectExists(inGameObject))
+		OBJECT_MANAGER->addObject(inGameObject);
 }
 
 void LinkingContext::RemoveGameObject(GameObject * inGameObject)

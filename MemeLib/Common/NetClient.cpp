@@ -19,13 +19,13 @@ bool NetClient::setup()
 	std::cout << "Starting client.\n";
 	ObjectCreationRegistry::createInstance();
 	LinkingContext::createInstance();
+	GameObjectManager::createInstance();
 	REGISTRY->RegisterCreationFunction<GameObject>();
 	REGISTRY->RegisterCreationFunction<Archer>();
 	REGISTRY->RegisterCreationFunction<TownCenter>();
 	RakNet::SocketDescriptor socketDesc;
 	mp_peer = RakNet::RakPeerInterface::GetInstance();
 	mp_peer->Startup(1, &socketDesc, 1);
-	mManager = new GameObjectManager();
 	return true;
 }
 
@@ -33,8 +33,7 @@ void NetClient::cleanup()
 {
 	LINKING->destroyInstance();
 	REGISTRY->destroyInstance();
-	delete mManager;
-	mManager = NULL;
+	OBJECT_MANAGER->destroyInstance();
 }
 
 void NetClient::update()

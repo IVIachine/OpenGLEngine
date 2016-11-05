@@ -40,16 +40,13 @@ public:
 	bool setup();
 	void cleanup();
 	void update();
-
+	void generateState();
 private:
 	NetServer();
 	~NetServer();
 
 	RakNet::RakPeerInterface* mp_peer;
 	RakNet::Packet*	mp_packet;
-	LinkingContext* mLinkContext;
-	GameObjectManager* mManager;
-
 	static NetServer* sp_instance;
 };
 

@@ -47,7 +47,6 @@ private:
 	RakNet::Packet*	mp_packet;
 	LinkingContext* mLinkContext;
 	bool	m_isConnected;
-	GameObjectManager* mManager;
 	static NetClient* sp_instance;
 };
 

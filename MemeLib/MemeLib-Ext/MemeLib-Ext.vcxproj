@@ -117,7 +117,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Archer.cpp" />
     <ClCompile Include="ArriveSteering.cpp" />
     <ClCompile Include="AStarPathfinder.cpp" />
     <ClCompile Include="BeginPathingEvent.cpp" />
@@ -143,12 +142,10 @@
     <ClCompile Include="SpawnEvent.cpp" />
     <ClCompile Include="Steering.cpp" />
     <ClCompile Include="SteeringComponent.cpp" />
-    <ClCompile Include="TownCenter.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Archer.h" />
     <ClInclude Include="ArriveSteering.h" />
     <ClInclude Include="AStarPathfinder.h" />
     <ClInclude Include="BeginPathingEvent.h" />
@@ -176,7 +173,6 @@
     <ClInclude Include="SpawnEvent.h" />
     <ClInclude Include="Steering.h" />
     <ClInclude Include="SteeringComponent.h" />
-    <ClInclude Include="TownCenter.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitManager.h" />
   </ItemGroup>

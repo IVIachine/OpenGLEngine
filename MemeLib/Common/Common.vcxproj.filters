@@ -18,6 +18,12 @@
     <Filter Include="Source Files\Net">
       <UniqueIdentifier>{e9a0900c-88e6-49aa-beed-3749656e870c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game Objects">
+      <UniqueIdentifier>{24ff1fcc-abea-4264-b452-a05358ea2892}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Objects">
+      <UniqueIdentifier>{ae433406-64d1-4419-a562-95e05c7ce736}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -29,6 +35,12 @@
     <ClInclude Include="NetServer.h">
       <Filter>Header Files\Net</Filter>
     </ClInclude>
+    <ClInclude Include="Archer.h">
+      <Filter>Header Files\Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="TownCenter.h">
+      <Filter>Header Files\Game Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NetServer.cpp">
@@ -36,6 +48,12 @@
     </ClCompile>
     <ClCompile Include="NetClient.cpp">
       <Filter>Source Files\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="TownCenter.cpp">
+      <Filter>Source Files\Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Archer.cpp">
+      <Filter>Source Files\Game Objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

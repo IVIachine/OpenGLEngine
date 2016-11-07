@@ -160,6 +160,7 @@
     <ClInclude Include="HalfEdge.h" />
     <ClInclude Include="LinkingContext.h" />
     <ClInclude Include="NavMesh.h" />
+    <ClInclude Include="Net.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="ObjectCreationRegistry.h" />
     <ClInclude Include="Path.h" />

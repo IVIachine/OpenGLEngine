@@ -36,7 +36,7 @@ public:
 	bool setup();
 	void cleanup();
 
-	Font*		addFont(TKey key, const std::string& filename, size_t size = 12);
+	Font*		addFont(TKey key, const std::string& filename);
 	Font*		getFont(TKey key);
 	Font*		setFont(TKey key, const std::string& filename);
 

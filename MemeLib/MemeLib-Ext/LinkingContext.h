@@ -1,18 +1,12 @@
 #ifndef LINKING_CONTEXT_H
 #define LINKING_CONTEXT_H
+
 #include <Trackable.h>
 #include "GameObject.h"
 #include <algorithm>
 #include <unordered_map>
-#include <MessageIdentifiers.h>
 #include <cassert>
-
-enum GameMessages
-{
-	REPLICATION_PACKET = ID_USER_PACKET_ENUM + 1,
-	REQUEST_WRITE_PACKET = ID_USER_PACKET_ENUM + 2,
-	RA_RPC
-};
+#include "Net.h"
 
 #define LINKING LinkingContext::getInstance()
 

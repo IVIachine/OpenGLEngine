@@ -22,14 +22,6 @@ ResourceManager::~ResourceManager()
 
 bool ResourceManager::setup()
 {
-	// Setup FreeType
-	FT_Error ft_error = FT_Init_FreeType(&m_ft_library);
-	if (ft_error)
-	{
-		fprintf(stderr, "Failed to initialize FreeType\n");
-		return false;
-	}
-
 	return true;
 }
 
@@ -47,9 +39,9 @@ void ResourceManager::cleanup()
 }
 
 
-Font* ResourceManager::addFont(TKey key, const std::string& filename, size_t size)
+Font* ResourceManager::addFont(TKey key, const std::string& filename)
 {
-	return m_fonts.addData(key, new Font(m_ft_library, filename, size, 0));
+	return m_fonts.addData(key, new Font(filename));
 }
 
 Font* ResourceManager::getFont(TKey key)
@@ -59,7 +51,7 @@ Font* ResourceManager::getFont(TKey key)
 
 Font* ResourceManager::setFont(TKey key, const std::string& filename)
 {
-	return m_fonts.setData(key, new Font(m_ft_library, filename));
+	return m_fonts.setData(key, new Font(filename));
 }
 
 

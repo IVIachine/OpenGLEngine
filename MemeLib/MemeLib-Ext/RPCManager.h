@@ -5,14 +5,11 @@
 #include <cassert>
 #include "Trackable.h"
 
-#include "LinkingContext.h"
-#include "ObjectCreationRegistry.h"
-#include "GameObjectManager.h"
+#include "Net.h"
 
 #define RPC RPCManager::getInstance()
 
 typedef int RPC_ID;
-typedef RakNet::BitStream BitStream;
 typedef void (*RPCReadFunc) (BitStream&);
 
 class RPCManager : public Trackable

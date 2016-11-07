@@ -238,5 +238,8 @@
     <ClInclude Include="RPCManager.h">
       <Filter>Header Files\Net</Filter>
     </ClInclude>
+    <ClInclude Include="Net.h">
+      <Filter>Header Files\Net</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

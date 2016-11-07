@@ -80,16 +80,10 @@
     <ClCompile Include="SteeringComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="PositionComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="PhysicsComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentManager.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Component.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="AStarPathfinder.cpp">
@@ -135,9 +129,6 @@
       <Filter>Source Files\Pathfinding\Core</Filter>
     </ClCompile>
     <ClCompile Include="Graph.cpp">
-      <Filter>Source Files\Pathfinding\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="HalfEdge.cpp">
       <Filter>Source Files\Pathfinding\Core</Filter>
     </ClCompile>
     <ClCompile Include="LinkingContext.cpp">

@@ -1,5 +1,5 @@
 #include "NetServer.h"
-#include <iostream>
+#include "Common.h"
 
 NetServer* NetServer::sp_instance = NULL;
 
@@ -11,6 +11,7 @@ NetServer::~NetServer()
 {
 	cleanup();
 }
+
 
 bool NetServer::setup()
 {
@@ -40,6 +41,7 @@ void NetServer::cleanup()
 {
 	RPCManager::destroyInstance();
 }
+
 
 void NetServer::update()
 {
@@ -101,7 +103,7 @@ void NetServer::update()
 			printf("A client lost the connection.\n");
 		}
 		break;
-		case RA_RPC:
+		case PacketType::RPC_PACKET:
 		{
 			BitStream iStream(mp_packet->data, mp_packet->length, false);
 			
@@ -123,10 +125,33 @@ void NetServer::update()
 	}
 }
 
+
+bool NetServer::sendByAddress(SystemAddress addr, BitStream& stream)
+{
+	mp_peer->Send(&stream, HIGH_PRIORITY, UNRELIABLE, 0, addr, false, 0U);
+
+	return true;
+}
+
+bool NetServer::sendByGuid(GUId guid, BitStream& stream)
+{
+	sendByAddress(mp_peer->GetSystemAddressFromGuid(guid), stream);
+
+	return true;
+}
+
+bool NetServer::sendByIndex(size_t index, BitStream& stream)
+{
+	sendByAddress(mp_peer->GetSystemAddressFromIndex(index), stream);
+
+	return true;
+}
+
+
 void NetServer::generateState()
 {
 	printf("A connection is incoming.\n");
-	
+
 	TownCenter* elfCent1 = new TownCenter();
 	elfCent1->setHealth(100);
 	elfCent1->setLoc(Vec3(20, 40, 10));
@@ -207,26 +232,4 @@ void NetServer::generateState()
 	OBJECT_MANAGER->addObject(orc3);
 
 	std::cout << "State Generated\n";
-}
-
-
-bool NetServer::sendByAddress(RakNet::AddressOrGUID addr, BitStream& stream)
-{
-	mp_peer->Send(&stream, HIGH_PRIORITY, UNRELIABLE, 0, addr, false, 0U);
-
-	return true;
-}
-
-bool NetServer::sendByGuid(RakNet::RakNetGUID guid, BitStream& stream)
-{
-	sendByAddress(mp_peer->GetSystemAddressFromGuid(guid), stream);
-
-	return true;
-}
-
-bool NetServer::sendByIndex(size_t index, BitStream& stream)
-{
-	sendByAddress(mp_peer->GetSystemAddressFromIndex(index), stream);
-
-	return true;
 }

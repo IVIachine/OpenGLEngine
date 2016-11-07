@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
@@ -12,14 +8,24 @@
     <Filter Include="Header Files\Net">
       <UniqueIdentifier>{738f3006-c16c-4927-942a-47e68506b7f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Net">
-      <UniqueIdentifier>{e9a0900c-88e6-49aa-beed-3749656e870c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game Objects">
       <UniqueIdentifier>{24ff1fcc-abea-4264-b452-a05358ea2892}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{ff8e5985-16dc-45d9-b549-73e6034ac07c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Net">
+      <UniqueIdentifier>{e9a0900c-88e6-49aa-beed-3749656e870c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Game Objects">
       <UniqueIdentifier>{ae433406-64d1-4419-a562-95e05c7ce736}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util">
+      <UniqueIdentifier>{87e7c7ac-da9f-4a55-95b7-d3feb7ec764e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -35,8 +41,14 @@
     <ClInclude Include="TownCenter.h">
       <Filter>Header Files\Game Objects</Filter>
     </ClInclude>
+    <ClInclude Include="GameController.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
     <ClInclude Include="Common.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="GameApp.h">
+      <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -53,7 +65,13 @@
       <Filter>Source Files\Game Objects</Filter>
     </ClCompile>
     <ClCompile Include="Common.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="GameApp.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="GameController.cpp">
+      <Filter>Source Files\Util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

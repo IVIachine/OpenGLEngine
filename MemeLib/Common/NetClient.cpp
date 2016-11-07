@@ -1,11 +1,12 @@
 #include "NetClient.h"
-#include <iostream>
-#include "NetServer.h"
+#include "Common.h"
+#include <sstream>
 
 NetClient* NetClient::sp_instance = NULL;
 
 NetClient::NetClient()
 {
+	m_isConnected = false;
 }
 
 NetClient::~NetClient()
@@ -35,6 +36,7 @@ void NetClient::cleanup()
 {
 	RPCManager::destroyInstance();
 }
+
 
 void NetClient::update()
 {
@@ -86,7 +88,7 @@ void NetClient::update()
 				printf("Connection lost.\n");
 		}
 		break;
-		case REPLICATION_PACKET:
+		case PacketType::REPLICATION_PACKET:
 		{
 			RakNet::BitStream bsIn(mp_packet->data, mp_packet->length, false);
 			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
@@ -100,16 +102,7 @@ void NetClient::update()
 			}
 		}
 		break;
-		case REQUEST_WRITE_PACKET:
-		{
-			RakNet::BitStream bsIn(mp_packet->data, mp_packet->length, false);
-			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
-			int index;
-			bsIn >> index;
-			writeStateToFile(index);
-		}
-		break;
-		case RA_RPC:
+		case PacketType::RPC_PACKET:
 		{
 			BitStream iStream(mp_packet->data, mp_packet->length, false);
 
@@ -120,9 +113,20 @@ void NetClient::update()
 			RPC->processRPC(oStream);
 		}
 		break;
+		case NetMessages::REQUEST_WRITE_PACKET:
+		{
+			RakNet::BitStream bsIn(mp_packet->data, mp_packet->length, false);
+			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+			int index;
+			bsIn >> index;
+			writeStateToFile(index);
+		}
+		break;
 		default:
+		{
 			printf("Message with identifier %i has arrived.\n", mp_packet->data[0]);
-			break;
+		}
+		break;
 		}
 	}
 }
@@ -144,9 +148,24 @@ bool NetClient::isConnected() const
 	return m_isConnected;
 }
 
+void NetClient::sendToServer(BitStream& out)
+{
+	RakNet::SystemAddress addr = mp_peer->GetSystemAddressFromIndex(0);
+
+	mp_peer->Send(&out, HIGH_PRIORITY, UNRELIABLE, 0, addr, false);
+}
+
+
 void NetClient::writeStateToFile(int clientNum)
 {
-	std::ofstream of("CurrentState" + std::to_string(clientNum) + ".txt");
+	std::stringstream sstream;
+	sstream
+		<< "../Assets/data/"
+		<< "CurrentState"
+		<< clientNum
+		<< ".txt";
+
+	std::ofstream of(sstream.str());
 	if (!of.fail())
 	{
 		for (size_t i = 0; i < OBJECT_MANAGER->getNumUnits(); i++)
@@ -156,14 +175,6 @@ void NetClient::writeStateToFile(int clientNum)
 	}
 	else
 	{
-		std::cout << "Failed to open state file\n";
+		std::cout << "Failed to open state file.\n";
 	}
-}
-
-
-void NetClient::sendToServer(BitStream& out)
-{
-	RakNet::SystemAddress addr = mp_peer->GetSystemAddressFromIndex(0);
-
-	mp_peer->Send(&out, HIGH_PRIORITY, UNRELIABLE, 0, addr, false);
 }

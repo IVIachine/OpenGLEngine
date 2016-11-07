@@ -119,6 +119,8 @@
   <ItemGroup>
     <ClInclude Include="Archer.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="GameApp.h" />
+    <ClInclude Include="GameController.h" />
     <ClInclude Include="NetClient.h" />
     <ClInclude Include="NetServer.h" />
     <ClInclude Include="TownCenter.h" />
@@ -126,6 +128,8 @@
   <ItemGroup>
     <ClCompile Include="Archer.cpp" />
     <ClCompile Include="Common.cpp" />
+    <ClCompile Include="GameApp.cpp" />
+    <ClCompile Include="GameController.cpp" />
     <ClCompile Include="NetClient.cpp" />
     <ClCompile Include="NetServer.cpp" />
     <ClCompile Include="TownCenter.cpp" />

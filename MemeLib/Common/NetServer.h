@@ -1,14 +1,7 @@
 #ifndef _NET_SERVER_H_
 #define _NET_SERVER_H_
 
-#include <map>
-#include <cassert>
-#include <RakPeerInterface.h>
-#include <MessageIdentifiers.h>
-#include <RakNetTypes.h>
-#include <BitStream.h>
-
-#include "RPCManager.h"
+#include "Net.h"
 #include "Archer.h"
 #include "TownCenter.h"
 
@@ -39,11 +32,12 @@ public:
 	bool setup();
 	void cleanup();
 	void update();
-	void generateState();
-
-	bool sendByAddress(RakNet::AddressOrGUID addr, BitStream& stream);
-	bool sendByGuid(RakNet::RakNetGUID guid, BitStream& stream);
+	
+	bool sendByAddress(SystemAddress addr, BitStream& stream);
+	bool sendByGuid(GUId guid, BitStream& stream);
 	bool sendByIndex(size_t index, BitStream& stream);
+
+	void generateState();
 
 private:
 	NetServer();

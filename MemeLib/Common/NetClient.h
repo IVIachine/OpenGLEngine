@@ -1,14 +1,11 @@
 #ifndef _NET_CLIENT_H_
 #define _NET_CLIENT_H_
 
+#include <Trackable.h>
 #include <cassert>
 #include <string>
-#include <RakPeerInterface.h>
-#include <MessageIdentifiers.h>
-#include <RakNetTypes.h>
-#include <BitStream.h>
 
-#include "RPCManager.h"
+#include "Net.h"
 
 #define CLIENT NetClient::getInstance()
 #define MAX_CONNECTIONS 1
@@ -39,9 +36,9 @@ public:
 
 	void connect(const std::string address);
 	bool isConnected() const;
-	void writeStateToFile(int clientNum);
-
 	void sendToServer(BitStream& out);
+
+	void writeStateToFile(int clientNum);
 
 private:
 	NetClient();

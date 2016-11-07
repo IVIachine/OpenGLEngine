@@ -22,7 +22,7 @@ void sendMessage(const MessageRPCStruct& message)
 {
 	BitStream oStream;
 
-	oStream.Write((RakNet::MessageID)RA_RPC);
+	oStream.Write((RakNet::MessageID)RPC_PACKET);
 
 	oStream.Write(PING_ID);
 

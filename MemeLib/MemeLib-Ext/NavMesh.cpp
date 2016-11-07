@@ -19,6 +19,7 @@ void NavMesh::constructMesh(Mesh* mesh)
 	splitTriangles(verts, mesh->getIndices(), edges, mesh->getCount()); //Split the intersections into multiple edges for accuracy
 	m_vertices = verts;
 	m_edges = edges;
+	gatherFaces();
 
 	m_nodeList.resize(m_vertices.size(), NULL);
 
@@ -45,8 +46,8 @@ void NavMesh::constructMesh(Mesh* mesh)
 			if (isWalkable)
 			{
 				Connection* pConnection = new Connection(
-					pSource, 
-					pTarget, 
+					pSource,
+					pTarget,
 					moveCost,
 					isWalkable);
 
@@ -60,7 +61,7 @@ void NavMesh::constructMesh(Mesh* mesh)
 }
 
 void NavMesh::gatherEdges(
-	EdgeList& edges, FaceList& faces, VertList& vertices, std::vector<size_t> indices, size_t faceCount)
+	EdgeList& edges, VertList& vertices, std::vector<size_t> indices, size_t faceCount)
 {
 	for (size_t i = 0; i < faceCount; i += 3)
 	{
@@ -83,19 +84,13 @@ void NavMesh::gatherEdges(
 		if (!reverseExists(edges, tmp3))
 			edges.push_back(tmp3);
 
-		Face faceTemp;
-		faceTemp.edges.push_back(tmp);
-		faceTemp.edges.push_back(tmp2);
-		faceTemp.edges.push_back(tmp3);
-		faces.push_back(faceTemp);
 	}
 }
 
 void NavMesh::splitTriangles(
 	VertList& vertices, std::vector<size_t> indices, EdgeList& edges, size_t faceCount)
 {
-	std::vector<Face> faces;
-	gatherEdges(edges, faces, vertices, indices, faceCount);
+	gatherEdges(edges, vertices, indices, faceCount);
 
 	size_t size = edges.size();
 	for (size_t i = 0; i < size; i++)
@@ -155,6 +150,45 @@ void NavMesh::splitTriangles(
 			}
 		}
 	}
+}
+
+void NavMesh::gatherFaces()
+{
+	for (size_t i = 0; i < m_edges.size(); i++)
+	{
+		lists.clear();
+		std::vector<Edge> edgeList;
+		recursiveFind(m_edges[i], m_edges[i], edgeList);
+		Face newFace;
+		newFace.edges = edgeList;
+		if (!faceExists(newFace))
+			m_faces.push_back(newFace);
+	}
+}
+
+bool NavMesh::recursiveFind(Edge key, Edge workingEdge, std::vector<Edge>& workingEdgeList)
+{
+	for (size_t i = 0; i < m_edges.size(); i++)
+	{																						//Share a vertex
+		if ((m_edges[i].first == workingEdge.first || m_edges[i].first == workingEdge.second || m_edges[i].second == workingEdge.first || m_edges[i].second == workingEdge.second) && workingEdge != m_edges[i] && std::find(workingEdgeList.begin(), workingEdgeList.end(), m_edges[i]) == workingEdgeList.end())
+		{
+			if (m_edges[i] == key && workingEdgeList.size() > 1)
+			{
+				workingEdgeList.push_back(key);
+				lists.push_back(workingEdgeList);
+				return true;
+			}
+			else if (m_edges[i] != key)
+			{
+				workingEdgeList.push_back(m_edges[i]);
+				if (recursiveFind(key, m_edges[i], workingEdgeList))
+				{
+					return true;
+				}
+			}
+		}
+	}
+	return false;
 }
 
 
@@ -230,6 +264,30 @@ bool NavMesh::reverseExists(std::vector<Edge> edges, Edge key)
 		if ((edges[i].first == key.second && edges[i].second == key.first) || (edges[i].first == key.first && edges[i].second == key.second))
 		{
 			return true;
+		}
+	}
+	return false;
+}
+
+bool NavMesh::faceExists(Face a)
+{
+	for (size_t i = 0; i < m_faces.size(); i++)
+	{
+		Face b = m_faces[i];
+		if (a.edges.size() == b.edges.size())
+		{
+			int matches = 0;
+			for (size_t i = 0; i < a.edges.size(); i++)
+			{
+				if (std::find(b.edges.begin(), b.edges.end(), a.edges[i]) != b.edges.end())
+				{
+					matches++;
+				}
+			}
+			if (matches == a.edges.size())
+			{
+				return true;
+			}
 		}
 	}
 	return false;

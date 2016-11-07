@@ -156,9 +156,9 @@ void NavMesh::gatherFaces()
 {
 	for (size_t i = 0; i < m_edges.size(); i++)
 	{
-		lists.clear();
+		std::vector<std::vector<Edge>> lists;
 		std::vector<Edge> edgeList;
-		recursiveFind(m_edges[i], m_edges[i], edgeList);
+		recursiveFind(m_edges[i], m_edges[i], edgeList, lists);
 		Face newFace;
 		newFace.edges = edgeList;
 		if (!faceExists(newFace))
@@ -166,31 +166,53 @@ void NavMesh::gatherFaces()
 	}
 }
 
-bool NavMesh::recursiveFind(Edge key, Edge workingEdge, std::vector<Edge>& workingEdgeList)
+bool NavMesh::recursiveFind(Edge key, Edge workingEdge, std::vector<Edge>& workingEdgeList, std::vector<std::vector<Edge>>& lists)
 {
-	for (size_t i = 0; i < m_edges.size(); i++)
-	{																						//Share a vertex
-		if ((m_edges[i].first == workingEdge.first || m_edges[i].first == workingEdge.second || m_edges[i].second == workingEdge.first || m_edges[i].second == workingEdge.second) && workingEdge != m_edges[i] && std::find(workingEdgeList.begin(), workingEdgeList.end(), m_edges[i]) == workingEdgeList.end())
+	Vec3 first, second;
+	first = workingEdge.first;
+	second = workingEdge.second;
+
+	EdgeList firstSplit = getKnownConnections(first);
+	EdgeList secondSplit = getKnownConnections(second);
+
+	for (size_t i = 0; i < firstSplit.size(); i++)
+	{
+		if (firstSplit[i] == key && workingEdgeList.size() > 1)
 		{
-			if (m_edges[i] == key && workingEdgeList.size() > 1)
+			workingEdgeList.push_back(firstSplit[i]);
+			lists.push_back(workingEdgeList);
+			return true;
+		}
+		else if (std::find(workingEdgeList.begin(), workingEdgeList.end(), firstSplit[i]) == workingEdgeList.end())
+		{
+			workingEdgeList.push_back(firstSplit[i]);
+			if (recursiveFind(key, firstSplit[i], workingEdgeList, lists))
 			{
-				workingEdgeList.push_back(key);
-				lists.push_back(workingEdgeList);
 				return true;
 			}
-			else if (m_edges[i] != key)
+		}
+	}
+
+	for (size_t i = 0; i < secondSplit.size(); i++)
+	{
+		if (secondSplit[i] == key && workingEdgeList.size() > 1)
+		{
+			workingEdgeList.push_back(firstSplit[i]);
+			lists.push_back(workingEdgeList);
+			return true;
+		}
+		else if(std::find(workingEdgeList.begin(), workingEdgeList.end(), secondSplit[i]) == workingEdgeList.end())
+		{
+			workingEdgeList.push_back(secondSplit[i]);
+			if (recursiveFind(key, secondSplit[i], workingEdgeList, lists))
 			{
-				workingEdgeList.push_back(m_edges[i]);
-				if (recursiveFind(key, m_edges[i], workingEdgeList))
-				{
-					return true;
-				}
+				return true;
 			}
 		}
 	}
 	return false;
 }
-
+//if ((m_edges[i].first == workingEdge.first || m_edges[i].first == workingEdge.second || m_edges[i].second == workingEdge.first || m_edges[i].second == workingEdge.second) && workingEdge != m_edges[i] && std::find(workingEdgeList.begin(), workingEdgeList.end(), m_edges[i]) == workingEdgeList.end())
 
 bool NavMesh::containsVertice(std::vector<Vec3> vertices, Vec3 key)
 {

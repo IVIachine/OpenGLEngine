@@ -27,7 +27,7 @@ public:
 	void	gatherEdges(EdgeList& edges, VertList& vertices, std::vector<size_t> indices, size_t faceCount);
 	void	splitTriangles(VertList& vertices, std::vector<size_t> indices, EdgeList& edges, size_t faceCount);
 	void	gatherFaces();
-	bool	recursiveFind(Edge key, Edge workingEdge, std::vector<Edge>& workingEdgeList);
+	bool	recursiveFind(Edge key, Edge workingEdge, std::vector<Edge>& workingEdgeList, std::vector<std::vector<Edge>>& lists);
 	bool	containsVertice(std::vector<Vec3> vertices, Vec3 key);
 	bool	getIntersection(Edge one, Edge two, Vec3& ip) const;
 	bool	getIntersection(Edge edge, Vec3 ip) const;
@@ -50,7 +50,6 @@ private:
 	std::vector<Edge>	m_edges;
 	std::vector<Vec3>	m_vertices;
 	std::vector<Face>	m_faces;
-	std::vector<std::vector<Edge>> lists;
 	inline float norm2(Vec3 v) const
 	{
 		return v.x * v.x + v.y * v.y + v.z * v.z;

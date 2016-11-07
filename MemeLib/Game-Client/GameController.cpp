@@ -8,6 +8,8 @@
 #include "NavMesh.h"
 #include "Gizmos.h"
 
+#include "Common.h"
+
 void GameController::update(NavMesh* pNavMesh)
 {
 	if (INPUT->getKeyDown(Keyboard::Up))
@@ -91,6 +93,22 @@ void GameController::draw(NavMesh* pNavMesh)
 	{
 		GIZMOS->drawPoint(mp_target->getPosition() + Vec3(0.f, 0.5f, 0.f));
 		EVENT_SYSTEM->fireEvent(ChangeTargetEvent(mp_target->getPosition()));
+	}
+
+
+	if (!CLIENT->isConnected())
+	{
+		if (INPUT->getKeyDown(Keyboard::C))
+		{
+			CLIENT->connect("127.0.0.1");
+		}
+	}
+	else
+	{
+		if (INPUT->getKeyDown(Keyboard::M))
+		{
+			sendMessage("Hello, World!");
+		}
 	}
 }
 

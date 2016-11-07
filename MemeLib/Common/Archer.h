@@ -22,8 +22,8 @@ public:
 	~Archer();
 
 	enum { mClassId = 'ARCH' };
-	virtual uint32_t GetClassId() const { return mClassId; };
-	static GameObject* CreateInstance() { return new Archer(); };
+	virtual uint32_t getClassId() const { return mClassId; };
+	static GameObject* createInstance() { return new Archer(); };
 
 	TownCenter* getTownCenter() { return mTownCenter; };
 	Vec3 getLoc() { return mLoc; };
@@ -36,8 +36,8 @@ public:
 	void setAction(CurrentAction action) { mCurrentAction = action; };
 
 	virtual void write(RakNet::BitStream& stream) const;
-	virtual void send(RakNet::BitStream & stream);
-	virtual void send(RakNet::RakPeerInterface * peer);
+	virtual void sendToServer(RakNet::BitStream & stream);
+	virtual void sendToServer(RakNet::RakPeerInterface * peer);
 	virtual void read(RakNet::BitStream& stream);
 	virtual void writeToFile(std::ofstream& of);
 

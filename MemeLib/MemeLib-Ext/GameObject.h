@@ -18,16 +18,18 @@ public:
 	virtual void handleEvent(const Event& ev);
 	
 	enum { mClassId = 'GOBJ' };
-	virtual uint32_t GetClassId() const { return mClassId; };
-	static GameObject* CreateInstance() { return new GameObject(); };
-	virtual void send(RakNet::RakPeerInterface * peer);
-	virtual void send(RakNet::BitStream& stream);
-	virtual void write(RakNet::BitStream& stream);
-	virtual void read(RakNet::BitStream& stream);
+	virtual uint32_t getClassId() const { return mClassId; };
+	static GameObject* createInstance() { return new GameObject(); };
 
+	virtual void sendToServer(RakNet::RakPeerInterface * peer);
+	virtual void sendToServer(RakNet::BitStream& stream);
+	virtual void read(RakNet::BitStream& stream);
+	virtual void write(RakNet::BitStream& stream);
 	virtual void writeToFile(std::ofstream& of) {};
+
 	GameObject();
 	~GameObject();
+
 private:
 
 

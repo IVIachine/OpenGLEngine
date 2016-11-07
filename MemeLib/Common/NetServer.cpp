@@ -15,25 +15,30 @@ NetServer::~NetServer()
 bool NetServer::setup()
 {
 	std::cout << "Starting server.\n";
-	ObjectCreationRegistry::createInstance();
-	LinkingContext::createInstance();
-	GameObjectManager::createInstance();
+
+	if (!RPCManager::createInstance()->setup())
+	{
+		std::cout << "Failed to create RPC manager instance.\n";
+		return false;
+	}
+
 	REGISTRY->RegisterCreationFunction<GameObject>();
 	REGISTRY->RegisterCreationFunction<Archer>();
 	REGISTRY->RegisterCreationFunction<TownCenter>();
+
 	RakNet::SocketDescriptor socketDesc(SERVER_PORT, 0);
 	mp_peer = RakNet::RakPeerInterface::GetInstance();
 	mp_peer->Startup(MAX_CLIENTS, &socketDesc, 1);
 	mp_peer->SetMaximumIncomingConnections(MAX_CLIENTS);
+	
 	generateState();
+
 	return true;
 }
 
 void NetServer::cleanup()
 {
-	LINKING->destroyInstance();
-	REGISTRY->destroyInstance();
-	OBJECT_MANAGER->destroyInstance();
+	RPCManager::destroyInstance();
 }
 
 void NetServer::update()
@@ -69,14 +74,16 @@ void NetServer::update()
 			stream.Write((RakNet::MessageID)REPLICATION_PACKET);
 			for (size_t i = 0; i < OBJECT_MANAGER->getNumUnits(); i++)
 			{
-				OBJECT_MANAGER->getAtIndex(i)->send(stream);
+				OBJECT_MANAGER->getAtIndex(i)->sendToServer(stream);
 			}
-			mp_peer->Send(&stream, HIGH_PRIORITY, UNRELIABLE, 0, mp_packet->systemAddress, false);
+			sendByAddress(mp_packet->systemAddress, stream);
 
 			RakNet::BitStream stream2;
 			stream2.Write((RakNet::MessageID)REQUEST_WRITE_PACKET);
 			stream2.Write(mp_peer->GetIndexFromSystemAddress(mp_packet->systemAddress));
-			mp_peer->Send(&stream2, HIGH_PRIORITY, UNRELIABLE, 0, mp_packet->systemAddress, false);
+			sendByAddress(mp_packet->systemAddress, stream2);
+
+			m_numClients++;
 		}
 		break;
 		case ID_NO_FREE_INCOMING_CONNECTIONS:
@@ -94,6 +101,19 @@ void NetServer::update()
 			printf("A client lost the connection.\n");
 		}
 		break;
+		case RA_RPC:
+		{
+			BitStream iStream(mp_packet->data, mp_packet->length, false);
+			
+			for (size_t i = 0; i < m_numClients; i++)
+			{
+				BitStream oStream;
+				oStream.Write(iStream);
+
+				sendByIndex(i, oStream);
+			}
+		}
+		break;
 		default:
 		{
 			printf("Message with identifier %i has arrived.\n", mp_packet->data[0]);
@@ -106,6 +126,7 @@ void NetServer::update()
 void NetServer::generateState()
 {
 	printf("A connection is incoming.\n");
+	
 	TownCenter* elfCent1 = new TownCenter();
 	elfCent1->setHealth(100);
 	elfCent1->setLoc(Vec3(20, 40, 10));
@@ -186,4 +207,26 @@ void NetServer::generateState()
 	OBJECT_MANAGER->addObject(orc3);
 
 	std::cout << "State Generated\n";
+}
+
+
+bool NetServer::sendByAddress(RakNet::AddressOrGUID addr, BitStream& stream)
+{
+	mp_peer->Send(&stream, HIGH_PRIORITY, UNRELIABLE, 0, addr, false, 0U);
+
+	return true;
+}
+
+bool NetServer::sendByGuid(RakNet::RakNetGUID guid, BitStream& stream)
+{
+	sendByAddress(mp_peer->GetSystemAddressFromGuid(guid), stream);
+
+	return true;
+}
+
+bool NetServer::sendByIndex(size_t index, BitStream& stream)
+{
+	sendByAddress(mp_peer->GetSystemAddressFromIndex(index), stream);
+
+	return true;
 }

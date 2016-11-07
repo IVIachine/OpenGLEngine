@@ -3,7 +3,7 @@
 #include "GameObjectManager.h"
 LinkingContext* LinkingContext::sp_instance = NULL;
 
-uint32_t LinkingContext::GetNetworkId(GameObject * inGameObject, bool inShouldCreateIfNotFound)
+uint32_t LinkingContext::getNetworkId(GameObject * inGameObject, bool inShouldCreateIfNotFound)
 {
 	auto it = mGameObjectToNetworkIdMap.find(inGameObject);
 	if (it != mGameObjectToNetworkIdMap.end())
@@ -13,7 +13,7 @@ uint32_t LinkingContext::GetNetworkId(GameObject * inGameObject, bool inShouldCr
 	else if (inShouldCreateIfNotFound)
 	{
 		uint32_t newNetworkId = mNextNetworkId++;
-		AddGameObject(inGameObject, newNetworkId); return newNetworkId;
+		addGameObject(inGameObject, newNetworkId); return newNetworkId;
 	}
 	else
 	{
@@ -21,7 +21,7 @@ uint32_t LinkingContext::GetNetworkId(GameObject * inGameObject, bool inShouldCr
 	}
 }
 
-void LinkingContext::AddGameObject(GameObject * inGameObject, uint32_t inNetworkId)
+void LinkingContext::addGameObject(GameObject * inGameObject, uint32_t inNetworkId)
 {
 	mNetworkIdToGameObjectMap[inNetworkId] = inGameObject;
 	mGameObjectToNetworkIdMap[inGameObject] = inNetworkId;
@@ -29,7 +29,7 @@ void LinkingContext::AddGameObject(GameObject * inGameObject, uint32_t inNetwork
 		OBJECT_MANAGER->addObject(inGameObject);
 }
 
-void LinkingContext::RemoveGameObject(GameObject * inGameObject)
+void LinkingContext::removeGameObject(GameObject * inGameObject)
 {
 	uint32_t networkId = mGameObjectToNetworkIdMap[inGameObject];
 	mGameObjectToNetworkIdMap.erase(inGameObject);
@@ -46,7 +46,7 @@ GameObject * LinkingContext::getGameObject(uint32_t netId, bool inShouldCreateIf
 	else if (inShouldCreateIfNotFound)
 	{
 		GameObject* tmp = REGISTRY->CreateGameObject(classId);
-		AddGameObject(tmp, netId);
+		addGameObject(tmp, netId);
 		return tmp;
 	}
 	else

@@ -1,10 +1,10 @@
 #include "GameObject.h"
 
-void GameObject::send(RakNet::RakPeerInterface * peer)
+void GameObject::sendToServer(RakNet::RakPeerInterface * peer)
 {
 }
 
-void GameObject::send(RakNet::BitStream & stream)
+void GameObject::sendToServer(RakNet::BitStream & stream)
 {
 }
 

@@ -22,19 +22,20 @@ public:
 		sp_instance = new GameObjectManager();
 		return getInstance();
 	};
-	static void		destroyInstance()
+	static void					destroyInstance()
 	{
 		delete sp_instance;
 		sp_instance = NULL;
 	};
 
 	GameObject* getAtIndex(int index);
-	void addObject(GameObject* toBeAdded);
+	void		addObject(GameObject* toBeAdded);
 
-	size_t getNumUnits();
-	void removeUnitAtIndex(int index);
-	void cleanup();
-	bool objectExists(GameObject* key);
+	size_t		getNumUnits();
+	void		removeUnitAtIndex(int index);
+	void		cleanup();
+	bool		objectExists(GameObject* key);
+
 private:
 	GameObjectManager();
 	~GameObjectManager();

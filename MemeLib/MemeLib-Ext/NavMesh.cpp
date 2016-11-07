@@ -169,8 +169,17 @@ void NavMesh::gatherFaces()
 bool NavMesh::recursiveFind(Edge key, Edge workingEdge, std::vector<Edge>& workingEdgeList)
 {
 	for (size_t i = 0; i < m_edges.size(); i++)
-	{																						//Share a vertex
-		if ((m_edges[i].first == workingEdge.first || m_edges[i].first == workingEdge.second || m_edges[i].second == workingEdge.first || m_edges[i].second == workingEdge.second) && workingEdge != m_edges[i] && std::find(workingEdgeList.begin(), workingEdgeList.end(), m_edges[i]) == workingEdgeList.end())
+	{	
+		//Share a vertex
+		if ((
+			m_edges[i].first == workingEdge.first || 
+			m_edges[i].first == workingEdge.second || 
+			m_edges[i].second == workingEdge.first || 
+			m_edges[i].second == workingEdge.second) && 
+			workingEdge != m_edges[i] && 
+			std::find(
+				workingEdgeList.begin(), 
+				workingEdgeList.end(), m_edges[i]) == workingEdgeList.end())
 		{
 			if (m_edges[i] == key && workingEdgeList.size() > 1)
 			{

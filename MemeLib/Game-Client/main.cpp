@@ -22,6 +22,7 @@ int main()
 	EventSystem::createInstance();
 	GameApp gameApp;
 	Game::createInstance();
+	
 	NetClient::createInstance();
 
 	bool isRunning = 
@@ -36,26 +37,18 @@ int main()
 	}
 
 	printControls();
-	
+	registerRPCs();
+
 	while (isRunning)
 	{
 		GAME->beginStep();		
 		GAME->step();
-
-		if (!CLIENT->isConnected())
-		{
-			if (INPUT->getKeyDown(Keyboard::C))
-			{
-				CLIENT->connect("127.0.0.1");
-			}
-		}
 
 		CLIENT->update();
 		isRunning = GAME->endStep();
 	}
 	
 	UNITS->deleteAll();
-
 
 	NetClient::destroyInstance();
 	Game::destroyInstance();

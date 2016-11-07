@@ -12,9 +12,6 @@
     <Filter Include="Header Files\Net">
       <UniqueIdentifier>{738f3006-c16c-4927-942a-47e68506b7f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Util">
-      <UniqueIdentifier>{5e8b4422-2253-4404-9219-ae60c7850fc0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Net">
       <UniqueIdentifier>{e9a0900c-88e6-49aa-beed-3749656e870c}</UniqueIdentifier>
     </Filter>
@@ -26,9 +23,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Common.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
     <ClInclude Include="NetClient.h">
       <Filter>Header Files\Net</Filter>
     </ClInclude>
@@ -40,6 +34,9 @@
     </ClInclude>
     <ClInclude Include="TownCenter.h">
       <Filter>Header Files\Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +51,9 @@
     </ClCompile>
     <ClCompile Include="Archer.cpp">
       <Filter>Source Files\Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Common.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

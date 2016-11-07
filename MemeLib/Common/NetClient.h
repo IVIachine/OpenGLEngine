@@ -7,13 +7,14 @@
 #include <MessageIdentifiers.h>
 #include <RakNetTypes.h>
 #include <BitStream.h>
-#include "LinkingContext.h"
-#include "ObjectCreationRegistry.h"
-#include "GameObjectManager.h"
+
+#include "RPCManager.h"
 
 #define CLIENT NetClient::getInstance()
+#define MAX_CONNECTIONS 1
+#define SOCKET_DESC_COUNT 1
 
-class NetClient
+class NetClient : public Trackable
 {
 public:
 	static NetClient*	getInstance()
@@ -39,6 +40,9 @@ public:
 	void connect(const std::string address);
 	bool isConnected() const;
 	void writeStateToFile(int clientNum);
+
+	void sendToServer(BitStream& out);
+
 private:
 	NetClient();
 	~NetClient();

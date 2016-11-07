@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Archer.cpp" />
+    <ClCompile Include="Common.cpp" />
     <ClCompile Include="NetClient.cpp" />
     <ClCompile Include="NetServer.cpp" />
     <ClCompile Include="TownCenter.cpp" />

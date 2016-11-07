@@ -17,23 +17,23 @@ NetClient::~NetClient()
 bool NetClient::setup()
 {
 	std::cout << "Starting client.\n";
-	ObjectCreationRegistry::createInstance();
-	LinkingContext::createInstance();
-	GameObjectManager::createInstance();
+
+	if (!RPCManager::createInstance()->setup())
+	{
+		std::cout << "Failed to create RPC manager instance.\n";
+		return false;
+	}
+
 	REGISTRY->RegisterCreationFunction<GameObject>();
 	REGISTRY->RegisterCreationFunction<Archer>();
 	REGISTRY->RegisterCreationFunction<TownCenter>();
-	RakNet::SocketDescriptor socketDesc;
-	mp_peer = RakNet::RakPeerInterface::GetInstance();
-	mp_peer->Startup(1, &socketDesc, 1);
+
 	return true;
 }
 
 void NetClient::cleanup()
 {
-	LINKING->destroyInstance();
-	REGISTRY->destroyInstance();
-	OBJECT_MANAGER->destroyInstance();
+	RPCManager::destroyInstance();
 }
 
 void NetClient::update()
@@ -72,13 +72,15 @@ void NetClient::update()
 		}
 		break;
 		case ID_NO_FREE_INCOMING_CONNECTIONS:
+		{
 			printf("The server is full.\n");
-			break;
+		}
+		break;
 		case ID_DISCONNECTION_NOTIFICATION:
 		{
 				printf("We have been disconnected.\n");
 		}
-			break;
+		break;
 		case ID_CONNECTION_LOST:
 		{
 				printf("Connection lost.\n");
@@ -107,12 +109,24 @@ void NetClient::update()
 			writeStateToFile(index);
 		}
 		break;
+		case RA_RPC:
+		{
+			BitStream iStream(mp_packet->data, mp_packet->length, false);
+
+			BitStream oStream;
+
+			oStream.Write(iStream);
+
+			RPC->processRPC(oStream);
+		}
+		break;
 		default:
 			printf("Message with identifier %i has arrived.\n", mp_packet->data[0]);
 			break;
 		}
 	}
 }
+
 
 void NetClient::connect(const std::string address)
 {
@@ -144,4 +158,12 @@ void NetClient::writeStateToFile(int clientNum)
 	{
 		std::cout << "Failed to open state file\n";
 	}
+}
+
+
+void NetClient::sendToServer(BitStream& out)
+{
+	RakNet::SystemAddress addr = mp_peer->GetSystemAddressFromIndex(0);
+
+	mp_peer->Send(&out, HIGH_PRIORITY, UNRELIABLE, 0, addr, false);
 }

@@ -18,7 +18,7 @@ void Archer::write(RakNet::BitStream & stream) const
 	stream.Write(mLoc.y);
 	stream.Write(mLoc.z);
 	stream.Write(mHealth);
-	stream.Write(LINKING->GetNetworkId(mTownCenter, false));
+	stream.Write(LINKING->getNetworkId(mTownCenter, false));
 }
 
 void Archer::read(RakNet::BitStream & stream)
@@ -71,19 +71,19 @@ std::string Archer::enumToString(CurrentAction action)
 	}
 }
 
-void Archer::send(RakNet::RakPeerInterface * peer)
+void Archer::sendToServer(RakNet::RakPeerInterface * peer)
 {
 	RakNet::BitStream stream;
 	stream.Write((RakNet::MessageID)REPLICATION_PACKET);
-	stream.Write(LINKING->GetNetworkId(this, true));
+	stream.Write(LINKING->getNetworkId(this, true));
 	stream.Write(mClassId);
 	write(stream);
 	peer->Send(&stream, HIGH_PRIORITY, UNRELIABLE, 0, peer->GetSystemAddressFromIndex(0), false);
 }
 
-void Archer::send(RakNet::BitStream & stream)
+void Archer::sendToServer(RakNet::BitStream & stream)
 {
-	stream.Write(LINKING->GetNetworkId(this, true));
+	stream.Write(LINKING->getNetworkId(this, true));
 	stream.Write(mClassId);
 	write(stream);
 }

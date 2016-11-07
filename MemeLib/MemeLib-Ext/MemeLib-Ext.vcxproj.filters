@@ -152,6 +152,9 @@
     <ClCompile Include="ObjectCreationRegistry.cpp">
       <Filter>Source Files\Net</Filter>
     </ClCompile>
+    <ClCompile Include="RPCManager.cpp">
+      <Filter>Source Files\Net</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UnitManager.h">
@@ -240,6 +243,9 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Header Files\Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="RPCManager.h">
+      <Filter>Header Files\Net</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

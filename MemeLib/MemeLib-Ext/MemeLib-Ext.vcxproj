@@ -138,6 +138,7 @@
     <ClCompile Include="PathFollowSteering.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PositionComponent.cpp" />
+    <ClCompile Include="RPCManager.cpp" />
     <ClCompile Include="SeekSteering.cpp" />
     <ClCompile Include="SpawnEvent.cpp" />
     <ClCompile Include="Steering.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="PathFollowSteering.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PositionComponent.h" />
+    <ClInclude Include="RPCManager.h" />
     <ClInclude Include="SeekSteering.h" />
     <ClInclude Include="SpawnEvent.h" />
     <ClInclude Include="Steering.h" />

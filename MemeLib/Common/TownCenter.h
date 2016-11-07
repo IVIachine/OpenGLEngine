@@ -22,24 +22,26 @@ public:
 	~TownCenter();
 
 	enum { mClassId = 'TWNC' };
-	virtual uint32_t GetClassId() const { return mClassId; };
-	static GameObject* CreateInstance() { return new TownCenter(); };
 
-	MonsterType getType() { return mType; };
-	Vec3 getLoc() { return mLoc; };
-	int getHealth() { return mHealth; };
+	virtual uint32_t	getClassId() const { return mClassId; };
+	static GameObject*	createInstance() { return new TownCenter(); };
+
+	MonsterType getType()	{ return mType; };
+	Vec3		getLoc()	{ return mLoc; };
+	int			getHealth() { return mHealth; };
 
 	void setType(MonsterType theType) { mType = theType; };
 	void setLoc(Vec3 loc) { mLoc = loc; };
 	void setHealth(int health) { mHealth = health; };
 
 	virtual void write(RakNet::BitStream& stream) const;
-	virtual void send(RakNet::RakPeerInterface* peer);
-	virtual void send(RakNet::BitStream& stream);
+	virtual void sendToServer(RakNet::RakPeerInterface* peer);
+	virtual void sendToServer(RakNet::BitStream& stream);
 	virtual void read(RakNet::BitStream& stream);
 	virtual void writeToFile(std::ofstream& of);
 
 	std::string enumToString(MonsterType monster);
+
 private:
 	MonsterType mType;
 	Vec3 mLoc;

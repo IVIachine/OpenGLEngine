@@ -20,19 +20,19 @@ void TownCenter::write(RakNet::BitStream & stream) const
 	stream.Write(mHealth);
 }
 
-void TownCenter::send(RakNet::RakPeerInterface * peer)
+void TownCenter::sendToServer(RakNet::RakPeerInterface * peer)
 {
 	RakNet::BitStream stream;
 	stream.Write((RakNet::MessageID)REPLICATION_PACKET);
-	stream.Write(LINKING->GetNetworkId(this, true));
+	stream.Write(LINKING->getNetworkId(this, true));
 	stream.Write(mClassId);
 	write(stream);
 	peer->Send(&stream, HIGH_PRIORITY, UNRELIABLE, 0, peer->GetSystemAddressFromIndex(0), false);
 }
 
-void TownCenter::send(RakNet::BitStream & stream)
+void TownCenter::sendToServer(RakNet::BitStream & stream)
 {
-	stream.Write(LINKING->GetNetworkId(this, true));
+	stream.Write(LINKING->getNetworkId(this, true));
 	stream.Write(mClassId);
 	write(stream);
 }

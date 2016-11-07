@@ -15,7 +15,7 @@ class ObjectCreationRegistry : public Trackable
 public:
 	static ObjectCreationRegistry*	getInstance()
 	{
-		assert(sp_instance != NULL);
+ 		assert(sp_instance != NULL);
 		return sp_instance;
 	};
 	static ObjectCreationRegistry*	createInstance()
@@ -23,7 +23,7 @@ public:
 		sp_instance = new ObjectCreationRegistry();
 		return getInstance();
 	};
-	static void		destroyInstance()
+	static void						destroyInstance()
 	{
 		delete sp_instance;
 		sp_instance = NULL;
@@ -33,7 +33,7 @@ public:
 	void RegisterCreationFunction()
 	{ 
 		assert(mNameToGameObjectCreationFunctionMap.find(T::mClassId) == mNameToGameObjectCreationFunctionMap.end());
-		mNameToGameObjectCreationFunctionMap[T::mClassId] = T::CreateInstance;
+		mNameToGameObjectCreationFunctionMap[T::mClassId] = T::createInstance;
 	}
 
 	GameObject* CreateGameObject(uint32_t inClassId);
@@ -41,6 +41,7 @@ public:
 private:
 	ObjectCreationRegistry() {} 
 	~ObjectCreationRegistry() {};
+
 	std::unordered_map<uint32_t, GameObjectCreationFunc> mNameToGameObjectCreationFunctionMap;
 
 	static ObjectCreationRegistry* sp_instance;

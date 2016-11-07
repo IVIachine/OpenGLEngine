@@ -48,16 +48,16 @@ std::string Serializable::toString() const
 }
 
 
-std::istream& operator>>(std::istream& in, Serializable& msg)
+std::istream& operator>>(std::istream& in, Serializable& text)
 {
-	msg.deserialize(in);
+	text.deserialize(in);
 
 	return in;
 }
 
-std::ostream& operator<<(std::ostream& out, const Serializable& msg)
+std::ostream& operator<<(std::ostream& out, const Serializable& text)
 {
-	msg.serialize(out);
+	text.serialize(out);
 
 	return out;
 }

@@ -7,6 +7,19 @@
 #include "NetServer.h"
 #include "NetClient.h"
 
-const char* APP_NAME = "MemeLib";
+void registerRPCs();
+
+
+const RPC_ID PING_ID = 'MSG';
+struct MessageRPCStruct : public Trackable
+{
+	const char* text;
+
+	MessageRPCStruct(const char* text = "") : text(text) {};
+};
+
+void readMessage(BitStream& iStream);
+void sendMessage(const MessageRPCStruct& pingStruct);
+void printMessage(const MessageRPCStruct& pingStruct);
 
 #endif // !_COMMON_H_

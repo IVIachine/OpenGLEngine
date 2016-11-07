@@ -7,9 +7,8 @@
 #include <MessageIdentifiers.h>
 #include <RakNetTypes.h>
 #include <BitStream.h>
-#include "LinkingContext.h"
-#include "ObjectCreationRegistry.h"
-#include "GameObjectManager.h"
+
+#include "RPCManager.h"
 #include "Archer.h"
 #include "TownCenter.h"
 
@@ -18,7 +17,7 @@
 #define SERVER_PORT 25566
 #define MAX_CLIENTS 10
 
-class NetServer
+class NetServer : public Trackable
 {
 public:
 	static NetServer*	getInstance()
@@ -41,6 +40,11 @@ public:
 	void cleanup();
 	void update();
 	void generateState();
+
+	bool sendByAddress(RakNet::AddressOrGUID addr, BitStream& stream);
+	bool sendByGuid(RakNet::RakNetGUID guid, BitStream& stream);
+	bool sendByIndex(size_t index, BitStream& stream);
+
 private:
 	NetServer();
 	~NetServer();
@@ -48,6 +52,8 @@ private:
 	RakNet::RakPeerInterface* mp_peer;
 	RakNet::Packet*	mp_packet;
 	static NetServer* sp_instance;
+
+	size_t m_numClients = 0;
 };
 
 

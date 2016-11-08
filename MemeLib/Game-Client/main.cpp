@@ -13,6 +13,8 @@ void printControls()
 		<< "P to delete units(if applicable) and spawn 10 new ones randomly\n"
 		<< "F to have all units path to the target(floating dot)\n"
 		<< "Up and Down arrow keys to change target location\n"
+		<< "C to connect to server\n"
+		<< "M to invoke RPC (\"Hello, World!\"\n"
 		<< "Press G to toggle debug mode\n";
 }
 

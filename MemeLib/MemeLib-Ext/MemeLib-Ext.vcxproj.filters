@@ -241,5 +241,8 @@
     <ClInclude Include="Net.h">
       <Filter>Header Files\Net</Filter>
     </ClInclude>
+    <ClInclude Include="EventsExt.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

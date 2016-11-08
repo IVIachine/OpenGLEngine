@@ -106,12 +106,10 @@ void NetServer::update()
 		case PacketType::RPC_PACKET:
 		{
 			BitStream iStream(mp_packet->data, mp_packet->length, false);
-			
+			BitStream oStream;
+			oStream.Write(iStream);
 			for (size_t i = 0; i < m_numClients; i++)
 			{
-				BitStream oStream;
-				oStream.Write(iStream);
-
 				sendByIndex(i, oStream);
 			}
 		}

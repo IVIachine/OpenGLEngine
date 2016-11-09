@@ -98,7 +98,6 @@ void NavMesh::gatherEdges(
 
 		if (!reverseExists(edges, tmp3))
 			edges.push_back(tmp3);
-
 	}
 }
 
@@ -120,22 +119,29 @@ void NavMesh::splitTriangles(
 
 			// get intersection point
 			Vec3 ip;
-			if (getIntersection(edges[i], edges[j], ip))
+			if (getIntersection(edges[i], edges[j], ip) && edges[i] != edges[j])
 			{
 				// add vertice if not exists
 				if (std::find(vertices.begin(), vertices.end(), ip) == vertices.end())
 				{
+					bool found = false;
 					for (auto& p : vertices)
 					{
 						float dist = Vector3::distance(ip, p);
 						if (dist < MIN_DIST)
 						{
-							ip = p;
+							found = true;
 							break;
 						}
 					}
-
-					vertices.push_back(ip);
+					if (!found)
+					{
+						vertices.push_back(ip);
+					}
+					else
+					{
+						continue;
+					}
 				}
 
 				// beginning or end of edges[i]
@@ -176,7 +182,20 @@ void NavMesh::splitTriangles(
 		}
 	}
 
-	std::cout << vertices.size() << "\n";
+	//Check for possible edges between two close points
+	for (size_t i = 0; i < vertices.size(); i++)
+	{
+		for (size_t j = 0; j < vertices.size(); j++)
+		{
+			if (Vector3::distance(vertices[i], vertices[j]) < MIN_DIST)
+			{
+				if (!edgeExists(vertices[i], vertices[j], edges))
+				{
+					edges.push_back(Edge(vertices[i], vertices[j]));
+				}
+			}
+		}
+	}
 }
 
 void NavMesh::gatherFaces()
@@ -243,11 +262,6 @@ void NavMesh::addConnection(Edge key)
 	}
 }
 
-void NavMesh::removeFinishedConnections()
-{
-
-}
-
 void NavMesh::reduceConnections()
 {
 	for (size_t i = 0; i < m_edges.size(); i++)
@@ -257,6 +271,20 @@ void NavMesh::reduceConnections()
 			removeConnection(m_edges[i]);
 		}
 	}
+}
+
+bool NavMesh::edgeExists(Vec3 a, Vec3 b, EdgeList edges)
+{
+	Edge test1 = Edge(a, b);
+	Edge test2 = Edge(b, a);
+	for (size_t i = 0; i < edges.size(); i++)
+	{
+		Edge reverse = Edge(edges[i].second, edges[i].first);
+
+		if (test1 == edges[i] || test1 == reverse || test2 == edges[i] || test2 == reverse)
+			return true;
+	}
+	return false;
 }
 
 bool NavMesh::cleanFace(Face key)

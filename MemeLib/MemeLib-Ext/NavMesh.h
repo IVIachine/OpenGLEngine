@@ -12,6 +12,7 @@
 #include "Face.h"
 
 const static float TOLERANCE = 0.00005f;
+const static float MIN_DIST = .025;
 
 typedef std::vector<Edge> EdgeList;
 typedef std::vector<Face> FaceList;
@@ -31,6 +32,7 @@ public:
 	void	addConnection(Edge key);
 	void	removeFinishedConnections();
 	void	reduceConnections();
+	void	cleanVertsAndEdges();
 	bool	cleanFace(Face key);
 	bool	containsVertice(std::vector<Vec3> vertices, Vec3 key);
 	bool	getIntersection(Edge one, Edge two, Vec3& ip) const;

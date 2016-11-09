@@ -58,7 +58,8 @@ void NavMesh::constructMesh(Mesh* mesh)
 
 		m_connectionMap[i] = connections;
 	}
-	gatherFaces();
+	cleanVertsAndEdges();
+	//gatherFaces();
 }
 
 void NavMesh::gatherEdges(
@@ -229,6 +230,31 @@ void NavMesh::reduceConnections()
 		if (numFacesWithEdge(m_edges[i]) == 2)
 		{
 			removeConnection(m_edges[i]);
+		}
+	}
+}
+
+void NavMesh::cleanVertsAndEdges()
+{
+	for (size_t i = m_vertices.size() - 1; i >= 0; --i)
+	{
+		for (size_t j = m_vertices.size() - 1; j >= 0; --j)
+		{
+			if (m_vertices[i] != m_vertices[j])
+			{
+				float dist = glm::length(m_vertices[i] - m_vertices[j]);
+				if (dist < MIN_DIST)
+				{
+					EdgeList allEdgesContaining = getKnownConnections(m_vertices[j]);
+					for (size_t k = 0; k < allEdgesContaining.size(); k++)
+					{
+						for (size_t f = 0; f < m_edges.size(); f++)
+						{
+
+						}
+					}
+				}
+			}
 		}
 	}
 }

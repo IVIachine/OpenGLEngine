@@ -2,6 +2,7 @@
 #include <algorithm>
 #include "Connection.h"
 #include "Vector3.h"
+#include "AStarPathfinder.h"
 
 NavMesh::NavMesh()
 {
@@ -19,10 +20,9 @@ void NavMesh::constructMesh(Mesh* mesh)
 	splitTriangles(verts, mesh->getIndices(), edges, mesh->getCount()); //Split the intersections into multiple edges for accuracy
 	m_vertices = verts;
 	m_edges = edges;
-	gatherFaces();
 
+	//CONSTRUCT TEMPORARY MESH FOR WIREFRAMES
 	m_nodeList.resize(m_vertices.size(), NULL);
-
 	for (size_t i = 0; i < m_vertices.size(); i++)
 	{
 		Node* pNode = new Node(i, m_vertices[i]);
@@ -58,6 +58,7 @@ void NavMesh::constructMesh(Mesh* mesh)
 
 		m_connectionMap[i] = connections;
 	}
+	gatherFaces();
 }
 
 void NavMesh::gatherEdges(
@@ -154,52 +155,110 @@ void NavMesh::splitTriangles(
 
 void NavMesh::gatherFaces()
 {
-	for (size_t i = 0; i < m_edges.size(); i++)
+	bool findingFaces = true;
+	while (findingFaces)
 	{
-		lists.clear();
-		std::vector<Edge> edgeList;
-		recursiveFind(m_edges[i], m_edges[i], edgeList);
-		Face newFace;
-		newFace.edges = edgeList;
-		if (!faceExists(newFace))
-			m_faces.push_back(newFace);
+		findingFaces = false;
+		for (size_t i = 0; i < m_edges.size(); i++)
+		{
+			removeConnection(m_edges[i]);
+			AStarPathfinder pathfinder(this);
+			pathfinder.getOptions()->enableHeuristic = false;
+			Path foundPath = pathfinder.findPath(getNode(m_edges[i].first), getNode(m_edges[i].second));
+			if (foundPath.size() > 2)
+			{
+				Face newFace;
+				EdgeList edges;
+				edges.push_back(m_edges[i]);
+				for (size_t j = 0; j < foundPath.size() - 1; j++)
+				{
+					Edge newEdge;
+					newEdge.first = foundPath.peek(j)->getPosition();
+					newEdge.second = foundPath.peek(j + 1)->getPosition();
+					edges.push_back(newEdge);
+				}
+				newFace.edges = edges;
+				if (!faceExists(newFace) && cleanFace(newFace))
+				{
+					findingFaces = true;
+					m_faces.push_back(newFace);
+				}
+			}
+			addConnection(m_edges[i]);
+		}
+		reduceConnections();
+	}
+	std::cout << m_faces.size() << std::endl;
+}
+
+void NavMesh::removeConnection(Edge key)
+{
+	for (size_t i = 0; i < m_connectionList.size(); i++)
+	{
+		if ((m_connectionList[i]->getSource()->getPosition() == key.first && m_connectionList[i]->getTarget()->getPosition() == key.second) ||
+			(m_connectionList[i]->getSource()->getPosition() == key.second && m_connectionList[i]->getTarget()->getPosition() == key.first))
+		{
+			m_connectionList[i]->setWalkable(false);
+		}
 	}
 }
 
-bool NavMesh::recursiveFind(Edge key, Edge workingEdge, std::vector<Edge>& workingEdgeList)
+void NavMesh::addConnection(Edge key)
+{
+	for (size_t i = 0; i < m_connectionList.size(); i++)
+	{
+		if ((m_connectionList[i]->getSource()->getPosition() == key.first && m_connectionList[i]->getTarget()->getPosition() == key.second) ||
+			(m_connectionList[i]->getSource()->getPosition() == key.second && m_connectionList[i]->getTarget()->getPosition() == key.first))
+		{
+			m_connectionList[i]->setWalkable(true);
+		}
+	}
+}
+
+void NavMesh::removeFinishedConnections()
+{
+
+}
+
+void NavMesh::reduceConnections()
 {
 	for (size_t i = 0; i < m_edges.size(); i++)
-	{	
-		//Share a vertex
-		if ((
-			m_edges[i].first == workingEdge.first || 
-			m_edges[i].first == workingEdge.second || 
-			m_edges[i].second == workingEdge.first || 
-			m_edges[i].second == workingEdge.second) && 
-			workingEdge != m_edges[i] && 
-			std::find(
-				workingEdgeList.begin(), 
-				workingEdgeList.end(), m_edges[i]) == workingEdgeList.end())
+	{
+		if (numFacesWithEdge(m_edges[i]) == 2)
 		{
-			if (m_edges[i] == key && workingEdgeList.size() > 1)
+			removeConnection(m_edges[i]);
+		}
+	}
+}
+
+bool NavMesh::cleanFace(Face key)
+{
+	//Remove faces that have edge inside of it
+
+	for (size_t j = 0; j < key.edges.size(); j++)
+	{
+		for (size_t k = 0; k < key.edges.size(); k++)
+		{
+			Edge firstEdge = key.edges[j];
+			Edge secondEdge = key.edges[k];
+			if (firstEdge.first != secondEdge.first && firstEdge.first != secondEdge.second && firstEdge.second != secondEdge.first && firstEdge.second != secondEdge.second)
 			{
-				workingEdgeList.push_back(key);
-				lists.push_back(workingEdgeList);
-				return true;
-			}
-			else if (m_edges[i] != key)
-			{
-				workingEdgeList.push_back(m_edges[i]);
-				if (recursiveFind(key, m_edges[i], workingEdgeList))
+				for (size_t f = 0; f < m_edges.size(); f++)
 				{
-					return true;
+					Edge intersectionEdge = m_edges[f];
+
+					Vec3 point1, point2;
+
+					if ((getIntersection(intersectionEdge, firstEdge.first) || getIntersection(intersectionEdge, firstEdge.second)) && (getIntersection(intersectionEdge, secondEdge.first) || getIntersection(intersectionEdge, secondEdge.second)))
+					{
+						std::cout << "REMOVED FACE\n";
+						return false;
+					}
 				}
 			}
 		}
 	}
-	return false;
 }
-
 
 bool NavMesh::containsVertice(std::vector<Vec3> vertices, Vec3 key)
 {
@@ -286,13 +345,15 @@ bool NavMesh::faceExists(Face a)
 		if (a.edges.size() == b.edges.size())
 		{
 			int matches = 0;
-			for (size_t i = 0; i < a.edges.size(); i++)
+			for (size_t j = 0; j < a.edges.size(); j++)
 			{
-				if (std::find(b.edges.begin(), b.edges.end(), a.edges[i]) != b.edges.end())
+				Edge reverse(a.edges[j].second, a.edges[j].first);
+				if (std::find(b.edges.begin(), b.edges.end(), a.edges[j]) != b.edges.end() || std::find(b.edges.begin(), b.edges.end(), reverse) != b.edges.end())
 				{
 					matches++;
 				}
 			}
+
 			if (matches == a.edges.size())
 			{
 				return true;
@@ -300,6 +361,19 @@ bool NavMesh::faceExists(Face a)
 		}
 	}
 	return false;
+}
+
+int NavMesh::numFacesWithEdge(Edge key)
+{
+	int matches = 0;
+	for (size_t i = 0; i < m_faces.size(); i++)
+	{
+		if (reverseExists(m_faces[i].edges, key))
+		{
+			matches++;
+		}
+	}
+	return matches;
 }
 
 
@@ -360,6 +434,11 @@ VertList NavMesh::getVerts() const
 	return m_vertices;
 }
 
+FaceList NavMesh::getFaces() const
+{
+	return m_faces;
+}
+
 
 Edge * NavMesh::getEdge(size_t index)
 {
@@ -387,6 +466,11 @@ size_t NavMesh::vertCount() const
 size_t NavMesh::edgeCount() const
 {
 	return m_edges.size();
+}
+
+size_t NavMesh::faceCount() const
+{
+	return m_faces.size();
 }
 
 Node* NavMesh::findNearestNode(const Vec3 & position)

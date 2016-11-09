@@ -18,7 +18,7 @@ public:
 	float	moveCost();
 	bool	isWalkable();
 	bool	isDiagonal();
-
+	void	setWalkable(bool walkable) { mIsWalkable = walkable; };
 private:
 	Node*	mpSource;
 	Node*	mpTarget;

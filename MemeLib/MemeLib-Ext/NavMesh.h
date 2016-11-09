@@ -27,30 +27,34 @@ public:
 	void	gatherEdges(EdgeList& edges, VertList& vertices, std::vector<size_t> indices, size_t faceCount);
 	void	splitTriangles(VertList& vertices, std::vector<size_t> indices, EdgeList& edges, size_t faceCount);
 	void	gatherFaces();
-	bool	recursiveFind(Edge key, Edge workingEdge, std::vector<Edge>& workingEdgeList);
+	void	removeConnection(Edge key);
+	void	addConnection(Edge key);
+	void	removeFinishedConnections();
+	void	reduceConnections();
+	bool	cleanFace(Face key);
 	bool	containsVertice(std::vector<Vec3> vertices, Vec3 key);
 	bool	getIntersection(Edge one, Edge two, Vec3& ip) const;
 	bool	getIntersection(Edge edge, Vec3 ip) const;
 	bool	reverseExists(std::vector<Edge> edges, Edge key);
 	bool	faceExists(Face a);
+	int		numFacesWithEdge(Edge key);
 	EdgeList	getEdges() const;
 	EdgeList	getKnownConnections(Vec3 key);
 	FaceList	getEdgeFaces(std::vector<Face>& faces, Edge key);
 	VertList	getVerts() const;
-
+	FaceList	getFaces() const;
 	Edge*		getEdge(size_t index);
 	Node*		getOtherNode(Edge tmp, Node* key);
 
 	size_t		vertCount() const;
 	size_t		edgeCount() const;
-
+	size_t		faceCount() const;
 	Node*	findNearestNode(const Vec3& position);
 
 private:
 	std::vector<Edge>	m_edges;
 	std::vector<Vec3>	m_vertices;
 	std::vector<Face>	m_faces;
-	std::vector<std::vector<Edge>> lists;
 	inline float norm2(Vec3 v) const
 	{
 		return v.x * v.x + v.y * v.y + v.z * v.z;

@@ -72,7 +72,7 @@ void GameController::draw(NavMesh* pNavMesh)
 
 	if (mDebugMode)
 	{
-		for (size_t i = 0; i < pNavMesh->size(); i++)
+		/*for (size_t i = 0; i < pNavMesh->size(); i++)
 		{
 		GIZMOS->drawPoint(pNavMesh->getNode(i)->getPosition());
 		}
@@ -87,9 +87,9 @@ void GameController::draw(NavMesh* pNavMesh)
 				p2.y += 0.05f;
 				GIZMOS->drawRay(p1, p2);
 			}
-		}
+		}*/
 
-		/*for (size_t i = 0; i < pNavMesh->faceCount(); i++)
+		for (size_t i = 0; i < pNavMesh->faceCount(); i++)
 		{
 			for (size_t j = 0; j < pNavMesh->getFaces()[i].edges.size(); j++)
 			{
@@ -99,7 +99,7 @@ void GameController::draw(NavMesh* pNavMesh)
 				p2.y += 0.05f;
 				GIZMOS->drawRay(p1, p2);
 			}
-		}*/
+		}
 	}
 
 	mp_target = pNavMesh->getNode(m_index);

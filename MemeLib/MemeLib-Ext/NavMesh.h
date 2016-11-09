@@ -11,8 +11,8 @@
 #include "Mesh.h"
 #include "Face.h"
 
-const static float TOLERANCE = 0.00005f;
-const static float MIN_DIST = .025;
+#define TOLERANCE 0.00005f
+#define MIN_DIST 0.075f
 
 typedef std::vector<Edge> EdgeList;
 typedef std::vector<Face> FaceList;
@@ -32,7 +32,6 @@ public:
 	void	addConnection(Edge key);
 	void	removeFinishedConnections();
 	void	reduceConnections();
-	void	cleanVertsAndEdges();
 	bool	cleanFace(Face key);
 	bool	containsVertice(std::vector<Vec3> vertices, Vec3 key);
 	bool	getIntersection(Edge one, Edge two, Vec3& ip) const;
@@ -40,6 +39,7 @@ public:
 	bool	reverseExists(std::vector<Edge> edges, Edge key);
 	bool	faceExists(Face a);
 	int		numFacesWithEdge(Edge key);
+
 	EdgeList	getEdges() const;
 	EdgeList	getKnownConnections(Vec3 key);
 	FaceList	getEdgeFaces(std::vector<Face>& faces, Edge key);

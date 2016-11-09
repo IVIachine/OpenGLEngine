@@ -4,6 +4,8 @@
 #include "Vector3.h"
 #include "AStarPathfinder.h"
 
+#include <Timer.h>
+
 NavMesh::NavMesh()
 {
 }
@@ -15,6 +17,9 @@ NavMesh::~NavMesh()
 
 void NavMesh::constructMesh(Mesh* mesh)
 {
+	Timer timer;
+	timer.start();
+
 	std::vector<Edge> edges;
 	std::vector<Vec3> verts = mesh->getVerts();
 	splitTriangles(verts, mesh->getIndices(), edges, mesh->getCount()); //Split the intersections into multiple edges for accuracy
@@ -58,8 +63,16 @@ void NavMesh::constructMesh(Mesh* mesh)
 
 		m_connectionMap[i] = connections;
 	}
-	cleanVertsAndEdges();
-	//gatherFaces();
+
+	gatherFaces();
+
+	for (auto* p : m_connectionList)
+	{
+		p->setWalkable(true);
+	}
+
+	timer.stop();
+	std::cout << "Elapsed Time: " << timer.getElapsedTime() << "\n";
 }
 
 void NavMesh::gatherEdges(
@@ -112,6 +125,16 @@ void NavMesh::splitTriangles(
 				// add vertice if not exists
 				if (std::find(vertices.begin(), vertices.end(), ip) == vertices.end())
 				{
+					for (auto& p : vertices)
+					{
+						float dist = Vector3::distance(ip, p);
+						if (dist < MIN_DIST)
+						{
+							ip = p;
+							break;
+						}
+					}
+
 					vertices.push_back(ip);
 				}
 
@@ -152,6 +175,8 @@ void NavMesh::splitTriangles(
 			}
 		}
 	}
+
+	std::cout << vertices.size() << "\n";
 }
 
 void NavMesh::gatherFaces()
@@ -230,31 +255,6 @@ void NavMesh::reduceConnections()
 		if (numFacesWithEdge(m_edges[i]) == 2)
 		{
 			removeConnection(m_edges[i]);
-		}
-	}
-}
-
-void NavMesh::cleanVertsAndEdges()
-{
-	for (size_t i = m_vertices.size() - 1; i >= 0; --i)
-	{
-		for (size_t j = m_vertices.size() - 1; j >= 0; --j)
-		{
-			if (m_vertices[i] != m_vertices[j])
-			{
-				float dist = glm::length(m_vertices[i] - m_vertices[j]);
-				if (dist < MIN_DIST)
-				{
-					EdgeList allEdgesContaining = getKnownConnections(m_vertices[j]);
-					for (size_t k = 0; k < allEdgesContaining.size(); k++)
-					{
-						for (size_t f = 0; f < m_edges.size(); f++)
-						{
-
-						}
-					}
-				}
-			}
 		}
 	}
 }

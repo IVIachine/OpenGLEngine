@@ -1,22 +1,8 @@
 #include "GameApp.h"
 #include "Common.h"
+#include "TextAsset.h"
 
 const int DISPLAY_WIDTH = 1280, DISPLAY_HEIGHT = 720;
-
-void printControls()
-{
-	std::cout
-		<< "\t\t\tCONTROLS\n"
-		<< "Press Enter key to unlock and lock camera\n"
-		<< "Use mouse to look around(only when camera is unlocked)\n"
-		<< "WASD to move\nQ and Z to move directly up and down\n"
-		<< "P to delete units(if applicable) and spawn 10 new ones randomly\n"
-		<< "F to have all units path to the target(floating dot)\n"
-		<< "Up and Down arrow keys to change target location\n"
-		<< "C to connect to server\n"
-		<< "M to invoke RPC (\"Hello, World!\"\n"
-		<< "Press G to toggle debug mode\n";
-}
 
 int main()
 {
@@ -38,7 +24,9 @@ int main()
 		return EXIT_FAILURE;
 	}
 
-	printControls();
+	TextAsset helpText("../Assets/data/help.txt");
+	helpText.display();
+
 	registerRPCs();
 
 	while (isRunning)

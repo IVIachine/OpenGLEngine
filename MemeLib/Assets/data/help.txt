@@ -1,0 +1,10 @@
+CONTROLS
+Press Enter key to unlock and lock camera
+Use mouse to look around(only when camera is unlocked)
+WASD to moveQ and Z to move directly up and down
+P to delete units (if applicable) and spawn 10 new ones randomly
+F to have all units path to the target(floating dot)
+Up and Down arrow keys to change target location
+C to connect to server
+M to invoke RPC (Hello, World!)
+Press G to toggle debug mode

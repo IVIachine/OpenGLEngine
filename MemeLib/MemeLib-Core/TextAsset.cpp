@@ -4,6 +4,11 @@ TextAsset::TextAsset()
 {
 }
 
+TextAsset::TextAsset(const std::string & filename)
+{
+	read(filename);
+}
+
 TextAsset::~TextAsset()
 {
 }
@@ -54,7 +59,9 @@ void TextAsset::display()
 		std::string line;
 		std::getline(m_stream, line);
 
-		std::cout
-			<< "" << i << "| " << line << "\n";
+		if (line.size() <= 0)
+			continue;
+
+		std::cout << line << "\n";
 	}
 }

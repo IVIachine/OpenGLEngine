@@ -11,6 +11,7 @@ class TextAsset : public Trackable
 {
 public:
 	TextAsset();
+	TextAsset(const std::string& filename);
 	~TextAsset();
 
 	size_t read(const std::string& filename);

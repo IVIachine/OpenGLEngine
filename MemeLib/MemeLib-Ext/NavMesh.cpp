@@ -178,17 +178,19 @@ void NavMesh::gatherFaces()
 					edges.push_back(newEdge);
 				}
 				newFace.edges = edges;
-				if (!faceExists(newFace) && cleanFace(newFace))
+				if (!faceExists(newFace))
 				{
-					findingFaces = true;
-					m_faces.push_back(newFace);
+					if (cleanFace(newFace))
+					{
+						findingFaces = true;
+						m_faces.push_back(newFace);
+					}
 				}
 			}
 			addConnection(m_edges[i]);
 		}
 		reduceConnections();
 	}
-	std::cout << m_faces.size() << std::endl;
 }
 
 void NavMesh::removeConnection(Edge key)
@@ -234,7 +236,6 @@ void NavMesh::reduceConnections()
 bool NavMesh::cleanFace(Face key)
 {
 	//Remove faces that have edge inside of it
-
 	for (size_t j = 0; j < key.edges.size(); j++)
 	{
 		for (size_t k = 0; k < key.edges.size(); k++)
@@ -246,18 +247,20 @@ bool NavMesh::cleanFace(Face key)
 				for (size_t f = 0; f < m_edges.size(); f++)
 				{
 					Edge intersectionEdge = m_edges[f];
-
+					Edge reverseEdge = Edge(intersectionEdge.second, intersectionEdge.first);
+					if (std::find(key.edges.begin(), key.edges.end(), intersectionEdge) != key.edges.end() || std::find(key.edges.begin(), key.edges.end(), reverseEdge) != key.edges.end())
+						continue;
+					
 					Vec3 point1, point2;
-
 					if ((getIntersection(intersectionEdge, firstEdge.first) || getIntersection(intersectionEdge, firstEdge.second)) && (getIntersection(intersectionEdge, secondEdge.first) || getIntersection(intersectionEdge, secondEdge.second)))
 					{
-						std::cout << "REMOVED FACE\n";
 						return false;
 					}
 				}
 			}
 		}
 	}
+	return true;
 }
 
 bool NavMesh::containsVertice(std::vector<Vec3> vertices, Vec3 key)

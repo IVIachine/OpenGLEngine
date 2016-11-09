@@ -79,25 +79,25 @@ void GameController::draw(NavMesh* pNavMesh)
 
 		for (size_t i = 0; i < pNavMesh->edgeCount(); i++)
 		{
-		Vec3 p1 = pNavMesh->getEdge(i)->first;
-		Vec3 p2 = pNavMesh->getEdge(i)->second;
-		p1.y += 0.05f;
-		p2.y += 0.05f;
-		GIZMOS->drawRay(p1, p2);
+			if (i != 18)
+			{
+				Vec3 p1 = pNavMesh->getEdge(i)->first;
+				Vec3 p2 = pNavMesh->getEdge(i)->second;
+				p1.y += 0.05f;
+				p2.y += 0.05f;
+				GIZMOS->drawRay(p1, p2);
+			}
 		}*/
 
 		for (size_t i = 0; i < pNavMesh->faceCount(); i++)
 		{
-			//if (pNavMesh->getFaces()[i].edges.size() > 3)
+			for (size_t j = 0; j < pNavMesh->getFaces()[i].edges.size(); j++)
 			{
-				for (size_t j = 0; j < pNavMesh->getFaces()[i].edges.size(); j++)
-				{
-					Vec3 p1 = pNavMesh->getFaces()[i].edges[j].first;
-					Vec3 p2 = pNavMesh->getFaces()[i].edges[j].second;
-					p1.y += 0.05f;
-					p2.y += 0.05f;
-					GIZMOS->drawRay(p1, p2);
-				}
+				Vec3 p1 = pNavMesh->getFaces()[i].edges[j].first;
+				Vec3 p2 = pNavMesh->getFaces()[i].edges[j].second;
+				p1.y += 0.05f;
+				p2.y += 0.05f;
+				GIZMOS->drawRay(p1, p2);
 			}
 		}
 	}

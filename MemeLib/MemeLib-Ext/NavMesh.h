@@ -37,7 +37,7 @@ public:
 	bool	getIntersection(Edge one, Edge two, Vec3& ip) const;
 	bool	getIntersection(Edge edge, Vec3 ip) const;
 	bool	reverseExists(std::vector<Edge> edges, Edge key);
-	bool	faceExists(Face a);
+	bool	faceExists(FaceList faces, Face a);
 	int		numFacesWithEdge(Edge key);
 
 	EdgeList	getEdges() const;
@@ -45,6 +45,7 @@ public:
 	FaceList	getEdgeFaces(std::vector<Face>& faces, Edge key);
 	VertList	getVerts() const;
 	FaceList	getFaces() const;
+	FaceList	getFaceConnections(Face key);
 	Edge*		getEdge(size_t index);
 	Node*		getOtherNode(Edge tmp, Node* key);
 
@@ -52,7 +53,8 @@ public:
 	size_t		edgeCount() const;
 	size_t		faceCount() const;
 	Node*	findNearestNode(const Vec3& position);
-
+	Vec3	getFaceCenter(Face key);
+	Face	getFaceFromVec(Vec3 key);
 private:
 	std::vector<Edge>	m_edges;
 	std::vector<Vec3>	m_vertices;

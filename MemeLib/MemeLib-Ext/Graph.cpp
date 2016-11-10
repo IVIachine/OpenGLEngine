@@ -23,6 +23,26 @@ void Graph::beginStep()
 {
 }
 
+void Graph::clear()
+{
+	for (auto* node : m_nodeList)
+	{
+		delete node;
+		node = NULL;
+	}
+	m_nodeList.clear();
+
+	for (auto* connection : m_connectionList)
+	{
+		delete connection;
+		connection = NULL;
+	}
+
+	m_connectionList.clear();
+
+	m_connectionMap.clear();
+}
+
 
 Node* Graph::getNode(size_t index)
 {

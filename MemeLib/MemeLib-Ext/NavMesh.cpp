@@ -63,12 +63,46 @@ void NavMesh::constructMesh(Mesh* mesh)
 
 		m_connectionMap[i] = connections;
 	}
-
 	gatherFaces();
 
-	for (auto* p : m_connectionList)
+	clear();
+
+	m_nodeList.resize(m_faces.size(), NULL);
+	for (size_t i = 0; i < m_faces.size(); i++)
 	{
-		p->setWalkable(true);
+		Vec3 center = getFaceCenter(m_faces[i]);
+		Node* pNode = new Node(i, center);
+		m_nodeList[i] = pNode;
+	}
+
+
+	for (size_t i = 0; i < m_faces.size(); i++)
+	{
+		Node* pSource = m_nodeList[i];
+		ConnectionList connections;
+		FaceList knownConnections = getFaceConnections(getFaceFromVec(pSource->getPosition()));
+
+		for (size_t j = 0; j < knownConnections.size(); j++)
+		{
+			Node* pTarget = getNode(getFaceCenter(knownConnections[j]));
+
+			float	moveCost = Vector3::distance(pSource->getPosition(), pTarget->getPosition());
+			bool	isWalkable = true;
+
+			if (isWalkable)
+			{
+				Connection* pConnection = new Connection(
+					pSource,
+					pTarget,
+					moveCost,
+					isWalkable);
+
+				m_connectionList.push_back(pConnection);
+				connections.push_back(pConnection);
+			}
+		}
+
+		m_connectionMap[i] = connections;
 	}
 
 	timer.stop();
@@ -223,7 +257,7 @@ void NavMesh::gatherFaces()
 					edges.push_back(newEdge);
 				}
 				newFace.edges = edges;
-				if (!faceExists(newFace))
+				if (!faceExists(m_faces, newFace))
 				{
 					if (cleanFace(newFace))
 					{
@@ -394,11 +428,11 @@ bool NavMesh::reverseExists(std::vector<Edge> edges, Edge key)
 	return false;
 }
 
-bool NavMesh::faceExists(Face a)
+bool NavMesh::faceExists(FaceList faces, Face a)
 {
-	for (size_t i = 0; i < m_faces.size(); i++)
+	for (size_t i = 0; i < faces.size(); i++)
 	{
-		Face b = m_faces[i];
+		Face b = faces[i];
 		if (a.edges.size() == b.edges.size())
 		{
 			int matches = 0;
@@ -496,6 +530,29 @@ FaceList NavMesh::getFaces() const
 	return m_faces;
 }
 
+FaceList NavMesh::getFaceConnections(Face key)
+{
+	FaceList faces;
+	for (size_t i = 0; i < m_faces.size(); i++)
+	{
+		Face workingFace = m_faces[i];
+		for (size_t j = 0; j < key.edges.size(); j++)
+		{
+			for (size_t k = 0; k < workingFace.edges.size(); k++)
+			{
+				if (key.edges[j] == workingFace.edges[k])
+				{
+					if (!faceExists(faces, workingFace))
+					{
+						faces.push_back(workingFace);
+					}
+				}
+			}
+		}
+	}
+	return faces;
+}
+
 
 Edge * NavMesh::getEdge(size_t index)
 {
@@ -547,4 +604,26 @@ Node* NavMesh::findNearestNode(const Vec3 & position)
 	}
 
 	return result;
+}
+
+Vec3 NavMesh::getFaceCenter(Face key)
+{
+	Vec3 center;
+	for (size_t j = 0; j < key.edges.size(); j++)
+	{
+		center += key.edges[j].first;
+		center += key.edges[j].second;
+	}
+	center /= key.edges.size() * 2;
+	return center;
+}
+
+Face NavMesh::getFaceFromVec(Vec3 key)
+{
+	for (size_t i = 0; i < m_faces.size(); i++)
+	{
+		if (getFaceCenter(m_faces[i]) == key)
+			return m_faces[i];
+	}
+	return Face();
 }

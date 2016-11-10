@@ -20,6 +20,8 @@ public:
 
 	virtual void beginStep();
 
+	void			clear();
+
 	Node*			getNode(size_t index);
 	Node*			getNode(Vec3 pos);
 	NodeList		getNodes() const;

@@ -64,7 +64,8 @@ void NavMesh::constructMesh(Mesh* mesh)
 		m_connectionMap[i] = connections;
 	}
 	cleanEdges();
-	gatherFaces();
+	
+	/*gatherFaces();
 	cleanAllFaces();
 	clear();
 
@@ -104,8 +105,8 @@ void NavMesh::constructMesh(Mesh* mesh)
 		}
 
 		m_connectionMap[i] = connections;
-	}
-
+	}*/
+	
 	timer.stop();
 	std::cout << "Elapsed Time: " << timer.getElapsedTime() << "\n";
 }
@@ -168,24 +169,7 @@ void NavMesh::splitTriangles(
 				// add vertice if not exists
 				if (std::find(vertices.begin(), vertices.end(), ip) == vertices.end())
 				{
-					bool found = false;
-					for (auto& p : vertices)
-					{
-						float dist = Vector3::distance(ip, p);
-						if (dist < MIN_DIST)
-						{
-							found = true;
-							break;
-						}
-					}
-					if (!found)
-					{
-						vertices.push_back(ip);
-					}
-					else
-					{
-						continue;
-					}
+					vertices.push_back(ip);
 				}
 
 				// beginning or end of edges[i]
@@ -332,8 +316,6 @@ void NavMesh::cleanEdges()
 				m_edges.erase(m_edges.begin() + i);
 				i = m_edges.size() - 1;
 				j = m_edges.size() - 1;
-
-				std::cout << j << std::endl;
 				break;
 			}
 		}
@@ -359,7 +341,7 @@ void NavMesh::cleanAllFaces()
 				found = true;
 			}
 		}
-		if (found)
+		if (!found)
 		{
 			m_faces.erase(m_faces.begin() + j);
 			j = m_faces.size() - 1;
@@ -391,7 +373,7 @@ bool NavMesh::cleanFace(Face key)
 		{
 			Edge firstEdge = key.edges[j];
 			Edge secondEdge = key.edges[k];
-			if (firstEdge.first != secondEdge.first && firstEdge.first != secondEdge.second && firstEdge.second != secondEdge.first && firstEdge.second != secondEdge.second)
+			if (firstEdge.first != secondEdge.first && firstEdge.first != secondEdge.second && firstEdge.second != secondEdge.first && firstEdge.second != secondEdge.second && j!=k)
 			{
 				for (size_t f = 0; f < m_edges.size(); f++)
 				{
@@ -400,7 +382,7 @@ bool NavMesh::cleanFace(Face key)
 					if (std::find(key.edges.begin(), key.edges.end(), intersectionEdge) != key.edges.end() || std::find(key.edges.begin(), key.edges.end(), reverseEdge) != key.edges.end())
 						continue;
 
-					Vec3 point1, point2;
+					Vec3 point1, point2, point3, point4;
 					if ((getIntersection(intersectionEdge, firstEdge.first) || getIntersection(intersectionEdge, firstEdge.second)) && (getIntersection(intersectionEdge, secondEdge.first) || getIntersection(intersectionEdge, secondEdge.second)))
 					{
 						return false;

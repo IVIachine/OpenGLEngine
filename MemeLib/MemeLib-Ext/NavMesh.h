@@ -11,8 +11,8 @@
 #include "Mesh.h"
 #include "Face.h"
 
-#define TOLERANCE 0.000005f
-#define MIN_DIST 0.00005f
+#define TOLERANCE 0.00005f
+#define MIN_DIST 0.05f
 
 typedef std::vector<Edge> EdgeList;
 typedef std::vector<Face> FaceList;

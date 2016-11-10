@@ -10,6 +10,9 @@
 #include "Connection.h"
 #include "Common.h"
 
+GameController::GameController()
+{
+}
 void GameController::update(NavMesh* pNavMesh)
 {
 	if (INPUT->getKeyDown(Keyboard::Up))
@@ -76,7 +79,7 @@ void GameController::draw(NavMesh* pNavMesh)
 		{
 			GIZMOS->drawPoint(pNavMesh->getNode(i)->getPosition());
 		}
-		/*
+		
 		for (size_t i = 0; i < pNavMesh->edgeCount(); i++)
 		{
 			if (i != 18)
@@ -87,33 +90,20 @@ void GameController::draw(NavMesh* pNavMesh)
 				p2.y += 0.05f;
 				GIZMOS->drawRay(p1, p2);
 			}
-		}*/
+		}
 
 		/*for (size_t i = 0; i < pNavMesh->faceCount(); i++)
 		{
-			if (pNavMesh->getFaces()[i].edges.size() == 4)
+			for (size_t j = 0; j < pNavMesh->getFaces()[i].edges.size(); j++)
 			{
-				for (size_t j = 0; j < pNavMesh->getFaces()[i].edges.size(); j++)
-				{
-					Vec3 p1 = pNavMesh->getFaces()[i].edges[j].first;
-					Vec3 p2 = pNavMesh->getFaces()[i].edges[j].second;
-					p1.y += 0.05f;
-					p2.y += 0.05f;
-					GIZMOS->drawRay(p1, p2);
-				}
+				Vec3 p1 = pNavMesh->getFaces()[i].edges[j].first;
+				Vec3 p2 = pNavMesh->getFaces()[i].edges[j].second;
+				p1.y += 0.05f;
+				p2.y += 0.05f;
+				GIZMOS->drawRay(p1, p2);
 			}
 		}*/
 
-		ConnectionList tmp = pNavMesh->getAllConnections();
-		/*for (size_t i = 0; i < pNavMesh->getAllConnections().size(); i++)
-		{
-			Connection* nextCon = tmp[i];
-			Vec3 p1 = nextCon->getSource()->getPosition();
-			Vec3 p2 = nextCon->getTarget()->getPosition();
-			p1.y += 0.05f;
-			p2.y += 0.05f;
-			GIZMOS->drawRay(p1, p2);
-		}*/
 	}
 
 	mp_target = pNavMesh->getNode(m_index);

@@ -94,7 +94,7 @@ bool GameApp::setup()
 	pSpr1->setScale(Vec3(.1f, .1f, .1f));
 	pSpr1->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
 
-	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test5.obj", false);
+	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test4.obj", false);
 	mp_navMesh->constructMesh(mp_volume->getMesh());
 
 	Transform skyBoxTransform = Transform(Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(500, 500, 500));
@@ -166,7 +166,7 @@ void GameApp::handleEvent(const Event & ev)
 		for (int i = 0; i < 10; i++)
 		{
 			int randIndex;
-			randIndex = rand() % (mp_navMesh->getFaces().size());
+			randIndex = rand() % (mp_navMesh->getVerts().size());
 			Unit* pUnit = UNITS->createUnit(*RESOURCES->getSprite("sprite2"), mp_navMesh, true, PositionData(mp_navMesh->getNode(randIndex)->getPosition(), 0));
 			pUnit->setSteering(Steering::PATH_FOLLOW);
 		}

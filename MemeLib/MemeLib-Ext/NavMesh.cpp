@@ -63,8 +63,9 @@ void NavMesh::constructMesh(Mesh* mesh)
 
 		m_connectionMap[i] = connections;
 	}
+	cleanEdges();
 	gatherFaces();
-
+	cleanAllFaces();
 	clear();
 
 	m_nodeList.resize(m_faces.size(), NULL);
@@ -132,6 +133,15 @@ void NavMesh::gatherEdges(
 
 		if (!reverseExists(edges, tmp3))
 			edges.push_back(tmp3);
+
+		Face newFace;
+		newFace.edges.push_back(tmp);
+		newFace.edges.push_back(tmp2);
+		newFace.edges.push_back(tmp3);
+		if (!faceExists(m_originalFaces, newFace))
+		{
+			m_originalFaces.push_back(newFace);
+		}
 	}
 }
 
@@ -307,6 +317,57 @@ void NavMesh::reduceConnections()
 	}
 }
 
+void NavMesh::cleanEdges()
+{
+	for (int i = m_edges.size() - 1; i >= 0; --i)
+	{
+		for (int j = m_edges.size() - 1; j >= 0; --j)
+		{
+			if (i == j)
+				continue;
+
+			Edge reverseEdge = Edge(m_edges[i].second, m_edges[i].first);
+			if (m_edges[i] == m_edges[j] || reverseEdge == m_edges[j])
+			{
+				m_edges.erase(m_edges.begin() + i);
+				i = m_edges.size() - 1;
+				j = m_edges.size() - 1;
+
+				std::cout << j << std::endl;
+				break;
+			}
+		}
+	}
+}
+
+void NavMesh::cleanAllFaces()
+{
+	for (int j = m_faces.size() - 1; j >= 0; --j)
+	{
+		bool found = false;
+		int count = 0;
+		Face key = m_faces[j];
+		for (size_t i = 0; i < m_originalFaces.size(); i++)
+		{
+			Vec3 A = m_originalFaces[i].edges[0].first;
+			Vec3 B = m_originalFaces[i].edges[1].first;
+			Vec3 C = m_originalFaces[i].edges[2].first;
+
+			Vec3 centerKey = getFaceCenter(key);
+			if (pointInTriangle(centerKey, A, B, C))
+			{
+				found = true;
+			}
+		}
+		if (found)
+		{
+			m_faces.erase(m_faces.begin() + j);
+			j = m_faces.size() - 1;
+		}
+	}
+
+}
+
 bool NavMesh::edgeExists(Vec3 a, Vec3 b, EdgeList edges)
 {
 	Edge test1 = Edge(a, b);
@@ -338,7 +399,7 @@ bool NavMesh::cleanFace(Face key)
 					Edge reverseEdge = Edge(intersectionEdge.second, intersectionEdge.first);
 					if (std::find(key.edges.begin(), key.edges.end(), intersectionEdge) != key.edges.end() || std::find(key.edges.begin(), key.edges.end(), reverseEdge) != key.edges.end())
 						continue;
-					
+
 					Vec3 point1, point2;
 					if ((getIntersection(intersectionEdge, firstEdge.first) || getIntersection(intersectionEdge, firstEdge.second)) && (getIntersection(intersectionEdge, secondEdge.first) || getIntersection(intersectionEdge, secondEdge.second)))
 					{
@@ -454,6 +515,28 @@ bool NavMesh::faceExists(FaceList faces, Face a)
 	return false;
 }
 
+//CITE: http://blackpawn.com/texts/pointinpoly/
+bool NavMesh::sameSide(Vec3 p1, Vec3 p2, Vec3 a, Vec3 b)
+{
+	Vec3 cp1 = glm::cross(b - a, p1 - a);
+	Vec3 cp2 = glm::cross(b - a, p2 - a);
+
+	if (glm::dot(cp1, cp2) >= 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool NavMesh::pointInTriangle(Vec3 point, Vec3 a, Vec3 b, Vec3 c)
+{
+	if (sameSide(point, a, b, c) && sameSide(point, b, a, c) && sameSide(point, c, a, b))
+		return true;
+
+	return false;
+}
+
 int NavMesh::numFacesWithEdge(Edge key)
 {
 	int matches = 0;
@@ -540,7 +623,8 @@ FaceList NavMesh::getFaceConnections(Face key)
 		{
 			for (size_t k = 0; k < workingFace.edges.size(); k++)
 			{
-				if (key.edges[j] == workingFace.edges[k])
+				if ((key.edges[j].first == workingFace.edges[k].first && key.edges[j].second == workingFace.edges[k].second) ||
+					(key.edges[j].second == workingFace.edges[k].first && key.edges[j].first == workingFace.edges[k].second))
 				{
 					if (!faceExists(faces, workingFace))
 					{

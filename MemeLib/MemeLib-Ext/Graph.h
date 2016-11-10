@@ -29,6 +29,7 @@ public:
 
 	ConnectionList	getConnections(const Node& pSource);
 	ConnectionList	getConnections(const NODE_ID& sourceID);
+	ConnectionList	getAllConnections() { return m_connectionList; };
 
 	Connection*		getConnection(const Node& pSource, const Node& pTarget);
 	Connection*		getConnection(const NODE_ID& sourceID, const NODE_ID& targetID);

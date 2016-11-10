@@ -12,7 +12,7 @@
 #include "Face.h"
 
 #define TOLERANCE 0.000005f
-#define MIN_DIST 0.00025f
+#define MIN_DIST 0.00005f
 
 typedef std::vector<Edge> EdgeList;
 typedef std::vector<Face> FaceList;
@@ -31,6 +31,8 @@ public:
 	void	removeConnection(Edge key);
 	void	addConnection(Edge key);
 	void	reduceConnections();
+	void	cleanEdges();
+	void	cleanAllFaces();
 	bool	edgeExists(Vec3 a, Vec3 b, EdgeList edges);
 	bool	cleanFace(Face key);
 	bool	containsVertice(std::vector<Vec3> vertices, Vec3 key);
@@ -38,6 +40,8 @@ public:
 	bool	getIntersection(Edge edge, Vec3 ip) const;
 	bool	reverseExists(std::vector<Edge> edges, Edge key);
 	bool	faceExists(FaceList faces, Face a);
+	bool	sameSide(Vec3 p1, Vec3 p2, Vec3 a, Vec3 b);
+	bool	pointInTriangle(Vec3 point, Vec3 a, Vec3 b, Vec3 c);
 	int		numFacesWithEdge(Edge key);
 
 	EdgeList	getEdges() const;
@@ -59,6 +63,7 @@ private:
 	std::vector<Edge>	m_edges;
 	std::vector<Vec3>	m_vertices;
 	std::vector<Face>	m_faces;
+	std::vector<Face>	m_originalFaces;
 	inline float norm2(Vec3 v) const
 	{
 		return v.x * v.x + v.y * v.y + v.z * v.z;

@@ -65,16 +65,16 @@ Vec3 Camera::screenPointToWorldPoint(Vec2 point2D)
 	int width = GRAPHICS->getWidth();
 	int height = GRAPHICS->getHeight();
 
-	float x = 2.0f * point2D.x / width - 1;
-	float y = -2.0f * point2D.y / height + 1;
-	float z = 0.0f;
-	float w = 0.0f;
-
 	Matrix projectionMatrix = getProjectionMatrix();
 	Matrix viewMatrix = getViewMatrix();
 
 	Matrix viewProjectionMatrix = projectionMatrix * viewMatrix;
 	Matrix viewProjectionInverse = glm::inverse(viewProjectionMatrix);
+
+	float x = 2.0f * point2D.x / width - 1;
+	float y = -2.0f * point2D.y / height + 1;
+	float z = 0.0f;
+	float w = 0.0f;
 	
 	glm::vec4 point3D = { x, y, z, w };
 

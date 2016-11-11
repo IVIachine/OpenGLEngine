@@ -137,9 +137,11 @@ void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 		EVENT_SYSTEM->fireEvent(ChangeTargetEvent(mp_target->getPosition()));
 	}
 
+	Camera* cam = GRAPHICS->getCamera();
+
 	Vec2 mp = INPUT->getMousePosition();	
-	Vec3 pos = GRAPHICS->getCamera()->screenPointToWorldPoint(mp);
-	Vec3 dir = GRAPHICS->getCamera()->getFoward();
+	Vec3 pos = cam->screenPointToWorldPoint(mp);
+	Vec3 dir = cam->getFoward();
 
 	GRAPHICS->setWindowTitle(std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z));
 	GIZMOS->drawPoint(pos);

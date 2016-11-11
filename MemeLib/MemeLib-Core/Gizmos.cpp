@@ -44,11 +44,16 @@ void Gizmos::drawPoint(Vec3 pos)
 		x1 = pos.x,
 		y1 = pos.y,
 		z1 = pos.z;
+
 	Camera* camera = GRAPHICS->getCamera();
-	Transform transform = Transform(pos, Vec3(0, 0, 0), Vec3(0, 0, 0));
+	//Transform transform = Transform(pos, Vec3(0, 0, 0), Vec3(0, 0, 0));
+	Transform transform = Transform(
+		Vec3(x1 / camera->getFOV(), y1 / camera->getFOV(), z1 / camera->getFOV()),
+		Vec3(0, 0, 0),
+		Vec3(1, 1, 1));
+
 	mpShader->bind();
 	mpShader->update(transform, *camera);
-	
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
@@ -76,7 +81,12 @@ void Gizmos::drawRay(Vec3 start, Vec3 end)
 		y2 = end.y,
 		z2 = end.z;
 
-	Transform transform = Transform(Vec3((start.x - end.x) / camera->getFOV(), (start.y - end.y) / camera->getFOV(), (start.z - end.z) / camera->getFOV()), Vec3(0, 0, 0), Vec3(1, 1, 1));
+	Transform transform = Transform(
+		Vec3((start.x - end.x) / camera->getFOV(), 
+		(start.y - end.y) / camera->getFOV(), (start.z - end.z) / camera->getFOV()), 
+		Vec3(0, 0, 0), 
+		Vec3(1, 1, 1));
+
 	mpShader->bind();
 	mpShader->update(transform, *camera);
 

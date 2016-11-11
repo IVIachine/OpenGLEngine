@@ -94,9 +94,8 @@ bool GameApp::setup()
 	pSpr1->setScale(Vec3(.1f, .1f, .1f));
 	pSpr1->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
 
-	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test7.obj", false);
+	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test.obj", false);
 	mp_navMesh->constructMesh(mp_volume->getMesh());
-	//mp_picker = new MousePicker(GRAPHICS->getCamera(), GRAPHICS->getCamera()->getPerspective(), mp_navMesh);
 	Transform skyBoxTransform = Transform(Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(500, 500, 500));
 	m_skybox = new Volume(
 		p_shader,
@@ -111,7 +110,7 @@ bool GameApp::setup()
 	// https://en.wikibooks.org/wiki/OpenGL_Programming/Modern_OpenGL_Tutorial_Text_Rendering_01#The_FreeType_library
 	RESOURCES->addShader("text", "../Assets/shaders/text");
 	RESOURCES->addFont("cour", "../Assets/fonts/cour.ttf");
-
+	mp_picker = new MousePicker();
 	return true;
 }
 
@@ -132,7 +131,7 @@ void GameApp::cleanup()
 
 void GameApp::update()
 {
-	//mp_picker->update();
+	mp_picker->update();
 	//std::cout << mp_picker->getCurrentRay().x << " " << mp_picker->getCurrentRay().y << " "  << mp_picker->getCurrentRay().z << std::endl;
 	m_skybox->transform().setPosition(GRAPHICS->getCamera()->getPosition());
 
@@ -149,7 +148,7 @@ void GameApp::draw()
 	{
 		Camera* cam = GRAPHICS->getCamera();
 
-		m_skybox->draw(*cam);
+		//m_skybox->draw(*cam);
 
 		mp_volume->draw(*cam);
 

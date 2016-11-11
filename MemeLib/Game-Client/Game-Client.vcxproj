@@ -83,7 +83,7 @@
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Common.lib;MemeLib-Core.lib;MemeLib-Ext.lib;DeanLibDebug.lib;FreeImage.lib;glew32.lib;glew32s.lib;glfw3.lib;opengl32.lib;RakNet.lib;freetype27d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Common.lib;MemeLib-Core.lib;MemeLib-Ext.lib;DeanLibDebug.lib;FreeImage.lib;glu32.lib;glew32.lib;glew32s.lib;glfw3.lib;opengl32.lib;RakNet.lib;freetype27d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\MemeLib-Core\Debug;..\MemeLib-Ext\Debug;..\Common\Debug;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\lib\Release\Win32;..\..\libraries\glfw-3.2.1\lib-vc2015;..\..\libraries\DeanLib\lib;..\..\libraries\RakNet\Libs\Debug;..\..\libraries\freetype-2.7\objs\vc2010\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Bscmake>

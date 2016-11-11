@@ -21,12 +21,14 @@ public:
 
 	void	setForward(Vec3 front);	
 	void	setPosition(Vec3 pos);
+	float	getNear() { return m_near; };
+	float	getFar() { return m_far; };
 
 private:
 	Matrix	m_perspective;
 	Vec3	m_pos;
 	Vec3	m_forward;
 	Vec3	m_up;
-	float	m_fov;
+	float	m_fov, m_far, m_near;
 };
 #endif

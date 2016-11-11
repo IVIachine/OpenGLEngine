@@ -75,7 +75,7 @@ void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 	// draw verts, edges, and target node
 	if (mDebugMode)
 	{
-		for (size_t i = 0; i < pNavMesh->size(); i++)
+		/*for (size_t i = 0; i < pNavMesh->size(); i++)
 		{
 			GIZMOS->drawPoint(pNavMesh->getNode(i)->getPosition());
 		}
@@ -89,6 +89,16 @@ void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 				p2.y += 0.05f;
 				GIZMOS->drawRay(p1, p2);
 		}
+		*/
+
+		Vec3 p1 = GRAPHICS->getCamera()->getPosition();
+		Vec3 p2 = GRAPHICS->getCamera()->getPosition() + picker->getRay();
+		p2 *= 10;
+		p1.y -= 0.05f;
+		p2.y -= 0.05f;
+		//std::cout << p1.x << " " << p1.y << " " << p1.z << std::endl;
+		std::cout << p2.x << " " << p2.y << " " << p2.z << std::endl;
+		GIZMOS->drawRay(p1, p2);
 
 		//for (size_t i = 0; i < pNavMesh->faceCount(); i++)
 		/*{

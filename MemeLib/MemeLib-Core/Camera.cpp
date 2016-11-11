@@ -7,6 +7,8 @@ Camera::Camera(const Vec3 & pos, float fov, float aspect, float zNear, float zFa
 	m_pos = pos;
 	m_forward = Vec3(0, 0, 0);
 	m_up = Vec3(0, 1, 0);
+	m_near = zNear;
+	m_far = zFar;
 }
 
 Camera::~Camera()

@@ -93,11 +93,11 @@ void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 
 		Vec3 p1 = GRAPHICS->getCamera()->getPosition();
 		Vec3 p2 = GRAPHICS->getCamera()->getPosition() + picker->getRay();
-		p2 *= 10;
-		p1.y -= 0.05f;
-		p2.y -= 0.05f;
-		//std::cout << p1.x << " " << p1.y << " " << p1.z << std::endl;
-		std::cout << p2.x << " " << p2.y << " " << p2.z << std::endl;
+		p2 *= 100;
+		//p1.y -= 0.01f; //May need these two lines
+		//p2.y -= 0.01f;
+		//std::cout << "Cam: " << p1.x << " " << p1.y << " " << p1.z << std::endl;
+		//std::cout <<  "Targ: " << p2.x << " " << p2.y << " " << p2.z << std::endl;
 		GIZMOS->drawRay(p1, p2);
 
 		//for (size_t i = 0; i < pNavMesh->faceCount(); i++)

@@ -4,21 +4,25 @@
 #include "Graphics.h"
 #include "Camera.h"
 #include "Vector3.h"
-
+#include "NavMesh.h"
+#include "Node.h"
 //CITE: https://www.youtube.com/watch?v=DLKN0jExRIM
 class MousePicker {
 public:
-	MousePicker() {};
+	MousePicker(NavMesh* mesh) { m_navMesh = mesh; };
 	~MousePicker() {};
 
 	void update()
 	{
-		// these positions must be in range [-1, 1] (!!!), not [0, width] and [0, height]
-		float mouseX = GRAPHICS->getLastX() / (GRAPHICS->getWidth()  * 0.5f) - 1.0f;
-		float mouseY = GRAPHICS->getLastY() / (GRAPHICS->getHeight() * 0.5f) - 1.0f;
+		// these positions must be in range [-1, 1] (!!!), not [0, width] and [0, height] After these lines the mouse X and y are still greater than and less than -1
+		float mouseX = GRAPHICS->getLastX() / ((float)GRAPHICS->getWidth() * .5f)  - 1.0f;
+		float mouseY = GRAPHICS->getLastY() / ((float)GRAPHICS->getHeight() * .5f) - 1.0f;
 
-		glm::mat4 proj = GRAPHICS->getCamera()->getPerspective();
-		glm::mat4 view = GRAPHICS->getCamera()->getViewProjection();
+		glm::mat4 proj = GRAPHICS->getCamera()->getViewProjection(); 
+		glm::mat4 view = GRAPHICS->getCamera()->getPerspective();
+		//glm::mat4 proj = GRAPHICS->getCamera()->getPerspective();
+		//glm::mat4 view = GRAPHICS->getCamera()->getViewProjection(); //May need to swap these
+
 
 		glm::mat4 invVP = glm::inverse(proj * view);
 		glm::vec4 screenPos = glm::vec4(mouseX, -mouseY, 1.0f, 1.0f);
@@ -27,12 +31,21 @@ public:
 		Vec3 dir = glm::normalize(Vec3(worldPos));
 		//std::cout << dir.x << " " << dir.y << " " << dir.z << std::endl;
 		m_Ray = dir;
+		getCollision();
+	}
+
+	//Check for collision between mesh and ray
+	void getCollision() 
+	{
+
 	}
 
 	Vec3 getRay() const { return m_Ray; };
 
 private:
 	Vec3 m_Ray;
+	NavMesh* m_navMesh;
+	Node* currentCollision;
 };
 #endif // !MOUSE_PICKER_H
 

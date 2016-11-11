@@ -110,7 +110,7 @@ bool GameApp::setup()
 	// https://en.wikibooks.org/wiki/OpenGL_Programming/Modern_OpenGL_Tutorial_Text_Rendering_01#The_FreeType_library
 	RESOURCES->addShader("text", "../Assets/shaders/text");
 	RESOURCES->addFont("cour", "../Assets/fonts/cour.ttf");
-	mp_picker = new MousePicker();
+	mp_picker = new MousePicker(mp_navMesh);
 	return true;
 }
 
@@ -148,7 +148,7 @@ void GameApp::draw()
 	{
 		Camera* cam = GRAPHICS->getCamera();
 
-		//m_skybox->draw(*cam);
+		m_skybox->draw(*cam);
 
 		mp_volume->draw(*cam);
 

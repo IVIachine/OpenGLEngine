@@ -25,7 +25,7 @@ public:
 
 
 		glm::mat4 invVP = glm::inverse(proj * view);
-		glm::vec4 screenPos = glm::vec4(mouseX, -mouseY, 1.0f, 1.0f);
+		glm::vec4 screenPos = glm::vec4(mouseX, -mouseY, 1.0f, 1.0f); //First 1.0f may need to be negative
 		glm::vec4 worldPos = invVP * screenPos;
 
 		Vec3 dir = glm::normalize(Vec3(worldPos));

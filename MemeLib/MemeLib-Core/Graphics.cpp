@@ -44,7 +44,7 @@ void mouse_look(GLFWwindow * window, double xpos, double ypos)
 	}
 	else
 	{
-		GRAPHICS->getCamera()->setForward(Vec3(0, 0, 1));
+		//GRAPHICS->getCamera()->setForward(Vec3(0, 0, 1));
 	}
 }
 
@@ -155,6 +155,21 @@ void Graphics::setWindowTitle(const std::string title)
 void Graphics::flip()
 {
 	glfwSwapBuffers(m_window);
+}
+
+void Graphics::toggleMouse()
+{
+	m_showMouse = !m_showMouse;
+
+	if (m_showMouse)
+	{
+		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
+	else
+	{
+		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	}
+
 }
 
 

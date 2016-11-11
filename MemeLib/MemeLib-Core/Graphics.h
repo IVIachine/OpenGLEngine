@@ -51,7 +51,7 @@ public:
 	void		setWindowSize(const int width, const int height);
 	void		setWindowTitle(const std::string title);
 	void		flip();
-
+	void		toggleMouse();
 	Vec2		getWindowSize();
 	std::string	getWindowTitle();
 	bool		exitWindow();
@@ -80,7 +80,7 @@ private:
 	int			m_height;
 	Vec2		m_mousePosition;
 	bool		m_enableMouseLook = true;
-	
+	bool		m_showMouse = false;
 	static Graphics* sp_instance;
 
 	friend class Keyboard;

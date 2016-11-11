@@ -53,6 +53,11 @@ void GameController::update(NavMesh* pNavMesh)
 	if (INPUT->getKeyDown(Keyboard::Enter))
 	{
 		GRAPHICS->enableMouseLook(!GRAPHICS->isMouseLookEnabled());
+		GRAPHICS->toggleMouse();
+		if (!GRAPHICS->isMouseLookEnabled())
+		{
+			GRAPHICS->getCamera()->setForward({ GRAPHICS->getCamera()->getFoward() });
+		}
 	}
 	if (INPUT->getKeyDown(Keyboard::P))
 	{
@@ -95,7 +100,7 @@ void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 		Vec3 p2 = GRAPHICS->getCamera()->getPosition() + picker->getRay();
 		p2 *= 100;
 		//p1.y -= 0.01f; //May need these two lines
-		//p2.y -= 0.01f;
+		p2.y -= 0.01f;
 		//std::cout << "Cam: " << p1.x << " " << p1.y << " " << p1.z << std::endl;
 		//std::cout <<  "Targ: " << p2.x << " " << p2.y << " " << p2.z << std::endl;
 		GIZMOS->drawRay(p1, p2);

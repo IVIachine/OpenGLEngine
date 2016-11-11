@@ -11,8 +11,9 @@
 #include "Mesh.h"
 #include "Face.h"
 
-#define TOLERANCE 0.00005f
 #define MIN_DIST 0.05f
+
+const static float TOLERANCE = 0.00005f;
 
 typedef std::vector<Edge> EdgeList;
 typedef std::vector<Face> FaceList;

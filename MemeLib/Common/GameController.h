@@ -1,7 +1,7 @@
 #ifndef _GAME_CONTROLLER_H_
 #define _GAME_CONTROLLER_H_
 
-
+#include "MousePicker.h"
 
 class Camera;
 class NavMesh;
@@ -15,7 +15,7 @@ public:
 	~GameController() {};
 
 	void update(NavMesh* pNavMesh);
-	void draw(NavMesh* pNavMesh);
+	void draw(NavMesh* pNavMesh, MousePicker* picker);
 
 	void moveCamera(Camera* pCamera);
 

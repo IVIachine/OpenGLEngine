@@ -66,7 +66,7 @@ Graphics::~Graphics()
 
 bool Graphics::setup(int width, int height, std::string windowName)
 {
-	m_camera = new Camera(Vec3(0.f, 0.f, -10.f), 70.0f, float(width) / float(height), 0.01f, 1000.0f);
+	m_camera = new Camera(Vec3(0.f, 0.f, 0.f), 70.0f, float(width) / float(height), 0.01f, 1000.0f);
 
 	m_width = width;
 	m_height = height;

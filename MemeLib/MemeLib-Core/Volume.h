@@ -16,7 +16,6 @@ public:
 	Transform& transform() { return m_transform; };
 	void draw(Camera& camera);
 	void setTransform(Transform transform) { m_transform = transform; };
-
 	Mesh* getMesh() { return mp_mesh; };
 
 private:

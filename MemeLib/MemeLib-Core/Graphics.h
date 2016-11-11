@@ -66,7 +66,6 @@ public:
 
 	void	enableMouseLook(bool value) { m_enableMouseLook = value; };
 	bool	isMouseLookEnabled() const { return m_enableMouseLook; };
-
 private:
 	Graphics();
 	~Graphics();
@@ -81,7 +80,6 @@ private:
 	int			m_height;
 	Vec2		m_mousePosition;
 	bool		m_enableMouseLook = true;
-	
 	
 	static Graphics* sp_instance;
 

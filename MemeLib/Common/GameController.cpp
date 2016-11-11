@@ -9,6 +9,7 @@
 #include "Gizmos.h"
 #include "Connection.h"
 #include "Common.h"
+#include "MousePicker.h"
 
 GameController::GameController()
 {
@@ -69,10 +70,9 @@ void GameController::update(NavMesh* pNavMesh)
 	moveCamera(GRAPHICS->getCamera());
 }
 
-void GameController::draw(NavMesh* pNavMesh)
+void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 {
 	// draw verts, edges, and target node
-
 	if (mDebugMode)
 	{
 		for (size_t i = 0; i < pNavMesh->size(); i++)
@@ -82,22 +82,20 @@ void GameController::draw(NavMesh* pNavMesh)
 		
 		for (size_t i = 0; i < pNavMesh->edgeCount(); i++)
 		{
-			if (i != 18)
-			{
+
 				Vec3 p1 = pNavMesh->getEdge(i)->first;
 				Vec3 p2 = pNavMesh->getEdge(i)->second;
 				p1.y += 0.05f;
 				p2.y += 0.05f;
 				GIZMOS->drawRay(p1, p2);
-			}
 		}
 
-		/*for (size_t i = 0; i < pNavMesh->faceCount(); i++)
-		{
-			for (size_t j = 0; j < pNavMesh->getFaces()[i].edges.size(); j++)
+		//for (size_t i = 0; i < pNavMesh->faceCount(); i++)
+		/*{
+			for (size_t j = 0; j < pNavMesh->getFaces()[currentIndex].edges.size(); j++)
 			{
-				Vec3 p1 = pNavMesh->getFaces()[i].edges[j].first;
-				Vec3 p2 = pNavMesh->getFaces()[i].edges[j].second;
+				Vec3 p1 = pNavMesh->getFaces()[currentIndex].edges[j].first;
+				Vec3 p2 = pNavMesh->getFaces()[currentIndex].edges[j].second;
 				p1.y += 0.05f;
 				p2.y += 0.05f;
 				GIZMOS->drawRay(p1, p2);

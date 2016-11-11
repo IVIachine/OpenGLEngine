@@ -271,6 +271,7 @@ OBJIndex OBJModel::ParseOBJIndex(const std::string& token, bool* hasUVs, bool* h
 	{
 		size_t vertIndexEnd = FindNextChar(vertIndexStart, tokenString, tokenLength, '/');
 		result.vertexIndex = ParseOBJIndexValue(token, vertIndexStart, vertIndexEnd);
+		indices.push_back(result.vertexIndex);
 		result.uvIndex = 0;
 		result.normalIndex = 0;
 

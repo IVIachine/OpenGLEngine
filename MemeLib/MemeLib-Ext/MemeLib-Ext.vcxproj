@@ -128,6 +128,7 @@
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="LinkingContext.cpp" />
+    <ClCompile Include="MousePicker.cpp" />
     <ClCompile Include="NavMesh.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="ObjectCreationRegistry.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Graph.h" />
     <ClInclude Include="HalfEdge.h" />
     <ClInclude Include="LinkingContext.h" />
+    <ClInclude Include="MousePicker.h" />
     <ClInclude Include="NavMesh.h" />
     <ClInclude Include="Net.h" />
     <ClInclude Include="Node.h" />

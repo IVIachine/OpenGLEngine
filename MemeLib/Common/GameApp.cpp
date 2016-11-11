@@ -94,9 +94,9 @@ bool GameApp::setup()
 	pSpr1->setScale(Vec3(.1f, .1f, .1f));
 	pSpr1->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
 
-	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test4.obj", false);
+	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test7.obj", false);
 	mp_navMesh->constructMesh(mp_volume->getMesh());
-
+	//mp_picker = new MousePicker(GRAPHICS->getCamera(), GRAPHICS->getCamera()->getPerspective(), mp_navMesh);
 	Transform skyBoxTransform = Transform(Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(500, 500, 500));
 	m_skybox = new Volume(
 		p_shader,
@@ -132,6 +132,8 @@ void GameApp::cleanup()
 
 void GameApp::update()
 {
+	//mp_picker->update();
+	//std::cout << mp_picker->getCurrentRay().x << " " << mp_picker->getCurrentRay().y << " "  << mp_picker->getCurrentRay().z << std::endl;
 	m_skybox->transform().setPosition(GRAPHICS->getCamera()->getPosition());
 
 	m_controller.update(mp_navMesh);
@@ -151,7 +153,7 @@ void GameApp::draw()
 
 		mp_volume->draw(*cam);
 
-		m_controller.draw(mp_navMesh);
+		m_controller.draw(mp_navMesh, mp_picker);
 
 		UNITS->drawAll();
 	}

@@ -146,6 +146,9 @@
     <ClCompile Include="RPCManager.cpp">
       <Filter>Source Files\Net</Filter>
     </ClCompile>
+    <ClCompile Include="MousePicker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UnitManager.h">
@@ -243,6 +246,9 @@
     </ClInclude>
     <ClInclude Include="EventsExt.h">
       <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="MousePicker.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

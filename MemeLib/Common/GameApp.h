@@ -11,6 +11,7 @@
 #include "UnitManager.h"
 #include "GameController.h"
 #include "Application.h"
+#include "MousePicker.h"
 
 const int MAX_UNITS = 500;
 
@@ -31,7 +32,7 @@ private:
 	Texture2D*	mp_texture;
 	Volume*		mp_volume;
 	NavMesh*	mp_navMesh;
-
+	MousePicker* mp_picker;
 	GLuint tex;
 
 	GameController m_controller;	

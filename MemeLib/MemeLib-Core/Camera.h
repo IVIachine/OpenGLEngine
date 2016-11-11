@@ -4,7 +4,7 @@
 #include "Vector3.h"
 #include "Matrix.h"
 #include <Trackable.h>
-
+#include "GL\glew.h"
 class Camera : public Trackable
 {
 public:
@@ -13,7 +13,6 @@ public:
 
 	Matrix	getViewProjection() const;
 	Matrix	getPerspective() const;
-
 	float	getFOV() const;
 
 	Vec3	getFoward() const;

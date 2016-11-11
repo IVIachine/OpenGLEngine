@@ -25,7 +25,7 @@ void NavMesh::constructMesh(Mesh* mesh)
 	splitTriangles(verts, mesh->getIndices(), edges, mesh->getCount()); //Split the intersections into multiple edges for accuracy
 	m_vertices = verts;
 	m_edges = edges;
-
+	cleanEdges();
 	//CONSTRUCT TEMPORARY MESH FOR WIREFRAMES
 	m_nodeList.resize(m_vertices.size(), NULL);
 	for (size_t i = 0; i < m_vertices.size(); i++)
@@ -63,49 +63,6 @@ void NavMesh::constructMesh(Mesh* mesh)
 
 		m_connectionMap[i] = connections;
 	}
-	cleanEdges();
-	
-	/*gatherFaces();
-	cleanAllFaces();
-	clear();
-
-	m_nodeList.resize(m_faces.size(), NULL);
-	for (size_t i = 0; i < m_faces.size(); i++)
-	{
-		Vec3 center = getFaceCenter(m_faces[i]);
-		Node* pNode = new Node(i, center);
-		m_nodeList[i] = pNode;
-	}
-
-
-	for (size_t i = 0; i < m_faces.size(); i++)
-	{
-		Node* pSource = m_nodeList[i];
-		ConnectionList connections;
-		FaceList knownConnections = getFaceConnections(getFaceFromVec(pSource->getPosition()));
-
-		for (size_t j = 0; j < knownConnections.size(); j++)
-		{
-			Node* pTarget = getNode(getFaceCenter(knownConnections[j]));
-
-			float	moveCost = Vector3::distance(pSource->getPosition(), pTarget->getPosition());
-			bool	isWalkable = true;
-
-			if (isWalkable)
-			{
-				Connection* pConnection = new Connection(
-					pSource,
-					pTarget,
-					moveCost,
-					isWalkable);
-
-				m_connectionList.push_back(pConnection);
-				connections.push_back(pConnection);
-			}
-		}
-
-		m_connectionMap[i] = connections;
-	}*/
 	
 	timer.stop();
 	std::cout << "Elapsed Time: " << timer.getElapsedTime() << "\n";
@@ -135,14 +92,6 @@ void NavMesh::gatherEdges(
 		if (!reverseExists(edges, tmp3))
 			edges.push_back(tmp3);
 
-		Face newFace;
-		newFace.edges.push_back(tmp);
-		newFace.edges.push_back(tmp2);
-		newFace.edges.push_back(tmp3);
-		if (!faceExists(m_originalFaces, newFace))
-		{
-			m_originalFaces.push_back(newFace);
-		}
 	}
 }
 
@@ -150,7 +99,6 @@ void NavMesh::splitTriangles(
 	VertList& vertices, std::vector<size_t> indices, EdgeList& edges, size_t faceCount)
 {
 	gatherEdges(edges, vertices, indices, faceCount);
-
 	size_t size = edges.size();
 	for (size_t i = 0; i < size; i++)
 	{
@@ -164,7 +112,7 @@ void NavMesh::splitTriangles(
 
 			// get intersection point
 			Vec3 ip;
-			if (getIntersection(edges[i], edges[j], ip) && edges[i] != edges[j])
+			if (getIntersection(edges[i], edges[j], ip))
 			{
 				// add vertice if not exists
 				if (std::find(vertices.begin(), vertices.end(), ip) == vertices.end())
@@ -205,21 +153,6 @@ void NavMesh::splitTriangles(
 						edges[i] = a;
 						edges.push_back(b);
 					}
-				}
-			}
-		}
-	}
-
-	//Check for possible edges between two close points
-	for (size_t i = 0; i < vertices.size(); i++)
-	{
-		for (size_t j = 0; j < vertices.size(); j++)
-		{
-			if (Vector3::distance(vertices[i], vertices[j]) < MIN_DIST)
-			{
-				if (!edgeExists(vertices[i], vertices[j], edges))
-				{
-					edges.push_back(Edge(vertices[i], vertices[j]));
 				}
 			}
 		}
@@ -618,7 +551,6 @@ FaceList NavMesh::getFaceConnections(Face key)
 	}
 	return faces;
 }
-
 
 Edge * NavMesh::getEdge(size_t index)
 {

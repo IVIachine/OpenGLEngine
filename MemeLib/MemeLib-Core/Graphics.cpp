@@ -66,7 +66,8 @@ Graphics::~Graphics()
 
 bool Graphics::setup(int width, int height, std::string windowName)
 {
-	m_camera = new Camera(Vec3(0.f, 0.f, 0.f), 70.0f, float(width) / float(height), 0.01f, 1000.0f);
+	Vec3 camPos = { 0.0f, 1.0f, -1.0f };
+	m_camera = new Camera(camPos, 70.0f, float(width) / float(height), 0.01f, 1000.0f);
 
 	m_width = width;
 	m_height = height;
@@ -138,6 +139,15 @@ void Graphics::clear()
 
 void Graphics::pollEvents()
 {
+	if (m_showMouse)
+	{
+		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
+	else
+	{
+		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	}
+
 	glfwPollEvents();
 }
 
@@ -160,16 +170,6 @@ void Graphics::flip()
 void Graphics::toggleMouse()
 {
 	m_showMouse = !m_showMouse;
-
-	if (m_showMouse)
-	{
-		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-	}
-	else
-	{
-		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	}
-
 }
 
 

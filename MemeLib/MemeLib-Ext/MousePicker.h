@@ -6,8 +6,14 @@
 #include "Vector3.h"
 #include "NavMesh.h"
 #include "Node.h"
-//CITE: https://www.youtube.com/watch?v=DLKN0jExRIM
-class MousePicker {
+
+struct RayCastHit
+{
+	Vec3 point;
+};
+
+class MousePicker 
+{
 public:
 	MousePicker(NavMesh* mesh) { m_navMesh = mesh; };
 	~MousePicker() {};
@@ -18,8 +24,8 @@ public:
 		float mouseX = GRAPHICS->getLastX() / ((float)GRAPHICS->getWidth() * .5f)  - 1.0f;
 		float mouseY = GRAPHICS->getLastY() / ((float)GRAPHICS->getHeight() * .5f) - 1.0f;
 
-		glm::mat4 proj = GRAPHICS->getCamera()->getViewProjection(); 
-		glm::mat4 view = GRAPHICS->getCamera()->getPerspective();
+		glm::mat4 proj = GRAPHICS->getCamera()->getViewMatrix(); 
+		glm::mat4 view = GRAPHICS->getCamera()->getProjectionMatrix();
 		//glm::mat4 proj = GRAPHICS->getCamera()->getPerspective();
 		//glm::mat4 view = GRAPHICS->getCamera()->getViewProjection(); //May need to swap these
 
@@ -30,7 +36,8 @@ public:
 
 		Vec3 dir = glm::normalize(Vec3(worldPos));
 		//std::cout << dir.x << " " << dir.y << " " << dir.z << std::endl;
-		m_Ray = dir;
+		m_Ray = worldPos;
+
 		getCollision();
 	}
 
@@ -42,10 +49,12 @@ public:
 
 	Vec3 getRay() const { return m_Ray; };
 
+	bool raycast(Vec3 origin, Vec3 dir, RayCastHit& hit);
+
 private:
-	Vec3 m_Ray;
-	NavMesh* m_navMesh;
-	Node* currentCollision;
+	Vec3		m_Ray;
+	NavMesh*	m_navMesh;
+	Node*		currentCollision;
 };
 #endif // !MOUSE_PICKER_H
 

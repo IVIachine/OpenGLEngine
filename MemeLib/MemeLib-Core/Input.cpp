@@ -5,6 +5,11 @@
 Input* Input::sp_instance = NULL;
 
 
+Vec2 Input::getMousePosition() const
+{
+	return Vec2(GRAPHICS->getLastX(), GRAPHICS->getLastY());
+}
+
 Input::Input()
 {	
 }

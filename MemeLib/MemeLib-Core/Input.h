@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+#include "Vector2.h"
+#include "Vector3.h"
 #include "Keyboard.h"
 #include "Mouse.h"
 
@@ -41,6 +43,8 @@ public:
 	bool getButton(Mouse::Buttons button) { return MOUSE->getButton(button); }
 	bool getButtonDown(Mouse::Buttons button) { return MOUSE->getButtonDown(button); }
 	bool getButtonUp(Mouse::Buttons button) { return MOUSE->getButtonUp(button); }
+
+	Vec2 getMousePosition() const;
 
 private:
 	Input();

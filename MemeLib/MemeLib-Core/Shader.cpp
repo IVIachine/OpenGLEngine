@@ -127,7 +127,7 @@ void Shader::bind()
 void Shader::update(const Transform & transform, const Camera& camera)
 {
 	glDepthMask(GL_TRUE);
-	Matrix model = camera.getViewProjection() * transform.getModel();
+	Matrix model = camera.getViewMatrix() * transform.getModel();
 	glUniformMatrix4fv(m_uniforms[TRANSFORM_U], 1, GL_FALSE, &model[0][0]); //Updates a uniform ** MAY NEED TO REPLACE FALSE WITH TRANSPOSE
 		//fv = float values
 }

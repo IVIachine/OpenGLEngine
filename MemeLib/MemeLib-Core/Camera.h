@@ -1,18 +1,20 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include "Vector2.h"
 #include "Vector3.h"
 #include "Matrix.h"
 #include <Trackable.h>
 #include "GL\glew.h"
+
 class Camera : public Trackable
 {
 public:
 	Camera(const Vec3& pos, float fov, float aspect, float zNear, float zFar);
 	~Camera();
 
-	Matrix	getViewProjection() const;
-	Matrix	getPerspective() const;
+	Matrix	getViewMatrix() const;
+	Matrix	getProjectionMatrix() const;
 	float	getFOV() const;
 
 	Vec3	getFoward() const;
@@ -23,6 +25,8 @@ public:
 	void	setPosition(Vec3 pos);
 	float	getNear() { return m_near; };
 	float	getFar() { return m_far; };
+
+	Vec3	screenPointToWorldPoint(Vec2 pos);
 
 private:
 	Matrix	m_perspective;

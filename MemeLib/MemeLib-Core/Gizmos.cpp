@@ -33,6 +33,11 @@ void Gizmos::setColor(Color color)
 }
 
 
+void Gizmos::drawPoint(Vec2 pos, float d)
+{
+	drawPoint({ pos.x, pos.y, d });
+}
+
 void Gizmos::drawPoint(Vec3 pos)
 {
 	float

@@ -34,6 +34,7 @@ public:
 
 	void setColor(Color color);
 
+	void drawPoint(Vec2 pos, float d = 0.0f);
 	void drawPoint(Vec3 pos);
 	void drawRay(Vec3 start, Vec3 end);
 

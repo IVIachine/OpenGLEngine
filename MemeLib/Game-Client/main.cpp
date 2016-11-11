@@ -33,7 +33,6 @@ int main()
 	{
 		GAME->beginStep();		
 		GAME->step();
-
 		CLIENT->update();
 		isRunning = GAME->endStep();
 	}

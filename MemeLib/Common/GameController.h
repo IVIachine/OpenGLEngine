@@ -14,7 +14,7 @@ public:
 	GameController();
 	~GameController() {};
 
-	void update(NavMesh* pNavMesh);
+	void update(NavMesh* pNavMesh, MousePicker* picker);
 	void draw(NavMesh* pNavMesh, MousePicker* picker);
 
 	void moveCamera(Camera* pCamera);

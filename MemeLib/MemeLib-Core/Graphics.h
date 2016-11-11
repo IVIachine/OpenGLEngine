@@ -56,24 +56,26 @@ public:
 	std::string	getWindowTitle();
 	bool		exitWindow();
 
-	GLfloat getLastY() { return m_lastY; };
-	GLfloat getLastX() { return m_lastX; };
-
-	void setLastX(GLfloat x) { m_lastX = x; };
-	void setLastY(GLfloat y) { m_lastY = y; };
-
 	Camera* getCamera() { return m_camera; };
+
+	float getLastY() { return m_lastY; };
+	float getLastX() { return m_lastX; };
+
+	void setLastX(float x) { m_lastX = x; };
+	void setLastY(float y) { m_lastY = y; };
 
 	void	enableMouseLook(bool value) { m_enableMouseLook = value; };
 	bool	isMouseLookEnabled() const { return m_enableMouseLook; };
+
 private:
 	Graphics();
 	~Graphics();
 
 	GLFWwindow* m_window;
-	GLfloat m_lastX, m_lastY;
-
 	Camera* m_camera;
+
+	float m_lastX;
+	float m_lastY;
 
 	std::string m_title;
 	int			m_width;
@@ -81,6 +83,7 @@ private:
 	Vec2		m_mousePosition;
 	bool		m_enableMouseLook = true;
 	bool		m_showMouse = false;
+
 	static Graphics* sp_instance;
 
 	friend class Keyboard;

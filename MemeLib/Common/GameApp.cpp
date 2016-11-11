@@ -110,7 +110,9 @@ bool GameApp::setup()
 	// https://en.wikibooks.org/wiki/OpenGL_Programming/Modern_OpenGL_Tutorial_Text_Rendering_01#The_FreeType_library
 	RESOURCES->addShader("text", "../Assets/shaders/text");
 	RESOURCES->addFont("cour", "../Assets/fonts/cour.ttf");
+	
 	mp_picker = new MousePicker(mp_navMesh);
+
 	return true;
 }
 
@@ -131,11 +133,10 @@ void GameApp::cleanup()
 
 void GameApp::update()
 {
-	mp_picker->update();
 	//std::cout << mp_picker->getCurrentRay().x << " " << mp_picker->getCurrentRay().y << " "  << mp_picker->getCurrentRay().z << std::endl;
 	m_skybox->transform().setPosition(GRAPHICS->getCamera()->getPosition());
 
-	m_controller.update(mp_navMesh);
+	m_controller.update(mp_navMesh, mp_picker);
 
 	COMPONENTS->update(FIXED_UPDATE_DELTA);
 

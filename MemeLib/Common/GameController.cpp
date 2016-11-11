@@ -14,7 +14,8 @@
 GameController::GameController()
 {
 }
-void GameController::update(NavMesh* pNavMesh)
+
+void GameController::update(NavMesh* pNavMesh, MousePicker* picker)
 {
 	if (INPUT->getKeyDown(Keyboard::Up))
 	{
@@ -50,20 +51,10 @@ void GameController::update(NavMesh* pNavMesh)
 	{
 		EVENT_SYSTEM->fireEvent(BeginPathingEvent());
 	}
-	if (INPUT->getKeyDown(Keyboard::Enter))
-	{
-		GRAPHICS->enableMouseLook(!GRAPHICS->isMouseLookEnabled());
-		GRAPHICS->toggleMouse();
-		if (!GRAPHICS->isMouseLookEnabled())
-		{
-			GRAPHICS->getCamera()->setForward({ GRAPHICS->getCamera()->getFoward() });
-		}
-	}
 	if (INPUT->getKeyDown(Keyboard::P))
 	{
 		EVENT_SYSTEM->fireEvent(SpawnEvent());
 	}
-
 	if (INPUT->getKeyDown(Keyboard::G))
 	{
 		if (mDebugMode)
@@ -71,8 +62,36 @@ void GameController::update(NavMesh* pNavMesh)
 		else
 			mDebugMode = true;
 	}
+	
+	if (!CLIENT->isConnected())
+	{
+		if (INPUT->getKeyDown(Keyboard::C))
+		{
+			std::cout << "Connecting to server... \n";
+			CLIENT->connect("127.0.0.1");
+		}
+	}
+	else
+	{
+		if (INPUT->getKeyDown(Keyboard::M))
+		{
+			sendMessage("Hello, World!");
+		}
+	}
 
 	moveCamera(GRAPHICS->getCamera());
+
+	if (INPUT->getKeyDown(Keyboard::Enter))
+	{
+		GRAPHICS->enableMouseLook(!GRAPHICS->isMouseLookEnabled());
+		GRAPHICS->toggleMouse();
+	}
+	if (!GRAPHICS->isMouseLookEnabled())
+	{
+		GRAPHICS->getCamera()->setForward({ GRAPHICS->getCamera()->getFoward() });
+	}
+
+	picker->update();
 }
 
 void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
@@ -96,15 +115,6 @@ void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 		}
 		*/
 
-		Vec3 p1 = GRAPHICS->getCamera()->getPosition();
-		Vec3 p2 = GRAPHICS->getCamera()->getPosition() + picker->getRay();
-		p2 *= 100;
-		//p1.y -= 0.01f; //May need these two lines
-		p2.y -= 0.01f;
-		//std::cout << "Cam: " << p1.x << " " << p1.y << " " << p1.z << std::endl;
-		//std::cout <<  "Targ: " << p2.x << " " << p2.y << " " << p2.z << std::endl;
-		GIZMOS->drawRay(p1, p2);
-
 		//for (size_t i = 0; i < pNavMesh->faceCount(); i++)
 		/*{
 			for (size_t j = 0; j < pNavMesh->getFaces()[currentIndex].edges.size(); j++)
@@ -127,22 +137,21 @@ void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 		EVENT_SYSTEM->fireEvent(ChangeTargetEvent(mp_target->getPosition()));
 	}
 
+	Vec2 mp = INPUT->getMousePosition();	
+	Vec3 pos = GRAPHICS->getCamera()->screenPointToWorldPoint(mp);
+	Vec3 dir = GRAPHICS->getCamera()->getFoward();
 
-	if (!CLIENT->isConnected())
+	GRAPHICS->setWindowTitle(std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z));
+	GIZMOS->drawPoint(pos);
+
+	RayCastHit hit;
+	if (picker->raycast(pos, dir, hit))
 	{
-		if (INPUT->getKeyDown(Keyboard::C))
-		{
-			std::cout << "Connecting to server... \n";
-			CLIENT->connect("127.0.0.1");
-		}
+		Vec3 point = hit.point;
+
+		GIZMOS->drawPoint(point);
 	}
-	else
-	{
-		if (INPUT->getKeyDown(Keyboard::M))
-		{
-			sendMessage("Hello, World!");
-		}
-	}
+	
 }
 
 void GameController::moveCamera(Camera* camera)

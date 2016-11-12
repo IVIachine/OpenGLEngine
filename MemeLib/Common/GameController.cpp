@@ -138,7 +138,6 @@ void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 	}
 
 	Camera* cam = GRAPHICS->getCamera();
-
 	Vec2 mp = INPUT->getMousePosition();	
 	Vec3 pos = cam->screenPointToWorldPoint(mp);
 	Vec3 dir = cam->getFoward();

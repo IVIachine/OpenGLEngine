@@ -465,6 +465,24 @@ int NavMesh::numFacesWithEdge(Edge key)
 	return matches;
 }
 
+float NavMesh::heighAtCoords(float x, float z)
+{
+	float dist = INFINITY;
+	Vec3 closest;
+	Vec3 testPoint(x, 0.0f, z);
+	for (size_t i = 0; i < m_vertices.size(); i++)
+	{
+		float testDist = glm::distance(m_vertices[i], testPoint);
+		if (testDist < dist)
+		{
+			closest = m_vertices[i];
+			dist = testDist;
+		}
+	}
+
+	return closest.y;
+}
+
 
 EdgeList NavMesh::getEdges() const
 {

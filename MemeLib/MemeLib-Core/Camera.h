@@ -26,7 +26,7 @@ public:
 	float	getNear() { return m_near; };
 	float	getFar() { return m_far; };
 
-	Vec3	screenPointToWorldPoint(Vec2 pos);
+	void screenPointToWorldPoint(Vec2 point2D, Vec3 & dir, Vec3 & origin, Vec3 & farPoint);
 
 private:
 	Matrix	m_perspective;

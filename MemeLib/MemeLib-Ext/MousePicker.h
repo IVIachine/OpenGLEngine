@@ -42,10 +42,8 @@ public:
 	}
 
 	//Check for collision between mesh and ray
-	void getCollision() 
-	{
+	Node* getCollision();
 
-	}
 
 	Vec3 getRay() const { return m_Ray; };
 
@@ -54,7 +52,7 @@ public:
 private:
 	Vec3		m_Ray;
 	NavMesh*	m_navMesh;
-	Node*		currentCollision;
+	Node*		m_currentCollision;
 };
 #endif // !MOUSE_PICKER_H
 

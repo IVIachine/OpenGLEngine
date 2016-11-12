@@ -44,7 +44,7 @@ public:
 	bool	sameSide(Vec3 p1, Vec3 p2, Vec3 a, Vec3 b);
 	bool	pointInTriangle(Vec3 point, Vec3 a, Vec3 b, Vec3 c);
 	int		numFacesWithEdge(Edge key);
-
+	float	heighAtCoords(float x, float z);
 	EdgeList	getEdges() const;
 	EdgeList	getKnownConnections(Vec3 key);
 	FaceList	getEdgeFaces(std::vector<Face>& faces, Edge key);

@@ -60,9 +60,33 @@ void Camera::setPosition(Vec3 pos)
 	m_pos = pos;
 }
 
-Vec3 Camera::screenPointToWorldPoint(Vec2 point2D)
+void Camera::screenPointToWorldPoint(Vec2 point2D, Vec3 & dir, Vec3 & origin, Vec3 & farPoint)
 {
-	int width = GRAPHICS->getWidth();
+	GLint viewport[4];
+	GLdouble modelMatrix[16];
+	GLdouble projectionMatrix[16];
+
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	glGetDoublev(GL_MODELVIEW_MATRIX, modelMatrix);
+	glGetDoublev(GL_PROJECTION_MATRIX, projectionMatrix);
+	GLfloat winY = GLfloat(viewport[3] - point2D.y);
+
+	double nearX, nearY, nearZ, farX, farY, farZ;;
+	gluUnProject((double)point2D.x, winY, 0.0f, // Near
+		modelMatrix, projectionMatrix, viewport,
+		&nearX, &nearY, &nearZ);
+	origin = Vec3(nearX, nearY, nearZ);
+
+	gluUnProject((double)point2D.x, winY, 1.0f, // Far
+		modelMatrix, projectionMatrix, viewport,
+		&farX, &farY, &farZ);
+	dir = Vec3(farX - nearX, farY - nearY, farZ - nearZ);
+	farPoint = Vec3(farX, farY, farZ);
+}
+
+//void Camera::screenPointToWorldPoint(Vec2 point2D, Vec3& dir, Vec3& origin);
+//{
+	/*int width = GRAPHICS->getWidth();
 	int height = GRAPHICS->getHeight();
 
 	Matrix projectionMatrix = getProjectionMatrix();
@@ -88,5 +112,9 @@ Vec3 Camera::screenPointToWorldPoint(Vec2 point2D)
 	pos.y *= pos.w;
 	pos.z *= pos.w;
 
-	return pos;
-}
+	return pos;*/
+
+
+
+	
+//}

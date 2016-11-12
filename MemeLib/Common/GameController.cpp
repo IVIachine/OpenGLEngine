@@ -139,12 +139,12 @@ void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 
 	Camera* cam = GRAPHICS->getCamera();
 	Vec2 mp = INPUT->getMousePosition();	
-	Vec3 pos = cam->screenPointToWorldPoint(mp);
-	Vec3 dir = cam->getFoward();
+	Vec3 pos;
+	Vec3 dir;
+	Vec3 farLoc;
+	cam->screenPointToWorldPoint(mp, dir, pos, farLoc);
 
-	
-	GIZMOS->drawRay(pos, { 0.f, 0.f, 0.f });
-	GIZMOS->drawPoint(pos);
+	GIZMOS->drawRay(pos, farLoc);
 
 	GRAPHICS->setWindowTitle(std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z));
 
@@ -152,7 +152,7 @@ void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 	if (picker->raycast(pos, dir, hit))
 	{
 		Vec3 point = hit.point;
-
+		std::cout << point.x << " " << point.y << " " << point.z << std::endl;
 		GIZMOS->drawPoint(point);
 	}
 	

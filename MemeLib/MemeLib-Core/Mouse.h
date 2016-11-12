@@ -54,9 +54,9 @@ public:
 
 		static void beginStep(MouseState& state)
 		{
-			state.mStateNew[Buttons::Left] = glfwGetMouseButton(GRAPHICS->m_window, GLFW_MOUSE_BUTTON_LEFT);
-			state.mStateNew[Buttons::Right] = glfwGetMouseButton(GRAPHICS->m_window, GLFW_MOUSE_BUTTON_RIGHT);
-			state.mStateNew[Buttons::Middle] = glfwGetMouseButton(GRAPHICS->m_window, GLFW_MOUSE_BUTTON_MIDDLE);
+			state.mStateNew[Buttons::Left] = (bool)glfwGetMouseButton(GRAPHICS->m_window, GLFW_MOUSE_BUTTON_LEFT);
+			state.mStateNew[Buttons::Right] = (bool)glfwGetMouseButton(GRAPHICS->m_window, GLFW_MOUSE_BUTTON_RIGHT);
+			state.mStateNew[Buttons::Middle] = (bool)glfwGetMouseButton(GRAPHICS->m_window, GLFW_MOUSE_BUTTON_MIDDLE);
 		}
 
 		static void endStep(MouseState& state)

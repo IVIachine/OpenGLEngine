@@ -31,7 +31,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -72,12 +72,16 @@
     <IncludePath>..\MemeLib-Core;..\MemeLib-Ext;..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;$(IncludePath)</IncludePath>
     <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>..\MemeLib-Core;..\MemeLib-Ext;..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <BrowseInformation>true</BrowseInformation>
+      <AdditionalIncludeDirectories>..\MemeLib-Core;..\MemeLib-Ext;..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;$(IncludePath)</AdditionalIncludeDirectories>
     </ClCompile>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -97,6 +101,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\MemeLib-Core;..\MemeLib-Ext;..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;$(IncludePath)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

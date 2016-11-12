@@ -31,7 +31,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -73,14 +73,14 @@
     <IncludePath>..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\..\libraries\RakNet\Includes\RakNet;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;$(IncludePath)</AdditionalIncludeDirectories>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Bscmake>
@@ -101,7 +101,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\libraries\RakNet\Includes\RakNet;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\libraries\DeanLib\include;..\..\libraries\FreeImage\Dist\x32\;..\..\libraries\glew-2.0.0\include;..\..\libraries\glfw-3.2.1\Include;..\..\libraries\glm-0.9.8.1\glm\glm;..\..\libraries\RakNet\Includes\RakNet;..\..\libraries\freetype-2.7\include;$(IncludePath)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

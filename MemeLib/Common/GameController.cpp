@@ -17,27 +17,16 @@ GameController::GameController()
 
 void GameController::update(NavMesh* pNavMesh, MousePicker* picker)
 {
-	if (INPUT->getKeyDown(Keyboard::Up))
+	RayCastHit hit;
+	if (picker->raycast(GRAPHICS->getCamera()->getPosition(), GRAPHICS->getCamera()->getFoward(), hit))
 	{
-		if (m_index + 1 > int(pNavMesh->size()))
-		{
-			m_index = 0;
-		}
-		else
-		{
-			m_index++;
-		}
+		Vec3 point = hit.point;
+		mp_target = pNavMesh->getNode(point);
 	}
-	if (INPUT->getKeyDown(Keyboard::Down))
+
+	if (INPUT->getButtonDown(Mouse::Buttons::Left))
 	{
-		if (m_index - 1 < 0)
-		{
-			m_index = int(pNavMesh->size()) - 1;
-		}
-		else
-		{
-			m_index--;
-		}
+		EVENT_SYSTEM->fireEvent(BeginPathingEvent());
 	}
 
 	if (INPUT->getKeyDown(Keyboard::KeyCode::Escape))
@@ -45,12 +34,6 @@ void GameController::update(NavMesh* pNavMesh, MousePicker* picker)
 		GAME->stop();
 	}
 
-	mp_target = pNavMesh->getNode(m_index);
-
-	if (INPUT->getKeyDown(Keyboard::F))
-	{
-		EVENT_SYSTEM->fireEvent(BeginPathingEvent());
-	}
 	if (INPUT->getKeyDown(Keyboard::P))
 	{
 		EVENT_SYSTEM->fireEvent(SpawnEvent());
@@ -62,7 +45,7 @@ void GameController::update(NavMesh* pNavMesh, MousePicker* picker)
 		else
 			mDebugMode = true;
 	}
-	
+
 	if (!CLIENT->isConnected())
 	{
 		if (INPUT->getKeyDown(Keyboard::C))
@@ -129,33 +112,20 @@ void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 
 	}
 
-	mp_target = pNavMesh->getNode(m_index);
-
 	if (mp_target)
 	{
 		GIZMOS->drawPoint(mp_target->getPosition() + Vec3(0.f, 0.5f, 0.f));
 		EVENT_SYSTEM->fireEvent(ChangeTargetEvent(mp_target->getPosition()));
 	}
 
-	Camera* cam = GRAPHICS->getCamera();
+	/*Camera* cam = GRAPHICS->getCamera();
 	Vec2 mp = INPUT->getMousePosition();	
 	Vec3 pos;
 	Vec3 dir;
 	Vec3 farLoc;
-	cam->screenPointToWorldPoint(mp, dir, pos, farLoc);
+	cam->screenPointToWorldPoint(mp, dir, pos, farLoc);*/
 
-	GIZMOS->drawRay(pos, farLoc);
-
-	GRAPHICS->setWindowTitle(std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z));
-
-	RayCastHit hit;
-	if (picker->raycast(GRAPHICS->getCamera()->getPosition(), GRAPHICS->getCamera()->getFoward(), hit))
-	{
-		Vec3 point = hit.point;
-		std::cout << point.x << " " << point.y << " " << point.z << std::endl;
-		GIZMOS->drawPoint(point);
-	}
-	
+	//GIZMOS->drawRay(pos, farLoc);
 }
 
 void GameController::moveCamera(Camera* camera)

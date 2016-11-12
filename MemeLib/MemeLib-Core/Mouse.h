@@ -2,8 +2,10 @@
 #define _MOUSE_STATE_H_
 
 
-#include <Trackable.h>
 #include <cassert>
+#include <Trackable.h>
+#include "Graphics.h"
+#include <GLFW\glfw3.h>
 
 #define MOUSE Mouse::getInstance()
 
@@ -52,9 +54,9 @@ public:
 
 		static void beginStep(MouseState& state)
 		{
-			//state.mStateNew[Buttons::Left] = sf::Mouse::isButtonPressed(sf::Mouse::Left);
-			//state.mStateNew[Buttons::Right] = sf::Mouse::isButtonPressed(sf::Mouse::Right);
-			//state.mStateNew[Buttons::Middle] = sf::Mouse::isButtonPressed(sf::Mouse::Middle);
+			state.mStateNew[Buttons::Left] = glfwGetMouseButton(GRAPHICS->m_window, GLFW_MOUSE_BUTTON_LEFT);
+			state.mStateNew[Buttons::Right] = glfwGetMouseButton(GRAPHICS->m_window, GLFW_MOUSE_BUTTON_RIGHT);
+			state.mStateNew[Buttons::Middle] = glfwGetMouseButton(GRAPHICS->m_window, GLFW_MOUSE_BUTTON_MIDDLE);
 		}
 
 		static void endStep(MouseState& state)

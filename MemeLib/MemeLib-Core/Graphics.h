@@ -87,6 +87,7 @@ private:
 	static Graphics* sp_instance;
 
 	friend class Keyboard;
+	friend class Mouse;
 };
 
 #endif

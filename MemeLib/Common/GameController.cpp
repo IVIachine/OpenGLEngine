@@ -149,7 +149,7 @@ void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 	GRAPHICS->setWindowTitle(std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z));
 
 	RayCastHit hit;
-	if (picker->raycast(pos, dir, hit))
+	if (picker->raycast(GRAPHICS->getCamera()->getPosition(), GRAPHICS->getCamera()->getFoward(), hit))
 	{
 		Vec3 point = hit.point;
 		std::cout << point.x << " " << point.y << " " << point.z << std::endl;

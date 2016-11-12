@@ -12,7 +12,7 @@ Node * MousePicker::getCollision()
 bool MousePicker::raycast(Vec3 origin, Vec3 dir, RayCastHit& hit)
 {
 	Vec3 targetPoint;
-	float offset = .05f;
+	float offset = .2f;
 	std::vector<Vec3> verts = m_navMesh->getVerts();
 	float minX, maxX, minY, maxY, minZ, maxZ;
 	for (size_t i = 0; i < verts.size(); i++)

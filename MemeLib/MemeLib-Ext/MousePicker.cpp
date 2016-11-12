@@ -9,6 +9,7 @@ Node * MousePicker::getCollision()
 	return m_currentCollision;
 }
 
+//Cite: http://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection
 bool MousePicker::raycast(Vec3 origin, Vec3 dir, RayCastHit& hit)
 {
 	Vec3 targetPoint;

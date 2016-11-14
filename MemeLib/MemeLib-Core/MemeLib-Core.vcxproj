@@ -129,6 +129,8 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventListener.h" />
     <ClInclude Include="EventSystem.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="MemeLib.h" />
     <ClInclude Include="TextAsset.h" />
     <ClInclude Include="Font.h" />
@@ -175,6 +177,8 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMessage.cpp" />
     <ClCompile Include="GameMessageManager.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="Gizmos.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Serializable.cpp" />

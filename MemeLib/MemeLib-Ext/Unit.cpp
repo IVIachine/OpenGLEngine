@@ -37,7 +37,16 @@ Unit::~Unit()
 }
 
 
-void Unit::update(float elapsedTime)
+bool Unit::start()
+{
+	return false;
+}
+
+void Unit::destroy()
+{
+}
+
+void Unit::update()
 {
 	AStarState pathState = mpPathfinder->getState();
 	switch (pathState)
@@ -80,6 +89,10 @@ void Unit::draw()
 	mSprite.draw(*GRAPHICS->getCamera());
 }
 
+void Unit::handleEvent(const Event & ev)
+{
+}
+
 
 PositionComponent* Unit::getPositionComponent() const
 {
@@ -99,12 +112,13 @@ SteeringComponent* Unit::getSteeringComponent() const
 	return pComponent;
 }
 
-void Unit::setSteering(Steering::SteeringType type, Vec3 targetLoc, UnitID targetUnitID)
+
+void Unit::setSteering(Steering::SteeringType type, Vec3 targetLoc, GameObjectID targetUnitID)
 {
 	SteeringComponent* pSteeringComponent = getSteeringComponent();
 	if (pSteeringComponent != NULL)
 	{
-		pSteeringComponent->setData(SteeringData(type, targetLoc, mID, targetUnitID));
+		pSteeringComponent->setData(SteeringData(type, targetLoc, getID(), targetUnitID));
 	}
 }
 

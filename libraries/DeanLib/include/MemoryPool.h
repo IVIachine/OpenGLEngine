@@ -17,15 +17,15 @@ public:
 	Byte* allocateObject();
 	void freeObject(Byte* ptr);
 
-	inline Uint32 getMaxObjectSize() { return mObjectSize; };
-	inline Uint32 getNumFreeObjects() { return mMaxNumObjects - mNumAllocatedObjects; };
+	inline size_t getMaxObjectSize() { return mObjectSize; };
+	inline size_t getNumFreeObjects() { return mMaxNumObjects - mNumAllocatedObjects; };
 
 private:
 	Byte* mMemory;
 	Byte* mHighestValidAddress;
-	Uint32 mMaxNumObjects;
-	Uint32 mNumAllocatedObjects;
-	Uint32 mObjectSize;
+	size_t mMaxNumObjects;
+	size_t mNumAllocatedObjects;
+	size_t mObjectSize;
 	std::forward_list<Byte*> mFreeList;
 
 	void createFreeList();

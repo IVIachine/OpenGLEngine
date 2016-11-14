@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Gizmos.h"
 #include "Application.h"
+#include "GameObjectManager.h"
 
 Game* Game::sp_instance = NULL;
 
@@ -63,6 +64,13 @@ bool Game::setup(int width, int height, Application* pApp)
 		return false;
 	}
 
+	// Setup GameMessageManager
+	if (!GameObjectManager::createInstance()->setup())
+	{
+		fprintf(stderr, "Failed to initialize GameObjectManager.\n");
+		return false;
+	}
+
 	// Setup Application
 	mp_app = pApp;
 	if (!mp_app || !mp_app->setup())
@@ -96,6 +104,9 @@ void Game::cleanup()
 
 	// Dispose GameMessageManager
 	GameMessageManager::destroyInstance();
+
+	// Dispose GameObjectManager
+	GameObjectManager::destroyInstance();
 }
 
 
@@ -112,8 +123,14 @@ void Game::step()
 	MESSAGES->processMessagesForThisframe();
 
 	mp_app->update();
+	OBJECT_MANAGER->update();
 
-	mp_app->draw();
+	GRAPHICS->clear();
+	{
+		mp_app->draw();
+		OBJECT_MANAGER->draw();
+	}
+	GRAPHICS->flip();
 }
 
 bool Game::endStep()

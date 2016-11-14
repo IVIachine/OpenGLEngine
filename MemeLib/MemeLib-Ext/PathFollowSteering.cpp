@@ -2,7 +2,7 @@
 #include "UnitManager.h"
 #include "Node.h"
 
-PathFollowSteering::PathFollowSteering(const UnitID& ownerID, const Vec3& targetLoc, const UnitID& targetID, float switchRadius)
+PathFollowSteering::PathFollowSteering(const GameObjectID& ownerID, const Vec3& targetLoc, const GameObjectID& targetID, float switchRadius)
 	:Steering()
 {
 	setOwnerID(ownerID);

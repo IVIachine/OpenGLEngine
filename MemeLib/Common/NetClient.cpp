@@ -168,9 +168,9 @@ void NetClient::writeStateToFile(int clientNum)
 	std::ofstream of(sstream.str());
 	if (!of.fail())
 	{
-		for (size_t i = 0; i < OBJECT_MANAGER->getNumUnits(); i++)
+		for (size_t i = 0; i < OBJECT_MANAGER->size(); i++)
 		{
-			OBJECT_MANAGER->getAtIndex(i)->writeToFile(of);
+			OBJECT_MANAGER->findByID(i)->writeToFile(of);
 		}
 	}
 	else

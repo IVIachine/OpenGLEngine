@@ -15,7 +15,7 @@ enum CurrentAction
 	WALKING
 };
 
-class Archer :public GameObject
+class Archer : public GameObject
 {
 public:
 	Archer();

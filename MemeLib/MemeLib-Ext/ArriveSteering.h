@@ -9,7 +9,7 @@ private:
 	float mSlowRadius;
 	float mTimeToTarget;
 public:
-	ArriveSteering(const UnitID& ownerID, const Vec3& targetLoc, const UnitID& targetID, float theRadius, float theSlowRadius, float arriveTime);
+	ArriveSteering(const GameObjectID& ownerID, const Vec3& targetLoc, const GameObjectID& targetID, float theRadius, float theSlowRadius, float arriveTime);
 	virtual Steering* getSteering();
 };
 

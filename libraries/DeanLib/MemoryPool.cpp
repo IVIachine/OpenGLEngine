@@ -13,21 +13,21 @@ int isPowerOfTwo(unsigned int x)
 
 unsigned int getClosestPowerOf2LargerThan(unsigned int num)
 {
-	static Uint32 powersOf2[32];
+	static size_t powersOf2[32];
 	static bool arrayInitted = false;
 
 	//init an array containing all the powers of 2 
 	//(as it is static this should only run the first time this function is called)
 	if (!arrayInitted)
 	{
-		for (Uint32 i = 0; i < 32; i++)
+		for (size_t i = 0; i < 32; i++)
 		{
 			powersOf2[i] = 1 << i;
 		}
 	}
 
 	//find the 1st power of 2 which is bigger than or equal to num
-	for (Uint32 i = 0; i < 32; i++)
+	for (size_t i = 0; i < 32; i++)
 	{
 		if ( powersOf2[i] >= num )
 			return powersOf2[i];
@@ -38,7 +38,7 @@ unsigned int getClosestPowerOf2LargerThan(unsigned int num)
 	
 }
 
-MemoryPool::MemoryPool(Uint32 maxNumObjects, Uint32 objectSize)
+MemoryPool::MemoryPool(size_t maxNumObjects, size_t objectSize)
 {
 	//make objectSize a power of 2 - used for padding
 	objectSize = getClosestPowerOf2LargerThan(objectSize);
@@ -103,7 +103,7 @@ void MemoryPool::freeObject(Byte* ptr)
 void MemoryPool::createFreeList()
 {
 	//  add in reverse order as the forward_list will otherwise be in reverse order
-	for (Uint32 i = mMaxNumObjects - 1;; i--)
+	for (size_t i = mMaxNumObjects - 1;; i--)
 	{
 		mFreeList.push_front(mMemory + (i * mObjectSize));
 		if (i == 0)

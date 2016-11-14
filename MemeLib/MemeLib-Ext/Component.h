@@ -1,7 +1,7 @@
 #ifndef _COMPONENT_H_
 #define _COMPONENT_H_
 
-#include <Trackable.h>
+#include "GameObject.h"
 #include <limits>
 
 typedef size_t ComponentID;

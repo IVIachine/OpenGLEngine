@@ -5,7 +5,7 @@
 #include "Unit.h"
 
 
-SeekSteering::SeekSteering(const UnitID& ownerID, const Vec3& targetLoc, const UnitID& targetID, bool shouldFlee /*= false*/)
+SeekSteering::SeekSteering(const GameObjectID& ownerID, const Vec3& targetLoc, const GameObjectID& targetID, bool shouldFlee /*= false*/)
 	: Steering()
 {
 	if (shouldFlee)
@@ -27,7 +27,7 @@ Steering* SeekSteering::getSteering()
 	Unit* pOwner = UNITS->getUnit(mOwnerID);
 	//are we seeking a location or a unit?
 	
-	if (mTargetID != INVALID_UNIT_ID)
+	if (mTargetID != INVALID_GOBJ_ID)
 	{
 		//seeking unit
 		Unit* pTarget = UNITS->getUnit(mTargetID);

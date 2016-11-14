@@ -3,7 +3,6 @@
 #include "Connection.h"
 #include "Vector3.h"
 #include "AStarPathfinder.h"
-
 #include <Timer.h>
 
 NavMesh::NavMesh()
@@ -22,10 +21,11 @@ void NavMesh::constructMesh(Mesh* mesh)
 
 	std::vector<Edge> edges;
 	std::vector<Vec3> verts = mesh->getVerts();
-	splitTriangles(verts, mesh->getIndices(), edges, mesh->getCount()); //Split the intersections into multiple edges for accuracy
+	splitTriangles(verts, mesh->getIndices(), edges, mesh->size()); //Split the intersections into multiple edges for accuracy
 	m_vertices = verts;
 	m_edges = edges;
 	cleanEdges();
+
 	//CONSTRUCT TEMPORARY MESH FOR WIREFRAMES
 	m_nodeList.resize(m_vertices.size(), NULL);
 	for (size_t i = 0; i < m_vertices.size(); i++)
@@ -430,9 +430,10 @@ bool NavMesh::faceExists(FaceList faces, Face a)
 	return false;
 }
 
-//CITE: http://blackpawn.com/texts/pointinpoly/
 bool NavMesh::sameSide(Vec3 p1, Vec3 p2, Vec3 a, Vec3 b)
 {
+	//CITE: http://blackpawn.com/texts/pointinpoly/
+
 	Vec3 cp1 = glm::cross(b - a, p1 - a);
 	Vec3 cp2 = glm::cross(b - a, p2 - a);
 

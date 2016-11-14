@@ -9,8 +9,7 @@ int main()
 	Maths::seedRandom();
 	EventSystem::createInstance();
 	GameApp gameApp;
-	Game::createInstance();
-	
+	Game::createInstance();	
 	NetClient::createInstance();
 
 	bool isRunning = 

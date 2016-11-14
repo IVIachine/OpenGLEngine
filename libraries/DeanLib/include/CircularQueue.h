@@ -59,10 +59,10 @@ public:
 
 private:
 	T mArray[SIZE];
-	Uint32 mCapacity;
-	Uint32 mBack;
-	Uint32 mFront;
-	Uint32 mNumEntries;
+	size_t mCapacity;
+	size_t mBack;
+	size_t mFront;
+	size_t mNumEntries;
 };
 
 #endif // !_CIRCULAR_QUEUE_H_

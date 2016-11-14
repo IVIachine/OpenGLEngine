@@ -63,12 +63,6 @@
     <Filter Include="Source Files\Net">
       <UniqueIdentifier>{eb12f046-88db-420a-984e-a14722420d70}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game Objects">
-      <UniqueIdentifier>{36e42803-7d85-4212-b653-9835ea3d46ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game Objects">
-      <UniqueIdentifier>{46fb2e4d-efed-4c64-b79d-c088184dfc32}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UnitManager.cpp">
@@ -81,9 +75,6 @@
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ComponentManager.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="AStarPathfinder.cpp">
@@ -134,12 +125,6 @@
     <ClCompile Include="LinkingContext.cpp">
       <Filter>Source Files\Net</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjectManager.cpp">
-      <Filter>Source Files\Game Objects</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectCreationRegistry.cpp">
       <Filter>Source Files\Net</Filter>
     </ClCompile>
@@ -148,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="MousePicker.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentManager.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -164,12 +152,6 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentManager.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Steering.h">
@@ -232,12 +214,6 @@
     <ClInclude Include="ObjectCreationRegistry.h">
       <Filter>Header Files\Net</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjectManager.h">
-      <Filter>Header Files\Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files\Game Objects</Filter>
-    </ClInclude>
     <ClInclude Include="RPCManager.h">
       <Filter>Header Files\Net</Filter>
     </ClInclude>
@@ -249,6 +225,12 @@
     </ClInclude>
     <ClInclude Include="MousePicker.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentManager.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

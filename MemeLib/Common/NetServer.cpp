@@ -74,9 +74,9 @@ void NetServer::update()
 		{
 			RakNet::BitStream stream;
 			stream.Write((RakNet::MessageID)REPLICATION_PACKET);
-			for (size_t i = 0; i < OBJECT_MANAGER->getNumUnits(); i++)
+			for (size_t i = 0; i < OBJECT_MANAGER->size(); i++)
 			{
-				OBJECT_MANAGER->getAtIndex(i)->sendToServer(stream);
+				OBJECT_MANAGER->findByID(i)->sendToServer(stream);
 			}
 			sendByAddress(mp_packet->systemAddress, stream);
 
@@ -154,80 +154,80 @@ void NetServer::generateState()
 	elfCent1->setHealth(100);
 	elfCent1->setLoc(Vec3(20, 40, 10));
 	elfCent1->setType(MonsterType::ELVES);
-	OBJECT_MANAGER->addObject(elfCent1);
+	OBJECT_MANAGER->create(elfCent1);
 
 	TownCenter* wereCent1 = new TownCenter();
 	wereCent1->setHealth(100);
 	wereCent1->setLoc(Vec3(20, 40, 10));
 	wereCent1->setType(MonsterType::WEREWOLVES);
-	OBJECT_MANAGER->addObject(wereCent1);
+	OBJECT_MANAGER->create(wereCent1);
 
 	TownCenter* vampCent1 = new TownCenter();
 	vampCent1->setHealth(100);
 	vampCent1->setLoc(Vec3(20, 40, 10));
 	vampCent1->setType(MonsterType::VAMPIRES);
-	OBJECT_MANAGER->addObject(vampCent1);
+	OBJECT_MANAGER->create(vampCent1);
 
 	TownCenter* orcCent1 = new TownCenter();
 	orcCent1->setHealth(100);
 	orcCent1->setLoc(Vec3(20, 40, 10));
 	orcCent1->setType(MonsterType::ORCS);
-	OBJECT_MANAGER->addObject(orcCent1);
+	OBJECT_MANAGER->create(orcCent1);
 
 	TownCenter* orcCent2 = new TownCenter();
 	orcCent2->setHealth(40);
 	orcCent2->setLoc(Vec3(20, 40, 10));
 	orcCent2->setType(MonsterType::ORCS);
-	OBJECT_MANAGER->addObject(orcCent2);
+	OBJECT_MANAGER->create(orcCent2);
 
 	Archer* elf1 = new Archer();
 	elf1->setCenter(elfCent1);
 	elf1->setHealth(100);
 	elf1->setAction(CurrentAction::WALKING);
 	elf1->setLoc(Vec3(20, 40, 10));
-	OBJECT_MANAGER->addObject(elf1);
+	OBJECT_MANAGER->create(elf1);
 
 	Archer* elf2 = new Archer();
 	elf2->setCenter(elfCent1);
 	elf2->setHealth(100);
 	elf2->setAction(CurrentAction::WALKING);
 	elf2->setLoc(Vec3(20, 40, 10));
-	OBJECT_MANAGER->addObject(elf2);
+	OBJECT_MANAGER->create(elf2);
 
 	Archer* were1 = new Archer();
 	were1->setCenter(wereCent1);
 	were1->setHealth(100);
 	were1->setAction(CurrentAction::WALKING);
 	were1->setLoc(Vec3(20, 40, 10));
-	OBJECT_MANAGER->addObject(were1);
+	OBJECT_MANAGER->create(were1);
 
 	Archer* vamp1 = new Archer();
 	vamp1->setCenter(vampCent1);
 	vamp1->setHealth(100);
 	vamp1->setAction(CurrentAction::WALKING);
 	vamp1->setLoc(Vec3(20, 40, 10));
-	OBJECT_MANAGER->addObject(vamp1);
+	OBJECT_MANAGER->create(vamp1);
 
 	Archer* orc1 = new Archer();
 	orc1->setCenter(orcCent1);
 	orc1->setHealth(100);
 	orc1->setAction(CurrentAction::WALKING);
 	orc1->setLoc(Vec3(20, 40, 10));
-	OBJECT_MANAGER->addObject(orc1);
+	OBJECT_MANAGER->create(orc1);
 
 	Archer* orc2 = new Archer();
 	orc2->setCenter(orcCent1);
 	orc2->setHealth(100);
 	orc2->setAction(CurrentAction::WALKING);
 	orc2->setLoc(Vec3(20, 40, 10));
-	OBJECT_MANAGER->addObject(orc2);
+	OBJECT_MANAGER->create(orc2);
 
 	Archer* orc3 = new Archer();
 	orc3->setCenter(orcCent2);
 	orc3->setHealth(100);
 	orc3->setAction(CurrentAction::WALKING);
 	orc3->setLoc(Vec3(20, 40, 10));
-	OBJECT_MANAGER->addObject(orc3);
+	OBJECT_MANAGER->create(orc3);
 
 	std::cout << "State Generated\n";
 }

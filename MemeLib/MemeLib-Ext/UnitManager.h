@@ -15,37 +15,54 @@ class Sprite;
 struct PositionData;
 struct PhysicsData;
 
-const UnitID PLAYER_UNIT_ID = 0;
-//const UnitID INVALID_UNIT_ID = UINT_MAX;
+const GameObjectID PLAYER_UNIT_ID = 0;
+//const GameObjectID INVALID_GOBJ_ID = UINT_MAX;
 
 #define UNITS UnitManager::getInstance()
 
 class UnitManager: public EventListener
 {
 public:
-	static UnitManager*	getInstance();
-	static void			disposeInstance();
-	static UnitManager*	createInstance(Uint32 maxSize);
+	static UnitManager*	getInstance()
+	{
+		assert(sp_instance != NULL);
+		return sp_instance;
+	};
+	static void			disposeInstance()
+	{
+		delete sp_instance;
+		sp_instance = NULL;
+	};
+	static UnitManager*	createInstance(size_t maxSize)
+	{
+		sp_instance = new UnitManager(maxSize);
+		return getInstance();
+	};
 
-	Unit* createUnit(const Sprite& sprite, NavMesh* graph, bool shouldWrap = true, const PositionData& posData = ZERO_POSITION_DATA, const PhysicsData& physicsData = ZERO_PHYSICS_DATA, const UnitID& id = INVALID_UNIT_ID);
+	Unit* createUnit(
+		const Sprite& sprite, 
+		NavMesh* graph, 
+		bool shouldWrap = true, 
+		const PositionData& posData = ZERO_POSITION_DATA, 
+		const PhysicsData& physicsData = ZERO_PHYSICS_DATA, 
+		const GameObjectID& id = INVALID_GOBJ_ID);
 
-	Unit* getUnit(const UnitID& id) const;
-	void deleteUnit(const UnitID& id);
+	Unit* getUnit(const GameObjectID& id) const;
+	bool deleteUnit(const GameObjectID& id);
 	void deleteRandomUnit();
 	void deleteAll();
-	void drawAll() const;
-	void updateAll(float elapsedTime);
 
 	Unit* getPlayerUnit() const { return getUnit(PLAYER_UNIT_ID); };
 	virtual void handleEvent(const Event& ev);
 	bool setup();
+
 private:
-	UnitManager(Uint32 maxSize);
+	UnitManager(size_t maxSize);
 	~UnitManager() {};
 
-	static UnitID msNextUnitID;
-	MemoryPool mPool;
-	std::map<UnitID, Unit*> mUnitMap;
+	//static GameObjectID msNextUnitID;
+	//MemoryPool mPool;
+	std::map<GameObjectID, Unit*> mUnitMap;
 
 	static UnitManager* sp_instance;
 };

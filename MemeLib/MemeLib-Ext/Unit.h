@@ -1,7 +1,8 @@
 #ifndef _UNIT_H_
 #define _UNIT_H_
 
-#include <Trackable.h>
+#include <GameObject.h>
+
 #include <limits>
 #include "Vector3.h"
 #include "AStarPathfinder.h"
@@ -16,16 +17,18 @@ class SteeringComponent;
 class Sprite;
 class UnitManager;
 
-typedef Uint32 UnitID;
-const Uint32 DEFAULT_QUEUE_CAPACITY = 8;
+const size_t DEFAULT_QUEUE_CAPACITY = 8;
 
-class Unit
+class Unit : public GameObject
 {
 public:
-	void draw();
+	virtual bool start();
+	virtual void destroy();
+	virtual void update();
+	virtual void draw();
+	virtual void handleEvent(const Event& ev);
 
 	float getFacing() const;
-	void update(float elapsedTime);
 
 	PositionComponent*	getPositionComponent() const;
 	PhysicsComponent*	getPhysicsComponent() const;
@@ -38,7 +41,7 @@ public:
 
 	void setShowTarget(bool val) { mShowTarget = val; };
 
-	void setSteering(Steering::SteeringType type, Vec3 targetLoc = Vec3(0, 0, 0), UnitID targetUnitID = INVALID_UNIT_ID);
+	void setSteering(Steering::SteeringType type, Vec3 targetLoc = Vec3(0, 0, 0), GameObjectID targetUnitID = INVALID_GOBJ_ID);
 
 	void findPath(Vec3 source, Vec3 target);
 	void findPath(Vec3 target);
@@ -47,7 +50,7 @@ public:
 	Vec3 getTarget() { return m_currentTarget; };
 
 private:
-	UnitID mID;
+	//GameObjectID mID;
 	ComponentID mPhysicsComponentID;
 	ComponentID mPositionComponentID;
 	ComponentID mSteeringComponentID;

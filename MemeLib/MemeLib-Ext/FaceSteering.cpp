@@ -7,7 +7,7 @@
 
 const double M_PI = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348;
 
-FaceSteering::FaceSteering(const UnitID& ownerID, const Vec3& targetLoc, const UnitID& targetID, float theRadius, float theSlowRadius)
+FaceSteering::FaceSteering(const GameObjectID& ownerID, const Vec3& targetLoc, const GameObjectID& targetID, float theRadius, float theSlowRadius)
 {
 	setOwnerID(ownerID);
 	setTargetID(targetID);
@@ -23,7 +23,7 @@ Steering* FaceSteering::getSteering()
 	float rotation;
 	float mTargetSteer = 0.0f;
 	Unit* pOwner = UNITS->getUnit(mOwnerID);
-	if (mTargetID != INVALID_UNIT_ID)
+	if (mTargetID != INVALID_GOBJ_ID)
 	{
 		//seeking unit
 		Unit* pTarget = UNITS->getUnit(mTargetID);

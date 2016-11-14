@@ -7,7 +7,7 @@
 class SeekSteering : public Steering
 {
 public:
-	SeekSteering(const UnitID& ownerID, const Vec3& targetLoc, const UnitID& targetID = INVALID_UNIT_ID, bool shouldFlee = false);
+	SeekSteering(const GameObjectID& ownerID, const Vec3& targetLoc, const GameObjectID& targetID = INVALID_GOBJ_ID, bool shouldFlee = false);
 	virtual Steering* getSteering();
 };
 

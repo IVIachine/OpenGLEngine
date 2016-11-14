@@ -8,64 +8,39 @@
 #include "ChangeTargetEvent.h"
 #include "BeginPathingEvent.h"
 #include "ComponentManager.h"
+#include "GameObjectManager.h"
 
-UnitID UnitManager::msNextUnitID = PLAYER_UNIT_ID + 1;
+//GameObjectID UnitManager::msNextUnitID = PLAYER_UNIT_ID + 1;
 UnitManager* UnitManager::sp_instance = NULL;
 
 using namespace std;
+
+UnitManager::UnitManager(size_t maxSize)
+{
+	EVENT_SYSTEM->addListener(PATH_EVENT, this);
+	EVENT_SYSTEM->addListener(TARGET_EVENT, this);
+}
+
 
 bool UnitManager::setup()
 {
 	return true;
 }
 
-UnitManager::UnitManager(Uint32 maxSize)
-	:mPool(maxSize, sizeof(Unit))
-{
-	EVENT_SYSTEM->addListener(PATH_EVENT, this);
-	EVENT_SYSTEM->addListener(TARGET_EVENT, this);
-}
 
-UnitManager* UnitManager::getInstance()
+Unit* UnitManager::createUnit(
+	const Sprite& sprite, 
+	NavMesh* graph, 
+	bool shouldWrap, 
+	const PositionData& posData, 
+	const PhysicsData& physicsData, 
+	const GameObjectID& id)
 {
-	assert(sp_instance != NULL);
-	return sp_instance;
-}
+	Unit* pUnit = OBJECT_MANAGER->create<Unit>(new Unit(sprite, graph));
 
-void UnitManager::disposeInstance()
-{
-	delete sp_instance;
-	sp_instance = NULL;
-}
-
-UnitManager* UnitManager::createInstance(Uint32 maxSize)
-{
-	sp_instance = new UnitManager(maxSize);
-	return getInstance();
-}
-
-Unit* UnitManager::createUnit(const Sprite& sprite, NavMesh* graph, bool shouldWrap, const PositionData& posData /*= ZERO_POSITION_DATA*/, const PhysicsData& physicsData /*= ZERO_PHYSICS_DATA*/, const UnitID& id)
-{
-	Unit* pUnit = NULL;
-
-	Byte* ptr = mPool.allocateObject();
-	if (ptr != NULL)
+	if (pUnit)
 	{
-		//create unit
-		pUnit = new (ptr)Unit(sprite, graph);//placement new
-
-		UnitID theID = id;
-		if (theID == INVALID_UNIT_ID)
-		{
-			theID = msNextUnitID;
-			msNextUnitID++;
-		}
-
-		//place in map
-		mUnitMap[theID] = pUnit;
-
-		//assign id and increment nextID counter
-		pUnit->mID = theID;
+		mUnitMap[pUnit->getID()] = pUnit;
 
 		//create some components
 		ComponentManager* pComponentManager = COMPONENTS;
@@ -78,36 +53,20 @@ Unit* UnitManager::createUnit(const Sprite& sprite, NavMesh* graph, bool shouldW
 		pUnit->mMaxAcc = MAX_ACC;
 		pUnit->mMaxRotAcc = MAX_ROT_ACC;
 		pUnit->mMaxRotVel = MAX_ROT_VEL;
-
 	}
 
 	return pUnit;
 }
 
-
-Unit* UnitManager::getUnit(const UnitID& id) const
+Unit* UnitManager::getUnit(const GameObjectID& id) const
 {
-	auto it = mUnitMap.find(id);
-	if (it != mUnitMap.end())//found?
-	{
-		return it->second;
-	}
-	else
-	{
-		return NULL;
-	}
+	return OBJECT_MANAGER->findByID<Unit>(id);
 }
 
-void UnitManager::deleteUnit(const UnitID& id)
+bool UnitManager::deleteUnit(const GameObjectID& id)
 {
-	auto it = mUnitMap.find(id);
-	if (it != mUnitMap.end())//found?
+	if (Unit* pUnit = OBJECT_MANAGER->findByID<Unit>(id))
 	{
-		Unit* pUnit = it->second;//hold for later
-
-		//remove from map
-		mUnitMap.erase(it);
-
 		//remove components
 		ComponentManager* pComponentManager = COMPONENTS;
 
@@ -115,18 +74,18 @@ void UnitManager::deleteUnit(const UnitID& id)
 		pComponentManager->deallocatePositionComponent(pUnit->mPositionComponentID);
 		pComponentManager->deallocateSteeringComponent(pUnit->mSteeringComponentID);
 
-		//call destructor
-		pUnit->~Unit();
+		OBJECT_MANAGER->removeByID(id);
 
-		//free the object in the pool
-		mPool.freeObject((Byte*)pUnit);
+		return true;
 	}
+
+	return false;
 }
 
 void UnitManager::deleteRandomUnit()
 {
-	Uint32 target = rand() % mUnitMap.size();
-	Uint32 cnt = 0;
+	size_t target = rand() % mUnitMap.size();
+	size_t cnt = 0;
 	if (mUnitMap.size() <= 1)
 	{
 		return;
@@ -137,7 +96,7 @@ void UnitManager::deleteRandomUnit()
 		{
 			if (it->first != NULL)
 			{
-				deleteUnit(it->first);
+				OBJECT_MANAGER->removeByID(it->first);
 				break;
 			}
 			else
@@ -152,48 +111,21 @@ void UnitManager::deleteAll()
 {
 	if (mUnitMap.size() > 0)
 	{
-		for (std::map<UnitID, Unit*>::iterator MapItor = mUnitMap.begin(); MapItor != mUnitMap.end(); ++MapItor)
+		for (auto& pair : mUnitMap)
 		{
-			Unit* pUnit = (*MapItor).second;
-			
-			//remove components
-			ComponentManager* pComponentManager = COMPONENTS;
-
-			pComponentManager->deallocatePhysicsComponent(pUnit->mPhysicsComponentID);
-			pComponentManager->deallocatePositionComponent(pUnit->mPositionComponentID);
-			pComponentManager->deallocateSteeringComponent(pUnit->mSteeringComponentID);
-
-			//call destructor
-			pUnit->~Unit();
-
-			//free the object in the pool
-			mPool.freeObject((Byte*)pUnit);
+			deleteUnit(pair.first);
 		}
+
 		mUnitMap.clear();
 	}
 }
 
-void UnitManager::drawAll() const
-{
-	for (auto it = mUnitMap.begin(); it != mUnitMap.end(); ++it)
-	{
-		it->second->draw();
-	}
-}
-
-void UnitManager::updateAll(float elapsedTime)
-{
-	for (auto it = mUnitMap.begin(); it != mUnitMap.end(); ++it)
-	{
-		it->second->update(elapsedTime);
-	}
-}
 
 void UnitManager::handleEvent(const Event & ev)
 {
 	if (ev.getType() == PATH_EVENT)
 	{
-		for (std::map<UnitID, Unit*>::iterator MapItor = mUnitMap.begin(); MapItor != mUnitMap.end(); ++MapItor)
+		for (std::map<GameObjectID, Unit*>::iterator MapItor = mUnitMap.begin(); MapItor != mUnitMap.end(); ++MapItor)
 		{
 			MapItor->second->findPath(MapItor->second->getTarget());
 		}
@@ -201,7 +133,7 @@ void UnitManager::handleEvent(const Event & ev)
 	else if (ev.getType() == TARGET_EVENT)
 	{
 		const ChangeTargetEvent& changeEvent = static_cast<const ChangeTargetEvent&>(ev);
-		for (std::map<UnitID, Unit*>::iterator MapItor = mUnitMap.begin(); MapItor != mUnitMap.end(); ++MapItor)
+		for (std::map<GameObjectID, Unit*>::iterator MapItor = mUnitMap.begin(); MapItor != mUnitMap.end(); ++MapItor)
 		{
 			MapItor->second->changeTarg(changeEvent.getTarg());
 		}

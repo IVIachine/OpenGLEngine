@@ -129,8 +129,6 @@
     <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="FaceSteering.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="LinkingContext.cpp" />
     <ClCompile Include="MousePicker.cpp" />
@@ -161,8 +159,6 @@
     <ClInclude Include="EventsExt.h" />
     <ClInclude Include="Face.h" />
     <ClInclude Include="FaceSteering.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="HalfEdge.h" />
     <ClInclude Include="LinkingContext.h" />

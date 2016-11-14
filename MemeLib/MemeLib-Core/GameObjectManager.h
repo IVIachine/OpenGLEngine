@@ -1,10 +1,9 @@
-// NYI
-
 #ifndef _GAME_OBJECT_MANAGER_H_
 #define _GAME_OBJECT_MANAGER_H_
 
+#include <MemoryPool.h>
 #include "GameObject.h"
-#include <vector>
+#include <map>
 #include <Trackable.h>
 
 #define OBJECT_MANAGER GameObjectManager::getInstance()
@@ -28,18 +27,45 @@ public:
 		sp_instance = NULL;
 	};
 
-	GameObject* getAtIndex(int index);
-	void		addObject(GameObject* toBeAdded);
+	bool	setup();
+	void	cleanup();	
+	void	update();
+	void	draw();
 
-	size_t		getNumUnits();
-	void		removeUnitAtIndex(int index);
-	void		cleanup();
-	bool		objectExists(GameObject* key);
+	GameObject*	create(GameObject* toBeAdded);
+	GameObject* findByID(GameObjectID index);
+	bool		removeByID(GameObjectID index);
+	size_t		size();
+
+
+	template <typename T>
+	T* create(GameObject* obj)
+	{
+		if (T* tmp = static_cast<T*>(create(obj)))
+		{
+			return tmp;
+		}
+
+		return NULL;
+	};
+
+	template <typename T>
+	T* findByID(GameObjectID id)
+	{ 
+		if (T* tmp = static_cast<T*>(findByID(id)))
+		{
+			return tmp;
+		}
+
+		return NULL;
+	};
 
 private:
 	GameObjectManager();
 	~GameObjectManager();
-	std::vector<GameObject*> mGameObjects;
+
+	std::map<GameObjectID, GameObject*> m_objectMap;
+	GameObjectID m_id = INVALID_GOBJ_ID;
 
 	static GameObjectManager* sp_instance;
 };

@@ -25,8 +25,7 @@ void LinkingContext::addGameObject(GameObject * inGameObject, uint32_t inNetwork
 {
 	mNetworkIdToGameObjectMap[inNetworkId] = inGameObject;
 	mGameObjectToNetworkIdMap[inGameObject] = inNetworkId;
-	if(!OBJECT_MANAGER->objectExists(inGameObject))
-		OBJECT_MANAGER->addObject(inGameObject);
+	OBJECT_MANAGER->create(inGameObject);
 }
 
 void LinkingContext::removeGameObject(GameObject * inGameObject)

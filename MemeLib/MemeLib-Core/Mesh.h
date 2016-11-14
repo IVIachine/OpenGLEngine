@@ -15,7 +15,7 @@ public:
 	~Mesh();
 	std::vector<Vec3> getVerts() const { return mNavVertices; };
 	std::vector<size_t> getIndices() const { return mNavIndices; };
-	size_t getCount() const { return mNavFaceCount; };
+	size_t size() const { return mNavFaceCount; };
 	void draw();
 
 private:

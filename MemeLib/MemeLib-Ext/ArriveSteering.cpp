@@ -4,7 +4,7 @@
 #include "UnitManager.h"
 #include "Unit.h"
 
-ArriveSteering::ArriveSteering(const UnitID& ownerID, const Vec3& targetLoc, const UnitID& targetID, float theRadius, float theSlowRadius, float arriveTime)
+ArriveSteering::ArriveSteering(const GameObjectID& ownerID, const Vec3& targetLoc, const GameObjectID& targetID, float theRadius, float theSlowRadius, float arriveTime)
 {
 	setOwnerID(ownerID);
 	setTargetID(targetID);
@@ -19,7 +19,7 @@ Steering* ArriveSteering::getSteering()
 
 	Unit* pOwner = UNITS->getUnit(mOwnerID);
 	//are we seeking a location or a unit?
-	if (mTargetID != INVALID_UNIT_ID)
+	if (mTargetID != INVALID_GOBJ_ID)
 	{
 		//seeking unit
 		Unit* pTarget = UNITS->getUnit(mTargetID);

@@ -17,7 +17,7 @@ private:
 
 	const float ARRIVE_SLOW = .5f, ARRIVE_RADIUS = .5f, TIME_TO = .1f, FACE_RADIUS = .005f, FACE_SLOW = 5.0f;
 public:
-	PathFollowSteering(const UnitID& ownerID, const Vec3& targetLoc, const UnitID& targetID, float switchRadius);
+	PathFollowSteering(const GameObjectID& ownerID, const Vec3& targetLoc, const GameObjectID& targetID, float switchRadius);
 	~PathFollowSteering();
 
 	virtual Steering* getSteering();

@@ -5,6 +5,7 @@
 #include "EventSystem.h"
 #include "SpawnEvent.h"
 #include "GameController.h"
+#include "GameObjectManager.h"
 
 GameApp::GameApp()
 {
@@ -139,38 +140,41 @@ void GameApp::update()
 	m_controller.update(mp_navMesh, mp_picker);
 
 	COMPONENTS->update(FIXED_UPDATE_DELTA);
-
-	UNITS->updateAll(FIXED_UPDATE_DELTA);
 }
 
 void GameApp::draw()
 {
-	GRAPHICS->clear();
-	{
-		Camera* cam = GRAPHICS->getCamera();
+	Camera* cam = GRAPHICS->getCamera();
 
-		m_skybox->draw(*cam);
+	m_skybox->draw(*cam);
 
-		mp_volume->draw(*cam);
+	mp_volume->draw(*cam);
 
-		m_controller.draw(mp_navMesh, mp_picker);
-
-		UNITS->drawAll();
-	}
-	GRAPHICS->flip();
+	m_controller.draw(mp_navMesh, mp_picker);	
 }
 
 void GameApp::handleEvent(const Event & ev)
 {
 	if (ev.getType() == SPAWN_EVENT)
 	{
+		std::cout << "SPAWN_EVENT\n";
+
 		UNITS->deleteAll();
+
 		for (int i = 0; i < 10; i++)
 		{
 			int randIndex;
 			randIndex = rand() % (mp_navMesh->getVerts().size());
-			Unit* pUnit = UNITS->createUnit(*RESOURCES->getSprite("sprite2"), mp_navMesh, true, PositionData(mp_navMesh->getNode(randIndex)->getPosition(), 0));
+			
+			Unit* pUnit = UNITS->createUnit(
+				*RESOURCES->getSprite("sprite2"), 
+				mp_navMesh, 
+				true, 
+				PositionData(mp_navMesh->getNode(randIndex)->getPosition(), 0));
+			
 			pUnit->setSteering(Steering::PATH_FOLLOW);
+
+			std::cout << "Created: " << pUnit->getID() << "\n";
 		}
 	}
 }

@@ -100,6 +100,12 @@
     <ClCompile Include="TextAsset.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectManager.cpp">
+      <Filter>Source Files\Game Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Volume.h">
@@ -222,6 +228,12 @@
     <ClInclude Include="MemeLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.h">
+      <Filter>Header Files\Game Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -259,6 +271,12 @@
     </Filter>
     <Filter Include="Header Files\Game">
       <UniqueIdentifier>{f4a33f15-b51b-4126-8fc9-40defb7f2a46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game Objects">
+      <UniqueIdentifier>{19315c33-94f6-4ce6-baf9-2b96188f90b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Objects">
+      <UniqueIdentifier>{7ecd6dbf-9217-4ed2-8523-76ebb2b1ad15}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

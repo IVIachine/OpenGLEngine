@@ -139,6 +139,7 @@
     <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="PathFollowSteering.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
+    <ClCompile Include="PositionComponent.cpp" />
     <ClCompile Include="RPCManager.cpp" />
     <ClCompile Include="SeekSteering.cpp" />
     <ClCompile Include="SpawnEvent.cpp" />
@@ -152,7 +153,6 @@
     <ClInclude Include="AStarPathfinder.h" />
     <ClInclude Include="BeginPathingEvent.h" />
     <ClInclude Include="ChangeTargetEvent.h" />
-    <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="Connection.h" />
     <ClInclude Include="Edge.h" />
@@ -171,6 +171,7 @@
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="PathFollowSteering.h" />
     <ClInclude Include="PhysicsComponent.h" />
+    <ClInclude Include="PhysicsData.h" />
     <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="RPCManager.h" />
     <ClInclude Include="SeekSteering.h" />

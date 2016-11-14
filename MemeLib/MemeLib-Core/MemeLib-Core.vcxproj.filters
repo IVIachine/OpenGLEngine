@@ -106,6 +106,9 @@
     <ClCompile Include="GameObjectManager.cpp">
       <Filter>Source Files\Game Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Volume.h">
@@ -234,6 +237,9 @@
     <ClInclude Include="GameObjectManager.h">
       <Filter>Header Files\Game Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -277,6 +283,12 @@
     </Filter>
     <Filter Include="Source Files\Game Objects">
       <UniqueIdentifier>{7ecd6dbf-9217-4ed2-8523-76ebb2b1ad15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{487cfc41-7ad9-4a1f-9e86-a42fc713118c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{64f9ae2d-81a6-447d-810c-29cc847384a1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

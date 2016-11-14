@@ -14,7 +14,7 @@ GameApp::GameApp()
 
 GameApp::~GameApp()
 {
-	cleanup();
+	clear();
 }
 
 
@@ -117,7 +117,7 @@ bool GameApp::setup()
 	return true;
 }
 
-void GameApp::cleanup()
+void GameApp::clear()
 {
 	UnitManager::disposeInstance();
 	ComponentManager::disposeInstance();
@@ -173,8 +173,6 @@ void GameApp::handleEvent(const Event & ev)
 				PositionData(mp_navMesh->getNode(randIndex)->getPosition(), 0));
 			
 			pUnit->setSteering(Steering::PATH_FOLLOW);
-
-			std::cout << "Created: " << pUnit->getID() << "\n";
 		}
 	}
 }

@@ -79,43 +79,19 @@ void GameController::update(NavMesh* pNavMesh, MousePicker* picker)
 
 void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 {
-	// draw verts, edges, and target node
-	if (mDebugMode)
-	{
-		/*for (size_t i = 0; i < pNavMesh->size(); i++)
-		{
-			GIZMOS->drawPoint(pNavMesh->getNode(i)->getPosition());
-		}
-		
-		for (size_t i = 0; i < pNavMesh->edgeCount(); i++)
-		{
-
-				Vec3 p1 = pNavMesh->getEdge(i)->first;
-				Vec3 p2 = pNavMesh->getEdge(i)->second;
-				p1.y += 0.05f;
-				p2.y += 0.05f;
-				GIZMOS->drawRay(p1, p2);
-		}
-		*/
-
-		//for (size_t i = 0; i < pNavMesh->faceCount(); i++)
-		/*{
-			for (size_t j = 0; j < pNavMesh->getFaces()[currentIndex].edges.size(); j++)
-			{
-				Vec3 p1 = pNavMesh->getFaces()[currentIndex].edges[j].first;
-				Vec3 p2 = pNavMesh->getFaces()[currentIndex].edges[j].second;
-				p1.y += 0.05f;
-				p2.y += 0.05f;
-				GIZMOS->drawRay(p1, p2);
-			}
-		}*/
-
-	}
-
 	if (mp_target)
 	{
 		GIZMOS->drawPoint(mp_target->getPosition() + Vec3(0.f, 0.5f, 0.f));
 		EVENT_SYSTEM->fireEvent(ChangeTargetEvent(mp_target->getPosition()));
+	}
+
+	for (size_t i = 0; i < pNavMesh->edgeCount(); i++)
+	{
+		Vec3 p1 = pNavMesh->getEdge(i)->first;
+		Vec3 p2 = pNavMesh->getEdge(i)->second;
+		p1.y += 0.05f;
+		p2.y += 0.05f;
+		GIZMOS->drawRay(p1, p2);
 	}
 
 	/*Camera* cam = GRAPHICS->getCamera();

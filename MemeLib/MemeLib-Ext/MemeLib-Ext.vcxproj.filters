@@ -9,17 +9,11 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Header Files\Components">
-      <UniqueIdentifier>{e43d2d60-3379-4b6f-ab27-5d2ef1f9d781}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Events">
       <UniqueIdentifier>{1d815eaf-ae6a-4b17-8ade-fe7689782906}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Steering">
       <UniqueIdentifier>{0dc1bdbd-572a-43bc-bdbf-70bbe55e6bcc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Units">
-      <UniqueIdentifier>{216d9a15-bd9c-44b1-9ff5-03c2918f2ab2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Pathfinding">
       <UniqueIdentifier>{623e4d91-0695-4c64-a421-b46479f564fe}</UniqueIdentifier>
@@ -32,12 +26,6 @@
     </Filter>
     <Filter Include="Header Files\Pathfinding\NavMesh">
       <UniqueIdentifier>{f6b609e5-e6f6-4333-a5f0-d42fb2b626fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Units">
-      <UniqueIdentifier>{65530013-2467-4031-b890-97c64ab4ee19}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Components">
-      <UniqueIdentifier>{bb0df405-bb22-49b0-b85e-cc480c4547db}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Events">
       <UniqueIdentifier>{036eff07-d3d1-42e1-8802-326b958d90ec}</UniqueIdentifier>
@@ -63,20 +51,20 @@
     <Filter Include="Source Files\Net">
       <UniqueIdentifier>{eb12f046-88db-420a-984e-a14722420d70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{6d1a0b38-d9f2-4e75-8ea8-3fda09753d1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{903c5f16-6b81-452b-a9c9-f2800cec9608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Units">
+      <UniqueIdentifier>{6b5dffc9-f0de-4311-b281-46b33278d3b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Units">
+      <UniqueIdentifier>{53b931df-5752-466a-9617-0b05c04b3eb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="UnitManager.cpp">
-      <Filter>Source Files\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit.cpp">
-      <Filter>Source Files\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="SteeringComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="AStarPathfinder.cpp">
       <Filter>Source Files\Pathfinding\Pathfinders</Filter>
     </ClCompile>
@@ -134,26 +122,26 @@
     <ClCompile Include="MousePicker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UnitManager.cpp">
+      <Filter>Source Files\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>Source Files\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="SteeringComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
     <ClCompile Include="ComponentManager.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PositionComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="UnitManager.h">
-      <Filter>Header Files\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="Unit.h">
-      <Filter>Header Files\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="SteeringComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PositionComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Steering.h">
       <Filter>Header Files\Steering</Filter>
     </ClInclude>
@@ -229,8 +217,23 @@
     <ClInclude Include="ComponentManager.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h">
+    <ClInclude Include="PhysicsComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PositionComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SteeringComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitManager.h">
+      <Filter>Header Files\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>Header Files\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsData.h">
+      <Filter>Header Files\Steering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

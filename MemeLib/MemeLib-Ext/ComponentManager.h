@@ -1,8 +1,7 @@
 #ifndef _COMPONENT_MANAGER_H_
 #define _COMPONENT_MANAGER_H_
 
-#include <map>
-#include <Trackable.h>
+#include <Dictionary.h>
 #include <MemoryPool.h>
 #include "Component.h"
 #include "PositionComponent.h"
@@ -23,15 +22,15 @@ public:
 
 	PositionComponent*	getPositionComponent(const ComponentID& id);
 	ComponentID			allocatePositionComponent(const PositionData& data = ZERO_POSITION_DATA, bool shouldWrap = true);
-	void				deallocatePositionComponent(const ComponentID& id);
+	bool				deallocatePositionComponent(const ComponentID& id);
 
 	PhysicsComponent*	getPhysicsComponent(const ComponentID& id);
 	ComponentID			allocatePhysicsComponent(const ComponentID& positionComponentID, const PhysicsData& data = ZERO_PHYSICS_DATA);
-	void				deallocatePhysicsComponent(const ComponentID& id);
+	bool				deallocatePhysicsComponent(const ComponentID& id);
 
 	SteeringComponent*	getSteeringComponent(const ComponentID& id);
 	ComponentID			allocateSteeringComponent(const ComponentID& physicsComponentID, const SteeringData& data = ZERO_STEERING_DATA);
-	void				deallocateSteeringComponent(const ComponentID& id);
+	bool				deallocateSteeringComponent(const ComponentID& id);
 
 	void update(float elapsedTime);
 
@@ -39,13 +38,13 @@ private:
 	ComponentManager(Uint32 maxSize);
 	~ComponentManager();
 
-	std::map<ComponentID, PositionComponent*> m_positionCOMPONENT_MANAGER;
+	Dictionary<ComponentID, PositionComponent> m_positionCOMPONENT_MANAGER;
 	MemoryPool m_positionPool;
 
-	std::map<ComponentID, PhysicsComponent*> m_physicsCOMPONENT_MANAGER;
+	Dictionary<ComponentID, PhysicsComponent> m_physicsCOMPONENT_MANAGER;
 	MemoryPool m_physicsPool;
 
-	std::map<ComponentID, SteeringComponent*> m_steeringCOMPONENT_MANAGER;
+	Dictionary<ComponentID, SteeringComponent> m_steeringCOMPONENT_MANAGER;
 	MemoryPool m_steeringPool;
 
 	static ComponentID ms_nextPositionComponentID;

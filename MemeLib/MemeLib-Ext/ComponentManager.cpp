@@ -54,7 +54,7 @@ bool ComponentManager::setup()
 void ComponentManager::clear()
 {
 	//call destructor for all COMPONENT_MANAGER
-	for (auto& it : m_positionCOMPONENT_MANAGER)
+	/*for (auto& it : m_positionCOMPONENT_MANAGER)
 	{
 		PositionComponent* pComponent = it.second;
 		pComponent->~PositionComponent();
@@ -68,7 +68,7 @@ void ComponentManager::clear()
 	{
 		SteeringComponent* pComponent = it.second;
 		pComponent->~SteeringComponent();
-	}
+	}*/
 
 	//clear maps
 	m_positionCOMPONENT_MANAGER.clear();
@@ -84,15 +84,7 @@ void ComponentManager::clear()
 
 PositionComponent* ComponentManager::getPositionComponent(const ComponentID& id)
 {
-	auto it = m_positionCOMPONENT_MANAGER.find(id);
-	if (it != m_positionCOMPONENT_MANAGER.end())
-	{
-		return it->second;
-	}
-	else
-	{
-		return NULL;
-	}
+	return m_positionCOMPONENT_MANAGER.getData(id);
 }
 
 ComponentID ComponentManager::allocatePositionComponent(const PositionData& data, bool shouldWrap)
@@ -105,40 +97,22 @@ ComponentID ComponentManager::allocatePositionComponent(const PositionData& data
 		newID = ms_nextPositionComponentID;
 		PositionComponent* pComponent = new (ptr)PositionComponent(newID, shouldWrap);
 		pComponent->setData(data);
-		m_positionCOMPONENT_MANAGER[newID] = pComponent;
+		m_positionCOMPONENT_MANAGER.addData(newID, pComponent);
 		ms_nextPositionComponentID++;//increment id
 	}
 
 	return newID;
 }
 
-void ComponentManager::deallocatePositionComponent(const ComponentID& id)
+bool ComponentManager::deallocatePositionComponent(const ComponentID& id)
 {
-	auto it = m_positionCOMPONENT_MANAGER.find(id);
-
-	if (it != m_positionCOMPONENT_MANAGER.end())//found it
-	{
-		PositionComponent* ptr = it->second;
-		m_positionCOMPONENT_MANAGER.erase(it);
-
-		ptr->~PositionComponent();
-		m_positionPool.freeObject((Byte*)ptr);
-	}
+	return m_positionCOMPONENT_MANAGER.erase(id);
 }
 
 
 PhysicsComponent* ComponentManager::getPhysicsComponent(const ComponentID& id)
 {
-	auto it = m_physicsCOMPONENT_MANAGER.find(id);
-	if (it != m_physicsCOMPONENT_MANAGER.end())
-	{
-		return it->second;
-	}
-	else
-	{
-		return NULL;
-	}
-
+	return m_physicsCOMPONENT_MANAGER.getData(id);
 }
 
 ComponentID ComponentManager::allocatePhysicsComponent(const ComponentID& positionComponentID, const PhysicsData& data)
@@ -151,43 +125,22 @@ ComponentID ComponentManager::allocatePhysicsComponent(const ComponentID& positi
 		newID = ms_nextPhysicsComponentID;
 		PhysicsComponent* pComponent = new (ptr)PhysicsComponent(newID, positionComponentID);
 		pComponent->setData(data);
-		m_physicsCOMPONENT_MANAGER[newID] = pComponent;
+		m_physicsCOMPONENT_MANAGER.addData(newID, pComponent);
 		ms_nextPhysicsComponentID++;//increment id
 	}
 
 	return newID;
 }
 
-void ComponentManager::deallocatePhysicsComponent(const ComponentID& id)
+bool ComponentManager::deallocatePhysicsComponent(const ComponentID& id)
 {
-	auto it = m_physicsCOMPONENT_MANAGER.find(id);
-
-	if (it != m_physicsCOMPONENT_MANAGER.end())//found it
-	{
-		PhysicsComponent* ptr = it->second;
-		m_physicsCOMPONENT_MANAGER.erase(it);
-
-		//hold for later
-		Byte* pByte = (Byte*)ptr;
-
-		ptr->~PhysicsComponent();
-		m_physicsPool.freeObject(pByte);
-	}
+	return m_physicsCOMPONENT_MANAGER.erase(id);
 }
 
 
 SteeringComponent* ComponentManager::getSteeringComponent(const ComponentID& id)
 {
-	auto it = m_steeringCOMPONENT_MANAGER.find(id);
-	if (it != m_steeringCOMPONENT_MANAGER.end())
-	{
-		return it->second;
-	}
-	else
-	{
-		return NULL;
-	}
-
+	return m_steeringCOMPONENT_MANAGER.getData(id);
 }
 
 ComponentID ComponentManager::allocateSteeringComponent(const ComponentID& physicsComponentID, const SteeringData& data)
@@ -200,28 +153,16 @@ ComponentID ComponentManager::allocateSteeringComponent(const ComponentID& physi
 		newID = ms_nextSteeringComponentID;
 		SteeringComponent* pComponent = new (ptr)SteeringComponent(newID, physicsComponentID);
 		pComponent->setData(data);
-		m_steeringCOMPONENT_MANAGER[newID] = pComponent;
+		m_steeringCOMPONENT_MANAGER.addData(newID, pComponent);
 		ms_nextSteeringComponentID++;//increment id
 	}
 
 	return newID;
 }
 
-void ComponentManager::deallocateSteeringComponent(const ComponentID& id)
+bool ComponentManager::deallocateSteeringComponent(const ComponentID& id)
 {
-	auto it = m_steeringCOMPONENT_MANAGER.find(id);
-
-	if (it != m_steeringCOMPONENT_MANAGER.end())//found it
-	{
-		SteeringComponent* ptr = it->second;
-		m_steeringCOMPONENT_MANAGER.erase(it);
-
-		//hold for later
-		Byte* pByte = (Byte*)ptr;
-
-		ptr->~SteeringComponent();
-		m_steeringPool.freeObject(pByte);
-	}
+	return m_steeringCOMPONENT_MANAGER.erase(id);
 }
 
 
@@ -235,7 +176,7 @@ void ComponentManager::update(float elapsedTime)
 
 void ComponentManager::updatePhysics(float elapsedTime)
 {
-	for (auto& it : m_physicsCOMPONENT_MANAGER)
+	for (auto& it : m_physicsCOMPONENT_MANAGER.getData())
 	{
 		PhysicsComponent* pPhysics = it.second;
 		assert(pPhysics != NULL);
@@ -247,7 +188,7 @@ void ComponentManager::updatePhysics(float elapsedTime)
 
 void ComponentManager::updateSteering(float elapsedTime)
 {
-	for (auto& it : m_steeringCOMPONENT_MANAGER)
+	for (auto& it : m_steeringCOMPONENT_MANAGER.getData())
 	{
 		SteeringComponent* pSteering = it.second;
 		assert(pSteering != NULL);

@@ -1,5 +1,5 @@
-#ifndef _MEMORY_MANAGER_H_
-#define _MEMORY_MANAGER_H_
+#ifndef _DICTIONARY_H_
+#define _DICTIONARY_H_
 
 #include <Trackable.h>
 #include <iterator>
@@ -12,12 +12,15 @@ public:
 	Dictionary();
 	~Dictionary();
 
-	void	cleanup();
+	void	clear();
 	TValue* addData(TKey key, TValue* value);
 	TValue* getData(TKey key);
 	TValue* setData(TKey key, TValue* value);
+	bool	erase(TKey key);
 
 	TValue*	operator[](TKey key);
+
+	std::map<TKey, TValue*> getData() const { return m_data; };
 
 private:
 	std::map<TKey, TValue*> m_data;	
@@ -39,14 +42,15 @@ inline Dictionary<TKey, TValue>::~Dictionary()
 /*	Functions
 * * * * * * * * * * * * * * */
 template<class TKey, class TValue>
-inline void Dictionary<TKey, TValue>::cleanup()
+inline void Dictionary<TKey, TValue>::clear()
 {
 	std::map<TKey, TValue*>::iterator it;
 	for (it = m_data.begin(); it != m_data.end(); ++it)
 	{
-		TValue* tmp = it->second;
-		delete tmp;
+		delete it->second;
 	}
+
+	m_data.clear();
 }
 
 template<class TKey, class TValue>
@@ -86,6 +90,24 @@ inline TValue * Dictionary<TKey, TValue>::setData(TKey key, TValue* value)
 	return NULL;
 }
 
+template<class TKey, class TValue>
+inline bool Dictionary<TKey, TValue>::erase(TKey key)
+{
+	std::map<TKey, TValue*>::iterator it = m_data.find(key);
+	if(it != m_data.end())
+	{
+		TValue* tmp = it->second;
+
+		it->second->~TValue();
+
+		m_data.erase(key);
+
+		return true;
+	}
+
+	return false;
+}
+
 
 /*	Operator Overloads
 * * * * * * * * * * * * * * */
@@ -95,4 +117,4 @@ inline TValue * Dictionary<TKey, TValue>::operator[](TKey key)
 	return getData(key);
 }
 
-#endif // !_MEMORY_MANAGER_H_
+#endif // !_DICTIONARY_H_

@@ -1,9 +1,8 @@
 #ifndef _STEERING_H_
 #define _STEERING_H_
 
-#include "Vector3.h"
-#include <Trackable.h>
-#include "PhysicsComponent.h"
+#include "GameObject.h"
+#include "PhysicsData.h"
 
 class Steering : public Trackable
 {

@@ -16,7 +16,7 @@ ResourceManager::ResourceManager()
 
 ResourceManager::~ResourceManager()
 {
-	cleanup();
+	clear();
 }
 
 
@@ -25,17 +25,17 @@ bool ResourceManager::setup()
 	return true;
 }
 
-void ResourceManager::cleanup()
+void ResourceManager::clear()
 {
-	m_fonts.cleanup();
+	m_fonts.clear();
 
-	m_shaders.cleanup();
+	m_shaders.clear();
 
-	m_textures.cleanup();
+	m_textures.clear();
 
-	m_texture2Ds.cleanup();
+	m_texture2Ds.clear();
 
-	m_sprites.cleanup();
+	m_sprites.clear();
 }
 
 

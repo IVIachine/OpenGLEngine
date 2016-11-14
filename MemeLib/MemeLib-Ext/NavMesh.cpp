@@ -19,22 +19,27 @@ void NavMesh::constructMesh(Mesh* mesh)
 	Timer timer;
 	timer.start();
 
-	std::vector<Edge> edges;
-	std::vector<Vec3> verts = mesh->getVerts();
-	splitTriangles(verts, mesh->getIndices(), edges, mesh->size()); //Split the intersections into multiple edges for accuracy
-	m_vertices = verts;
-	m_edges = edges;
-	cleanEdges();
+	std::cout << toString() << "Building...\n";
 
-	//CONSTRUCT TEMPORARY MESH FOR WIREFRAMES
+	std::cout << toString() << " (1/4) -> Splitting triangles... ";
+	m_vertices = mesh->getVerts();
+	splitTriangles(m_vertices, mesh->getIndices(), m_edges, mesh->size());
+	std::cout << "Done.\n";
+
+	std::cout << toString() << " (2/4) -> Cleaning edges... ";
+	cleanEdges();
+	std::cout << "Done.\n";
+
+	std::cout << toString() << " (3/4) -> Populating node list... ";
 	m_nodeList.resize(m_vertices.size(), NULL);
 	for (size_t i = 0; i < m_vertices.size(); i++)
 	{
 		Node* pNode = new Node(i, m_vertices[i]);
 		m_nodeList[i] = pNode;
 	}
+	std::cout << "Done.\n";
 
-
+	std::cout << toString() << " (4/4) -> Creating connections... ";
 	for (size_t i = 0; i < m_vertices.size(); i++)
 	{
 		Node* pSource = m_nodeList[i];
@@ -63,10 +68,12 @@ void NavMesh::constructMesh(Mesh* mesh)
 
 		m_connectionMap[i] = connections;
 	}
-	
+	std::cout << "Done.\n";	
+
 	timer.stop();
-	std::cout << "Elapsed Time: " << timer.getElapsedTime() << "\n";
+	std::cout << toString() << " -> Elapsed Time: " << timer.getElapsedTime() << "\n";
 }
+
 
 void NavMesh::gatherEdges(
 	EdgeList& edges, VertList& vertices, std::vector<size_t> indices, size_t faceCount)

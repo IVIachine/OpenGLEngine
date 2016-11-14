@@ -15,7 +15,7 @@ Game::Game()
 
 Game::~Game()
 {
-	cleanup();
+	clear();
 }
 
 
@@ -83,9 +83,9 @@ bool Game::setup(int width, int height, Application* pApp)
 	return m_isRunning;
 }
 
-void Game::cleanup()
+void Game::clear()
 {
-	mp_app->cleanup();
+	mp_app->clear();
 
 	// Dispose ResourceManager
 	ResourceManager::destroyInstance();

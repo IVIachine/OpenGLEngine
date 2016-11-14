@@ -37,7 +37,7 @@ public:
 	};
 
 	bool	setup(int width, int height, Application* pApp);
-	void	cleanup();
+	void	clear();
 	
 	void	beginStep();
 	void	step();

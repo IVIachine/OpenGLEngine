@@ -9,7 +9,7 @@ GameObjectManager::GameObjectManager()
 
 GameObjectManager::~GameObjectManager()
 {
-	cleanup();
+	clear();
 }
 
 
@@ -20,7 +20,7 @@ bool GameObjectManager::setup()
 	return true;
 }
 
-void GameObjectManager::cleanup()
+void GameObjectManager::clear()
 {
 	for (auto& pair : m_objectMap)
 	{

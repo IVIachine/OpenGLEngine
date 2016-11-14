@@ -26,6 +26,9 @@ const SteeringData ZERO_STEERING_DATA;
 class SteeringComponent :public Component
 {
 public:
+	SteeringComponent(const ComponentID& id, const ComponentID& physicsComponentID);
+	~SteeringComponent();
+
 	//getters and setters
 	Steering::SteeringType getType() const { return mData.type; };
 	const Vec3& getTargetLoc() const { return mData.targetLoc; };
@@ -41,9 +44,6 @@ private:
 	ComponentID mPhysicsComponentID;
 	SteeringData mData;
 	Steering* mpSteering;
-
-	SteeringComponent(const ComponentID& id, const ComponentID& physicsComponentID);
-	~SteeringComponent();
 
 	friend class ComponentManager;
 };

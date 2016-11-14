@@ -9,7 +9,7 @@ NetServer::NetServer()
 
 NetServer::~NetServer()
 {
-	cleanup();
+	clear();
 }
 
 
@@ -37,7 +37,7 @@ bool NetServer::setup()
 	return true;
 }
 
-void NetServer::cleanup()
+void NetServer::clear()
 {
 	RPCManager::destroyInstance();
 }

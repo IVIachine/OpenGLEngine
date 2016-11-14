@@ -22,7 +22,7 @@ public:
 	~GameApp();
 
 	bool setup() override;
-	void cleanup() override;
+	void clear() override;
 	void update() override;
 	void draw() override;
 	void handleEvent(const Event& ev) override;

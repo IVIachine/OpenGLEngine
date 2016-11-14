@@ -8,7 +8,7 @@ RPCManager::RPCManager()
 
 RPCManager::~RPCManager()
 {
-	cleanup();
+	clear();
 }
 
 
@@ -20,7 +20,7 @@ bool RPCManager::setup()
 	return true;
 }
 
-void RPCManager::cleanup()
+void RPCManager::clear()
 {
 	ObjectCreationRegistry::destroyInstance();
 	LinkingContext::destroyInstance();

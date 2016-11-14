@@ -31,7 +31,7 @@ public:
 	};
 
 	bool setup();
-	void cleanup();
+	void clear();
 	void update();
 
 	void connect(const std::string address);

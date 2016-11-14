@@ -33,7 +33,7 @@ Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 
 Unit::~Unit()
 {
-	cleanup();
+	clear();
 }
 
 
@@ -134,7 +134,7 @@ void Unit::findPath(Vec3 target)
 	findPath(getPositionComponent()->getPosition(), target);
 }
 
-void Unit::cleanup()
+void Unit::clear()
 {
 	delete mpPathfinder;
 	mpPathfinder = NULL;

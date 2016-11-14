@@ -16,7 +16,7 @@ Input::Input()
 
 Input::~Input()
 {
-	cleanup();
+	clear();
 }
 
 
@@ -28,7 +28,7 @@ bool Input::setup()
 	return true;
 }
 
-void Input::cleanup()
+void Input::clear()
 {
 	Keyboard::destroyInstance();
 	Mouse::destroyInstance();

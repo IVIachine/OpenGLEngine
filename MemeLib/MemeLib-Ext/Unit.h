@@ -45,7 +45,7 @@ public:
 
 	void findPath(Vec3 source, Vec3 target);
 	void findPath(Vec3 target);
-	void cleanup();
+	void clear();
 	void changeTarg(Vec3 targ) { m_currentTarget = targ; };
 	Vec3 getTarget() { return m_currentTarget; };
 

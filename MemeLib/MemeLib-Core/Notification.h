@@ -16,10 +16,10 @@ class Notification :public Trackable
 {
 	friend class NotificationQueue;
 public:
-	Notification() { mID = msID++; };
-	inline unsigned int getID() { return mID; };
+	Notification() { m_id = msID++; };
+	inline unsigned int getID() { return m_id; };
 private:
-	unsigned int mID;
+	unsigned int m_id;
 	NotificationCallback mCallback;
 
 	static unsigned int msID;

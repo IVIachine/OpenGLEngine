@@ -43,10 +43,9 @@ Unit* UnitManager::createUnit(
 		mUnitMap[pUnit->getID()] = pUnit;
 
 		//create some components
-		ComponentManager* pComponentManager = COMPONENTS;
-		pUnit->mPositionComponentID = pComponentManager->allocatePositionComponent(posData,shouldWrap);
-		pUnit->mPhysicsComponentID = pComponentManager->allocatePhysicsComponent(pUnit->mPositionComponentID, physicsData);
-		pUnit->mSteeringComponentID = pComponentManager->allocateSteeringComponent(pUnit->mPhysicsComponentID);
+		pUnit->mPositionComponentID = COMPONENTS->allocatePositionComponent(posData,shouldWrap);
+		pUnit->mPhysicsComponentID = COMPONENTS->allocatePhysicsComponent(pUnit->mPositionComponentID, physicsData);
+		pUnit->mSteeringComponentID = COMPONENTS->allocateSteeringComponent(pUnit->mPhysicsComponentID);
 
 		//set max's
 		pUnit->mMaxSpeed = MAX_SPEED;

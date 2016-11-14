@@ -14,7 +14,7 @@ GameMessageManager::GameMessageManager()
 
 GameMessageManager::~GameMessageManager()
 {
-	cleanup();
+	clear();
 }
 
 
@@ -23,7 +23,7 @@ bool GameMessageManager::setup()
 	return true;
 }
 
-void GameMessageManager::cleanup()
+void GameMessageManager::clear()
 {
 	list<GameMessage*>::iterator iter;
 	for (iter = mMessages.begin(); iter != mMessages.end(); ++iter)

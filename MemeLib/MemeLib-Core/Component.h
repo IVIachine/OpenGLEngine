@@ -10,12 +10,13 @@ const ComponentID INVALID_COMPONENT_ID = UINT_MAX;
 class Component :public Trackable
 {
 public:
-	Component(const ComponentID& id) :mID(id) {};
-	virtual ~Component() {};
+	Component(const ComponentID& id);
+	virtual ~Component();
 
-	inline ComponentID getID() { return mID; };
+	ComponentID getID() const;
+
 private:
-	ComponentID mID;
+	ComponentID m_id;
 };
 
 #endif

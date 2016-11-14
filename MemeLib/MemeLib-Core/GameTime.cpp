@@ -8,7 +8,7 @@ GameTime::GameTime()
 
 GameTime::~GameTime()
 {
-	cleanup();
+	clear();
 }
 
 
@@ -28,7 +28,7 @@ bool GameTime::setup()
 	return true;
 }
 
-void GameTime::cleanup()
+void GameTime::clear()
 {
 	delete mp_loopTimer;
 	mp_loopTimer = NULL;

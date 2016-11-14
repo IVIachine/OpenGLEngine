@@ -11,7 +11,7 @@ NetClient::NetClient()
 
 NetClient::~NetClient()
 {
-	cleanup();
+	clear();
 }
 
 
@@ -32,7 +32,7 @@ bool NetClient::setup()
 	return true;
 }
 
-void NetClient::cleanup()
+void NetClient::clear()
 {
 	RPCManager::destroyInstance();
 }

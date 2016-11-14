@@ -32,7 +32,7 @@ public:
 	};
 
 	bool setup();
-	void cleanup();
+	void clear();
 
 	void registerUnwrapFunction(RPC_ID id, RPCReadFunc func);
 

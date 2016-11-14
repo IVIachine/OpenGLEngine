@@ -30,7 +30,7 @@ public:
 
 
 	bool	setup();
-	void	cleanup();
+	void	clear();
 
 	void	beginStep();
 	void	step();

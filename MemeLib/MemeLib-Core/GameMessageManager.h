@@ -29,7 +29,7 @@ public:
 	};
 
 	bool	setup();
-	void	cleanup();
+	void	clear();
 
 	//note - message manager will now "own" the message and will delete it at its pleasure
 	void addMessage(GameMessage* pMessage, int delay = 0);

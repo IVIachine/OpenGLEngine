@@ -34,7 +34,7 @@ public:
 	};
 
 	bool setup();
-	void cleanup();
+	void clear();
 
 	Font*		addFont(TKey key, const std::string& filename);
 	Font*		getFont(TKey key);

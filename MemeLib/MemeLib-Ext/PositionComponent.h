@@ -19,6 +19,9 @@ const PositionData ZERO_POSITION_DATA;
 class PositionComponent :public Component
 {
 public:
+	PositionComponent(const ComponentID& id, bool shouldWrap = true) : Component(id) {};
+	~PositionComponent() {};
+
 	//getters and setters
 	const Vec3& getPosition() const { return mData.pos; };
 	void setPosition(const Vec3& pos) { mData.pos = pos; };
@@ -32,9 +35,6 @@ public:
 
 private:
 	PositionData mData;
-
-	PositionComponent(const ComponentID& id, bool shouldWrap = true) :Component(id) {};
-	~PositionComponent() {};
 
 	friend class ComponentManager;
 };

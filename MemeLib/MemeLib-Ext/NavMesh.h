@@ -34,6 +34,7 @@ public:
 	void	reduceConnections();
 	void	cleanEdges();
 	void	cleanAllFaces();
+
 	bool	edgeExists(Vec3 a, Vec3 b, EdgeList edges);
 	bool	cleanFace(Face key);
 	bool	containsVertice(std::vector<Vec3> vertices, Vec3 key);
@@ -43,8 +44,10 @@ public:
 	bool	faceExists(FaceList faces, Face a);
 	bool	sameSide(Vec3 p1, Vec3 p2, Vec3 a, Vec3 b);
 	bool	pointInTriangle(Vec3 point, Vec3 a, Vec3 b, Vec3 c);
+
 	int		numFacesWithEdge(Edge key);
 	float	heighAtCoords(float x, float z);
+
 	EdgeList	getEdges() const;
 	EdgeList	getKnownConnections(Vec3 key);
 	FaceList	getEdgeFaces(std::vector<Face>& faces, Edge key);
@@ -57,9 +60,11 @@ public:
 	size_t		vertCount() const;
 	size_t		edgeCount() const;
 	size_t		faceCount() const;
+
 	Node*	findNearestNode(const Vec3& position);
 	Vec3	getFaceCenter(Face key);
 	Face	getFaceFromVec(Vec3 key);
+
 private:
 	std::vector<Edge>	m_edges;
 	std::vector<Vec3>	m_vertices;

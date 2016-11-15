@@ -1,5 +1,6 @@
 #include "NetServer.h"
 #include "Common.h"
+#include "ClientProxy.h"
 
 NetServer* NetServer::sp_instance = NULL;
 
@@ -85,7 +86,19 @@ void NetServer::update()
 			stream2.Write(mp_peer->GetIndexFromSystemAddress(mp_packet->systemAddress));
 			sendByAddress(mp_packet->systemAddress, stream2);
 
-			m_numClients++;
+			//m_numClients++;
+
+			if (m_clients.find(mp_packet->systemAddress) == m_clients.end())
+			{
+				ClientData data(
+					"Client Name", // name
+					m_clients.size(), // index
+					mp_packet->guid, // guid
+					mp_packet->systemAddress // address
+				);
+
+				m_clients[mp_packet->systemAddress] = ClientProxy(data);
+			}
 		}
 		break;
 		case ID_NO_FREE_INCOMING_CONNECTIONS:
@@ -108,9 +121,10 @@ void NetServer::update()
 			BitStream iStream(mp_packet->data, mp_packet->length, false);
 			BitStream oStream;
 			oStream.Write(iStream);
-			for (size_t i = 0; i < m_numClients; i++)
+
+			for (auto& pair : m_clients)
 			{
-				sendByIndex(i, oStream);
+				sendByAddress(pair.first, oStream);
 			}
 		}
 		break;
@@ -124,14 +138,14 @@ void NetServer::update()
 }
 
 
-bool NetServer::sendByAddress(SystemAddress addr, BitStream& stream)
+bool NetServer::sendByAddress(NetAddress addr, BitStream& stream)
 {
 	mp_peer->Send(&stream, HIGH_PRIORITY, UNRELIABLE, 0, addr, false, 0U);
 
 	return true;
 }
 
-bool NetServer::sendByGuid(GUId guid, BitStream& stream)
+bool NetServer::sendByGuid(NetGUID guid, BitStream& stream)
 {
 	sendByAddress(mp_peer->GetSystemAddressFromGuid(guid), stream);
 

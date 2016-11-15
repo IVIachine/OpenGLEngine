@@ -11,8 +11,8 @@
 #include "GameObjectManager.h"
 
 typedef RakNet::BitStream		BitStream;
-typedef RakNet::RakNetGUID		GUId;
-typedef RakNet::SystemAddress	SystemAddress;
+typedef RakNet::RakNetGUID		NetGUID;
+typedef RakNet::SystemAddress	NetAddress;
 
 enum PacketType
 {

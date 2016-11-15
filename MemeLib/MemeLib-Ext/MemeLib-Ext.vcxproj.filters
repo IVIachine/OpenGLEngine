@@ -140,6 +140,9 @@
     <ClCompile Include="PositionComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="ClientProxy.cpp">
+      <Filter>Source Files\Net</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Steering.h">
@@ -234,6 +237,9 @@
     </ClInclude>
     <ClInclude Include="PhysicsData.h">
       <Filter>Header Files\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientProxy.h">
+      <Filter>Header Files\Net</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

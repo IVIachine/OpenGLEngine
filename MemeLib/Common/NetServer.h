@@ -10,6 +10,8 @@
 #define SERVER_PORT 25566
 #define MAX_CLIENTS 10
 
+class ClientProxy;
+
 class NetServer : public Trackable
 {
 public:
@@ -33,8 +35,8 @@ public:
 	void clear();
 	void update();
 	
-	bool sendByAddress(SystemAddress addr, BitStream& stream);
-	bool sendByGuid(GUId guid, BitStream& stream);
+	bool sendByAddress(NetAddress addr, BitStream& stream);
+	bool sendByGuid(NetGUID guid, BitStream& stream);
 	bool sendByIndex(size_t index, BitStream& stream);
 
 	void generateState();
@@ -47,7 +49,9 @@ private:
 	RakNet::Packet*	mp_packet;
 	static NetServer* sp_instance;
 
-	size_t m_numClients = 0;
+	std::map<NetAddress, ClientProxy> m_clients;
+
+	//size_t m_numClients = 0;
 };
 
 

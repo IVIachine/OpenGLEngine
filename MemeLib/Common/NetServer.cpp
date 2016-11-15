@@ -24,6 +24,8 @@ bool NetServer::setup()
 		return false;
 	}
 
+	GameObjectManager::createInstance();
+
 	REGISTRY->RegisterCreationFunction<GameObject>();
 	REGISTRY->RegisterCreationFunction<Archer>();
 	REGISTRY->RegisterCreationFunction<TownCenter>();
@@ -40,6 +42,8 @@ bool NetServer::setup()
 
 void NetServer::clear()
 {
+	GameObjectManager::destroyInstance();
+
 	RPCManager::destroyInstance();
 }
 
@@ -77,7 +81,7 @@ void NetServer::update()
 			stream.Write((RakNet::MessageID)REPLICATION_PACKET);
 			for (size_t i = 0; i < OBJECT_MANAGER->size(); i++)
 			{
-				OBJECT_MANAGER->findByID(i)->sendToServer(stream);
+				//OBJECT_MANAGER->findByID(i)->sendToServer(stream);
 			}
 			sendByAddress(mp_packet->systemAddress, stream);
 
@@ -90,14 +94,16 @@ void NetServer::update()
 
 			if (m_clients.find(mp_packet->systemAddress) == m_clients.end())
 			{
-				ClientData data(
-					"Client Name", // name
-					m_clients.size(), // index
-					mp_packet->guid, // guid
-					mp_packet->systemAddress // address
-				);
+				m_clients[mp_packet->systemAddress] = ClientProxy(
+					mp_packet->systemAddress,
+					mp_packet->guid,
+					m_clients.size(),
+					"Client Name");
 
-				m_clients[mp_packet->systemAddress] = ClientProxy(data);
+				std::cout 
+					<< m_clients[mp_packet->systemAddress].getName() 
+					<< " has joined the server."
+					<< "\n";
 			}
 		}
 		break;

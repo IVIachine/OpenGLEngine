@@ -4,36 +4,24 @@
 #include <string>
 #include "Net.h"
 
-struct ClientData
-{
-	std::string name;
-	size_t		index;
-	NetGUID		guid;
-	NetAddress	address;
-
-	ClientData(
-		std::string name,
-		size_t index, 
-		NetGUID guid, 
-		NetAddress address)
-		: name(name)
-		, index(index)
-		, guid(guid)
-		, address(address)
-	{};
-};
-
 class ClientProxy
 {
 public:
-	ClientProxy(ClientData data);
+	ClientProxy();
+	ClientProxy(NetAddress address, NetGUID guid, size_t index, std::string name);
+	ClientProxy(const ClientProxy& copy);
 	~ClientProxy();
 
-	ClientData	getData() const;
-	void		setData(ClientData data);
+	NetAddress	getAddress() const;
+	NetGUID		getGUID() const;
+	std::string getName() const;
+	size_t		getIndex() const;
 
 private:
-	ClientData m_data;
+	NetAddress	m_address;
+	NetGUID		m_guid;
+	size_t		m_index;
+	std::string m_name;
 };
 
 #endif // !_CLIENT_PROXY_H_

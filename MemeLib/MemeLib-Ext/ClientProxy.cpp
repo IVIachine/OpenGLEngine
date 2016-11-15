@@ -1,6 +1,18 @@
 #include "ClientProxy.h"
 
-ClientProxy::ClientProxy(ClientData data) : m_data(data)
+ClientProxy::ClientProxy()
+{
+}
+
+ClientProxy::ClientProxy(NetAddress address, NetGUID guid, size_t index, std::string name)
+{
+	m_address = address;
+	m_guid = guid;
+	m_index = index;
+	m_name = name;
+}
+
+ClientProxy::ClientProxy(const ClientProxy & copy)
 {
 }
 
@@ -9,12 +21,22 @@ ClientProxy::~ClientProxy()
 }
 
 
-ClientData ClientProxy::getData() const
+NetAddress ClientProxy::getAddress() const
 {
-	return m_data;
+	return m_address;
 }
 
-void ClientProxy::setData(ClientData data)
+NetGUID ClientProxy::getGUID() const
 {
-	m_data = data;
+	return m_guid;
+}
+
+size_t ClientProxy::getIndex() const
+{
+	return m_index;
+}
+
+std::string ClientProxy::getName() const
+{
+	return m_name;
 }

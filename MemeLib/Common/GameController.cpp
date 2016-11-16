@@ -94,14 +94,6 @@ void GameController::draw(NavMesh* pNavMesh, MousePicker* picker)
 		GIZMOS->drawRay(p1, p2);
 	}
 
-	/*Camera* cam = GRAPHICS->getCamera();
-	Vec2 mp = INPUT->getMousePosition();	
-	Vec3 pos;
-	Vec3 dir;
-	Vec3 farLoc;
-	cam->screenPointToWorldPoint(mp, dir, pos, farLoc);*/
-
-	//GIZMOS->drawRay(pos, farLoc);
 }
 
 void GameController::moveCamera(Camera* camera)

@@ -4,11 +4,13 @@
 #include "Net.h"
 #include "Archer.h"
 #include "TownCenter.h"
+#include "Paddle.h"
+#include "Ball.h"
 
 #define SERVER NetServer::getInstance()
 
 #define SERVER_PORT 25566
-#define MAX_CLIENTS 10
+#define MAX_CLIENTS 2
 
 class ClientProxy;
 
@@ -52,7 +54,6 @@ private:
 	static NetServer* sp_instance;
 
 	std::map<NetAddress, ClientProxy> m_clients;
-
 	//size_t m_numClients = 0;
 };
 

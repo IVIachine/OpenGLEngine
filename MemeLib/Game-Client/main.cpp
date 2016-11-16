@@ -10,7 +10,6 @@ int main()
 	std::string tmp;
 	std::cout << "Enter 1 for pong or 2 for navigation mesh\n";
 	std::cin >> tmp;
-
 	Application* app = NULL;
 	if (tmp == "1")
 	{
@@ -33,6 +32,8 @@ int main()
 	bool isRunning =
 		GAME->setup(DISPLAY_WIDTH, DISPLAY_HEIGHT, app) &&
 		CLIENT->setup();
+
+	RPC->setServer(false);
 
 	if(!isRunning)
 	{

@@ -4,7 +4,6 @@ int main()
 {
 	Maths::seedRandom();
 	NetServer::createInstance();
-
 	bool isRunning = SERVER->setup();
 
 	if (!isRunning)
@@ -13,9 +12,8 @@ int main()
 		system("pause");
 		return EXIT_FAILURE;
 	}
-
+	RPC->setServer(true);
 	registerRPCs();
-
 	while (isRunning)
 	{
 		SERVER->update();

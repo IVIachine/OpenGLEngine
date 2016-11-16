@@ -27,8 +27,8 @@ bool NetServer::setup()
 	GameObjectManager::createInstance();
 
 	REGISTRY->RegisterCreationFunction<GameObject>();
-	REGISTRY->RegisterCreationFunction<Archer>();
-	REGISTRY->RegisterCreationFunction<TownCenter>();
+	REGISTRY->RegisterCreationFunction<Paddle>();
+	REGISTRY->RegisterCreationFunction<Ball>();
 
 	RakNet::SocketDescriptor socketDesc(SERVER_PORT, 0);
 	mp_peer = RakNet::RakPeerInterface::GetInstance();
@@ -54,7 +54,22 @@ void NetServer::handleNewClient(BitStream& iStream, NetAddress addr)
 		size_t		index = m_clients.size();
 		std::string name = "Client Name";
 		NetGUID		guid = mp_packet->guid;
-		m_clients[addr] = ClientProxy(addr, guid, index, name);
+
+		if (index == 0)
+		{
+			PaddleServer* firstPaddle = new PaddleServer();
+			firstPaddle->setLoc(Vec3(5, 0, 0));
+			uint32_t id = LINKING->getNetworkId(firstPaddle, true); //Also this id
+
+		}
+		else if (index == 1)
+		{
+			PaddleServer* secondPaddle = new PaddleServer();
+			secondPaddle->setLoc(Vec3(-5, 0, 0));
+			uint32_t id = LINKING->getNetworkId(secondPaddle, true); //This id
+		}
+
+		m_clients[addr] = ClientProxy(addr, guid, index, name); //Create and set the target paddle ID to the Paddle Link ID
 
 		std::cout
 			<< m_clients[addr].getName() << " has joined the server."
@@ -62,12 +77,10 @@ void NetServer::handleNewClient(BitStream& iStream, NetAddress addr)
 
 		RakNet::BitStream stream;
 		stream.Write((RakNet::MessageID)REPLICATION_PACKET);
-
 		for (auto& pair : OBJECT_MANAGER->getData())
 		{
 			pair.second->sendToServer(stream);
 		}
-
 		sendByAddress(mp_packet->systemAddress, stream);
 
 		RakNet::BitStream stream2;
@@ -179,86 +192,9 @@ bool NetServer::sendByIndex(size_t index, BitStream& stream)
 
 void NetServer::generateState()
 {
-	printf("A connection is incoming.\n");
-
-	TownCenter* elfCent1 = new TownCenter();
-	elfCent1->setHealth(100);
-	elfCent1->setLoc(Vec3(20, 40, 10));
-	elfCent1->setType(MonsterType::ELVES);
-	LINKING->getNetworkId(elfCent1, true);
-
-	TownCenter* wereCent1 = new TownCenter();
-	wereCent1->setHealth(100);
-	wereCent1->setLoc(Vec3(20, 40, 10));
-	wereCent1->setType(MonsterType::WEREWOLVES);
-	LINKING->getNetworkId(wereCent1, true);
-
-	TownCenter* vampCent1 = new TownCenter();
-	vampCent1->setHealth(100);
-	vampCent1->setLoc(Vec3(20, 40, 10));
-	vampCent1->setType(MonsterType::VAMPIRES);
-	LINKING->getNetworkId(vampCent1, true);
-
-	TownCenter* orcCent1 = new TownCenter();
-	orcCent1->setHealth(100);
-	orcCent1->setLoc(Vec3(20, 40, 10));
-	orcCent1->setType(MonsterType::ORCS);
-	LINKING->getNetworkId(orcCent1, true);
-
-	TownCenter* orcCent2 = new TownCenter();
-	orcCent2->setHealth(40);
-	orcCent2->setLoc(Vec3(20, 40, 10));
-	orcCent2->setType(MonsterType::ORCS);
-	LINKING->getNetworkId(orcCent2, true);
-
-	Archer* elf1 = new Archer();
-	elf1->setCenter(elfCent1);
-	elf1->setHealth(100);
-	elf1->setAction(CurrentAction::WALKING);
-	elf1->setLoc(Vec3(20, 40, 10));
-	LINKING->getNetworkId(elf1, true);
-
-	Archer* elf2 = new Archer();
-	elf2->setCenter(elfCent1);
-	elf2->setHealth(100);
-	elf2->setAction(CurrentAction::WALKING);
-	elf2->setLoc(Vec3(20, 40, 10));
-	LINKING->getNetworkId(elf2, true);
-
-	Archer* were1 = new Archer();
-	were1->setCenter(wereCent1);
-	were1->setHealth(100);
-	were1->setAction(CurrentAction::WALKING);
-	were1->setLoc(Vec3(20, 40, 10));
-	LINKING->getNetworkId(were1, true);
-
-	Archer* vamp1 = new Archer();
-	vamp1->setCenter(vampCent1);
-	vamp1->setHealth(100);
-	vamp1->setAction(CurrentAction::WALKING);
-	vamp1->setLoc(Vec3(20, 40, 10));
-	LINKING->getNetworkId(vamp1, true);
-
-	Archer* orc1 = new Archer();
-	orc1->setCenter(orcCent1);
-	orc1->setHealth(100);
-	orc1->setAction(CurrentAction::WALKING);
-	orc1->setLoc(Vec3(20, 40, 10));
-	LINKING->getNetworkId(orc1, true);
-
-	Archer* orc2 = new Archer();
-	orc2->setCenter(orcCent1);
-	orc2->setHealth(100);
-	orc2->setAction(CurrentAction::WALKING);
-	orc2->setLoc(Vec3(20, 40, 10));
-	LINKING->getNetworkId(orc2, true);
-
-	Archer* orc3 = new Archer();
-	orc3->setCenter(orcCent2);
-	orc3->setHealth(100);
-	orc3->setAction(CurrentAction::WALKING);
-	orc3->setLoc(Vec3(20, 40, 10));
-	LINKING->getNetworkId(orc3, true);
+	BallServer* ball = new BallServer();
+	ball->setLoc(Vec3(0, 0, 0));
+	LINKING->getNetworkId(ball, true);
 
 	std::cout << "State Generated\n";
 }

@@ -62,7 +62,7 @@ void Camera::setPosition(Vec3 pos)
 
 void Camera::screenPointToWorldPoint(Vec2 point2D, Vec3 & dir, Vec3 & origin, Vec3 & farPoint)
 {
-	GLint viewport[4];
+	/*GLint viewport[4];
 	GLdouble modelMatrix[16];
 	GLdouble projectionMatrix[16];
 
@@ -81,7 +81,7 @@ void Camera::screenPointToWorldPoint(Vec2 point2D, Vec3 & dir, Vec3 & origin, Ve
 		modelMatrix, projectionMatrix, viewport,
 		&farX, &farY, &farZ);
 	dir = Vec3(farX - nearX, farY - nearY, farZ - nearZ);
-	farPoint = Vec3(farX, farY, farZ);
+	farPoint = Vec3(farX, farY, farZ);*/
 }
 
 //void Camera::screenPointToWorldPoint(Vec2 point2D, Vec3& dir, Vec3& origin);

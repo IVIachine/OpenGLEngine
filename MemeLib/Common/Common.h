@@ -27,5 +27,4 @@ struct MessageRPCStruct : public Trackable
 void readMessage(BitStream& iStream);
 void sendMessage(const MessageRPCStruct& pingStruct);
 void printMessage(const MessageRPCStruct& pingStruct);
-
 #endif // !_COMMON_H_

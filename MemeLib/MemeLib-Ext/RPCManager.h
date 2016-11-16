@@ -37,13 +37,14 @@ public:
 	void registerUnwrapFunction(RPC_ID id, RPCReadFunc func);
 
 	void process(BitStream& iStream);
-
+	bool getServer() { return m_isServer; };
+	void setServer(bool server) { m_isServer = server; };
 private:
 	RPCManager();
 	~RPCManager();
 
 	std::unordered_map<RPC_ID, RPCReadFunc> m_rpcMap;
-
+	bool m_isServer;
 	static RPCManager* sp_instance;
 
 };

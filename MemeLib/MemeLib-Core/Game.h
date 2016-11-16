@@ -56,7 +56,6 @@ private:
 	float	m_fps = GameTime::FPS_60;
 	bool 	m_isRunning;
 	bool	m_stopRequested = false;
-
 	Application* mp_app;
 
 	static Game* sp_instance;

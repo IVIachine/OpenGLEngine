@@ -124,21 +124,33 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Archer.h" />
+    <ClInclude Include="Ball.h" />
+    <ClInclude Include="BallClient.h" />
+    <ClInclude Include="BallServer.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="NetClient.h" />
     <ClInclude Include="NetServer.h" />
+    <ClInclude Include="Paddle.h" />
+    <ClInclude Include="PaddleClient.h" />
+    <ClInclude Include="PaddleServer.h" />
     <ClInclude Include="PongApp.h" />
     <ClInclude Include="TownCenter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Archer.cpp" />
+    <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="BallClient.cpp" />
+    <ClCompile Include="BallServer.cpp" />
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="NetClient.cpp" />
     <ClCompile Include="NetServer.cpp" />
+    <ClCompile Include="Paddle.cpp" />
+    <ClCompile Include="PaddleClient.cpp" />
+    <ClCompile Include="PaddleServer.cpp" />
     <ClCompile Include="PongApp.cpp" />
     <ClCompile Include="TownCenter.cpp" />
   </ItemGroup>

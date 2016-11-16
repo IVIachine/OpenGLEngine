@@ -21,5 +21,4 @@ enum PacketType
 	NET_USER_PACKET
 };
 
-
 #endif // !_NET_H_

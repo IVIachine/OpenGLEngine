@@ -26,8 +26,8 @@ bool NetClient::setup()
 	}
 
 	REGISTRY->RegisterCreationFunction<GameObject>();
-	REGISTRY->RegisterCreationFunction<Archer>();
-	REGISTRY->RegisterCreationFunction<TownCenter>();
+	REGISTRY->RegisterCreationFunction<Paddle>();
+	REGISTRY->RegisterCreationFunction<Ball>();
 
 	return true;
 }
@@ -67,9 +67,6 @@ void NetClient::update()
 			//system("cls");
 			printf("Our connection request has been accepted.\n");
 
-			//BitStream oStream;
-			//oStream.Write((RakNet::MessageID)HANDSHAKE_PACKET);
-			//mp_peer->Send(&oStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, mp_peer->GetSystemAddressFromIndex(0), false);
 		}
 		break;
 		case ID_NEW_INCOMING_CONNECTION:

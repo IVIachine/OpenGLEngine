@@ -64,7 +64,7 @@ void NetClient::update()
 		break;
 		case ID_CONNECTION_REQUEST_ACCEPTED:
 		{
-			system("cls");
+			//system("cls");
 			printf("Our connection request has been accepted.\n");
 		}
 		break;
@@ -110,16 +110,33 @@ void NetClient::update()
 
 			oStream.Write(iStream);
 
-			RPC->processRPC(oStream);
+			RPC->process(oStream);
 		}
 		break;
 		case NetMessages::REQUEST_WRITE_PACKET:
 		{
 			RakNet::BitStream bsIn(mp_packet->data, mp_packet->length, false);
+
 			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+			
 			int index;
+			
 			bsIn >> index;
+
 			writeStateToFile(index);
+		}
+		break;
+		case NetMessages::HANDSHAKE_PACKET:
+		{
+			BitStream iStream(mp_packet->data, mp_packet->length, false);
+
+			iStream.IgnoreBytes(sizeof(RakNet::MessageID));
+
+			m_proxy.read(iStream);
+
+			std::cout << m_proxy.getName() << "\n";
+
+			std::cout << "HANDSHAKE RECIEVED\n";
 		}
 		break;
 		default:

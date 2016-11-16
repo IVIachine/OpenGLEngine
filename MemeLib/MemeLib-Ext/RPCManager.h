@@ -36,7 +36,7 @@ public:
 
 	void registerUnwrapFunction(RPC_ID id, RPCReadFunc func);
 
-	void processRPC(BitStream& iStream);
+	void process(BitStream& iStream);
 
 private:
 	RPCManager();

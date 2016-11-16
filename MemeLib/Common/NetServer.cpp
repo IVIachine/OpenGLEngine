@@ -77,6 +77,7 @@ void NetServer::update()
 		break;
 		case ID_NEW_INCOMING_CONNECTION:
 		{
+			/*
 			RakNet::BitStream stream;
 			stream.Write((RakNet::MessageID)REPLICATION_PACKET);
 			for (size_t i = 0; i < OBJECT_MANAGER->size(); i++)
@@ -89,21 +90,31 @@ void NetServer::update()
 			stream2.Write((RakNet::MessageID)REQUEST_WRITE_PACKET);
 			stream2.Write(mp_peer->GetIndexFromSystemAddress(mp_packet->systemAddress));
 			sendByAddress(mp_packet->systemAddress, stream2);
+			*/
 
-			//m_numClients++;
+			// Create new client proxy if none exists
+			
+			NetAddress addr = mp_packet->systemAddress;
 
-			if (m_clients.find(mp_packet->systemAddress) == m_clients.end())
+			if (m_clients.find(addr) == m_clients.end())
 			{
-				m_clients[mp_packet->systemAddress] = ClientProxy(
-					mp_packet->systemAddress,
-					mp_packet->guid,
-					m_clients.size(),
-					"Client Name");
+				NetGUID		guid = mp_packet->guid;
+				size_t		index = m_clients.size();
+				std::string name = "Client Name";
 
-				std::cout 
-					<< m_clients[mp_packet->systemAddress].getName() 
-					<< " has joined the server."
+				m_clients[addr] = ClientProxy(addr, guid, index, name);
+
+				std::cout
+					<< m_clients[addr].getName() << " has joined the server."
 					<< "\n";
+
+				// Send proxy to client
+				BitStream oStream;
+				oStream.Write((RakNet::MessageID)NetMessages::HANDSHAKE_PACKET);
+				m_clients[addr].write(oStream);
+				sendByAddress(addr, oStream);
+
+				std::cout << "HANDSHAKE SENT\n";
 			}
 		}
 		break;

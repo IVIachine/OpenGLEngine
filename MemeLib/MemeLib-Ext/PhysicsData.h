@@ -5,7 +5,7 @@
 #include <Vector3.h>
 
 static const float MAX_ACC = 2.0f;
-static const float MAX_SPEED = 0.75f;
+static const float MAX_SPEED = 0.65f;
 static const float MAX_ROT_ACC = 150.0f;
 static const float MAX_ROT_VEL = 200.0f;
 

@@ -2,9 +2,10 @@
 #define _CLIENT_PROXY_H_
 
 #include <string>
+#include <Serializable.h>
 #include "Net.h"
 
-class ClientProxy
+class ClientProxy : public Serializable
 {
 public:
 	ClientProxy();
@@ -16,6 +17,9 @@ public:
 	NetGUID		getGUID() const;
 	std::string getName() const;
 	size_t		getIndex() const;
+
+	void read(BitStream& in) override;
+	void write(BitStream& out) const override;
 
 private:
 	NetAddress	m_address;

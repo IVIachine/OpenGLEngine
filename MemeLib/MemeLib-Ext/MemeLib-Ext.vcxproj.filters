@@ -15,18 +15,6 @@
     <Filter Include="Header Files\Steering">
       <UniqueIdentifier>{0dc1bdbd-572a-43bc-bdbf-70bbe55e6bcc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Pathfinding">
-      <UniqueIdentifier>{623e4d91-0695-4c64-a421-b46479f564fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Pathfinding\Pathfinders">
-      <UniqueIdentifier>{03470b53-b7d6-4e17-8e1d-a8b985114183}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Pathfinding\Core">
-      <UniqueIdentifier>{ce20dd5e-2950-4b76-8957-61b8decbae96}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Pathfinding\NavMesh">
-      <UniqueIdentifier>{f6b609e5-e6f6-4333-a5f0-d42fb2b626fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Events">
       <UniqueIdentifier>{036eff07-d3d1-42e1-8802-326b958d90ec}</UniqueIdentifier>
     </Filter>
@@ -62,6 +50,18 @@
     </Filter>
     <Filter Include="Header Files\Units">
       <UniqueIdentifier>{53b931df-5752-466a-9617-0b05c04b3eb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Pathfinding">
+      <UniqueIdentifier>{623e4d91-0695-4c64-a421-b46479f564fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Pathfinding\Pathfinders">
+      <UniqueIdentifier>{03470b53-b7d6-4e17-8e1d-a8b985114183}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Pathfinding\Core">
+      <UniqueIdentifier>{ce20dd5e-2950-4b76-8957-61b8decbae96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Pathfinding\NavMesh">
+      <UniqueIdentifier>{f6b609e5-e6f6-4333-a5f0-d42fb2b626fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

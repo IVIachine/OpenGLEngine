@@ -34,7 +34,7 @@ void RPCManager::registerUnwrapFunction(RPC_ID id, RPCReadFunc func)
 	m_rpcMap[id] = func;
 }
 
-void RPCManager::processRPC(BitStream& iStream)
+void RPCManager::process(BitStream& iStream)
 {
 	iStream.IgnoreBytes(sizeof(RakNet::MessageID));
 

@@ -40,3 +40,23 @@ std::string ClientProxy::getName() const
 {
 	return m_name;
 }
+
+
+void ClientProxy::read(BitStream& in)
+{
+	in.Read(m_address);
+	in.Read(m_guid);
+	in.Read(m_index);
+
+	RakNet::RakString rakStr;
+	in.Read(rakStr);
+	m_name = rakStr.C_String();
+}
+
+void ClientProxy::write(BitStream& out) const
+{
+	out.Write(m_address);
+	out.Write(m_guid);
+	out.Write(m_index);
+	out.Write(m_name.c_str());
+}

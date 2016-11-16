@@ -4,7 +4,7 @@
 #include <Trackable.h>
 #include <cassert>
 #include <string>
-
+#include <ClientProxy.h>
 #include "Net.h"
 
 #define CLIENT NetClient::getInstance()
@@ -43,6 +43,8 @@ public:
 private:
 	NetClient();
 	~NetClient();
+
+	ClientProxy m_proxy;
 
 	RakNet::RakPeerInterface* mp_peer;
 	RakNet::Packet*	mp_packet;

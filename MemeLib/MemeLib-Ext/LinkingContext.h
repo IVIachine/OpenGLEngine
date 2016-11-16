@@ -33,7 +33,7 @@ public:
 	void		addGameObject(GameObject* inGameObject, uint32_t inNetworkId);
 	void		removeGameObject(GameObject *inGameObject);
 	GameObject* getGameObject(uint32_t netId, bool inShouldCreateIfNotFound, uint32_t classId);
-
+	size_t getNumElements() { return mNetworkIdToGameObjectMap.size(); };
 private:
 	std::unordered_map<uint32_t, GameObject*>		mNetworkIdToGameObjectMap;
 	std::unordered_map<const GameObject*, uint32_t> mGameObjectToNetworkIdMap;

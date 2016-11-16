@@ -31,6 +31,8 @@ public:
 		sp_instance = NULL;
 	};
 
+	void handleNewClient(BitStream& iStream, NetAddress addr);
+
 	bool setup();
 	void clear();
 	void update();

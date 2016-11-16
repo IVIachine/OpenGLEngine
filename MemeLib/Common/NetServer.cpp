@@ -47,11 +47,55 @@ void NetServer::clear()
 	RPCManager::destroyInstance();
 }
 
+void NetServer::handleNewClient(BitStream& iStream, NetAddress addr)
+{
+	if (mp_packet->data[0] == ID_NEW_INCOMING_CONNECTION)
+	{
+		size_t		index = m_clients.size();
+		std::string name = "Client Name";
+		NetGUID		guid = mp_packet->guid;
+		m_clients[addr] = ClientProxy(addr, guid, index, name);
+
+		std::cout
+			<< m_clients[addr].getName() << " has joined the server."
+			<< "\n";
+
+		RakNet::BitStream stream;
+		stream.Write((RakNet::MessageID)REPLICATION_PACKET);
+		for (size_t i = 0; i < OBJECT_MANAGER->size(); i++)
+		{
+			if (GameObject* tmp = OBJECT_MANAGER->findByID(i))
+			{
+				tmp->sendToServer(stream);
+			}
+		}
+		sendByAddress(mp_packet->systemAddress, stream);
+
+		RakNet::BitStream stream2;
+		stream2.Write((RakNet::MessageID)REQUEST_WRITE_PACKET);
+		stream2.Write(mp_peer->GetIndexFromSystemAddress(mp_packet->systemAddress));
+		sendByAddress(mp_packet->systemAddress, stream2);
+	}
+	else
+	{
+		std::cout << "Bad incoming connection from unknown packet\n";
+	}
+}
 
 void NetServer::update()
 {
 	for (mp_packet = mp_peer->Receive(); mp_packet; mp_peer->DeallocatePacket(mp_packet), mp_packet = mp_peer->Receive())
 	{
+		NetAddress addr = mp_packet->systemAddress;
+
+		if (m_clients.find(addr) == m_clients.end())
+		{
+			BitStream iStream(mp_packet->data, mp_packet->length, false);
+			NetAddress addr = mp_packet->systemAddress;
+			handleNewClient(iStream, addr);
+			continue;
+		}
+
 		switch (mp_packet->data[0])
 		{
 		case ID_REMOTE_DISCONNECTION_NOTIFICATION:
@@ -73,49 +117,6 @@ void NetServer::update()
 		{
 			system("cls");
 			printf("Our connection request has been accepted.\n");
-		}
-		break;
-		case ID_NEW_INCOMING_CONNECTION:
-		{
-			/*
-			RakNet::BitStream stream;
-			stream.Write((RakNet::MessageID)REPLICATION_PACKET);
-			for (size_t i = 0; i < OBJECT_MANAGER->size(); i++)
-			{
-				//OBJECT_MANAGER->findByID(i)->sendToServer(stream);
-			}
-			sendByAddress(mp_packet->systemAddress, stream);
-
-			RakNet::BitStream stream2;
-			stream2.Write((RakNet::MessageID)REQUEST_WRITE_PACKET);
-			stream2.Write(mp_peer->GetIndexFromSystemAddress(mp_packet->systemAddress));
-			sendByAddress(mp_packet->systemAddress, stream2);
-			*/
-
-			// Create new client proxy if none exists
-			
-			NetAddress addr = mp_packet->systemAddress;
-
-			if (m_clients.find(addr) == m_clients.end())
-			{
-				NetGUID		guid = mp_packet->guid;
-				size_t		index = m_clients.size();
-				std::string name = "Client Name";
-
-				m_clients[addr] = ClientProxy(addr, guid, index, name);
-
-				std::cout
-					<< m_clients[addr].getName() << " has joined the server."
-					<< "\n";
-
-				// Send proxy to client
-				BitStream oStream;
-				oStream.Write((RakNet::MessageID)NetMessages::HANDSHAKE_PACKET);
-				m_clients[addr].write(oStream);
-				sendByAddress(addr, oStream);
-
-				std::cout << "HANDSHAKE SENT\n";
-			}
 		}
 		break;
 		case ID_NO_FREE_INCOMING_CONNECTIONS:
@@ -185,80 +186,80 @@ void NetServer::generateState()
 	elfCent1->setHealth(100);
 	elfCent1->setLoc(Vec3(20, 40, 10));
 	elfCent1->setType(MonsterType::ELVES);
-	OBJECT_MANAGER->create(elfCent1);
+	LINKING->getNetworkId(elfCent1, true);
 
 	TownCenter* wereCent1 = new TownCenter();
 	wereCent1->setHealth(100);
 	wereCent1->setLoc(Vec3(20, 40, 10));
 	wereCent1->setType(MonsterType::WEREWOLVES);
-	OBJECT_MANAGER->create(wereCent1);
+	LINKING->getNetworkId(wereCent1, true);
 
 	TownCenter* vampCent1 = new TownCenter();
 	vampCent1->setHealth(100);
 	vampCent1->setLoc(Vec3(20, 40, 10));
 	vampCent1->setType(MonsterType::VAMPIRES);
-	OBJECT_MANAGER->create(vampCent1);
+	LINKING->getNetworkId(vampCent1, true);
 
 	TownCenter* orcCent1 = new TownCenter();
 	orcCent1->setHealth(100);
 	orcCent1->setLoc(Vec3(20, 40, 10));
 	orcCent1->setType(MonsterType::ORCS);
-	OBJECT_MANAGER->create(orcCent1);
+	LINKING->getNetworkId(orcCent1, true);
 
 	TownCenter* orcCent2 = new TownCenter();
 	orcCent2->setHealth(40);
 	orcCent2->setLoc(Vec3(20, 40, 10));
 	orcCent2->setType(MonsterType::ORCS);
-	OBJECT_MANAGER->create(orcCent2);
+	LINKING->getNetworkId(orcCent2, true);
 
 	Archer* elf1 = new Archer();
 	elf1->setCenter(elfCent1);
 	elf1->setHealth(100);
 	elf1->setAction(CurrentAction::WALKING);
 	elf1->setLoc(Vec3(20, 40, 10));
-	OBJECT_MANAGER->create(elf1);
+	LINKING->getNetworkId(elf1, true);
 
 	Archer* elf2 = new Archer();
 	elf2->setCenter(elfCent1);
 	elf2->setHealth(100);
 	elf2->setAction(CurrentAction::WALKING);
 	elf2->setLoc(Vec3(20, 40, 10));
-	OBJECT_MANAGER->create(elf2);
+	LINKING->getNetworkId(elf2, true);
 
 	Archer* were1 = new Archer();
 	were1->setCenter(wereCent1);
 	were1->setHealth(100);
 	were1->setAction(CurrentAction::WALKING);
 	were1->setLoc(Vec3(20, 40, 10));
-	OBJECT_MANAGER->create(were1);
+	LINKING->getNetworkId(were1, true);
 
 	Archer* vamp1 = new Archer();
 	vamp1->setCenter(vampCent1);
 	vamp1->setHealth(100);
 	vamp1->setAction(CurrentAction::WALKING);
 	vamp1->setLoc(Vec3(20, 40, 10));
-	OBJECT_MANAGER->create(vamp1);
+	LINKING->getNetworkId(vamp1, true);
 
 	Archer* orc1 = new Archer();
 	orc1->setCenter(orcCent1);
 	orc1->setHealth(100);
 	orc1->setAction(CurrentAction::WALKING);
 	orc1->setLoc(Vec3(20, 40, 10));
-	OBJECT_MANAGER->create(orc1);
+	LINKING->getNetworkId(orc1, true);
 
 	Archer* orc2 = new Archer();
 	orc2->setCenter(orcCent1);
 	orc2->setHealth(100);
 	orc2->setAction(CurrentAction::WALKING);
 	orc2->setLoc(Vec3(20, 40, 10));
-	OBJECT_MANAGER->create(orc2);
+	LINKING->getNetworkId(orc2, true);
 
 	Archer* orc3 = new Archer();
 	orc3->setCenter(orcCent2);
 	orc3->setHealth(100);
 	orc3->setAction(CurrentAction::WALKING);
 	orc3->setLoc(Vec3(20, 40, 10));
-	OBJECT_MANAGER->create(orc3);
+	LINKING->getNetworkId(orc3, true);
 
 	std::cout << "State Generated\n";
 }

@@ -66,6 +66,10 @@ void NetClient::update()
 		{
 			//system("cls");
 			printf("Our connection request has been accepted.\n");
+
+			//BitStream oStream;
+			//oStream.Write((RakNet::MessageID)HANDSHAKE_PACKET);
+			//mp_peer->Send(&oStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, mp_peer->GetSystemAddressFromIndex(0), false);
 		}
 		break;
 		case ID_NEW_INCOMING_CONNECTION:
@@ -126,19 +130,6 @@ void NetClient::update()
 			writeStateToFile(index);
 		}
 		break;
-		case NetMessages::HANDSHAKE_PACKET:
-		{
-			BitStream iStream(mp_packet->data, mp_packet->length, false);
-
-			iStream.IgnoreBytes(sizeof(RakNet::MessageID));
-
-			m_proxy.read(iStream);
-
-			std::cout << m_proxy.getName() << "\n";
-
-			std::cout << "HANDSHAKE RECIEVED\n";
-		}
-		break;
 		default:
 		{
 			printf("Message with identifier %i has arrived.\n", mp_packet->data[0]);
@@ -187,7 +178,10 @@ void NetClient::writeStateToFile(int clientNum)
 	{
 		for (size_t i = 0; i < OBJECT_MANAGER->size(); i++)
 		{
-			OBJECT_MANAGER->findByID(i)->writeToFile(of);
+			if (GameObject* tmp = OBJECT_MANAGER->findByID(i))
+			{
+				tmp->writeToFile(of);
+			}
 		}
 	}
 	else

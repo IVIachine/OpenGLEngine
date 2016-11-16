@@ -32,8 +32,11 @@ public:
 	void	update();
 	void	draw();
 
+	std::map<GameObjectID, GameObject*> getData() const { return m_objectMap; };
+
 	GameObject*	create(GameObject* toBeAdded);
 	GameObject* findByID(GameObjectID index);
+
 	bool		removeByID(GameObjectID index);
 	size_t		size();
 

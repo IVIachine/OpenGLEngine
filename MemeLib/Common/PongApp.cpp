@@ -51,9 +51,10 @@ bool PongApp::setup()
 	m_ball.sprite->setScale(Vec3(0.211f, 0.211f, 1.f));
 	m_ball.sprite->setRotation(Vec3(0, 180, 0) * Maths::DEG_TO_RAD);
 
-	m_paddle1.position = Vec3(0.f, 0.f, 0.f);
-	m_paddle2.position = Vec3(0.f, 0.f, 0.f);
-	m_ball.position = Vec3(0.f, 0.f, 0.f);
+	// Set positions
+	m_paddle1.position = { -5, 0, 0 };
+	m_paddle2.position = { 5, 0, 0 };
+	m_ball.position = { 0, 0, 0 };
 
 	return true;
 }
@@ -64,11 +65,6 @@ void PongApp::clear()
 
 void PongApp::update()
 {
-	// Set positions
-	m_paddle1.position = { -5, 0, 0 };
-	m_paddle2.position = { 5, 0, 0 };
-	m_ball.position = { 0, 0, 0 };
-
 	m_paddle1.sprite->setPosition(m_paddle1.position);
 	m_paddle2.sprite->setPosition(m_paddle2.position);
 	m_ball.sprite->setPosition(m_ball.position);
@@ -81,15 +77,6 @@ void PongApp::update()
 	if (INPUT->getKeyDown(Keyboard::C))
 	{
 		CLIENT->connect("127.0.0.1");
-	}
-
-	if (INPUT->getKey(Keyboard::Up))
-	{
-		// Send move up
-	}
-	else if (INPUT->getKey(Keyboard::Down))
-	{
-		// Send move down
 	}
 }
 

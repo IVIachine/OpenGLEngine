@@ -14,7 +14,7 @@ GameApp::GameApp()
 
 GameApp::~GameApp()
 {
-	clear();
+	//clear();
 }
 
 

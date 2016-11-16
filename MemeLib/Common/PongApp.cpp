@@ -4,6 +4,8 @@
 #include <EventSystem.h>
 #include <GameObjectManager.h>
 #include <ResourceManager.h>
+#include "NetServer.h"
+#include "NetClient.h"
 
 PongApp::PongApp()
 {
@@ -74,6 +76,11 @@ void PongApp::update()
 	if (INPUT->getKeyDown(Keyboard::KeyCode::Escape))
 	{
 		GAME->stop();
+	}
+
+	if (INPUT->getKeyDown(Keyboard::C))
+	{
+		CLIENT->connect("127.0.0.1");
 	}
 
 	if (INPUT->getKey(Keyboard::Up))

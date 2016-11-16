@@ -1,4 +1,5 @@
 #include "GameApp.h"
+#include "PongApp.h"
 #include "Common.h"
 #include "TextAsset.h"
 
@@ -8,12 +9,13 @@ int main()
 {
 	Maths::seedRandom();
 	EventSystem::createInstance();
-	GameApp gameApp;
 	Game::createInstance();	
 	NetClient::createInstance();
 
+	PongApp app;
+
 	bool isRunning = 
-		GAME->setup(DISPLAY_WIDTH, DISPLAY_HEIGHT, &gameApp) &&
+		GAME->setup(DISPLAY_WIDTH, DISPLAY_HEIGHT, &app) &&
 		CLIENT->setup();
 
 	if(!isRunning)
@@ -35,8 +37,6 @@ int main()
 		CLIENT->update();
 		isRunning = GAME->endStep();
 	}
-	
-	UNITS->deleteAll();
 
 	NetClient::destroyInstance();
 	Game::destroyInstance();

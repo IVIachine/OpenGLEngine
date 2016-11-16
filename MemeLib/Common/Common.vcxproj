@@ -129,6 +129,7 @@
     <ClInclude Include="GameController.h" />
     <ClInclude Include="NetClient.h" />
     <ClInclude Include="NetServer.h" />
+    <ClInclude Include="PongApp.h" />
     <ClInclude Include="TownCenter.h" />
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +139,7 @@
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="NetClient.cpp" />
     <ClCompile Include="NetServer.cpp" />
+    <ClCompile Include="PongApp.cpp" />
     <ClCompile Include="TownCenter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

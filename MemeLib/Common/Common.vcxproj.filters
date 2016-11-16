@@ -27,6 +27,12 @@
     <Filter Include="Source Files\Util">
       <UniqueIdentifier>{87e7c7ac-da9f-4a55-95b7-d3feb7ec764e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Pong">
+      <UniqueIdentifier>{5620f74e-1851-417d-b250-7d225a634528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Pong">
+      <UniqueIdentifier>{b54c4e26-302c-4ac6-8714-5642a4f10321}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NetClient.h">
@@ -50,6 +56,9 @@
     <ClInclude Include="GameApp.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="PongApp.h">
+      <Filter>Header Files\Pong</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NetServer.cpp">
@@ -72,6 +81,9 @@
     </ClCompile>
     <ClCompile Include="GameController.cpp">
       <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="PongApp.cpp">
+      <Filter>Source Files\Pong</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

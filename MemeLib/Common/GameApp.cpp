@@ -119,7 +119,9 @@ bool GameApp::setup()
 
 void GameApp::clear()
 {
+	UNITS->deleteAll();
 	UnitManager::disposeInstance();
+
 	ComponentManager::disposeInstance();
 
 	delete m_skybox;

@@ -40,7 +40,7 @@ private:
 
 	uint32_t mNextNetworkId;
 
-	LinkingContext() : mNextNetworkId(1) {}
+	LinkingContext() : mNextNetworkId(0) {}
 	~LinkingContext() {};
 
 	static LinkingContext* sp_instance;

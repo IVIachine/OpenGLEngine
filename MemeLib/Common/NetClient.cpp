@@ -176,12 +176,9 @@ void NetClient::writeStateToFile(int clientNum)
 	std::ofstream of(sstream.str());
 	if (!of.fail())
 	{
-		for (size_t i = 0; i < OBJECT_MANAGER->size(); i++)
+		for (auto& pair : OBJECT_MANAGER->getData())
 		{
-			if (GameObject* tmp = OBJECT_MANAGER->findByID(i))
-			{
-				tmp->writeToFile(of);
-			}
+			pair.second->writeToFile(of);
 		}
 	}
 	else

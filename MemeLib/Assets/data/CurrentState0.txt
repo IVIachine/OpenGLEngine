@@ -78,3 +78,25 @@ Center
 Center Type: Orcs
 Center Loc: ( 20.000000, 40.000000, 10.000000 )
 Center Health: 100
+------------------------------------------------------------
+Archer
+Archer Action: Walking
+Archer Loc: ( 20.000000, 40.000000, 10.000000 )
+Archer Health: 100
+Lives in Center: 
+-------------
+Center
+Center Type: Orcs
+Center Loc: ( 20.000000, 40.000000, 10.000000 )
+Center Health: 100
+------------------------------------------------------------
+Archer
+Archer Action: Walking
+Archer Loc: ( 20.000000, 40.000000, 10.000000 )
+Archer Health: 100
+Lives in Center: 
+-------------
+Center
+Center Type: Orcs
+Center Loc: ( 20.000000, 40.000000, 10.000000 )
+Center Health: 40

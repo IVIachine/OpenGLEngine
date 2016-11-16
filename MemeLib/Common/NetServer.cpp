@@ -62,13 +62,12 @@ void NetServer::handleNewClient(BitStream& iStream, NetAddress addr)
 
 		RakNet::BitStream stream;
 		stream.Write((RakNet::MessageID)REPLICATION_PACKET);
-		for (size_t i = 0; i < OBJECT_MANAGER->size(); i++)
+
+		for (auto& pair : OBJECT_MANAGER->getData())
 		{
-			if (GameObject* tmp = OBJECT_MANAGER->findByID(i))
-			{
-				tmp->sendToServer(stream);
-			}
+			pair.second->sendToServer(stream);
 		}
+
 		sendByAddress(mp_packet->systemAddress, stream);
 
 		RakNet::BitStream stream2;

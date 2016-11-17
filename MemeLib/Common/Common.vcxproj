@@ -130,6 +130,8 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameController.h" />
+    <ClInclude Include="InputState.h" />
+    <ClInclude Include="Move.h" />
     <ClInclude Include="NetClient.h" />
     <ClInclude Include="NetServer.h" />
     <ClInclude Include="Paddle.h" />
@@ -146,6 +148,8 @@
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="InputState.cpp" />
+    <ClCompile Include="Move.cpp" />
     <ClCompile Include="NetClient.cpp" />
     <ClCompile Include="NetServer.cpp" />
     <ClCompile Include="Paddle.cpp" />

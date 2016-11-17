@@ -34,7 +34,6 @@ bool PongApp::setup()
 
 	RESOURCES->addSprite("paddle1", RESOURCES->getTexture2D("paddle1"));
 	RESOURCES->addSprite("ball", RESOURCES->getTexture2D("ball"));
-
 	return true;
 }
 

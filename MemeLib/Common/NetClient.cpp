@@ -28,12 +28,15 @@ bool NetClient::setup()
 	REGISTRY->RegisterCreationFunction<GameObject>();
 	REGISTRY->RegisterCreationFunction<Paddle>();
 	REGISTRY->RegisterCreationFunction<Ball>();
-
+	m_inputState = new InputState();
 	return true;
 }
 
 void NetClient::clear()
 {
+	delete m_inputState;
+	m_inputState = NULL;
+
 	RPCManager::destroyInstance();
 }
 
@@ -42,6 +45,9 @@ void NetClient::update()
 {
 	if (!m_isConnected)
 		return;
+
+	m_inputState->update(TIME->deltaTime());
+
 
 	for (mp_packet = mp_peer->Receive(); mp_packet; mp_peer->DeallocatePacket(mp_packet), mp_packet = mp_peer->Receive())
 	{

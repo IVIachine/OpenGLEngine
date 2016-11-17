@@ -41,11 +41,13 @@ GameObject * LinkingContext::getGameObject(uint32_t netId, bool inShouldCreateIf
 	if (it != mNetworkIdToGameObjectMap.end())
 	{
 		return it->second;
+		std::cout << "OLD\n";
 	}
 	else if (inShouldCreateIfNotFound)
 	{
 		GameObject* tmp = REGISTRY->CreateGameObject(classId);
 		addGameObject(tmp, netId);
+		std::cout << "NEW\n";
 		return tmp;
 	}
 	else

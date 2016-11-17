@@ -75,18 +75,18 @@ void NetServer::handleNewClient(BitStream& iStream, NetAddress addr)
 			<< m_clients[addr].getName() << " has joined the server."
 			<< "\n";
 
-		RakNet::BitStream stream;
-		stream.Write((RakNet::MessageID)REPLICATION_PACKET);
-		for (auto& pair : OBJECT_MANAGER->getData())
+		int i = 0;
+		for (auto& pair : m_clients)
 		{
-			pair.second->sendToServer(stream);
+			RakNet::BitStream stream;
+			stream.Write((RakNet::MessageID)REPLICATION_PACKET);
+			for (auto& pair : OBJECT_MANAGER->getData())
+			{
+				pair.second->sendToServer(stream);
+			}
+			sendByAddress(m_clients[mp_peer->GetSystemAddressFromIndex(i)].getAddress(), stream); //This isn't efficient
+			i++;
 		}
-		sendByAddress(mp_packet->systemAddress, stream);
-
-		RakNet::BitStream stream2;
-		stream2.Write((RakNet::MessageID)REQUEST_WRITE_PACKET);
-		stream2.Write(mp_peer->GetIndexFromSystemAddress(mp_packet->systemAddress));
-		sendByAddress(mp_packet->systemAddress, stream2);
 	}
 	else
 	{
@@ -171,7 +171,6 @@ void NetServer::update()
 bool NetServer::sendByAddress(NetAddress addr, BitStream& stream)
 {
 	mp_peer->Send(&stream, HIGH_PRIORITY, UNRELIABLE, 0, addr, false, 0U);
-
 	return true;
 }
 

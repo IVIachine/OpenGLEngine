@@ -2,10 +2,14 @@
 
 bool Move::write(RakNet::BitStream & stream) const
 {
-	return false;
+	mInputState.write(stream);
+	stream.Write(mDeltaTime);
+	return true;
 }
 
 bool Move::read(RakNet::BitStream & stream)
 {
-	return false;
+	mInputState.read(stream);
+	stream.Read(mDeltaTime);
+	return true;
 }

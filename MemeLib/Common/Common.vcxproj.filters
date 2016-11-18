@@ -83,6 +83,12 @@
     <ClInclude Include="Move.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MoveList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientProxy.h">
+      <Filter>Header Files\Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NetServer.cpp">
@@ -132,6 +138,12 @@
     </ClCompile>
     <ClCompile Include="Move.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientProxy.cpp">
+      <Filter>Source Files\Net</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -4,9 +4,10 @@
 #include <Trackable.h>
 #include <cassert>
 #include <string>
-#include <ClientProxy.h>
+#include "ClientProxy.h"
 #include "Net.h"
 #include "InputState.h"
+#include "MoveList.h"
 
 #define CLIENT NetClient::getInstance()
 #define MAX_CONNECTIONS 1
@@ -52,7 +53,8 @@ private:
 	LinkingContext* mLinkContext;
 	bool	m_isConnected;
 	static NetClient* sp_instance;
-	InputState* m_inputState;
+	MoveList* m_moves;
+	float m_frameCount;
 };
 
 #endif // !_NET_CLIENT_H_

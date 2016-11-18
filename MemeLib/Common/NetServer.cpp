@@ -54,29 +54,28 @@ void NetServer::handleNewClient(BitStream& iStream, NetAddress addr)
 		size_t		index = m_clients.size();
 		std::string name = "Client Name";
 		NetGUID		guid = mp_packet->guid;
-
+		uint32_t id = 999;
 		if (index == 0)
 		{
 			PaddleServer* firstPaddle = new PaddleServer();
 			firstPaddle->setLoc(Vec3(5, 0, 0));
-			uint32_t id = LINKING->getNetworkId(firstPaddle, true); //Also this id
+			id = LINKING->getNetworkId(firstPaddle, true); //Also this id
 
 		}
 		else if (index == 1)
 		{
 			PaddleServer* secondPaddle = new PaddleServer();
 			secondPaddle->setLoc(Vec3(-5, 0, 0));
-			uint32_t id = LINKING->getNetworkId(secondPaddle, true); //This id
+			id = LINKING->getNetworkId(secondPaddle, true); //This id
 		}
 
-		m_clients[addr] = ClientProxy(addr, guid, index, name); //Create and set the target paddle ID to the Paddle Link ID
+		m_clients[addr] = ClientProxy(addr, guid, index, name, id); //Create and set the target paddle ID to the Paddle Link ID
 
 		std::cout
 			<< m_clients[addr].getName() << " has joined the server."
 			<< "\n";
 
-		int i = 0;
-		for (auto& pair : m_clients)
+		for (auto& client : m_clients)
 		{
 			RakNet::BitStream stream;
 			stream.Write((RakNet::MessageID)REPLICATION_PACKET);
@@ -84,8 +83,7 @@ void NetServer::handleNewClient(BitStream& iStream, NetAddress addr)
 			{
 				pair.second->sendToServer(stream);
 			}
-			sendByAddress(m_clients[mp_peer->GetSystemAddressFromIndex(i)].getAddress(), stream); //This isn't efficient
-			i++;
+			sendByAddress(client.second.getAddress(), stream);
 		}
 	}
 	else
@@ -158,12 +156,36 @@ void NetServer::update()
 			}
 		}
 		break;
+		case MOVE_REQUEST_PACKET:
+		{
+			std::cout << "NEWMOVE\n";
+			BitStream iStream(mp_packet->data, mp_packet->length, false);
+			m_clients.find(addr)->second.readMove(iStream);
+		}
+		break;
 		default:
 		{
 			printf("Message with identifier %i has arrived.\n", mp_packet->data[0]);
 		}
 		break;
 		}
+	}
+
+	for (auto& client : m_clients)
+	{
+		client.second.update();
+	}
+
+	RakNet::BitStream stream;
+	stream.Write((RakNet::MessageID)REPLICATION_PACKET);
+	for (auto& pair : OBJECT_MANAGER->getData())
+	{
+		pair.second->sendToServer(stream);
+	}
+
+	for (auto& client : m_clients)
+	{
+		sendByAddress(client.second.getAddress(), stream);
 	}
 }
 

@@ -7,6 +7,7 @@ NetClient* NetClient::sp_instance = NULL;
 NetClient::NetClient()
 {
 	m_isConnected = false;
+	m_frameCount = 0;
 }
 
 NetClient::~NetClient()
@@ -28,14 +29,14 @@ bool NetClient::setup()
 	REGISTRY->RegisterCreationFunction<GameObject>();
 	REGISTRY->RegisterCreationFunction<Paddle>();
 	REGISTRY->RegisterCreationFunction<Ball>();
-	m_inputState = new InputState();
+	m_moves = new MoveList();
 	return true;
 }
 
 void NetClient::clear()
 {
-	delete m_inputState;
-	m_inputState = NULL;
+	delete m_moves;
+	m_moves = NULL;
 
 	RPCManager::destroyInstance();
 }
@@ -46,8 +47,21 @@ void NetClient::update()
 	if (!m_isConnected)
 		return;
 
-	m_inputState->update(TIME->deltaTime());
+	InputState currentState;
+	currentState.update(TIME->deltaTime());
+	if(currentState.checkValidState())
+		m_moves->addMove(currentState, TIME->getCurrentTime());
+	m_frameCount++;
 
+	if (m_frameCount >= 3) //May need to fix
+	{
+		RakNet::BitStream stream;
+		if (m_moves->sendInputPacket(stream))
+		{
+			sendToServer(stream);
+		}
+		m_frameCount = 0;
+	}
 
 	for (mp_packet = mp_peer->Receive(); mp_packet; mp_peer->DeallocatePacket(mp_packet), mp_packet = mp_peer->Receive())
 	{

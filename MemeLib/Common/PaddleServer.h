@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Vector3.h"
+#include "Movelist.h"
 
 class PaddleServer :public GameObject
 {
@@ -17,7 +18,7 @@ public:
 	virtual void read(RakNet::BitStream& stream);
 	virtual void writeToFile(std::ofstream& of);
 	virtual void draw();
-	virtual void update();
+	void updatePaddle(MoveList& moves);
 
 	Vec3 getLoc() const { return mLoc; };
 	void setLoc(Vec3 loc) { mLoc = loc; };

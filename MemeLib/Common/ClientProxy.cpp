@@ -1,15 +1,17 @@
 #include "ClientProxy.h"
+#include "PaddleServer.h"
 
 ClientProxy::ClientProxy()
 {
 }
 
-ClientProxy::ClientProxy(NetAddress address, NetGUID guid, size_t index, std::string name)
+ClientProxy::ClientProxy(NetAddress address, NetGUID guid, size_t index, std::string name, uint32_t paddleID)
 {
 	m_address = address;
 	m_guid = guid;
 	m_index = index;
 	m_name = name;
+	m_paddleID = paddleID;
 }
 
 ClientProxy::ClientProxy(const ClientProxy & copy)
@@ -42,6 +44,19 @@ std::string ClientProxy::getName() const
 }
 
 
+void ClientProxy::readMove(BitStream& in)
+{
+	in.IgnoreBytes(sizeof(RakNet::MessageID));
+	int counter;
+	in >> counter;
+	for (int i = 0; i < counter; i++)
+	{
+		Move tmp;
+		tmp.read(in);
+		m_moveList.pushBackMove(tmp);
+	}
+}
+
 void ClientProxy::read(BitStream& in)
 {
 	in.Read(m_address);
@@ -59,4 +74,12 @@ void ClientProxy::write(BitStream& out) const
 	out.Write(m_guid);
 	out.Write(m_index);
 	out.Write(m_name.c_str());
+}
+
+void ClientProxy::update()
+{
+	if (static_cast<PaddleServer*>(LINKING->getGameObject(m_paddleID, false, 0)))
+	{
+		static_cast<PaddleServer*>(LINKING->getGameObject(m_paddleID, false, 0))->updatePaddle(m_moveList);
+	}
 }

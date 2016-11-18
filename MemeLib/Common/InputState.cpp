@@ -3,25 +3,27 @@
 
 bool InputState::write(RakNet::BitStream & stream) const
 {
-	return false;
+	stream.Write(mDesiredBackAmount);
+	stream.Write(mDesiredForwardAmount);
+	return true;
 }
 
 bool InputState::read(RakNet::BitStream & stream)
 {
-	return false;
+	stream.Read(mDesiredBackAmount);
+	stream.Read(mDesiredForwardAmount);
+	return true;
 }
 
 void InputState::update(float deltaTime)
 {
 	if (INPUT->getKey(Keyboard::W))
 	{
-		mDesiredForwardAmount -= .05f;
-		std::cout << "UP\n";
+		mDesiredForwardAmount += .05f;
 	}
 
 	if (INPUT->getKey(Keyboard::S))
 	{
-		mDesiredForwardAmount += .05f;
-		std::cout << "DOWN\n";
+		mDesiredForwardAmount -= .05f;
 	}
 }

@@ -15,9 +15,15 @@ void PaddleServer::draw()
 {
 }
 
-void PaddleServer::update()
+void PaddleServer::updatePaddle(MoveList& moves)
 {
-	//Update physics here
+	std::vector<Move> moveList = moves.getData();
+	for (size_t i = 0; i < moveList.size(); i++)
+	{
+		//std::cout << moveList[i].GetInputState().getDesiredVerticalDelta() << std::endl;
+		mLoc.y += moveList[i].GetInputState().getDesiredVerticalDelta();
+	}
+	moves.clearList();
 }
 
 void PaddleServer::write(RakNet::BitStream & stream) const

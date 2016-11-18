@@ -15,8 +15,11 @@ MoveList::~MoveList()
 const Move & MoveList::addMove(const InputState & inputState, float timestamp)
 {
 	float deltaTime = mLastMoveTimestamp >= 0.f ? timestamp - mLastMoveTimestamp : 0.f;
+
 	mMoves.emplace_back(inputState, timestamp, deltaTime); 
+
 	mLastMoveTimestamp = timestamp; 
+
 	return mMoves.back();
 }
 

@@ -49,6 +49,7 @@ void ClientProxy::readMove(BitStream& in)
 	in.IgnoreBytes(sizeof(RakNet::MessageID));
 	int counter;
 	in >> counter;
+
 	for (int i = 0; i < counter; i++)
 	{
 		Move tmp;

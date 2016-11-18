@@ -55,6 +55,8 @@ void PongApp::update()
 			CLIENT->connect("127.0.0.1");
 		}
 	}
+
+	//std::cout << TIME->getCurrentTime() << "\n";
 }
 
 void PongApp::draw()

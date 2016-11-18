@@ -2,6 +2,7 @@
 #include "ResourceManager.h"
 #include "LinkingContext.h"
 #include "NetServer.h"
+#include <Timer.h>
 
 PaddleServer::PaddleServer()
 {
@@ -18,16 +19,23 @@ void PaddleServer::draw()
 
 void PaddleServer::updatePaddle(MoveList& moves)
 {
+	Timer timer;
+
 	bool hasChanged = false;
 	std::vector<Move> moveList = moves.getData();
 	for (size_t i = 0; i < moveList.size(); i++)
 	{
 		hasChanged = true;
 		mLoc.y += moveList[i].GetInputState().getDesiredVerticalDelta();
+
+		timer.sleepUntilElapsed(moveList[i].GetDeltaTime());
 	}
 	moves.clearList();
-	if(hasChanged)
+
+	if (hasChanged)
+	{
 		SERVER->broadcastNewLocation(this);
+	}
 }
 
 void PaddleServer::write(RakNet::BitStream & stream) 

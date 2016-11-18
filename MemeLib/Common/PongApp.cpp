@@ -50,7 +50,10 @@ void PongApp::update()
 
 	if (INPUT->getKeyDown(Keyboard::C))
 	{
-		CLIENT->connect("127.0.0.1");
+		if (!CLIENT->isConnected())
+		{
+			CLIENT->connect("127.0.0.1");
+		}
 	}
 }
 

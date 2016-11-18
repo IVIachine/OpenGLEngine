@@ -1,6 +1,7 @@
 #include "PaddleServer.h"
 #include "ResourceManager.h"
 #include "LinkingContext.h"
+#include "NetServer.h"
 
 PaddleServer::PaddleServer()
 {
@@ -17,17 +18,30 @@ void PaddleServer::draw()
 
 void PaddleServer::updatePaddle(MoveList& moves)
 {
+	bool hasChanged = false;
 	std::vector<Move> moveList = moves.getData();
 	for (size_t i = 0; i < moveList.size(); i++)
 	{
-		//std::cout << moveList[i].GetInputState().getDesiredVerticalDelta() << std::endl;
+		hasChanged = true;
 		mLoc.y += moveList[i].GetInputState().getDesiredVerticalDelta();
 	}
 	moves.clearList();
+	if(hasChanged)
+		SERVER->broadcastNewLocation(this);
 }
 
-void PaddleServer::write(RakNet::BitStream & stream) const
+void PaddleServer::write(RakNet::BitStream & stream) 
 {
+	if (mLoc.y < MIN_PADDLE_Y)
+	{
+		mLoc.y = MIN_PADDLE_Y;
+	}
+
+	if (mLoc.y > MAX_PADDLE_Y)
+	{
+		mLoc.y = MAX_PADDLE_Y;
+	}
+
 	stream.Write(mLoc.x);
 	stream.Write(mLoc.y);
 	stream.Write(mLoc.z);

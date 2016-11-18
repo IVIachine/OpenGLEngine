@@ -158,7 +158,6 @@ void NetServer::update()
 		break;
 		case MOVE_REQUEST_PACKET:
 		{
-			std::cout << "NEWMOVE\n";
 			BitStream iStream(mp_packet->data, mp_packet->length, false);
 			m_clients.find(addr)->second.readMove(iStream);
 		}
@@ -174,18 +173,6 @@ void NetServer::update()
 	for (auto& client : m_clients)
 	{
 		client.second.update();
-	}
-
-	RakNet::BitStream stream;
-	stream.Write((RakNet::MessageID)REPLICATION_PACKET);
-	for (auto& pair : OBJECT_MANAGER->getData())
-	{
-		pair.second->sendToServer(stream);
-	}
-
-	for (auto& client : m_clients)
-	{
-		sendByAddress(client.second.getAddress(), stream);
 	}
 }
 
@@ -218,4 +205,15 @@ void NetServer::generateState()
 	LINKING->getNetworkId(ball, true);
 
 	std::cout << "State Generated\n";
+}
+
+void NetServer::broadcastNewLocation(PaddleServer* key)
+{
+	RakNet::BitStream stream;
+	stream.Write((RakNet::MessageID)REPLICATION_PACKET);
+	key->sendToServer(stream);
+	for (auto& client : m_clients)
+	{
+		sendByAddress(client.second.getAddress(), stream);
+	}
 }

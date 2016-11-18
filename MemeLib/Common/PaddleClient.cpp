@@ -1,7 +1,7 @@
 #include "PaddleClient.h"
 #include "ResourceManager.h"
 #include "LinkingContext.h"
-
+#include "PongApp.h"
 PaddleClient::PaddleClient()
 {
 	mp_sprite = RESOURCES->getSprite("paddle1");
@@ -24,7 +24,7 @@ void PaddleClient::update()
 {
 }
 
-void PaddleClient::write(RakNet::BitStream & stream) const
+void PaddleClient::write(RakNet::BitStream & stream) 
 {
 	stream.Write(mLoc.x);
 	stream.Write(mLoc.y);

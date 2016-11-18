@@ -19,11 +19,11 @@ void InputState::update(float deltaTime)
 {
 	if (INPUT->getKey(Keyboard::W))
 	{
-		mDesiredForwardAmount += .05f;
+		mDesiredForwardAmount += .1f;
 	}
 
 	if (INPUT->getKey(Keyboard::S))
 	{
-		mDesiredForwardAmount -= .05f;
+		mDesiredBackAmount += .1f;
 	}
 }

@@ -45,6 +45,8 @@ public:
 
 	void generateState();
 
+	void broadcastNewLocation(PaddleServer* key);
+
 private:
 	NetServer();
 	~NetServer();
@@ -52,7 +54,6 @@ private:
 	RakNet::RakPeerInterface* mp_peer;
 	RakNet::Packet*	mp_packet;
 	static NetServer* sp_instance;
-
 	std::map<NetAddress, ClientProxy> m_clients;
 	//size_t m_numClients = 0;
 };

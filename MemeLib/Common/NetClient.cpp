@@ -53,7 +53,7 @@ void NetClient::update()
 		m_moves->addMove(currentState, TIME->getCurrentTime());
 	m_frameCount++;
 
-	if (m_frameCount >= 3) //May need to fix
+	if (m_frameCount >= 2) //May need to fix
 	{
 		RakNet::BitStream stream;
 		if (m_moves->sendInputPacket(stream))

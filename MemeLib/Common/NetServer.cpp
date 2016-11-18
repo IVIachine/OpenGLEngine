@@ -57,16 +57,16 @@ void NetServer::handleNewClient(BitStream& iStream, NetAddress addr)
 		uint32_t id = 999;
 		if (index == 0)
 		{
-			PaddleServer* firstPaddle = new PaddleServer();
-			firstPaddle->setLoc(Vec3(5, 0, 0));
-			id = LINKING->getNetworkId(firstPaddle, true); //Also this id
+			m_paddleR = new PaddleServer();
+			m_paddleR->setLoc(Vec3(5, 0, 0));
+			id = LINKING->getNetworkId(m_paddleR, true); //Also this id
 
 		}
 		else if (index == 1)
 		{
-			PaddleServer* secondPaddle = new PaddleServer();
-			secondPaddle->setLoc(Vec3(-5, 0, 0));
-			id = LINKING->getNetworkId(secondPaddle, true); //This id
+			m_paddleL = new PaddleServer();
+			m_paddleL->setLoc(Vec3(-5, 0, 0));
+			id = LINKING->getNetworkId(m_paddleL, true); //This id
 		}
 
 		m_clients[addr] = ClientProxy(addr, guid, index, name, id); //Create and set the target paddle ID to the Paddle Link ID
@@ -170,9 +170,74 @@ void NetServer::update()
 		}
 	}
 
-	for (auto& client : m_clients)
+
+	if (m_ball && m_paddleL && m_paddleR)
 	{
-		client.second.update();
+		m_ball->update();
+
+		float ballX = m_ball->getLoc().x;
+		float ballY = m_ball->getLoc().y;
+
+		float dyL = glm::distance(m_ball->getLoc(), m_paddleL->getLoc());
+		float dyR = glm::distance(m_ball->getLoc(), m_paddleR->getLoc());
+
+		bool rhsPoint = ballX > m_paddleR->getLoc().x;
+		bool lhsPoint = ballX < m_paddleL->getLoc().x;
+		bool hitPaddle = (lhsPoint && dyL < 1.0f || rhsPoint && dyR < 1.0f);
+
+		float ceil = MAX_PADDLE_Y;
+		bool hitCeil = ballY <= -ceil || ballY >= ceil;
+
+		if (hitPaddle)
+		{
+			m_ball->bounce();
+		}
+		else if (hitCeil)
+		{
+			m_ball->flip();
+		}
+		else if (rhsPoint || lhsPoint)
+		{
+			if (rhsPoint)
+			{
+				m_pointsR++;
+
+				std::cout << "Right Scored!\n";
+			}
+			else if (lhsPoint)
+			{
+				m_pointsL++;
+
+				std::cout << "Left Scored!\n";
+			}
+
+			m_ball->setLoc({ 0, 0, 0 });
+
+			std::cout << "Score:" << " L: " << m_pointsL << " R: " << m_pointsR << "\n";
+		}
+
+		if (m_frameCounter > 10)
+		{
+			RakNet::BitStream stream;
+			stream.Write((RakNet::MessageID)REPLICATION_PACKET);
+			m_ball->sendToServer(stream);
+			
+			for (auto& client : m_clients)
+			{
+				sendByAddress(client.second.getAddress(), stream);
+			}
+
+			m_frameCounter = 0;
+		}
+		else
+		{
+			m_frameCounter++;
+		}
+
+		for (auto& client : m_clients)
+		{
+			client.second.update();
+		}
 	}
 }
 
@@ -200,9 +265,9 @@ bool NetServer::sendByIndex(size_t index, BitStream& stream)
 
 void NetServer::generateState()
 {
-	BallServer* ball = new BallServer();
-	ball->setLoc(Vec3(0, 0, 0));
-	LINKING->getNetworkId(ball, true);
+	m_ball = new BallServer();
+	m_ball->setLoc(Vec3(0, 0, 0));
+	LINKING->getNetworkId(m_ball, true);
 
 	std::cout << "State Generated\n";
 }

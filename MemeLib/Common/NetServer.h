@@ -44,7 +44,6 @@ public:
 	bool sendByIndex(size_t index, BitStream& stream);
 
 	void generateState();
-
 	void broadcastNewLocation(PaddleServer* key);
 
 private:
@@ -55,6 +54,13 @@ private:
 	RakNet::Packet*	mp_packet;
 	static NetServer* sp_instance;
 	std::map<NetAddress, ClientProxy> m_clients;
+
+	BallServer* m_ball;
+	PaddleServer* m_paddleL;
+	PaddleServer* m_paddleR;
+	int m_frameCounter;
+	int m_pointsR, m_pointsL;
+
 	//size_t m_numClients = 0;
 };
 

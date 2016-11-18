@@ -59,35 +59,35 @@
     <ClInclude Include="PongApp.h">
       <Filter>Header Files\Pong</Filter>
     </ClInclude>
-    <ClInclude Include="Paddle.h">
-      <Filter>Header Files\Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Ball.h">
-      <Filter>Header Files\Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="BallClient.h">
-      <Filter>Header Files\Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="BallServer.h">
-      <Filter>Header Files\Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="PaddleServer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PaddleClient.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Move.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ClientProxy.h">
       <Filter>Header Files\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="PaddleServer.h">
+      <Filter>Header Files\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="Move.h">
+      <Filter>Header Files\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveList.h">
+      <Filter>Header Files\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="PaddleClient.h">
+      <Filter>Header Files\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="InputState.h">
+      <Filter>Header Files\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="BallServer.h">
+      <Filter>Header Files\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="BallClient.h">
+      <Filter>Header Files\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>Header Files\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="Paddle.h">
+      <Filter>Header Files\Pong</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -115,35 +115,35 @@
     <ClCompile Include="PongApp.cpp">
       <Filter>Source Files\Pong</Filter>
     </ClCompile>
-    <ClCompile Include="Paddle.cpp">
-      <Filter>Source Files\Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Ball.cpp">
-      <Filter>Source Files\Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="BallClient.cpp">
-      <Filter>Source Files\Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="BallServer.cpp">
-      <Filter>Source Files\Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="PaddleServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PaddleClient.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InputState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Move.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ClientProxy.cpp">
       <Filter>Source Files\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Paddle.cpp">
+      <Filter>Source Files\Pong</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Source Files\Pong</Filter>
+    </ClCompile>
+    <ClCompile Include="BallClient.cpp">
+      <Filter>Source Files\Pong</Filter>
+    </ClCompile>
+    <ClCompile Include="BallServer.cpp">
+      <Filter>Source Files\Pong</Filter>
+    </ClCompile>
+    <ClCompile Include="PaddleServer.cpp">
+      <Filter>Source Files\Pong</Filter>
+    </ClCompile>
+    <ClCompile Include="InputState.cpp">
+      <Filter>Source Files\Pong</Filter>
+    </ClCompile>
+    <ClCompile Include="Move.cpp">
+      <Filter>Source Files\Pong</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveList.cpp">
+      <Filter>Source Files\Pong</Filter>
+    </ClCompile>
+    <ClCompile Include="PaddleClient.cpp">
+      <Filter>Source Files\Pong</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

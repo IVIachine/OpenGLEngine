@@ -49,8 +49,10 @@ void NetClient::update()
 
 	InputState currentState;
 	currentState.update(TIME->deltaTime());
-	if(currentState.checkValidState())
+	if (currentState.checkValidState())
+	{
 		m_moves->addMove(currentState, TIME->getCurrentTime());
+	}
 	m_frameCount++;
 
 	if (m_frameCount >= 2) //May need to fix

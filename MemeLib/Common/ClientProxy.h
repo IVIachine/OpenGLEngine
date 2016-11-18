@@ -23,6 +23,7 @@ public:
 	void read(BitStream& in) override;
 	void write(BitStream& out) const override;
 	void update();
+
 private:
 	NetAddress	m_address;
 	NetGUID		m_guid;

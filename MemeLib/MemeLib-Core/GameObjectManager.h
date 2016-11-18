@@ -4,6 +4,7 @@
 #include <MemoryPool.h>
 #include "GameObject.h"
 #include <map>
+#include <vector>
 #include <Trackable.h>
 
 #define OBJECT_MANAGER GameObjectManager::getInstance()
@@ -61,6 +62,22 @@ public:
 		}
 
 		return NULL;
+	};
+
+	template <typename T>
+	std::vector<T*> findObjectsOfType()
+	{
+		std::vector<T*> list;
+
+		for (auto& pair : m_objectMap)
+		{
+			if (T* tmp = dynamic_cast<T*>(pair.second))
+			{
+				list.push_back(tmp);
+			}
+		}
+
+		return list;
 	};
 
 private:

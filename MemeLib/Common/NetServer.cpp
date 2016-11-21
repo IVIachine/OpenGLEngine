@@ -26,10 +26,6 @@ bool NetServer::setup()
 
 	GameObjectManager::createInstance();
 
-	REGISTRY->RegisterCreationFunction<GameObject>();
-	REGISTRY->RegisterCreationFunction<Paddle>();
-	REGISTRY->RegisterCreationFunction<Ball>();
-
 	RakNet::SocketDescriptor socketDesc(SERVER_PORT, 0);
 	mp_peer = RakNet::RakPeerInterface::GetInstance();
 	mp_peer->Startup(MAX_CLIENTS, &socketDesc, 1);

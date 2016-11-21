@@ -38,7 +38,7 @@ public:
 	virtual void write(RakNet::BitStream& stream) const;
 	virtual void sendToServer(RakNet::BitStream & stream);
 	virtual void sendToServer(RakNet::RakPeerInterface * peer);
-	virtual void read(RakNet::BitStream& stream);
+	virtual void read(RakNet::BitStream & stream, ObjectCreationRegistry* registry);
 	virtual void writeToFile(std::ofstream& of);
 
 	std::string enumToString(CurrentAction action);

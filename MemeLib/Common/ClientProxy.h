@@ -5,6 +5,7 @@
 #include <Serializable.h>
 #include "Net.h"
 #include "Movelist.h"
+#include "ObjectCreationRegistry.h"
 
 class ClientProxy : public Serializable
 {
@@ -31,6 +32,7 @@ private:
 	size_t		m_index;
 	std::string m_name;
 	MoveList m_moveList;
+	ObjectCreationRegistry* m_Registry;
 };
 
 #endif // !_CLIENT_PROXY_H_

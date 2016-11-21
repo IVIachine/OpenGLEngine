@@ -8,6 +8,7 @@
 #include "Net.h"
 #include "InputState.h"
 #include "MoveList.h"
+#include "ObjectCreationRegistry.h"
 
 #define CLIENT NetClient::getInstance()
 #define MAX_CONNECTIONS 1
@@ -55,6 +56,7 @@ private:
 	static NetClient* sp_instance;
 	MoveList* m_moves;
 	float m_frameCount;
+	ObjectCreationRegistry* m_Registry;
 };
 
 #endif // !_NET_CLIENT_H_

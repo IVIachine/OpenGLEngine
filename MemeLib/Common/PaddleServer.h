@@ -26,8 +26,6 @@ public:
 	Vec3 getLoc() const { return mLoc; };
 	void setLoc(Vec3 loc) { mLoc = loc; };
 
-	
-
 private:
 	Vec3 mLoc;
 };

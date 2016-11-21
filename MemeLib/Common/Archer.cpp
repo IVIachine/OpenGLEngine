@@ -21,7 +21,7 @@ void Archer::write(RakNet::BitStream & stream) const
 	stream.Write(LINKING->getNetworkId(mTownCenter, false));
 }
 
-void Archer::read(RakNet::BitStream & stream)
+void Archer::read(RakNet::BitStream & stream, ObjectCreationRegistry* registry)
 {
 	stream.Read(mCurrentAction);
 	stream.Read(mLoc.x);
@@ -30,7 +30,7 @@ void Archer::read(RakNet::BitStream & stream)
 	stream.Read(mHealth);
 	uint32_t centerID;
 	stream.Read(centerID);
-	mTownCenter = static_cast<TownCenter*>(LINKING->getGameObject(centerID, false, 0));
+	mTownCenter = static_cast<TownCenter*>(LINKING->getGameObject(centerID, false, 0, registry));
 }
 
 void Archer::writeToFile(std::ofstream& of)

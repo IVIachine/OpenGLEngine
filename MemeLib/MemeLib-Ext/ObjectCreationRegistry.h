@@ -8,26 +8,11 @@
 
 typedef GameObject* (*GameObjectCreationFunc)();
 
-#define REGISTRY ObjectCreationRegistry::getInstance()
-
 class ObjectCreationRegistry : public Trackable
 {
 public:
-	static ObjectCreationRegistry*	getInstance()
-	{
- 		assert(sp_instance != NULL);
-		return sp_instance;
-	};
-	static ObjectCreationRegistry*	createInstance()
-	{
-		sp_instance = new ObjectCreationRegistry();
-		return getInstance();
-	};
-	static void						destroyInstance()
-	{
-		delete sp_instance;
-		sp_instance = NULL;
-	};
+	ObjectCreationRegistry() {}
+	~ObjectCreationRegistry() {};
 
 	template<class T>
 	void RegisterCreationFunction()
@@ -37,13 +22,7 @@ public:
 	}
 
 	GameObject* CreateGameObject(uint32_t inClassId);
-
 private:
-	ObjectCreationRegistry() {} 
-	~ObjectCreationRegistry() {};
-
 	std::unordered_map<uint32_t, GameObjectCreationFunc> mNameToGameObjectCreationFunctionMap;
-
-	static ObjectCreationRegistry* sp_instance;
 };
 #endif

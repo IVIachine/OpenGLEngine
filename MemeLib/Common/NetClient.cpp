@@ -6,6 +6,10 @@ NetClient* NetClient::sp_instance = NULL;
 
 NetClient::NetClient()
 {
+	m_Registry = new ObjectCreationRegistry();
+	m_Registry->RegisterCreationFunction<GameObject>();
+	m_Registry->RegisterCreationFunction<Paddle>();
+	m_Registry->RegisterCreationFunction<Ball>();
 	m_isConnected = false;
 	m_frameCount = 0;
 }
@@ -26,9 +30,6 @@ bool NetClient::setup()
 		return false;
 	}
 
-	REGISTRY->RegisterCreationFunction<GameObject>();
-	REGISTRY->RegisterCreationFunction<Paddle>();
-	REGISTRY->RegisterCreationFunction<Ball>();
 	m_moves = new MoveList();
 	return true;
 }
@@ -38,6 +39,8 @@ void NetClient::clear()
 	delete m_moves;
 	m_moves = NULL;
 
+	delete m_Registry;
+	m_Registry = NULL;
 	RPCManager::destroyInstance();
 }
 
@@ -120,7 +123,7 @@ void NetClient::update()
 				uint32_t netId, classId;
 				bsIn >> netId;
 				bsIn >> classId;
-				GameObject* tmp = LINKING->getGameObject(netId, true, classId);
+				GameObject* tmp = LINKING->getGameObject(netId, true, classId, m_Registry);
 				tmp->read(bsIn);
 			}
 		}

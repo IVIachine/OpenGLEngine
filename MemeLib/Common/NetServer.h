@@ -60,7 +60,6 @@ private:
 	PaddleServer* m_paddleR;
 	int m_frameCounter;
 	int m_pointsR, m_pointsL;
-
 	//size_t m_numClients = 0;
 };
 

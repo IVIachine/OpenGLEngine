@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <cassert>
 #include "Net.h"
+#include "ObjectCreationRegistry.h"
 
 #define LINKING LinkingContext::getInstance()
 
@@ -32,7 +33,7 @@ public:
 	uint32_t	getNetworkId(GameObject* inGameObject, bool inShouldCreateIfNotFound);
 	void		addGameObject(GameObject* inGameObject, uint32_t inNetworkId);
 	void		removeGameObject(GameObject *inGameObject);
-	GameObject* getGameObject(uint32_t netId, bool inShouldCreateIfNotFound, uint32_t classId);
+	GameObject* getGameObject(uint32_t netId, bool inShouldCreateIfNotFound, uint32_t classId, ObjectCreationRegistry* registry);
 	size_t getNumElements() { return mNetworkIdToGameObjectMap.size(); };
 private:
 	std::unordered_map<uint32_t, GameObject*>		mNetworkIdToGameObjectMap;

@@ -14,7 +14,6 @@ RPCManager::~RPCManager()
 
 bool RPCManager::setup()
 {
-	ObjectCreationRegistry::createInstance();
 	LinkingContext::createInstance();
 
 	return true;
@@ -22,7 +21,6 @@ bool RPCManager::setup()
 
 void RPCManager::clear()
 {
-	ObjectCreationRegistry::destroyInstance();
 	LinkingContext::destroyInstance();
 }
 

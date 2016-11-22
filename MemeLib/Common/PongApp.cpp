@@ -48,15 +48,14 @@ void PongApp::update()
 		GAME->stop();
 	}
 
-	if (INPUT->getKeyDown(Keyboard::C))
+	if (!CLIENT->isConnected())
 	{
-		if (!CLIENT->isConnected())
+		if (INPUT->getKeyDown(Keyboard::C))
 		{
-			CLIENT->connect("127.0.0.1");
+			std::cout << "Connecting to server... \n";
+			CLIENT->connect(m_ip);
 		}
 	}
-
-	//std::cout << TIME->getCurrentTime() << "\n";
 }
 
 void PongApp::draw()

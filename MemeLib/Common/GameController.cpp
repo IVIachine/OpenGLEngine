@@ -46,22 +46,6 @@ void GameController::update(NavMesh* pNavMesh, MousePicker* picker)
 			mDebugMode = true;
 	}
 
-	if (!CLIENT->isConnected())
-	{
-		if (INPUT->getKeyDown(Keyboard::C))
-		{
-			std::cout << "Connecting to server... \n";
-			CLIENT->connect("127.0.0.1");
-		}
-	}
-	else
-	{
-		if (INPUT->getKeyDown(Keyboard::M))
-		{
-			sendMessage("Hello, World!");
-		}
-	}
-
 	moveCamera(GRAPHICS->getCamera());
 
 	if (INPUT->getKeyDown(Keyboard::Enter))

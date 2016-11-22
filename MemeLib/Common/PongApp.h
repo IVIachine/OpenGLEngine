@@ -16,7 +16,12 @@ public:
 	void draw() override;
 	void handleEvent(const Event& ev) override;
 
+	void setIP(std::string ip) { m_ip = ip; };
+	std::string getIP() { return m_ip; };
+
 private:
+
+	std::string m_ip;
 };
 
 #endif // !_PONG_APP_H_

@@ -14,6 +14,20 @@ int main()
 	if (tmp == "1")
 	{
 		app = new PongApp();
+
+		PongApp* pApp = (PongApp*)app;
+
+		std::cout << "Enter IP or Press Enter to Continue ";
+		std::string tmp;
+		std::getline(std::cin, tmp);
+		if (tmp == "")
+		{
+			pApp->setIP("127.0.0.1");
+		}
+		else
+		{
+			pApp->setIP(tmp);
+		}
 	}
 	else if (tmp == "2")
 	{

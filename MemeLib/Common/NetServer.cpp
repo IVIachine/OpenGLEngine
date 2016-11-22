@@ -54,14 +54,14 @@ void NetServer::handleNewClient(BitStream& iStream, NetAddress addr)
 		if (index == 0)
 		{
 			m_paddleR = new PaddleServer();
-			m_paddleR->setLoc(Vec3(5, 0, 0));
+			m_paddleR->setLoc(Vec3(6, 0, 0));
 			id = LINKING->getNetworkId(m_paddleR, true); //Also this id
 
 		}
 		else if (index == 1)
 		{
 			m_paddleL = new PaddleServer();
-			m_paddleL->setLoc(Vec3(-5, 0, 0));
+			m_paddleL->setLoc(Vec3(-6, 0, 0));
 			id = LINKING->getNetworkId(m_paddleL, true); //This id
 		}
 
@@ -209,7 +209,17 @@ void NetServer::update()
 
 			m_ball->setLoc({ 0, 0, 0 });
 
-			std::cout << "Score:" << " L: " << m_pointsL << " R: " << m_pointsR << "\n";
+			// Send RPC containing score
+			std::stringstream sstream;
+			sstream << "Score:" << " L: " << m_pointsL << " R: " << m_pointsR << "\n";			
+			BitStream oStream;
+			oStream.Write((RakNet::MessageID)RPC_PACKET);
+			oStream.Write(PING_ID);
+			oStream.Write(sstream.str().c_str());
+			for (auto& client : m_clients)
+			{
+				sendByAddress(client.second.getAddress(), oStream);
+			}
 		}
 
 		if (m_frameCounter > 10)

@@ -33,5 +33,5 @@ void sendMessage(const MessageRPCStruct& message)
 
 void printMessage(const MessageRPCStruct& message)
 {
-	std::cout << message.text << "\n";
+	GRAPHICS->setWindowTitle(message.text);
 }

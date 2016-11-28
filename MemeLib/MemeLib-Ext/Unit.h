@@ -10,6 +10,7 @@
 #include "Component.h"
 #include "Sprite.h"
 #include "Steering.h"
+#include "StateMachine.h"
 
 class PositionComponent;
 class PhysicsComponent;
@@ -18,6 +19,8 @@ class Sprite;
 class UnitManager;
 
 const size_t DEFAULT_QUEUE_CAPACITY = 8;
+
+#define PLAYER_ID 999
 
 class Unit : public GameObject
 {
@@ -65,6 +68,7 @@ private:
 	NavMesh* mp_navMesh;
 	Vec3 m_currentTarget;
 	AStarPathfinder* mpPathfinder;
+	StateMachine* mpStateMachine;
 	Unit(const Sprite& sprite, NavMesh* navMesh);
 	virtual ~Unit();
 

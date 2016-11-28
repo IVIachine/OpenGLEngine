@@ -29,6 +29,8 @@ Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 	pOpt->enableHeuristic = true;
 	pOpt->maxDistance = 0;
 	m_currentTarget = Vec3(0, 0, 0);
+
+	//Add States
 }
 
 Unit::~Unit()
@@ -48,6 +50,8 @@ void Unit::destroy()
 
 void Unit::update()
 {
+	mpStateMachine->update(mSprite.getPosition());
+
 	AStarState pathState = mpPathfinder->getState();
 	switch (pathState)
 	{

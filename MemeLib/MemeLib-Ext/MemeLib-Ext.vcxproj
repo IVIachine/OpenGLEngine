@@ -130,6 +130,7 @@
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="FaceSteering.cpp" />
     <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="LinkingContext.cpp" />
     <ClCompile Include="MousePicker.cpp" />
     <ClCompile Include="NavMesh.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="FaceSteering.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="HalfEdge.h" />
+    <ClInclude Include="IdleState.h" />
     <ClInclude Include="LinkingContext.h" />
     <ClInclude Include="MousePicker.h" />
     <ClInclude Include="NavMesh.h" />

@@ -95,7 +95,7 @@ bool GameApp::setup()
 	pSpr1->setScale(Vec3(.1f, .1f, .1f));
 	pSpr1->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
 
-	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test7.obj", false);
+	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test4.obj", false);
 	mp_navMesh->constructMesh(mp_volume->getMesh());
 	Transform skyBoxTransform = Transform(Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(500, 500, 500));
 	m_skybox = new Volume(
@@ -113,6 +113,18 @@ bool GameApp::setup()
 	RESOURCES->addFont("cour", "../Assets/fonts/cour.ttf");
 	
 	mp_picker = new MousePicker(mp_navMesh);
+
+
+	int randIndex;
+	randIndex = rand() % (mp_navMesh->getVerts().size());
+
+	Unit* pUnit = UNITS->createUnit(
+		*RESOURCES->getSprite("sprite2"),
+		mp_navMesh,
+		true,
+		PositionData(mp_navMesh->getNode(randIndex)->getPosition(), 0), ZERO_PHYSICS_DATA, PLAYER_ID);
+	
+	pUnit->setSteering(Steering::PATH_FOLLOW);
 
 	return true;
 }
@@ -157,7 +169,7 @@ void GameApp::draw()
 
 void GameApp::handleEvent(const Event & ev)
 {
-	if (ev.getType() == SPAWN_EVENT)
+	/*if (ev.getType() == SPAWN_EVENT)
 	{
 		std::cout << "SPAWN_EVENT\n";
 
@@ -176,5 +188,5 @@ void GameApp::handleEvent(const Event & ev)
 			
 			pUnit->setSteering(Steering::PATH_FOLLOW);
 		}
-	}
+	}*/
 }

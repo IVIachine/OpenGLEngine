@@ -1,4 +1,7 @@
 #include "IdleState.h"
+#include "Unit.h"
+#include "GameObjectManager.h"
+#include "PositionComponent.h"
 
 void IdleState::onEntrance()
 {
@@ -10,11 +13,10 @@ void IdleState::onExit()
 
 StateTransition * IdleState::update(Vec3 currentLoc)
 {
-	Vec3 playerPos = static_cast<Unit*>(OBJECT_MANAGER->getData().at(PLAYER_ID))->getPositionComponent()->getPosition();//Access the player unit location
-
-	//Check player dist from current Loc
-
-
+	for (auto object : OBJECT_MANAGER->getData())
+	{
+		std::cout << object.first << std::endl;
+	}
 
 
 	//Check dist from all powerups
@@ -22,4 +24,5 @@ StateTransition * IdleState::update(Vec3 currentLoc)
 
 
 	//If distances are a below the threshhold, change states
+	return nullptr;
 }

@@ -35,7 +35,7 @@ public:
 
 	std::map<GameObjectID, GameObject*> getData() const { return m_objectMap; };
 
-	GameObject*	create(GameObject* toBeAdded);
+	GameObject*	create(GameObject* obj, GameObjectID id = 0, bool isPlayer = false);
 	GameObject* findByID(GameObjectID index);
 
 	bool		removeByID(GameObjectID index);

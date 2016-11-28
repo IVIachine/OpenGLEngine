@@ -3,9 +3,6 @@
 #include <map>
 #include <Trackable.h>
 #include "Vector3.h"
-#include "GameObjectManager.h"
-#include "Unit.h"
-#include "PositionComponent.h"
 
 /*Collection of base classes to implement a StateMachine.  Heavily borrowed from
 Millington text.

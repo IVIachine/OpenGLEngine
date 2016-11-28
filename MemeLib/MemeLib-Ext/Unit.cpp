@@ -12,6 +12,7 @@
 #include "BeginPathingEvent.h"
 #include "ChangeTargetEvent.h"
 #include "ComponentManager.h"
+#include "IdleState.h"
 
 Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 	:mSprite(sprite)
@@ -30,7 +31,11 @@ Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 	pOpt->maxDistance = 0;
 	m_currentTarget = Vec3(0, 0, 0);
 
-	//Add States
+	mpStateMachine = new StateMachine();
+
+	StateMachineState* idleState = new IdleState(0);
+	mpStateMachine->addState(idleState);
+	mpStateMachine->setInitialStateID(0);
 }
 
 Unit::~Unit()

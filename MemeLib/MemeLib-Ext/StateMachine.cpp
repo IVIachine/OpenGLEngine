@@ -32,7 +32,7 @@ void StateMachine::update(Vec3 currentLoc)
 		assert(mpCurrentState != NULL);
 	}
 
-	StateTransition* pTransition = mpCurrentState->update();
+	StateTransition* pTransition = mpCurrentState->update(currentLoc);
 	if (pTransition != NULL)
 	{
 		transitionToState(pTransition->getTargetStateID());

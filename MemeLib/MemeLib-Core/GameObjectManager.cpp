@@ -48,16 +48,25 @@ void GameObjectManager::draw()
 }
 
 
-GameObject* GameObjectManager::create(GameObject* obj)
+GameObject* GameObjectManager::create(GameObject* obj, GameObjectID id, bool isPlayer)
 {
 	if (!findByID(obj->getID()))
 	{
-		m_id++;
-		m_objectMap[m_id] = obj;
-		m_objectMap[m_id]->setID(m_id);
+		if (isPlayer)
+		{
+			m_objectMap[id] = obj;
+			m_objectMap[id]->setID(id);
 
-		m_objectMap[m_id]->start();
+			m_objectMap[id]->start();
+		}
+		else
+		{
+			m_id++;
+			m_objectMap[m_id] = obj;
+			m_objectMap[m_id]->setID(m_id);
 
+			m_objectMap[m_id]->start();
+		}
 		return m_objectMap[m_id];
 	}
 

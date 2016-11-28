@@ -36,7 +36,7 @@ Unit* UnitManager::createUnit(
 	const PhysicsData& physicsData, 
 	const GameObjectID& id)
 {
-	Unit* pUnit = OBJECT_MANAGER->create<Unit>(new Unit(sprite, graph));
+	Unit* pUnit = OBJECT_MANAGER->create<Unit>(new Unit(sprite, graph), id);
 
 	if (pUnit)
 	{
@@ -124,10 +124,8 @@ void UnitManager::handleEvent(const Event & ev)
 {
 	if (ev.getType() == PATH_EVENT)
 	{
-		for (std::map<GameObjectID, Unit*>::iterator MapItor = mUnitMap.begin(); MapItor != mUnitMap.end(); ++MapItor)
-		{
-			MapItor->second->findPath(MapItor->second->getTarget());
-		}
+		Unit* tmp = OBJECT_MANAGER->findByID<Unit>(PLAYER_ID);
+		tmp->findPath(tmp->getTarget());
 	}
 	else if (ev.getType() == TARGET_EVENT)
 	{

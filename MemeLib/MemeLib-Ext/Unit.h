@@ -69,6 +69,7 @@ private:
 	Vec3 m_currentTarget;
 	AStarPathfinder* mpPathfinder;
 	StateMachine* mpStateMachine;
+	StateMachineState* mpIdleState;
 	Unit(const Sprite& sprite, NavMesh* navMesh);
 	virtual ~Unit();
 

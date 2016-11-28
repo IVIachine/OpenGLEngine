@@ -148,7 +148,6 @@ void GameApp::clear()
 
 void GameApp::update()
 {
-	//std::cout << mp_picker->getCurrentRay().x << " " << mp_picker->getCurrentRay().y << " "  << mp_picker->getCurrentRay().z << std::endl;
 	m_skybox->transform().setPosition(GRAPHICS->getCamera()->getPosition());
 
 	m_controller.update(mp_navMesh, mp_picker);
@@ -169,11 +168,11 @@ void GameApp::draw()
 
 void GameApp::handleEvent(const Event & ev)
 {
-	/*if (ev.getType() == SPAWN_EVENT)
+	if (ev.getType() == SPAWN_EVENT)
 	{
 		std::cout << "SPAWN_EVENT\n";
 
-		UNITS->deleteAll();
+		//UNITS->deleteAll();
 
 		for (int i = 0; i < 10; i++)
 		{
@@ -188,5 +187,5 @@ void GameApp::handleEvent(const Event & ev)
 			
 			pUnit->setSteering(Steering::PATH_FOLLOW);
 		}
-	}*/
+	}
 }

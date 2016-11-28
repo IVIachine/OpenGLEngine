@@ -33,8 +33,8 @@ Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 
 	mpStateMachine = new StateMachine();
 
-	StateMachineState* idleState = new IdleState(0);
-	mpStateMachine->addState(idleState);
+	mpIdleState = new IdleState(0);
+	mpStateMachine->addState(mpIdleState);
 	mpStateMachine->setInitialStateID(0);
 }
 
@@ -147,6 +147,12 @@ void Unit::clear()
 {
 	delete mpPathfinder;
 	mpPathfinder = NULL;
+
+	delete mpStateMachine;
+	mpStateMachine = NULL;
+
+	delete mpIdleState;
+	mpIdleState = NULL;
 }
 
 float Unit::getFacing() const

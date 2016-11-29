@@ -1,6 +1,6 @@
 #include "MoveList.h"
 #include "Net.h"
-
+#include "GameTime.h"
 
 MoveList::MoveList()
 {
@@ -28,6 +28,10 @@ bool MoveList::sendInputPacket(RakNet::BitStream& inputPacket)
 	if (!mMoves.empty()) 
 	{
 		inputPacket.Write((RakNet::MessageID)MOVE_REQUEST_PACKET);
+
+		float timeStamp = TIME->getCurrentTime();
+		inputPacket.Write(timeStamp);
+
 		//we only want to send the last three moves 
 		int moveCount = mMoves.size(); 
 		int startIndex = moveCount > 3 ? moveCount - 3 - 1: 0; 

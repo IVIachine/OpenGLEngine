@@ -152,6 +152,22 @@ void NetClient::update()
 			writeStateToFile(index);
 		}
 		break;
+		case NetMessages::TIME_PACKET:
+		{
+			RakNet::BitStream bsIn(mp_packet->data, mp_packet->length, false);
+
+			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
+
+			float timeStamp;
+
+			bsIn >> timeStamp;
+
+
+			float lag = TIME->getCurrentTime() - timeStamp;
+
+			std::cout << "RTT: " << lag << "\n";
+		}
+		break;
 		default:
 		{
 			printf("Message with identifier %i has arrived.\n", mp_packet->data[0]);

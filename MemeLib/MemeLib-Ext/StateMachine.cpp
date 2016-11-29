@@ -24,7 +24,7 @@ void StateMachine::start()
 	}
 }
 
-void StateMachine::update(Vec3 currentLoc)
+void StateMachine::update(Unit* currentUnit)
 {
 	if (mpCurrentState == NULL)
 	{
@@ -32,7 +32,7 @@ void StateMachine::update(Vec3 currentLoc)
 		assert(mpCurrentState != NULL);
 	}
 
-	StateTransition* pTransition = mpCurrentState->update(currentLoc);
+	StateTransition* pTransition = mpCurrentState->update(currentUnit);
 	if (pTransition != NULL)
 	{
 		transitionToState(pTransition->getTargetStateID());

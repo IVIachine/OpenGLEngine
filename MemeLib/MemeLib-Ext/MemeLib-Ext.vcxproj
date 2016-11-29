@@ -126,6 +126,7 @@
     <ClCompile Include="AStarPathfinder.cpp" />
     <ClCompile Include="BeginPathingEvent.cpp" />
     <ClCompile Include="ChangeTargetEvent.cpp" />
+    <ClCompile Include="ChaseState.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="FaceSteering.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="AStarPathfinder.h" />
     <ClInclude Include="BeginPathingEvent.h" />
     <ClInclude Include="ChangeTargetEvent.h" />
+    <ClInclude Include="ChaseState.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="Connection.h" />
     <ClInclude Include="Edge.h" />

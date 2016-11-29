@@ -4,6 +4,7 @@
 #include <list>
 #include <map>
 #include "Pathfinder.h"
+#include "Vector3.h"
 
 class Path;
 class Node;

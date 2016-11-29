@@ -174,7 +174,7 @@ void GameApp::handleEvent(const Event & ev)
 
 		//UNITS->deleteAll();
 
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			int randIndex;
 			randIndex = rand() % (mp_navMesh->getVerts().size());

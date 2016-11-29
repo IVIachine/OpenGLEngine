@@ -63,6 +63,7 @@ public:
 
 	Node*	findNearestNode(const Vec3& position);
 	Vec3	getFaceCenter(Face key);
+	Vec3	getClosestVert(Vec3 key);
 	Face	getFaceFromVec(Vec3 key);
 
 private:

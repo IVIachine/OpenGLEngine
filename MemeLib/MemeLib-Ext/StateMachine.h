@@ -2,8 +2,6 @@
 
 #include <map>
 #include <Trackable.h>
-#include "Vector3.h"
-
 /*Collection of base classes to implement a StateMachine.  Heavily borrowed from
 Millington text.
 
@@ -13,12 +11,14 @@ Champlain College
 */
 
 class StateTransition;
+class Unit;
 
 enum TransitionType
 {
 	INVALID_TRANSITION_TYPE = -1,
-	KABOOM_TRANSITION = 0,
-	END_GAME_TRANSITION = 1
+	IDLE_TRANSITION = 0,
+	CHASE_TRANSITION = 1,
+	PICKUP_TRANSITION = 2
 };
 
 typedef int SM_idType;
@@ -27,14 +27,14 @@ class StateMachineState :public Trackable
 {
 public:
 	StateMachineState(const SM_idType& id) :mID(id) {};
-	~StateMachineState();
+	virtual ~StateMachineState();
 
 	void addTransition(StateTransition* pTransition);
 	inline const SM_idType& getID() const { return mID; };
 
 	virtual void onEntrance() = 0;//code to run when the state is entered
 	virtual void onExit() = 0;//code to run when the state is exitted
-	virtual StateTransition* update(Vec3 currentLoc) = 0;//code to run each frame - returning NULL means no transition
+	virtual StateTransition* update(Unit* currentUnit) = 0;//code to run each frame - returning NULL means no transition
 
 protected:
 	SM_idType mID;
@@ -64,7 +64,7 @@ public:
 	void addState(StateMachineState* pState);
 	void setInitialStateID(const SM_idType& id) { mInitialStateID = id; };
 
-	void update(Vec3 currentLoc);//give the current state a chance to run
+	void update(Unit* currentUnit);//give the current state a chance to run
 	void start();//go to the initial state
 
 protected:

@@ -20,7 +20,7 @@ class UnitManager;
 
 const size_t DEFAULT_QUEUE_CAPACITY = 8;
 
-#define PLAYER_ID 999
+const GameObjectID PLAYER_ID = 999;
 
 class Unit : public GameObject
 {
@@ -51,7 +51,8 @@ public:
 	void clear();
 	void changeTarg(Vec3 targ) { m_currentTarget = targ; };
 	Vec3 getTarget() { return m_currentTarget; };
-
+	NavMesh* getNavMesh() { return mp_navMesh; };
+	AStarPathfinder* getPathFinder() { return mpPathfinder; };
 private:
 	//GameObjectID mID;
 	ComponentID mPhysicsComponentID;
@@ -70,6 +71,10 @@ private:
 	AStarPathfinder* mpPathfinder;
 	StateMachine* mpStateMachine;
 	StateMachineState* mpIdleState;
+	StateMachineState* mpChaseState;
+
+	StateTransition* mpIdleTransition;
+	StateTransition* mpChaseTransition;
 	Unit(const Sprite& sprite, NavMesh* navMesh);
 	virtual ~Unit();
 

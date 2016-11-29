@@ -642,6 +642,22 @@ Vec3 NavMesh::getFaceCenter(Face key)
 	return center;
 }
 
+Vec3 NavMesh::getClosestVert(Vec3 key)
+{
+	Vec3 closest;
+	float closestDist = INFINITY;
+	for (size_t i = 0; i < m_vertices.size(); i++)
+	{
+		float dist = glm::distance(key, m_vertices[i]);
+		if (dist < closestDist)
+		{
+			closest = m_vertices[i];
+			closestDist = dist;
+		}
+	}
+	return closest;
+}
+
 Face NavMesh::getFaceFromVec(Vec3 key)
 {
 	for (size_t i = 0; i < m_faces.size(); i++)

@@ -32,6 +32,7 @@ PathFollowSteering::~PathFollowSteering()
 
 Steering* PathFollowSteering::getSteering()
 {
+	Unit* pOwner = UNITS->getUnit(mOwnerID);
 	if (mFollowing)
 	{
 		if (mpFollowPath.size() <= 0)
@@ -39,9 +40,7 @@ Steering* PathFollowSteering::getSteering()
 			mFollowing = false;
 			return nullptr;
 		}
-
 		Vec3 diff;
-		Unit* pOwner = UNITS->getUnit(mOwnerID);
 
 		diff = mpFollowPath.peek(mCurrentIndex)->getPosition() - pOwner->getPositionComponent()->getPosition();
 		if (glm::length(diff) < mSwitchRadius)
@@ -53,7 +52,7 @@ Steering* PathFollowSteering::getSteering()
 		}
 
 		diff = mpFollowPath.peek(mCurrentIndex)->getPosition() - pOwner->getPositionComponent()->getPosition();
-		if (mCurrentIndex + 1 == mpFollowPath.size() && glm::length(diff) < .15f)
+		if (mCurrentIndex + 1 == mpFollowPath.size() && glm::length(diff) < ARRIVE_RADIUS)
 		{
 			mCurrentIndex = 0;
 			mpFollowPath.clear();

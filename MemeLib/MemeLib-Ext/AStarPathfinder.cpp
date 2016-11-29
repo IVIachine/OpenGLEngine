@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <map>
 #include "Vector3.h"
+#include "NavMesh.h"
 
 AStarPathfinder::AStarPathfinder(Graph* pGraph)
 	: Pathfinder(dynamic_cast<Graph*>(pGraph))
@@ -220,6 +221,7 @@ void AStarPathfinder::step()
 		if (unvisitedNode == mp_target)
 		{
 			setState(Done);
+			
 			return;
 		}
 
@@ -270,6 +272,7 @@ AStarState AStarPathfinder::endStep()
 		}
 
 		// Reverse the path
+
 		mPath.reverse();
 		// Resize the path
 		if (m_options.maxDistance > 0)

@@ -13,6 +13,7 @@
 #include "ChangeTargetEvent.h"
 #include "ComponentManager.h"
 #include "IdleState.h"
+#include "ChaseState.h"
 
 Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 	:mSprite(sprite)
@@ -34,7 +35,14 @@ Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 	mpStateMachine = new StateMachine();
 
 	mpIdleState = new IdleState(0);
+	mpChaseState = new ChaseState(1);
+	mpIdleTransition = new StateTransition(IDLE_TRANSITION, 0);
+	mpChaseTransition = new StateTransition(CHASE_TRANSITION, 1);
+	mpIdleState->addTransition(mpChaseTransition);
+	mpChaseState->addTransition(mpIdleTransition);
+
 	mpStateMachine->addState(mpIdleState);
+	mpStateMachine->addState(mpChaseState);
 	mpStateMachine->setInitialStateID(0);
 }
 
@@ -55,7 +63,10 @@ void Unit::destroy()
 
 void Unit::update()
 {
-	mpStateMachine->update(mSprite.getPosition());
+	if (getID() != PLAYER_ID)
+	{
+		mpStateMachine->update(this);
+	}
 
 	AStarState pathState = mpPathfinder->getState();
 	switch (pathState)
@@ -153,6 +164,15 @@ void Unit::clear()
 
 	delete mpIdleState;
 	mpIdleState = NULL;
+
+	delete mpChaseState;
+	mpChaseState = NULL;
+
+	delete mpIdleTransition;
+	mpIdleTransition = NULL;
+
+	delete mpChaseTransition;
+	mpChaseTransition = NULL;
 }
 
 float Unit::getFacing() const

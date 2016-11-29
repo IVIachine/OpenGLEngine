@@ -63,6 +63,12 @@
     <Filter Include="Header Files\Pathfinding\NavMesh">
       <UniqueIdentifier>{f6b609e5-e6f6-4333-a5f0-d42fb2b626fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\StateMachine">
+      <UniqueIdentifier>{0bd0d408-fa31-42e6-8702-a1f2c52f08a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\StateMachine">
+      <UniqueIdentifier>{51be4b6a-bf32-44e7-88d6-8fa1bc4ea10d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AStarPathfinder.cpp">
@@ -141,12 +147,18 @@
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="StateMachine.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="PickupState.cpp">
+      <Filter>Source Files\StateMachine</Filter>
     </ClCompile>
     <ClCompile Include="IdleState.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\StateMachine</Filter>
     </ClCompile>
     <ClCompile Include="ChaseState.cpp">
+      <Filter>Source Files\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Pickup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -245,12 +257,18 @@
       <Filter>Header Files\Steering</Filter>
     </ClInclude>
     <ClInclude Include="StateMachine.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="PickupState.h">
+      <Filter>Header Files\StateMachine</Filter>
     </ClInclude>
     <ClInclude Include="IdleState.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\StateMachine</Filter>
     </ClInclude>
     <ClInclude Include="ChaseState.h">
+      <Filter>Header Files\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Pickup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

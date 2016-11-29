@@ -14,6 +14,7 @@
 #include "ComponentManager.h"
 #include "IdleState.h"
 #include "ChaseState.h"
+#include "PickupState.h"
 
 Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 	:mSprite(sprite)
@@ -36,13 +37,20 @@ Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 
 	mpIdleState = new IdleState(0);
 	mpChaseState = new ChaseState(1);
+	mpPickupState = new PickupState(2);
+
 	mpIdleTransition = new StateTransition(IDLE_TRANSITION, 0);
 	mpChaseTransition = new StateTransition(CHASE_TRANSITION, 1);
+	mpPickupTransition = new StateTransition(PICKUP_TRANSITION, 2);
+
 	mpIdleState->addTransition(mpChaseTransition);
+	mpIdleState->addTransition(mpPickupTransition);
+
 	mpChaseState->addTransition(mpIdleTransition);
 
 	mpStateMachine->addState(mpIdleState);
 	mpStateMachine->addState(mpChaseState);
+	mpStateMachine->addState(mpPickupState);
 	mpStateMachine->setInitialStateID(0);
 }
 
@@ -173,6 +181,12 @@ void Unit::clear()
 
 	delete mpChaseTransition;
 	mpChaseTransition = NULL;
+
+	delete mpPickupState;
+	mpPickupState = NULL;
+
+	delete mpPickupTransition;
+	mpPickupTransition = NULL;
 }
 
 float Unit::getFacing() const

@@ -139,6 +139,7 @@
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="PaddleClient.h" />
     <ClInclude Include="PaddleServer.h" />
+    <ClInclude Include="PickupSpawner.h" />
     <ClInclude Include="PongApp.h" />
     <ClInclude Include="TownCenter.h" />
   </ItemGroup>
@@ -159,6 +160,7 @@
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="PaddleClient.cpp" />
     <ClCompile Include="PaddleServer.cpp" />
+    <ClCompile Include="PickupSpawner.cpp" />
     <ClCompile Include="PongApp.cpp" />
     <ClCompile Include="TownCenter.cpp" />
   </ItemGroup>

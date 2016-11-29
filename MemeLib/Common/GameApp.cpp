@@ -83,11 +83,15 @@ bool GameApp::setup()
 	Shader* p_shader2 = RESOURCES->addShader("advanced", "../Assets/shaders/basicShader2");
 
 	RESOURCES->addTexture("box",		"../Assets/textures/box.png");
-	RESOURCES->addTexture("brick",		"../Assets/textures/Brick-Texture-1.jpg");
+	RESOURCES->addTexture("lightning",		"../Assets/textures/irboost.png");
+	RESOURCES->addTexture("binoculars", "../Assets/textures/binoculars.png");
 	RESOURCES->addTexture("player",		"../Assets/textures/player.png");
 	RESOURCES->addTexture("enemy",		"../Assets/textures/enemy.png");
 
-	RESOURCES->addTexture2D("brick",	RESOURCES->getTexture("brick"),		p_shader);
+	//CITE: https://irboost.com/img/irboost.png
+	//CITE: http://pngimg.com/upload/small/binocular_PNG12921.png
+	RESOURCES->addTexture2D("lightning",	RESOURCES->getTexture("lightning"),		p_shader);
+	RESOURCES->addTexture2D("binoculars", RESOURCES->getTexture("binoculars"), p_shader);
 	RESOURCES->addTexture2D("player",	RESOURCES->getTexture("player"),	p_shader);
 	RESOURCES->addTexture2D("enemy",	RESOURCES->getTexture("enemy"),		p_shader);
 
@@ -95,7 +99,15 @@ bool GameApp::setup()
 	pSpr1->setScale(Vec3(.1f, .1f, .1f));
 	pSpr1->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
 
-	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("brick"), "../Assets/obj/test4.obj", false);
+	Sprite* pSpr2 = RESOURCES->addSprite("lightningSprite", RESOURCES->getTexture2D("lightning"));
+	pSpr2->setScale(Vec3(.1f, .1f, .1f));
+	pSpr2->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
+
+	Sprite* pSpr3 = RESOURCES->addSprite("binocularsSprite", RESOURCES->getTexture2D("binoculars"));
+	pSpr3->setScale(Vec3(.1f, .1f, .1f));
+	pSpr3->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
+
+	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("lightning"), "../Assets/obj/test4.obj", false);
 	mp_navMesh->constructMesh(mp_volume->getMesh());
 	Transform skyBoxTransform = Transform(Vec3(0, 0, 0), Vec3(0, 0, 0), Vec3(500, 500, 500));
 	m_skybox = new Volume(
@@ -113,7 +125,7 @@ bool GameApp::setup()
 	RESOURCES->addFont("cour", "../Assets/fonts/cour.ttf");
 	
 	mp_picker = new MousePicker(mp_navMesh);
-
+	mp_spawner = new PickupSpawner(3000);
 
 	int randIndex;
 	randIndex = rand() % (mp_navMesh->getVerts().size());
@@ -144,6 +156,9 @@ void GameApp::clear()
 
 	delete mp_navMesh;
 	mp_navMesh = NULL;
+
+	delete mp_spawner;
+	mp_spawner = NULL;
 }
 
 void GameApp::update()
@@ -151,7 +166,7 @@ void GameApp::update()
 	m_skybox->transform().setPosition(GRAPHICS->getCamera()->getPosition());
 
 	m_controller.update(mp_navMesh, mp_picker);
-
+	mp_spawner->update();
 	COMPONENTS->update(FIXED_UPDATE_DELTA);
 }
 

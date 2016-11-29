@@ -72,9 +72,11 @@ private:
 	StateMachine* mpStateMachine;
 	StateMachineState* mpIdleState;
 	StateMachineState* mpChaseState;
+	StateMachineState* mpPickupState;
 
 	StateTransition* mpIdleTransition;
 	StateTransition* mpChaseTransition;
+	StateTransition* mpPickupTransition;
 	Unit(const Sprite& sprite, NavMesh* navMesh);
 	virtual ~Unit();
 

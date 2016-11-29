@@ -89,6 +89,9 @@
     <ClInclude Include="Paddle.h">
       <Filter>Header Files\Pong</Filter>
     </ClInclude>
+    <ClInclude Include="PickupSpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NetServer.cpp">
@@ -144,6 +147,9 @@
     </ClCompile>
     <ClCompile Include="PaddleClient.cpp">
       <Filter>Source Files\Pong</Filter>
+    </ClCompile>
+    <ClCompile Include="PickupSpawner.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -141,6 +141,8 @@
     <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="PathFollowSteering.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
+    <ClCompile Include="Pickup.cpp" />
+    <ClCompile Include="PickupState.cpp" />
     <ClCompile Include="PositionComponent.cpp" />
     <ClCompile Include="RPCManager.cpp" />
     <ClCompile Include="SeekSteering.cpp" />
@@ -177,6 +179,8 @@
     <ClInclude Include="PathFollowSteering.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsData.h" />
+    <ClInclude Include="Pickup.h" />
+    <ClInclude Include="PickupState.h" />
     <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="RPCManager.h" />
     <ClInclude Include="SeekSteering.h" />

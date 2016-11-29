@@ -130,13 +130,18 @@ bool GameApp::setup()
 	int randIndex;
 	randIndex = rand() % (mp_navMesh->getVerts().size());
 
-	Unit* pUnit = UNITS->createUnit(
+	Unit* pPlayer = UNITS->createUnit(
 		*RESOURCES->getSprite("sprite2"),
 		mp_navMesh,
 		true,
-		PositionData(mp_navMesh->getNode(randIndex)->getPosition(), 0), ZERO_PHYSICS_DATA, PLAYER_ID);
+		PositionData(mp_navMesh->getNode(randIndex)->getPosition(), 0), 
+		ZERO_PHYSICS_DATA);
 	
-	pUnit->setSteering(Steering::PATH_FOLLOW);
+	pPlayer->setSteering(Steering::PATH_FOLLOW);
+
+	Unit::setPlayerID(pPlayer->getID());
+
+	std::cout << "PLAYER ID " << Unit::getPlayerID() << "\n";
 
 	return true;
 }
@@ -168,6 +173,15 @@ void GameApp::update()
 	m_controller.update(mp_navMesh, mp_picker);
 	mp_spawner->update();
 	COMPONENTS->update(FIXED_UPDATE_DELTA);
+
+	GameObjectID id = Unit::getPlayerID();
+	if (OBJECT_MANAGER->idExists(id))
+	{
+		if (INPUT->getKeyDown(Keyboard::T))
+		{
+			UNITS->deleteUnit(id);
+		}
+	}
 }
 
 void GameApp::draw()

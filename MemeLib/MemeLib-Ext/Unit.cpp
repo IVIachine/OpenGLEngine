@@ -13,6 +13,8 @@
 #include "ChangeTargetEvent.h"
 #include "ComponentManager.h"
 
+GameObjectID Unit::s_playerID = INVALID_GOBJ_ID;
+
 
 Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 	:mSprite(sprite)
@@ -70,7 +72,7 @@ void Unit::destroy()
 
 void Unit::update()
 {
-	if (getID() != PLAYER_ID)
+	if (getID() != s_playerID)
 	{
 		mpStateMachine->update(this);
 	}

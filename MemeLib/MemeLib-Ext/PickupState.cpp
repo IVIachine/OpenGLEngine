@@ -21,6 +21,13 @@ void PickupState::onExit()
 
 StateTransition * PickupState::update(Unit * currentUnit)
 {
+	if (!currentUnit)
+	{
+		std::cout << "CURRENT UNIT IS NULL\n";
+
+		return NULL;
+	}
+
 	if (OBJECT_MANAGER->idExists(mPickup))
 	{
 		Pickup* tmp = OBJECT_MANAGER->findByID<Pickup>(mPickup);
@@ -30,9 +37,12 @@ StateTransition * PickupState::update(Unit * currentUnit)
 			mHasSetPath = true;
 		}
 
-		if (glm::distance(currentUnit->getPositionComponent()->getPosition(), tmp->getLoc()) < TEMP_DIST)
+		float dist = glm::distance(currentUnit->getPositionComponent()->getPosition(), tmp->getLoc());
+		if (dist < TEMP_DIST)
 		{
 			OBJECT_MANAGER->removeByID(mPickup);
+
+
 			mPickup = INVALID_GOBJ_ID;
 			std::cout << "INCREASING STATS\n";
 			std::map<TransitionType, StateTransition*>::iterator iter = mTransitions.find(IDLE_TRANSITION);

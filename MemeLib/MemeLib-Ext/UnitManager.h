@@ -44,8 +44,7 @@ public:
 		NavMesh* graph, 
 		bool shouldWrap = true, 
 		const PositionData& posData = ZERO_POSITION_DATA, 
-		const PhysicsData& physicsData = ZERO_PHYSICS_DATA, 
-		const GameObjectID& id = INVALID_GOBJ_ID);
+		const PhysicsData& physicsData = ZERO_PHYSICS_DATA);
 
 	Unit* getUnit(const GameObjectID& id) const;
 	bool deleteUnit(const GameObjectID& id);

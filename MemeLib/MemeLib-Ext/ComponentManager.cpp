@@ -53,23 +53,6 @@ bool ComponentManager::setup()
 
 void ComponentManager::clear()
 {
-	//call destructor for all COMPONENT_MANAGER
-	/*for (auto& it : m_positionCOMPONENT_MANAGER)
-	{
-		PositionComponent* pComponent = it.second;
-		pComponent->~PositionComponent();
-	}
-	for (auto& it : m_physicsCOMPONENT_MANAGER)
-	{
-		PhysicsComponent* pComponent = it.second;
-		pComponent->~PhysicsComponent();
-	}
-	for (auto& it : m_steeringCOMPONENT_MANAGER)
-	{
-		SteeringComponent* pComponent = it.second;
-		pComponent->~SteeringComponent();
-	}*/
-
 	//clear maps
 	m_positionCOMPONENT_MANAGER.clear();
 	m_physicsCOMPONENT_MANAGER.clear();

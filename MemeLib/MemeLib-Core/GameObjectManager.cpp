@@ -57,16 +57,13 @@ GameObject* GameObjectManager::create(GameObject* obj)
 		m_objectMap[m_id]->setID(m_id);
 
 		m_objectMap[m_id]->start();
+
+		std::cout << "GOBJ: CREATE " << m_id << "\n";
+
 		return m_objectMap[m_id];
 	}
 	return NULL;
 }
-
-/*m_objectMap[id] = obj;
-			m_objectMap[id]->setID(id);
-
-			m_objectMap[id]->start();
-			return m_objectMap[id];*/
 
 GameObject* GameObjectManager::findByID(GameObjectID id)
 {
@@ -88,7 +85,8 @@ bool GameObjectManager::removeByID(GameObjectID id)
 {
 	if (findByID(id) != NULL)
 	{
-		std::cout << m_objectMap[id]->toString() << std::endl;
+		std::cout << "GOBJ: DELETING " << m_objectMap[id]->toString() << std::endl;
+
 		m_objectMap[id]->destroy();
 
 		delete m_objectMap[id];

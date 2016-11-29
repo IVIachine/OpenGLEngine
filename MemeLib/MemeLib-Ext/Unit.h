@@ -23,8 +23,6 @@ class UnitManager;
 
 const size_t DEFAULT_QUEUE_CAPACITY = 8;
 
-const GameObjectID PLAYER_ID = 999;
-
 class Unit : public GameObject
 {
 public:
@@ -57,6 +55,10 @@ public:
 	Vec3 getTarget() { return m_currentTarget; };
 	NavMesh* getNavMesh() { return mp_navMesh; };
 	AStarPathfinder* getPathFinder() { return mpPathfinder; };
+
+	static GameObjectID getPlayerID() { return s_playerID; };
+	static void setPlayerID(GameObjectID id) { s_playerID = id; };
+
 private:
 	//GameObjectID mID;
 	ComponentID mPhysicsComponentID;
@@ -87,6 +89,7 @@ private:
 	Unit(Unit&);//invalidate copy constructor
 	void operator=(Unit&);//invalidate assignment operator
 
+	static GameObjectID s_playerID;
 
 	friend class UnitManager;
 };

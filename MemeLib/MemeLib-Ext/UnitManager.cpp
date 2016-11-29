@@ -33,8 +33,7 @@ Unit* UnitManager::createUnit(
 	NavMesh* graph, 
 	bool shouldWrap, 
 	const PositionData& posData, 
-	const PhysicsData& physicsData, 
-	const GameObjectID& id)
+	const PhysicsData& physicsData)
 {
 	Unit* pUnit = OBJECT_MANAGER->create<Unit>(new Unit(sprite, graph));
 
@@ -124,7 +123,7 @@ void UnitManager::handleEvent(const Event & ev)
 {
 	if (ev.getType() == PATH_EVENT)
 	{
-		Unit* tmp = OBJECT_MANAGER->findByID<Unit>(PLAYER_ID);
+		Unit* tmp = OBJECT_MANAGER->findByID<Unit>(Unit::getPlayerID());
 		tmp->findPath(tmp->getTarget());
 	}
 	else if (ev.getType() == TARGET_EVENT)

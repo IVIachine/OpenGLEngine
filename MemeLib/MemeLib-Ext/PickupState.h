@@ -4,7 +4,7 @@
 #include "Vector3.h"
 #include "Pickup.h"
 
-#define TEMP_DIST .5f //To Be Removed
+#define TEMP_DIST 2 //To Be Removed
 
 class PickupState : public StateMachineState
 {
@@ -14,7 +14,9 @@ public:
 	virtual void onEntrance();
 	virtual void onExit();
 	virtual StateTransition* update(Unit* currentUnit);
+
+	void setPickup(GameObjectID targ) { mPickup = targ; };
 private:
-	Pickup* mPickup;
+	GameObjectID mPickup;
 	bool mHasSetPath;
 };

@@ -22,7 +22,7 @@ void PickupSpawner::update()
 	if (mTimeToSpawn->getElapsedTime() >= mBetweenTime)
 	{
 		mTimeToSpawn->stop();
-		Pickup* newPickup = OBJECT_MANAGER->create<Pickup>(new Pickup(Vec3(0, 0, 0), PickupType::SPEED_TYPE), INVALID_GOBJ_ID);
+		Pickup* newPickup = OBJECT_MANAGER->create<Pickup>(new Pickup(Vec3(0, 0, 0), PickupType::SPEED_TYPE));
 		mTimeToSpawn->start();
 	}
 }

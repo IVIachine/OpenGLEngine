@@ -35,7 +35,9 @@ public:
 
 	std::map<GameObjectID, GameObject*> getData() const { return m_objectMap; };
 
-	GameObject*	create(GameObject* obj, GameObjectID id = INVALID_GOBJ_ID);
+	bool idExists(GameObjectID id) { return m_objectMap.find(id) != m_objectMap.end(); };
+
+	GameObject*	create(GameObject* obj);
 	GameObject* findByID(GameObjectID index);
 
 	bool		removeByID(GameObjectID index);
@@ -43,9 +45,9 @@ public:
 
 
 	template <typename T>
-	T* create(GameObject* obj, GameObjectID id)
+	T* create(GameObject* obj)
 	{
-		if (T* tmp = static_cast<T*>(create(obj, id)))
+		if (T* tmp = static_cast<T*>(create(obj)))
 		{
 			return tmp;
 		}

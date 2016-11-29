@@ -12,9 +12,7 @@
 #include "BeginPathingEvent.h"
 #include "ChangeTargetEvent.h"
 #include "ComponentManager.h"
-#include "IdleState.h"
-#include "ChaseState.h"
-#include "PickupState.h"
+
 
 Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 	:mSprite(sprite)
@@ -47,6 +45,7 @@ Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 	mpIdleState->addTransition(mpPickupTransition);
 
 	mpChaseState->addTransition(mpIdleTransition);
+	mpPickupState->addTransition(mpPickupTransition);
 
 	mpStateMachine->addState(mpIdleState);
 	mpStateMachine->addState(mpChaseState);

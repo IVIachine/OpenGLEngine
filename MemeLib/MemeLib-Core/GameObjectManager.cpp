@@ -48,31 +48,25 @@ void GameObjectManager::draw()
 }
 
 
-GameObject* GameObjectManager::create(GameObject* obj, GameObjectID id)
+GameObject* GameObjectManager::create(GameObject* obj)
 {
 	if (!findByID(obj->getID()))
 	{
-		if (id != INVALID_GOBJ_ID)
-		{
-			m_objectMap[id] = obj;
+		m_id++;
+		m_objectMap[m_id] = obj;
+		m_objectMap[m_id]->setID(m_id);
+
+		m_objectMap[m_id]->start();
+		return m_objectMap[m_id];
+	}
+	return NULL;
+}
+
+/*m_objectMap[id] = obj;
 			m_objectMap[id]->setID(id);
 
 			m_objectMap[id]->start();
-			return m_objectMap[id];
-		}
-		else
-		{
-			m_id++;
-			m_objectMap[m_id] = obj;
-			m_objectMap[m_id]->setID(m_id);
-
-			m_objectMap[m_id]->start();
-			return m_objectMap[m_id];
-		}
-	}
-
-	return NULL;
-}
+			return m_objectMap[id];*/
 
 GameObject* GameObjectManager::findByID(GameObjectID id)
 {
@@ -94,6 +88,7 @@ bool GameObjectManager::removeByID(GameObjectID id)
 {
 	if (findByID(id) != NULL)
 	{
+		std::cout << m_objectMap[id]->toString() << std::endl;
 		m_objectMap[id]->destroy();
 
 		delete m_objectMap[id];

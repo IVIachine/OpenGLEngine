@@ -9,7 +9,7 @@ class Sprite;
 
 enum PickupType
 {
-	INVALID_TYPE = -1,
+	INVALID_PICKUP_TYPE = -1,
 	SPEED_TYPE,
 	DETECTION_RANGE_TYPE
 };

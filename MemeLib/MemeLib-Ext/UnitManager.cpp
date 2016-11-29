@@ -36,7 +36,7 @@ Unit* UnitManager::createUnit(
 	const PhysicsData& physicsData, 
 	const GameObjectID& id)
 {
-	Unit* pUnit = OBJECT_MANAGER->create<Unit>(new Unit(sprite, graph), id);
+	Unit* pUnit = OBJECT_MANAGER->create<Unit>(new Unit(sprite, graph));
 
 	if (pUnit)
 	{

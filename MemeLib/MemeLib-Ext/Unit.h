@@ -11,6 +11,9 @@
 #include "Sprite.h"
 #include "Steering.h"
 #include "StateMachine.h"
+#include "IdleState.h"
+#include "ChaseState.h"
+#include "PickupState.h"
 
 class PositionComponent;
 class PhysicsComponent;
@@ -50,6 +53,7 @@ public:
 	void findPath(Vec3 target);
 	void clear();
 	void changeTarg(Vec3 targ) { m_currentTarget = targ; };
+	void setPickup(GameObjectID targ) { static_cast<PickupState*>(mpPickupState)->setPickup(targ); };
 	Vec3 getTarget() { return m_currentTarget; };
 	NavMesh* getNavMesh() { return mp_navMesh; };
 	AStarPathfinder* getPathFinder() { return mpPathfinder; };

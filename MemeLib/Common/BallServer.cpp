@@ -1,6 +1,6 @@
 #include "BallServer.h"
 #include "LinkingContext.h"
-
+#include "GameTime.h"
 
 BallServer::BallServer()
 {
@@ -20,6 +20,7 @@ BallServer::~BallServer()
 void BallServer::update()
 {
 	//Update physics here
+
 	m_pos = m_pos + m_vel;
 }
 

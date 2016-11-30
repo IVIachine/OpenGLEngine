@@ -47,6 +47,19 @@ public:
 	void	normalize();
 	Vector3 normalized();
 
+	static Vec3 lerp(const Vec3& a, const Vec3& b, float t)
+	{
+		if (t <= 0.f)
+		{
+			return a;
+		}
+		else if (t >= 1.f)
+		{
+			return b;
+		}
+
+		return a * t + b * (1.f - t);
+	}
 
 
 	Vec3 vec3() const

@@ -162,10 +162,9 @@ void NetClient::update()
 
 			bsIn >> timeStamp;
 
+			float rtt = TIME->getCurrentTime() - timeStamp;
 
-			float lag = TIME->getCurrentTime() - timeStamp;
-
-			std::cout << "RTT: " << lag << "\n";
+			std::cout << "RTT: " << rtt << "\n";
 		}
 		break;
 		default:

@@ -17,7 +17,7 @@ BallClient::~BallClient()
 
 void BallClient::draw()
 {
-	mp_sprite->setPosition(mLoc);
+	mp_sprite->setPosition(m_posOld);
 	mp_sprite->draw(*GRAPHICS->getCamera());
 }
 
@@ -27,9 +27,9 @@ void BallClient::update()
 
 void BallClient::write(RakNet::BitStream & stream) const
 {
-	stream.Write(mLoc.x);
-	stream.Write(mLoc.y);
-	stream.Write(mLoc.z);
+	stream.Write(m_posOld.x);
+	stream.Write(m_posOld.y);
+	stream.Write(m_posOld.z);
 }
 
 void BallClient::sendToServer(RakNet::BitStream & stream)
@@ -51,10 +51,11 @@ void BallClient::sendToServer(RakNet::RakPeerInterface * peer)
 
 void BallClient::read(RakNet::BitStream & stream)
 {
-	stream.Read(mLoc.x);
-	stream.Read(mLoc.y);
-	stream.Read(mLoc.z);
-	setLoc(mLoc);
+	m_posOld = m_posNew;
+
+	stream.Read(m_posNew.x);
+	stream.Read(m_posNew.y);
+	stream.Read(m_posNew.z);
 }
 
 void BallClient::writeToFile(std::ofstream & of)

@@ -19,11 +19,13 @@ public:
 	virtual void draw();
 	virtual void update();
 
-	Vec3 getLoc() const { return mLoc; };
-	void setLoc(Vec3 loc) { mLoc = loc; };
+	Vec3 getLoc() const { return m_posOld; };
+	void setLoc(Vec3 loc) { m_posOld = loc; };
 	void setSprite(Sprite* sprite) { mp_sprite = sprite; };
+
 private:
 	Sprite* mp_sprite;
-	Vec3 mLoc;
+	Vec3 m_posOld;
+	Vec3 m_posNew;
 };
 

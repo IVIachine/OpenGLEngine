@@ -11,7 +11,8 @@ enum PickupType
 {
 	INVALID_PICKUP_TYPE = -1,
 	SPEED_TYPE,
-	DETECTION_RANGE_TYPE
+	DETECTION_RANGE_TYPE,
+	NUM_PICKUP_TYPES
 };
 
 class Pickup :public GameObject
@@ -24,9 +25,10 @@ public:
 	virtual void draw();
 
 	Vec3 getLoc() { return mLoc; };
-
+	PickupType getType() { return mType; };
 private:
 	Vec3 mLoc;
+	float mOriginalY;
 	PickupType mType;
 	Sprite mSprite;
 };

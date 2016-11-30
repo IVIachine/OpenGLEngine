@@ -4,7 +4,7 @@
 #include "Vector3.h"
 #include "Pickup.h"
 
-#define TEMP_DIST 2 //To Be Removed
+#define TEMP_DIST_PICKUP .25f //To Be Removed
 
 class PickupState : public StateMachineState
 {

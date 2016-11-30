@@ -3,8 +3,10 @@
 #include <GameTime.h>
 
 Pickup::Pickup(Vec3 desiredLoc, PickupType type)
-	:mLoc(desiredLoc), mType(type)
 {
+	mLoc = desiredLoc;
+	mOriginalY = mLoc.y;
+	mType = type;
 	if (type == PickupType::SPEED_TYPE)
 	{
 		mSprite = *RESOURCES->getSprite("lightningSprite");
@@ -22,7 +24,7 @@ Pickup::~Pickup()
 
 void Pickup::update()
 {
-	mLoc.y = 0 + (sin(TIME->deltaTime()) * .005); //Needs to be fixed to make bobbing powerup
+	mLoc.y = mOriginalY + (sin(TIME->deltaTime()) * .005); //Needs to be fixed to make bobbing powerup
 }
 
 void Pickup::draw()

@@ -57,6 +57,14 @@ Node* Path::getAndRemoveNext()
 	}
 }
 
+void Path::removeFront()
+{
+	if (m_nodeList.size() > 0)
+	{
+		m_nodeList.erase(m_nodeList.begin() + 0);
+	}
+}
+
 size_t Path::size() const
 {
 	return m_nodeList.size();

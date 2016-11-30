@@ -52,7 +52,7 @@ Steering* PathFollowSteering::getSteering()
 		}
 
 		diff = mpFollowPath.peek(mCurrentIndex)->getPosition() - pOwner->getPositionComponent()->getPosition();
-		if (mCurrentIndex + 1 == mpFollowPath.size() && glm::length(diff) < ARRIVE_RADIUS)
+		if (mCurrentIndex + 1 == mpFollowPath.size() && glm::length(diff) < ARRIVE_RADIUS/2)
 		{
 			mCurrentIndex = 0;
 			mpFollowPath.clear();

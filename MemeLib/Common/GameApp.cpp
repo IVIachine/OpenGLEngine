@@ -125,7 +125,7 @@ bool GameApp::setup()
 	RESOURCES->addFont("cour", "../Assets/fonts/cour.ttf");
 	
 	mp_picker = new MousePicker(mp_navMesh);
-	mp_spawner = new PickupSpawner(3000);
+	mp_spawner = new PickupSpawner(4000);
 
 	int randIndex;
 	randIndex = rand() % (mp_navMesh->getVerts().size());
@@ -171,7 +171,7 @@ void GameApp::update()
 	m_skybox->transform().setPosition(GRAPHICS->getCamera()->getPosition());
 
 	m_controller.update(mp_navMesh, mp_picker);
-	mp_spawner->update();
+	mp_spawner->update(mp_navMesh);
 	COMPONENTS->update(FIXED_UPDATE_DELTA);
 
 	GameObjectID id = Unit::getPlayerID();
@@ -199,8 +199,6 @@ void GameApp::handleEvent(const Event & ev)
 {
 	if (ev.getType() == SPAWN_EVENT)
 	{
-		std::cout << "SPAWN_EVENT\n";
-
 		//UNITS->deleteAll();
 
 		for (int i = 0; i < 1; i++)

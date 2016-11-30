@@ -42,7 +42,7 @@ StateTransition * IdleState::update(Unit* currentUnit)
 	//Vec3 playerLoc = static_cast<Unit*>(OBJECT_MANAGER->getData()[s_playerID])->getPositionComponent()->getPosition();
 	Vec3 playerLoc = pPlayer->getPositionComponent()->getPosition();
 	Vec3 currentLoc = currentUnit->getPositionComponent()->getPosition();
-	if (glm::distance(playerLoc, currentLoc) < TEMP_DIST)
+	if (glm::distance(playerLoc, currentLoc) < TEMP_DIST_CHASE)
 	{
 		std::map<TransitionType, StateTransition*>::iterator iter = mTransitions.find(CHASE_TRANSITION);
 		if (iter != mTransitions.end())//found?
@@ -56,19 +56,20 @@ StateTransition * IdleState::update(Unit* currentUnit)
 	std::vector<Pickup*> pickups = OBJECT_MANAGER->findObjectsOfType<Pickup>();
 	if (pickups.size() > 0)
 	{
-		Pickup* tmp = pickups[0];
-
-		if (tmp != NULL)
+		for (auto pickup : pickups)
 		{
-			if (glm::distance(tmp->getLoc(), currentLoc) < TEMP_DIST)
+			if (pickup!= NULL)
 			{
-				std::map<TransitionType, StateTransition*>::iterator iter = mTransitions.find(PICKUP_TRANSITION);
-				if (iter != mTransitions.end())//found?
+				if (glm::distance(pickup->getLoc(), currentLoc) < TEMP_DIST_PICK)
 				{
-					GameObjectID id = tmp->getID();
-					currentUnit->setPickup(id);
-					StateTransition* pTransition = iter->second;
-					return pTransition;
+					std::map<TransitionType, StateTransition*>::iterator iter = mTransitions.find(PICKUP_TRANSITION);
+					if (iter != mTransitions.end())//found?
+					{
+						GameObjectID id = pickup->getID();
+						currentUnit->setPickup(id);
+						StateTransition* pTransition = iter->second;
+						return pTransition;
+					}
 				}
 			}
 		}

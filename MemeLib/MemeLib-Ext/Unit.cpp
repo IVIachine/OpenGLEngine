@@ -47,7 +47,8 @@ Unit::Unit(const Sprite& sprite, NavMesh* navMesh)
 	mpIdleState->addTransition(mpPickupTransition);
 
 	mpChaseState->addTransition(mpIdleTransition);
-	mpPickupState->addTransition(mpPickupTransition);
+	mpPickupState->addTransition(mpIdleTransition);
+	mpPickupState->addTransition(mpChaseTransition);
 
 	mpStateMachine->addState(mpIdleState);
 	mpStateMachine->addState(mpChaseState);
@@ -96,7 +97,13 @@ void Unit::update()
 		{
 			SteeringData data = getSteeringComponent()->getData();
 			Path path = mpPathfinder->getPath();
-
+			Vec3 pos = getPositionComponent()->getPosition();
+			Vec3 dirA = glm::normalize(path.peek(0)->getPosition() - pos);
+			Vec3 dirB = glm::normalize(path.peek(1)->getPosition() - pos);
+			if (dirA == -dirB)
+			{
+				path.removeFront();
+			}
 			getSteeringComponent()->setData(data, path);
 		}
 		else

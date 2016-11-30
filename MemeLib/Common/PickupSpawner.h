@@ -2,6 +2,7 @@
 #define PICKUP_SPAWNER_H
 
 #include <Trackable.h>
+#include "NavMesh.h"
 
 class Timer;
 
@@ -11,7 +12,7 @@ public:
 	PickupSpawner(float timeBetween);
 	~PickupSpawner();
 
-	void update();
+	void update(NavMesh* navMesh);
 
 private:
 	Timer* mTimeToSpawn;

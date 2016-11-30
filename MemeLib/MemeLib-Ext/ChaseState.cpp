@@ -24,11 +24,10 @@ StateTransition * ChaseState::update(Unit* currentUnit)
 	{
 		currentUnit->findPath(closestNode);
 		mPrevPlayerLoc = closestNode;
-		std::cout << "Attempt\n";
 	}
 
 
-	if (glm::distance(playerLoc, currentLoc) > TEMP_DIST)
+	if (glm::distance(playerLoc, currentLoc) > TEMP_DIST_IDLE)
 	{
 		std::map<TransitionType, StateTransition*>::iterator iter = mTransitions.find(IDLE_TRANSITION);
 		if (iter != mTransitions.end())//found?

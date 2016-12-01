@@ -18,6 +18,8 @@ Steering* ArriveSteering::getSteering()
 	Vec3 diff;
 
 	Unit* pOwner = UNITS->getUnit(mOwnerID);
+	PhysicsData data = pOwner->getPhysicsComponent()->getData();
+
 	//are we seeking a location or a unit?
 	if (mTargetID != INVALID_GOBJ_ID)
 	{
@@ -27,7 +29,6 @@ Steering* ArriveSteering::getSteering()
 		mTargetLoc = pTarget->getPositionComponent()->getPosition();
 	}
 
-	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 	diff = mTargetLoc - pOwner->getPositionComponent()->getPosition();
 	float distance = glm::length(diff);
 
@@ -41,11 +42,11 @@ Steering* ArriveSteering::getSteering()
 
 	if (distance > mSlowRadius)
 	{
-		targetSpeed = pOwner->getMaxSpeed();
+		targetSpeed = data.maxSpeed;
 	}
 	else
 	{
-		targetSpeed = pOwner->getMaxSpeed() * distance / mSlowRadius;
+		targetSpeed = data.maxSpeed * distance / mSlowRadius;
 	}
 
 	targetVelocity = diff;

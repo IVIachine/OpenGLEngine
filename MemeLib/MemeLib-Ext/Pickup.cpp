@@ -11,9 +11,13 @@ Pickup::Pickup(Vec3 desiredLoc, PickupType type)
 	{
 		mSprite = *RESOURCES->getSprite("lightningSprite");
 	}
-	else if (type == PickupType::DETECTION_RANGE_TYPE)
+	else if (type == PickupType::HEALTH_TYPE)
 	{
-		mSprite = *RESOURCES->getSprite("binocularsSprite");
+		mSprite = *RESOURCES->getSprite("healthSprite");
+	}
+	else if (type == PickupType::DAMAGE_TYPE)
+	{
+		mSprite = *RESOURCES->getSprite("damageSprite");
 	}
 }
 

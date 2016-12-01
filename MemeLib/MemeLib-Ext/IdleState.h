@@ -15,5 +15,6 @@ public:
 	virtual StateTransition* update(Unit* currentUnit);
 private:
 	Timer* mpTimeTillSwitch;
+	bool mSpriteChange;
 };
 

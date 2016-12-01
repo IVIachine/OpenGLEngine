@@ -30,12 +30,15 @@ bool UnitManager::setup()
 
 Unit* UnitManager::createUnit(
 	const Sprite& sprite, 
-	NavMesh* graph, 
+	NavMesh* graph,
+	float health,
+	float damageRadius,
+	float damage,
 	bool shouldWrap, 
 	const PositionData& posData, 
 	const PhysicsData& physicsData)
 {
-	Unit* pUnit = OBJECT_MANAGER->create<Unit>(new Unit(sprite, graph));
+	Unit* pUnit = OBJECT_MANAGER->create<Unit>(new Unit(sprite, graph, health, damageRadius, damage));
 
 	if (pUnit)
 	{

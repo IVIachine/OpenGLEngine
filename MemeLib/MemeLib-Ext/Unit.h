@@ -14,12 +14,14 @@
 #include "IdleState.h"
 #include "ChaseState.h"
 #include "PickupState.h"
+#include "UnitManager.h"
 
 class PositionComponent;
 class PhysicsComponent;
 class SteeringComponent;
 class Sprite;
 class UnitManager;
+class Timer;
 
 const size_t DEFAULT_QUEUE_CAPACITY = 8;
 
@@ -55,7 +57,9 @@ public:
 	Vec3 getTarget() { return m_currentTarget; };
 	NavMesh* getNavMesh() { return mp_navMesh; };
 	AStarPathfinder* getPathFinder() { return mpPathfinder; };
-
+	void changeSprite(std::string target);
+	void applyDamage(float damage);
+	void applyBuff(Pickup* pickup);
 	static GameObjectID getPlayerID() { return s_playerID; };
 	static void setPlayerID(GameObjectID id) { s_playerID = id; };
 
@@ -70,8 +74,9 @@ private:
 	float mMaxSpeed;
 	float mMaxRotAcc;
 	float mMaxRotVel;
+	float mHealth, mDamageRadius, mDamage, mMaxHealth;
 	bool mShowTarget;
-
+	bool mPowered;
 	NavMesh* mp_navMesh;
 	Vec3 m_currentTarget;
 	AStarPathfinder* mpPathfinder;
@@ -83,7 +88,10 @@ private:
 	StateTransition* mpIdleTransition;
 	StateTransition* mpChaseTransition;
 	StateTransition* mpPickupTransition;
-	Unit(const Sprite& sprite, NavMesh* navMesh);
+	Timer* mPowerupTime;
+	PickupType mPoweredType;
+	void checkNearby();
+	Unit(const Sprite& sprite, NavMesh* navMesh, float health, float damageRadius, float damage);
 	virtual ~Unit();
 
 	Unit(Unit&);//invalidate copy constructor

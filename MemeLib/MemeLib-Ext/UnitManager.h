@@ -41,7 +41,10 @@ public:
 
 	Unit* createUnit(
 		const Sprite& sprite, 
-		NavMesh* graph, 
+		NavMesh* graph,
+		float health,
+		float damageRadius,
+		float damage,
 		bool shouldWrap = true, 
 		const PositionData& posData = ZERO_POSITION_DATA, 
 		const PhysicsData& physicsData = ZERO_PHYSICS_DATA);

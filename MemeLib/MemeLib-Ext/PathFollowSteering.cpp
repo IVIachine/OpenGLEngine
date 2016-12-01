@@ -33,6 +33,7 @@ PathFollowSteering::~PathFollowSteering()
 Steering* PathFollowSteering::getSteering()
 {
 	Unit* pOwner = UNITS->getUnit(mOwnerID);
+	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 	if (mFollowing)
 	{
 		if (mpFollowPath.size() <= 0)
@@ -57,8 +58,9 @@ Steering* PathFollowSteering::getSteering()
 			mCurrentIndex = 0;
 			mpFollowPath.clear();
 			mFollowing = false;
-			this->mData.acc = Vec3(0, 0, 0);
-			this->mData.vel = Vec3(0, 0, 0);
+			data.acc = Vec3(0, 0, 0);
+			data.vel = Vec3(0, 0, 0);
+			this->mData = data;
 			return this;
 		}
 
@@ -78,8 +80,9 @@ Steering* PathFollowSteering::getSteering()
 			pTemp = mpSeekSteering->getSteering();
 			if (pTemp != NULL)
 			{
-				this->mData = pTemp->getData();
+				data = pTemp->getData();
 			}
+			this->mData = data;
 			return this;
 		}
 		else
@@ -88,7 +91,8 @@ Steering* PathFollowSteering::getSteering()
 			pTemp = mpArriveSteering->getSteering();
 			if (pTemp != NULL)
 			{
-				this->mData = pTemp->getData();
+				data = pTemp->getData();
+				this->mData = data;
 			}
 			return this;
 		}

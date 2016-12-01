@@ -24,7 +24,6 @@ void PickupSpawner::update(NavMesh* navMesh)
 		mTimeToSpawn->stop();
 		int randNodeIndex = rand() % (navMesh->getVerts().size() - 1);
 		int randType = rand() % ((int)NUM_PICKUP_TYPES);
-		std::cout << navMesh->getVerts().at(randNodeIndex).y << std::endl;
 		Pickup* newPickup = OBJECT_MANAGER->create<Pickup>(new Pickup(navMesh->getVerts().at(randNodeIndex), PickupType(randType)));
 		mTimeToSpawn->start();
 	}

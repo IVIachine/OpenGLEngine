@@ -7,7 +7,7 @@ void ChaseState::onEntrance()
 {
 	//Change Sprite to chasing sprite
 	mPrevPlayerLoc = Vec3(INFINITY, INFINITY, INFINITY);
-	std::cout << "CHASE\n";
+	mSpriteChange = true;
 }
 
 void ChaseState::onExit()
@@ -16,7 +16,12 @@ void ChaseState::onExit()
 
 StateTransition * ChaseState::update(Unit* currentUnit)
 {
-	//Vec3 playerLoc = static_cast<Unit*>(OBJECT_MANAGER->getData()[PLAYER_ID])->getPositionComponent()->getPosition();
+	if (mSpriteChange)
+	{
+		currentUnit->changeSprite("chase");
+		mSpriteChange = false;
+	}
+
 	Vec3 playerLoc = OBJECT_MANAGER->findByID<Unit>(Unit::getPlayerID())->getPositionComponent()->getPosition();
 	Vec3 currentLoc = currentUnit->getPositionComponent()->getPosition();
 	Vec3 closestNode = currentUnit->getNavMesh()->getClosestVert(playerLoc);

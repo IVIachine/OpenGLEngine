@@ -129,6 +129,7 @@
     <ClInclude Include="BallServer.h" />
     <ClInclude Include="ClientProxy.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="InputState.h" />
@@ -150,6 +151,7 @@
     <ClCompile Include="BallServer.cpp" />
     <ClCompile Include="ClientProxy.cpp" />
     <ClCompile Include="Common.cpp" />
+    <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="InputState.cpp" />

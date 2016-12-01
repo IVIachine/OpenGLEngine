@@ -19,8 +19,7 @@ IdleState::~IdleState()
 }
 void IdleState::onEntrance()
 {
-	//Change to idle sprite
-	std::cout << "IDLE\n";
+	mSpriteChange = true;
 	mpTimeTillSwitch->start();
 }
 
@@ -31,7 +30,12 @@ void IdleState::onExit()
 
 StateTransition * IdleState::update(Unit* currentUnit)
 {
-	//Unit* pPlayer = static_cast<Unit*>(OBJECT_MANAGER->getData()[Unit::getPlayerID()]);
+	if (mSpriteChange)
+	{
+		currentUnit->changeSprite("idle");
+		mSpriteChange = false;
+	}
+
 	Unit* pPlayer = UNITS->getUnit(Unit::getPlayerID());
 	if (!pPlayer)
 	{
@@ -75,7 +79,7 @@ StateTransition * IdleState::update(Unit* currentUnit)
 		}
 	}
 
-	if (mpTimeTillSwitch->getElapsedTime() > 10000)
+	if (mpTimeTillSwitch->getElapsedTime() > 5000)
 	{
 		mpTimeTillSwitch->stop();
 		int randIndex = rand() % (currentUnit->getNavMesh()->getVerts().size() - 1);

@@ -92,6 +92,9 @@
     <ClInclude Include="PickupSpawner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EnemySpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NetServer.cpp">
@@ -149,6 +152,9 @@
       <Filter>Source Files\Pong</Filter>
     </ClCompile>
     <ClCompile Include="PickupSpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -2,7 +2,7 @@
 #include "StateMachine.h"
 #include "Vector3.h"
 
-#define TEMP_DIST_IDLE 2 //To Be Removed
+#define TEMP_DIST_IDLE 4 //To Be Removed
 
 class ChaseState : public StateMachineState
 {
@@ -14,5 +14,6 @@ public:
 	virtual StateTransition* update(Unit* currentUnit);
 private:
 	Vec3 mPrevPlayerLoc;
+	bool mSpriteChange;
 };
 

@@ -12,6 +12,7 @@
 #include "GameController.h"
 #include "Application.h"
 #include "PickupSpawner.h"
+#include "EnemySpawner.h"
 
 const int MAX_UNITS = 500;
 
@@ -39,7 +40,8 @@ private:
 
 	GLuint tex;
 	GameController m_controller;	
-	PickupSpawner* mp_spawner;
+	PickupSpawner* mp_pickupSpawner;
+	EnemySpawner* mp_enemySpawner;
 };
 
 #endif // !_GAME_APP_H_

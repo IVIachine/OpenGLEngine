@@ -84,28 +84,52 @@ bool GameApp::setup()
 
 	RESOURCES->addTexture("box",		"../Assets/textures/box.png");
 	RESOURCES->addTexture("lightning",		"../Assets/textures/irboost.png");
-	RESOURCES->addTexture("binoculars", "../Assets/textures/binoculars.png");
+	RESOURCES->addTexture("health", "../Assets/textures/health.png");
+	RESOURCES->addTexture("damage", "../Assets/textures/plus.png");
 	RESOURCES->addTexture("player",		"../Assets/textures/player.png");
-	RESOURCES->addTexture("enemy",		"../Assets/textures/enemy.png");
-
+	RESOURCES->addTexture("enemyIdle",		"../Assets/textures/enemy1.png");
+	RESOURCES->addTexture("enemyChase", "../Assets/textures/enemy2.png");
+	RESOURCES->addTexture("enemyPickup", "../Assets/textures/enemy3.png");
 	//CITE: https://irboost.com/img/irboost.png
 	//CITE: http://pngimg.com/upload/small/binocular_PNG12921.png
+	//CITE: http://www.free-icons-download.net/images/first-aid-kit-icon-29793.png
+	//CITE: http://cdn.bulbagarden.net/upload/1/1a/Prop_Top_Hat_Sprite.png
 	RESOURCES->addTexture2D("lightning",	RESOURCES->getTexture("lightning"),		p_shader);
-	RESOURCES->addTexture2D("binoculars", RESOURCES->getTexture("binoculars"), p_shader);
+	RESOURCES->addTexture2D("health", RESOURCES->getTexture("health"), p_shader);
+	RESOURCES->addTexture2D("damage", RESOURCES->getTexture("damage"), p_shader);
 	RESOURCES->addTexture2D("player",	RESOURCES->getTexture("player"),	p_shader);
-	RESOURCES->addTexture2D("enemy",	RESOURCES->getTexture("enemy"),		p_shader);
+	RESOURCES->addTexture2D("enemyIdle",	RESOURCES->getTexture("enemyIdle"),		p_shader);
+	RESOURCES->addTexture2D("enemyChase", RESOURCES->getTexture("enemyChase"), p_shader);
+	RESOURCES->addTexture2D("enemyPickup", RESOURCES->getTexture("enemyPickup"), p_shader);
 
-	Sprite* pSpr1 = RESOURCES->addSprite("sprite2", RESOURCES->getTexture2D("enemy"));
-	pSpr1->setScale(Vec3(.1f, .1f, .1f));
-	pSpr1->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
+	Sprite* pSpr11 = RESOURCES->addSprite("idle", RESOURCES->getTexture2D("enemyIdle"));
+	pSpr11->setScale(Vec3(.1f, .1f, .1f));
+	pSpr11->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
+
+	Sprite* pSpr12 = RESOURCES->addSprite("chase", RESOURCES->getTexture2D("enemyChase"));
+	pSpr12->setScale(Vec3(.1f, .1f, .1f));
+	pSpr12->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
+
+	Sprite* pSpr13 = RESOURCES->addSprite("pickup", RESOURCES->getTexture2D("enemyPickup"));
+	pSpr13->setScale(Vec3(.1f, .1f, .1f));
+	pSpr13->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
+
 
 	Sprite* pSpr2 = RESOURCES->addSprite("lightningSprite", RESOURCES->getTexture2D("lightning"));
 	pSpr2->setScale(Vec3(.1f, .1f, .1f));
 	pSpr2->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
 
-	Sprite* pSpr3 = RESOURCES->addSprite("binocularsSprite", RESOURCES->getTexture2D("binoculars"));
+	Sprite* pSpr3 = RESOURCES->addSprite("healthSprite", RESOURCES->getTexture2D("health"));
 	pSpr3->setScale(Vec3(.1f, .1f, .1f));
 	pSpr3->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
+
+	Sprite* pSpr4 = RESOURCES->addSprite("player", RESOURCES->getTexture2D("player"));
+	pSpr4->setScale(Vec3(.1f, .1f, .1f));
+	pSpr4->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
+
+	Sprite* pSpr5 = RESOURCES->addSprite("damageSprite", RESOURCES->getTexture2D("damage"));
+	pSpr5->setScale(Vec3(.1f, .1f, .1f));
+	pSpr5->setRotation(Vec3(270, 0, 0) * Maths::DEG_TO_RAD);
 
 	mp_volume = new Volume(p_shader2, RESOURCES->getTexture("lightning"), "../Assets/obj/test4.obj", false);
 	mp_navMesh->constructMesh(mp_volume->getMesh());
@@ -125,14 +149,17 @@ bool GameApp::setup()
 	RESOURCES->addFont("cour", "../Assets/fonts/cour.ttf");
 	
 	mp_picker = new MousePicker(mp_navMesh);
-	mp_spawner = new PickupSpawner(4000);
-
+	mp_enemySpawner = new EnemySpawner(10000, Vec3(0,0,0));
+	mp_pickupSpawner = new PickupSpawner(4000);
 	int randIndex;
 	randIndex = rand() % (mp_navMesh->getVerts().size());
 
 	Unit* pPlayer = UNITS->createUnit(
-		*RESOURCES->getSprite("sprite2"),
+		*RESOURCES->getSprite("player"),
 		mp_navMesh,
+		200,
+		3,
+		.3,
 		true,
 		PositionData(mp_navMesh->getNode(randIndex)->getPosition(), 0), 
 		ZERO_PHYSICS_DATA);
@@ -162,26 +189,20 @@ void GameApp::clear()
 	delete mp_navMesh;
 	mp_navMesh = NULL;
 
-	delete mp_spawner;
-	mp_spawner = NULL;
+	delete mp_enemySpawner;
+	mp_enemySpawner = NULL;
+
+	delete mp_pickupSpawner;
+	mp_pickupSpawner = NULL;
 }
 
 void GameApp::update()
 {
 	m_skybox->transform().setPosition(GRAPHICS->getCamera()->getPosition());
-
 	m_controller.update(mp_navMesh, mp_picker);
-	mp_spawner->update(mp_navMesh);
+	mp_enemySpawner->update(mp_navMesh);
+	mp_pickupSpawner->update(mp_navMesh);
 	COMPONENTS->update(FIXED_UPDATE_DELTA);
-
-	GameObjectID id = Unit::getPlayerID();
-	if (OBJECT_MANAGER->idExists(id))
-	{
-		if (INPUT->getKeyDown(Keyboard::T))
-		{
-			UNITS->deleteUnit(id);
-		}
-	}
 }
 
 void GameApp::draw()
@@ -199,20 +220,6 @@ void GameApp::handleEvent(const Event & ev)
 {
 	if (ev.getType() == SPAWN_EVENT)
 	{
-		//UNITS->deleteAll();
-
-		for (int i = 0; i < 1; i++)
-		{
-			int randIndex;
-			randIndex = rand() % (mp_navMesh->getVerts().size());
-			
-			Unit* pUnit = UNITS->createUnit(
-				*RESOURCES->getSprite("sprite2"), 
-				mp_navMesh, 
-				true, 
-				PositionData(mp_navMesh->getNode(randIndex)->getPosition(), 0));
-			
-			pUnit->setSteering(Steering::PATH_FOLLOW);
-		}
+		
 	}
 }

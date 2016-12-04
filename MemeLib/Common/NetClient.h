@@ -9,6 +9,7 @@
 #include "InputState.h"
 #include "MoveList.h"
 #include "ObjectCreationRegistry.h"
+class Timer;
 
 #define CLIENT NetClient::getInstance()
 #define MAX_CONNECTIONS 1
@@ -40,7 +41,6 @@ public:
 	void connect(const std::string address);
 	bool isConnected() const;
 	void sendToServer(BitStream& out);
-
 	void writeStateToFile(int clientNum);
 
 private:
@@ -52,11 +52,12 @@ private:
 	RakNet::RakPeerInterface* mp_peer;
 	RakNet::Packet*	mp_packet;
 	LinkingContext* mLinkContext;
-	bool	m_isConnected;
+	bool	m_isConnected, mIsSimulating;
 	static NetClient* sp_instance;
 	MoveList* m_moves;
-	float m_frameCount;
+	float m_frameCount, mSimulationTime;
 	ObjectCreationRegistry* m_Registry;
+	Timer* mSimulationTimer;
 };
 
 #endif // !_NET_CLIENT_H_

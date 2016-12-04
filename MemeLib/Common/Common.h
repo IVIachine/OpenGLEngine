@@ -12,7 +12,8 @@ enum NetMessages
 {
 	REQUEST_WRITE_PACKET = PacketType::NET_USER_PACKET + 1,
 	HANDSHAKE_PACKET,
-	TIME_PACKET
+	TIME_PACKET,
+	RTT_PACKET
 };
 
 void registerRPCs();

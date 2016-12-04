@@ -74,10 +74,10 @@ void ClientProxy::readMove(BitStream& in)
 		m_moveList.pushBackMove(tmp);
 	}
 
-	BitStream oStream;
-	oStream.Write((RakNet::MessageID)TIME_PACKET);
-	oStream.Write(timeStamp);
-	SERVER->sendByAddress(m_address, oStream);
+	//BitStream oStream;
+	//oStream.Write((RakNet::MessageID)TIME_PACKET);
+	//oStream.Write(timeStamp);
+	//SERVER->sendByAddress(m_address, oStream);
 }
 
 void ClientProxy::read(BitStream& in)

@@ -1,6 +1,7 @@
 #include "NetClient.h"
 #include "Common.h"
 #include <sstream>
+#include "Timer.h"
 
 NetClient* NetClient::sp_instance = NULL;
 
@@ -11,7 +12,10 @@ NetClient::NetClient()
 	m_Registry->RegisterCreationFunction<Paddle>();
 	m_Registry->RegisterCreationFunction<Ball>();
 	m_isConnected = false;
+	mIsSimulating = false;
+	mSimulationTime = 0;
 	m_frameCount = 0;
+	mSimulationTimer = new Timer();
 }
 
 NetClient::~NetClient()
@@ -41,6 +45,9 @@ void NetClient::clear()
 
 	delete m_Registry;
 	m_Registry = NULL;
+
+	delete mSimulationTimer;
+	mSimulationTimer = NULL;
 	RPCManager::destroyInstance();
 }
 
@@ -65,8 +72,33 @@ void NetClient::update()
 		{
 			sendToServer(stream);
 		}
-		m_frameCount = 0;
+
+		
 	}
+
+	RakNet::BitStream stream2;
+	stream2.Write((RakNet::MessageID)RTT_PACKET);
+	stream2.Write(TIME->getCurrentTime());
+	sendToServer(stream2);
+	m_frameCount = 0;
+
+	if (mIsSimulating)
+	{
+		if (mSimulationTimer->getElapsedTime() >= mSimulationTime)
+		{
+			mSimulationTimer->stop();
+			mSimulationTime = 0;
+		}
+		else
+		{
+			std::vector<BallClient*> ball = OBJECT_MANAGER->findObjectsOfType<BallClient>();
+			if (ball[0])
+			{
+				ball[0]->update(mSimulationTime);
+			}
+		}
+	}
+
 
 	for (mp_packet = mp_peer->Receive(); mp_packet; mp_peer->DeallocatePacket(mp_packet), mp_packet = mp_peer->Receive())
 	{
@@ -154,6 +186,7 @@ void NetClient::update()
 		break;
 		case NetMessages::TIME_PACKET:
 		{
+			mSimulationTimer->stop();
 			RakNet::BitStream bsIn(mp_packet->data, mp_packet->length, false);
 
 			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
@@ -163,8 +196,9 @@ void NetClient::update()
 			bsIn >> timeStamp;
 
 			float rtt = TIME->getCurrentTime() - timeStamp;
-
-			std::cout << "RTT: " << rtt << "\n";
+			mSimulationTime = rtt; //May need to divide by 2
+			mIsSimulating = true;
+			mSimulationTimer->start();
 		}
 		break;
 		default:

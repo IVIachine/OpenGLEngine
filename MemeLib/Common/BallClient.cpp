@@ -17,19 +17,21 @@ BallClient::~BallClient()
 
 void BallClient::draw()
 {
-	mp_sprite->setPosition(m_posOld);
+	mp_sprite->setPosition(m_posCurrent);
 	mp_sprite->draw(*GRAPHICS->getCamera());
 }
 
-void BallClient::update()
+void BallClient::update(float lerpTime)
 {
+	std::cout << "UPDATING\n";
+	m_posCurrent = Vector3::lerp(m_posOld, m_posNew, lerpTime);
 }
 
 void BallClient::write(RakNet::BitStream & stream) const
 {
-	stream.Write(m_posOld.x);
-	stream.Write(m_posOld.y);
-	stream.Write(m_posOld.z);
+	stream.Write(m_posCurrent.x);
+	stream.Write(m_posCurrent.y);
+	stream.Write(m_posCurrent.z);
 }
 
 void BallClient::sendToServer(RakNet::BitStream & stream)
@@ -51,11 +53,12 @@ void BallClient::sendToServer(RakNet::RakPeerInterface * peer)
 
 void BallClient::read(RakNet::BitStream & stream)
 {
-	m_posOld = m_posNew;
+	m_posOld = m_posCurrent;
 
 	stream.Read(m_posNew.x);
 	stream.Read(m_posNew.y);
 	stream.Read(m_posNew.z);
+	//std::cout << m_posOld.x << " " << m_posOld.z << " | " << m_posNew.x << " " << m_posNew.z << std::endl;
 }
 
 void BallClient::writeToFile(std::ofstream & of)

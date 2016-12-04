@@ -158,6 +158,20 @@ void NetServer::update()
 			m_clients.find(addr)->second.readMove(iStream);
 		}
 		break;
+		case RTT_PACKET:
+		{
+			BitStream in(mp_packet->data, mp_packet->length, false);
+			in.IgnoreBytes(sizeof(RakNet::MessageID));
+
+			float timeStamp;
+			in >> timeStamp;
+
+			BitStream oStream;
+			oStream.Write((RakNet::MessageID)TIME_PACKET);
+			oStream.Write(timeStamp);
+			SERVER->sendByAddress(mp_packet->systemAddress, oStream);
+		}
+		break;
 		default:
 		{
 			printf("Message with identifier %i has arrived.\n", mp_packet->data[0]);

@@ -2,8 +2,8 @@
 #define _TIME_H_
 
 #include <cassert>
-#include <Trackable.h>
-#include <Timer.h>
+#include "Trackable.h"
+#include "Timer.h"
 
 #define TIME GameTime::getInstance()
 

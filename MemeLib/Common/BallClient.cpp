@@ -2,6 +2,7 @@
 #include "ResourceManager.h"
 #include "Graphics.h"
 #include "LinkingContext.h"
+#include "GameTime.h"
 
 BallClient::BallClient()
 {
@@ -23,8 +24,7 @@ void BallClient::draw()
 
 void BallClient::update(float lerpTime)
 {
-	std::cout << "LERPING\n";
-	m_posCurrent = Vector3::lerp(m_posCurrent, m_posNew, lerpTime);
+	m_posCurrent = Vector3::lerp(m_posCurrent, m_posNew, lerpTime * TIME->deltaTime());
 }
 
 void BallClient::write(RakNet::BitStream & stream) const

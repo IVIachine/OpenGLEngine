@@ -84,7 +84,7 @@ void NetClient::update()
 
 	if (mIsSimulating)
 	{
-		if (mSimulationTimer->getElapsedTime() > mSimulationTime)
+		if (mSimulationTimer->getElapsedTime() >= mSimulationTime)
 		{
 			mSimulationTimer->stop();
 			mSimulationTime = 0;
@@ -95,10 +95,6 @@ void NetClient::update()
 			if (ball[0])
 			{
 				ball[0]->update(mSimulationTime);
-			}
-			else
-			{
-				std::cout << "Ball doesn't exist\n";
 			}
 		}
 	}
@@ -200,7 +196,7 @@ void NetClient::update()
 			bsIn >> timeStamp;
 
 			float rtt = TIME->getCurrentTime() - timeStamp;
-			mSimulationTime = rtt/2; //May need to divide by 2
+			mSimulationTime = rtt/2.0f; //May need to divide by 2
 			mIsSimulating = true;
 			mSimulationTimer->start();
 		}

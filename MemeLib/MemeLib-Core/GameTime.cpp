@@ -41,8 +41,6 @@ void GameTime::clear()
 void GameTime::beginStep()
 {
 	m_startTime = m_endTime;
-
-	mp_loopTimer->start();
 }
 
 void GameTime::step()
@@ -55,8 +53,6 @@ void GameTime::endStep()
 	m_endTime = mp_loopTimer->getElapsedTime();
 
 	m_delta = (m_endTime - m_startTime);
-
-	mp_loopTimer->sleepUntilElapsed(m_fps);
 }
 
 

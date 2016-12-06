@@ -72,19 +72,19 @@ void NetClient::update()
 		{
 			sendToServer(stream);
 		}
-
-		
+		else
+		{
+			RakNet::BitStream stream2;
+			stream2.Write((RakNet::MessageID)RTT_PACKET);
+			stream2.Write(TIME->getCurrentTime());
+			sendToServer(stream2);
+		}
+		m_frameCount = 0;
 	}
-
-	RakNet::BitStream stream2;
-	stream2.Write((RakNet::MessageID)RTT_PACKET);
-	stream2.Write(TIME->getCurrentTime());
-	sendToServer(stream2);
-	m_frameCount = 0;
 
 	if (mIsSimulating)
 	{
-		if (mSimulationTimer->getElapsedTime() >= mSimulationTime)
+		if (mSimulationTimer->getElapsedTime() > mSimulationTime)
 		{
 			mSimulationTimer->stop();
 			mSimulationTime = 0;
@@ -95,6 +95,10 @@ void NetClient::update()
 			if (ball[0])
 			{
 				ball[0]->update(mSimulationTime);
+			}
+			else
+			{
+				std::cout << "Ball doesn't exist\n";
 			}
 		}
 	}
@@ -196,7 +200,7 @@ void NetClient::update()
 			bsIn >> timeStamp;
 
 			float rtt = TIME->getCurrentTime() - timeStamp;
-			mSimulationTime = rtt; //May need to divide by 2
+			mSimulationTime = rtt/2; //May need to divide by 2
 			mIsSimulating = true;
 			mSimulationTimer->start();
 		}

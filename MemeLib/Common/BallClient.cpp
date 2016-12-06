@@ -23,15 +23,15 @@ void BallClient::draw()
 
 void BallClient::update(float lerpTime)
 {
-	std::cout << "UPDATING\n";
-	m_posCurrent = Vector3::lerp(m_posOld, m_posNew, lerpTime);
+	std::cout << "LERPING\n";
+	m_posCurrent = Vector3::lerp(m_posCurrent, m_posNew, lerpTime);
 }
 
 void BallClient::write(RakNet::BitStream & stream) const
 {
-	stream.Write(m_posCurrent.x);
-	stream.Write(m_posCurrent.y);
-	stream.Write(m_posCurrent.z);
+	stream.Write(m_posNew.x);
+	stream.Write(m_posNew.y);
+	stream.Write(m_posNew.z);
 }
 
 void BallClient::sendToServer(RakNet::BitStream & stream)

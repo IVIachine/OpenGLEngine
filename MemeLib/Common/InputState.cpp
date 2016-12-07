@@ -17,13 +17,15 @@ bool InputState::read(RakNet::BitStream & stream)
 
 void InputState::update(float deltaTime)
 {
+	float speed = deltaTime * 0.01f;
+
 	if (INPUT->getKey(Keyboard::W))
 	{
-		mDesiredForwardAmount += .1f;
+		mDesiredForwardAmount += speed;
 	}
 
 	if (INPUT->getKey(Keyboard::S))
 	{
-		mDesiredBackAmount += .1f;
+		mDesiredBackAmount += speed;
 	}
 }

@@ -65,7 +65,7 @@ void NetClient::update()
 	}
 	m_frameCount++;
 
-	if (m_frameCount >= 10) //May need to fix
+	if (m_frameCount >= 3) //May need to fix
 	{
 		RakNet::BitStream stream;
 		if (m_moves->sendInputPacket(stream))
@@ -74,10 +74,10 @@ void NetClient::update()
 		}
 		else
 		{
-			RakNet::BitStream stream2;
-			stream2.Write((RakNet::MessageID)RTT_PACKET);
-			stream2.Write(TIME->getCurrentTime());
-			sendToServer(stream2);
+			//RakNet::BitStream stream2;
+			//stream2.Write((RakNet::MessageID)RTT_PACKET);
+			//stream2.Write(TIME->getCurrentTime());
+			//sendToServer(stream2);
 		}
 		m_frameCount = 0;
 	}

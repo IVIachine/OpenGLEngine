@@ -82,20 +82,14 @@ void NetClient::update()
 		m_frameCount = 0;
 	}
 
-	if (mIsSimulating)
+	if (mSimulationTime > 0.f)
 	{
-		if (mSimulationTimer->getElapsedTime() >= mSimulationTime)
+		std::vector<BallClient*> ball = OBJECT_MANAGER->findObjectsOfType<BallClient>();
+		if (ball[0])
 		{
-			mSimulationTimer->stop();
-			mSimulationTime = 0;
-		}
-		else
-		{
-			std::vector<BallClient*> ball = OBJECT_MANAGER->findObjectsOfType<BallClient>();
-			if (ball[0])
-			{
-				ball[0]->update(mSimulationTime);
-			}
+			ball[0]->update(mSimulationTime);
+
+			//mSimulationTime = 0;
 		}
 	}
 
@@ -186,7 +180,7 @@ void NetClient::update()
 		break;
 		case NetMessages::TIME_PACKET:
 		{
-			mSimulationTimer->stop();
+			//mSimulationTimer->stop();
 			RakNet::BitStream bsIn(mp_packet->data, mp_packet->length, false);
 
 			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
@@ -199,7 +193,7 @@ void NetClient::update()
 			mSimulationTime = rtt/2.0f; //May need to divide by 2
 			std::cout << mSimulationTime << std::endl;
 			mIsSimulating = true;
-			mSimulationTimer->start();
+			//mSimulationTimer->start();
 		}
 		break;
 		default:

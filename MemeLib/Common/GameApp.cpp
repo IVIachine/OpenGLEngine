@@ -141,7 +141,7 @@ void GameApp::update()
 
 	m_controller.update(mp_navMesh, mp_picker);
 
-	COMPONENTS->update(TIME->deltaTime());
+	COMPONENTS->update(FIXED_UPDATE_DELTA);
 }
 
 void GameApp::draw()

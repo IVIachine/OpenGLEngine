@@ -3,7 +3,7 @@
 #include "Sprite.h"
 
 
-class PaddleClient :public GameObject
+class PaddleClient : public GameObject
 {
 public:
 	PaddleClient();

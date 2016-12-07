@@ -22,8 +22,10 @@ void PaddleClient::draw()
 
 void PaddleClient::update()
 {
-	//m_pos += m_dir;
-	//m_dir *= TIME->deltaTime();
+	//float speed = 1.0f;
+	//m_pos = Vector3::lerp(m_pos, m_dir, TIME->deltaTime() * speed);
+
+	m_pos = m_dir;
 }
 
 void PaddleClient::write(RakNet::BitStream & stream) 
@@ -52,14 +54,9 @@ void PaddleClient::sendToServer(RakNet::RakPeerInterface * peer)
 
 void PaddleClient::read(RakNet::BitStream & stream)
 {
-	Vec3 tmp = m_pos;
-	stream.Read(m_pos.x);
-	stream.Read(m_pos.y);
-	stream.Read(m_pos.z);
-	//std::cout << m_pos.x << " " << m_pos.z << std::endl;
-	m_dir = (m_pos - tmp);
-
-	setLoc(m_pos);
+	stream.Read(m_dir.x);
+	stream.Read(m_dir.y);
+	stream.Read(m_dir.z);
 }
 
 void PaddleClient::writeToFile(std::ofstream & of)

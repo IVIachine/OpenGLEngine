@@ -54,8 +54,6 @@ void NetClient::clear()
 
 void NetClient::update()
 {
-	//std::cout << TIME->deltaTime() << std::endl;
-
 	if (!m_isConnected)
 		return;
 
@@ -65,11 +63,11 @@ void NetClient::update()
 	{
 		m_moves->addMove(currentState, TIME->getCurrentTime());
 	}
-	m_frameCount+=TIME->elapsedMilliseconds();
 
 	if (m_frameCount >= 10) //May need to fix
 	{
 		RakNet::BitStream stream;
+
 		if (m_moves->sendInputPacket(stream))
 		{
 			sendToServer(stream);
@@ -81,30 +79,29 @@ void NetClient::update()
 			stream2.Write(TIME->getCurrentTime());
 			sendToServer(stream2);
 		}
+
 		m_frameCount = 0;
 	}
-
-	if (mIsSimulating)
+	else
 	{
-		std::cout << "SIMULATION\n";
-		if (mSimulationTimer->getElapsedTime() >= mSimulationTime)
-		{
-			mSimulationTimer->stop();
-			mSimulationTime = 0;
-			mIsSimulating = false;
-		}
-		else
-		{
-			std::vector<BallClient*> ball = OBJECT_MANAGER->findObjectsOfType<BallClient>();
-			if (ball[0])
-			{
-				ball[0]->update(mSimulationTime);
-			}
+		m_frameCount += TIME->elapsedMilliseconds();
+	}
 
-			for (auto p : OBJECT_MANAGER->findObjectsOfType<PaddleClient>())
-			{
-				p->update();
-			}
+	if (mSimulationTimer->getElapsedTime() >= mSimulationTime)
+	{
+		mSimulationTimer->stop();
+		mSimulationTime = 0;
+	}
+	else
+	{
+		for (auto ball : OBJECT_MANAGER->findObjectsOfType<BallClient>())
+		{
+			ball->update(mSimulationTime);
+		}
+
+		for (auto paddle : OBJECT_MANAGER->findObjectsOfType<PaddleClient>())
+		{
+			paddle->update();
 		}
 	}
 
@@ -195,7 +192,6 @@ void NetClient::update()
 		break;
 		case NetMessages::TIME_PACKET:
 		{
-			mSimulationTimer->stop();
 			RakNet::BitStream bsIn(mp_packet->data, mp_packet->length, false);
 
 			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
@@ -205,10 +201,11 @@ void NetClient::update()
 			bsIn >> timeStamp;
 
 			float rtt = TIME->getCurrentTime() - timeStamp;
-			mSimulationTime = rtt/2; //May need to divide by 2
-			//std::cout << mSimulationTime << std::endl;
+			mSimulationTime = rtt/2;
+
 			system("cls");
-			mIsSimulating = true;
+
+			mSimulationTimer->stop();
 			mSimulationTimer->start();
 		}
 		break;

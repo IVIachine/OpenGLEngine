@@ -24,8 +24,10 @@ void BallClient::draw()
 
 void BallClient::update(float lerpTime)
 {
-	//m_posCurrent = m_posNew;
-	m_posCurrent = Vector3::lerp(m_posCurrent, m_posNew, lerpTime * TIME->deltaTime());
+	m_posCurrent = Vector3::lerp(
+		m_posCurrent, 
+		m_posNew, 
+		lerpTime * TIME->deltaTime());
 }
 
 void BallClient::write(RakNet::BitStream & stream) const

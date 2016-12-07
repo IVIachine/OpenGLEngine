@@ -20,12 +20,12 @@ public:
 	virtual void draw();
 	virtual void update();
 
-	Vec3 getLoc() { return mLoc; };
-	void setLoc(Vec3 loc) { mLoc = loc; };
+	Vec3 getLoc() { return m_pos; };
+	void setLoc(Vec3 loc) { m_pos = loc; };
 	void setSprite(Sprite* sprite) { mp_sprite = sprite; };
 
 private:
 	Sprite* mp_sprite;
-	Vec3 mLoc;
+	Vec3 m_pos, m_dir;
 };
 

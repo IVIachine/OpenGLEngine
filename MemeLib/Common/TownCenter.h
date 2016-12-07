@@ -27,11 +27,11 @@ public:
 	static GameObject*	createInstance() { return new TownCenter(); };
 
 	MonsterType getType()	{ return mType; };
-	Vec3		getLoc()	{ return mLoc; };
+	Vec3		getLoc()	{ return m_pos; };
 	int			getHealth() { return mHealth; };
 
 	void setType(MonsterType theType) { mType = theType; };
-	void setLoc(Vec3 loc) { mLoc = loc; };
+	void setLoc(Vec3 loc) { m_pos = loc; };
 	void setHealth(int health) { mHealth = health; };
 
 	virtual void write(RakNet::BitStream& stream) const;
@@ -44,7 +44,7 @@ public:
 
 private:
 	MonsterType mType;
-	Vec3 mLoc;
+	Vec3 m_pos;
 	int mHealth;
 };
 #endif

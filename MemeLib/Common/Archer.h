@@ -26,13 +26,13 @@ public:
 	static GameObject* createInstance() { return new Archer(); };
 
 	TownCenter* getTownCenter() { return mTownCenter; };
-	Vec3 getLoc() { return mLoc; };
+	Vec3 getLoc() { return m_pos; };
 	CurrentAction getCurrentAction() { return mCurrentAction; };
 	int getHealth() { return mHealth; };
 
 	void setCenter(TownCenter* center) { mTownCenter = center; };
 	void setHealth(int health) { mHealth = health; };
-	void setLoc(Vec3 loc) { mLoc = loc; };
+	void setLoc(Vec3 loc) { m_pos = loc; };
 	void setAction(CurrentAction action) { mCurrentAction = action; };
 
 	virtual void write(RakNet::BitStream& stream) const;
@@ -45,7 +45,7 @@ public:
 private:
 	CurrentAction mCurrentAction;
 	int mHealth;
-	Vec3 mLoc;
+	Vec3 m_pos;
 	TownCenter* mTownCenter;
 };
 #endif

@@ -91,6 +91,11 @@ void NetClient::update()
 
 			//mSimulationTime = 0;
 		}
+
+		for (auto p : OBJECT_MANAGER->findObjectsOfType<PaddleClient>())
+		{
+			p->update();
+		}
 	}
 
 

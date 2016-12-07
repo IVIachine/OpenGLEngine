@@ -14,9 +14,9 @@ Archer::~Archer()
 void Archer::write(RakNet::BitStream & stream) const
 {
 	stream.Write(mCurrentAction);
-	stream.Write(mLoc.x);
-	stream.Write(mLoc.y);
-	stream.Write(mLoc.z);
+	stream.Write(m_pos.x);
+	stream.Write(m_pos.y);
+	stream.Write(m_pos.z);
 	stream.Write(mHealth);
 	stream.Write(LINKING->getNetworkId(mTownCenter, false));
 }
@@ -24,9 +24,9 @@ void Archer::write(RakNet::BitStream & stream) const
 void Archer::read(RakNet::BitStream & stream, ObjectCreationRegistry* registry)
 {
 	stream.Read(mCurrentAction);
-	stream.Read(mLoc.x);
-	stream.Read(mLoc.y);
-	stream.Read(mLoc.z);
+	stream.Read(m_pos.x);
+	stream.Read(m_pos.y);
+	stream.Read(m_pos.z);
 	stream.Read(mHealth);
 	uint32_t centerID;
 	stream.Read(centerID);
@@ -38,7 +38,7 @@ void Archer::writeToFile(std::ofstream& of)
 	of << "------------------------------------------------------------" << std::endl;
 	of << "Archer" << std::endl;
 	of << "Archer Action: " << enumToString(mCurrentAction) << std::endl;
-	of << "Archer Loc: ( " << std::to_string(mLoc.x) << ", " << std::to_string(mLoc.y) << ", " << std::to_string(mLoc.z) << " )" << std::endl;
+	of << "Archer Loc: ( " << std::to_string(m_pos.x) << ", " << std::to_string(m_pos.y) << ", " << std::to_string(m_pos.z) << " )" << std::endl;
 	of << "Archer Health: " << std::to_string(mHealth) << std::endl;
 	of << "Lives in Center: " << std::endl;
 	mTownCenter->writeToFile(of);

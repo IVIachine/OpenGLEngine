@@ -23,10 +23,10 @@ public:
 	virtual void draw();
 	void updatePaddle(MoveList& moves);
 
-	Vec3 getLoc() const { return mLoc; };
-	void setLoc(Vec3 loc) { mLoc = loc; };
+	Vec3 getLoc() const { return m_pos; };
+	void setLoc(Vec3 loc) { m_pos = loc; };
 
 private:
-	Vec3 mLoc;
+	Vec3 m_pos;
 };
 

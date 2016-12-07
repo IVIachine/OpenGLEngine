@@ -26,7 +26,7 @@ void PaddleServer::updatePaddle(MoveList& moves)
 	for (size_t i = 0; i < moveList.size(); i++)
 	{
 		hasChanged = true;
-		mLoc.y += moveList[i].GetInputState().getDesiredVerticalDelta();
+		m_pos.y += moveList[i].GetInputState().getDesiredVerticalDelta();
 
 		timer.sleepUntilElapsed(moveList[i].GetDeltaTime());
 	}
@@ -40,19 +40,19 @@ void PaddleServer::updatePaddle(MoveList& moves)
 
 void PaddleServer::write(RakNet::BitStream & stream) 
 {
-	if (mLoc.y < MIN_PADDLE_Y)
+	if (m_pos.y < MIN_PADDLE_Y)
 	{
-		mLoc.y = MIN_PADDLE_Y;
+		m_pos.y = MIN_PADDLE_Y;
 	}
 
-	if (mLoc.y > MAX_PADDLE_Y)
+	if (m_pos.y > MAX_PADDLE_Y)
 	{
-		mLoc.y = MAX_PADDLE_Y;
+		m_pos.y = MAX_PADDLE_Y;
 	}
 
-	stream.Write(mLoc.x);
-	stream.Write(mLoc.y);
-	stream.Write(mLoc.z);
+	stream.Write(m_pos.x);
+	stream.Write(m_pos.y);
+	stream.Write(m_pos.z);
 }
 
 void PaddleServer::sendToServer(RakNet::BitStream & stream)
@@ -74,10 +74,10 @@ void PaddleServer::sendToServer(RakNet::RakPeerInterface * peer)
 
 void PaddleServer::read(RakNet::BitStream & stream)
 {
-	stream.Read(mLoc.x);
-	stream.Read(mLoc.y);
-	stream.Read(mLoc.z);
-	setLoc(mLoc);
+	stream.Read(m_pos.x);
+	stream.Read(m_pos.y);
+	stream.Read(m_pos.z);
+	setLoc(m_pos);
 }
 
 void PaddleServer::writeToFile(std::ofstream & of)

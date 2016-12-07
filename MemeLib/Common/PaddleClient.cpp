@@ -16,19 +16,21 @@ PaddleClient::~PaddleClient()
 
 void PaddleClient::draw()
 {
-	mp_sprite->setPosition(mLoc);
+	mp_sprite->setPosition(m_pos);
 	mp_sprite->draw(*GRAPHICS->getCamera());
 }
 
 void PaddleClient::update()
 {
+	m_pos += m_dir;
+	//m_dir *= TIME->deltaTime();
 }
 
 void PaddleClient::write(RakNet::BitStream & stream) 
 {
-	stream.Write(mLoc.x);
-	stream.Write(mLoc.y);
-	stream.Write(mLoc.z);
+	stream.Write(m_pos.x);
+	stream.Write(m_pos.y);
+	stream.Write(m_pos.z);
 }
 
 void PaddleClient::sendToServer(RakNet::BitStream & stream)
@@ -50,10 +52,15 @@ void PaddleClient::sendToServer(RakNet::RakPeerInterface * peer)
 
 void PaddleClient::read(RakNet::BitStream & stream)
 {
-	stream.Read(mLoc.x);
-	stream.Read(mLoc.y);
-	stream.Read(mLoc.z);
-	setLoc(mLoc);
+	Vec3 tmp = m_pos;
+
+	stream.Read(m_pos.x);
+	stream.Read(m_pos.y);
+	stream.Read(m_pos.z);
+
+	m_dir = (m_pos - tmp);
+
+	setLoc(m_pos);
 }
 
 void PaddleClient::writeToFile(std::ofstream & of)

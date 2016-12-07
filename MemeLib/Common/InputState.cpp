@@ -17,7 +17,7 @@ bool InputState::read(RakNet::BitStream & stream)
 
 void InputState::update(float deltaTime)
 {
-	float speed = deltaTime * 0.01f;
+	float speed = deltaTime * 0.025f;
 
 	if (INPUT->getKey(Keyboard::W))
 	{

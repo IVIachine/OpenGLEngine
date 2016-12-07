@@ -4,7 +4,7 @@
 
 BallServer::BallServer()
 {
-	m_ballSpeed = 0.0001f;
+	m_ballSpeed = 0.00015f;
 
 	float rx = m_ballSpeed;
 	float ry = 0.f;
@@ -20,7 +20,6 @@ BallServer::~BallServer()
 void BallServer::update()
 {
 	//Update physics here
-
 	m_pos = m_pos + m_vel;
 }
 

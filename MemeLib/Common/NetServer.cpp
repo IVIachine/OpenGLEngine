@@ -242,8 +242,8 @@ void NetServer::update()
 				sendByAddress(client.second.getAddress(), oStream);
 			}
 		}
-		std::cout << m_frameCounter << std::endl;
-		if (m_frameCounter >= 1000)
+
+		if (m_frameCounter >= 10.f)
 		{
 			RakNet::BitStream stream;
 			stream.Write((RakNet::MessageID)REPLICATION_PACKET);
@@ -258,7 +258,7 @@ void NetServer::update()
 		}
 		else
 		{
-			m_frameCounter+= TIME->elapsedMilliseconds();
+			m_frameCounter += TIME->deltaTime();
 		}
 
 		for (auto& client : m_clients)

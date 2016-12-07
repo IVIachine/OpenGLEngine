@@ -58,7 +58,7 @@ private:
 	BallServer* m_ball;
 	PaddleServer* m_paddleL;
 	PaddleServer* m_paddleR;
-	int m_frameCounter;
+	float m_frameCounter;
 	int m_pointsR, m_pointsL;
 	//size_t m_numClients = 0;
 };

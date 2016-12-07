@@ -63,8 +63,7 @@ void NetClient::update()
 	{
 		m_moves->addMove(currentState, TIME->getCurrentTime());
 	}
-
-	if (m_frameCount >= 10) //May need to fix
+	if (m_frameCount >= 30) //May need to fix
 	{
 		RakNet::BitStream stream;
 
@@ -84,24 +83,28 @@ void NetClient::update()
 	}
 	else
 	{
-		m_frameCount += TIME->elapsedMilliseconds();
+		m_frameCount += TIME->deltaTime();
 	}
 
-	if (mSimulationTimer->getElapsedTime() >= mSimulationTime)
+	if (mIsSimulating)
 	{
-		mSimulationTimer->stop();
-		mSimulationTime = 0;
-	}
-	else
-	{
-		for (auto ball : OBJECT_MANAGER->findObjectsOfType<BallClient>())
+		if (mSimulationTimer->getElapsedTime() >= mSimulationTime)
 		{
-			ball->update(mSimulationTime);
+			mSimulationTimer->stop();
+			mSimulationTime = 0;
+			mIsSimulating = false;
 		}
-
-		for (auto paddle : OBJECT_MANAGER->findObjectsOfType<PaddleClient>())
+		else
 		{
-			paddle->update();
+			for (auto ball : OBJECT_MANAGER->findObjectsOfType<BallClient>())
+			{
+				ball->update(mSimulationTime);
+			}
+
+			for (auto paddle : OBJECT_MANAGER->findObjectsOfType<PaddleClient>())
+			{
+				paddle->update();
+			}
 		}
 	}
 
@@ -201,10 +204,8 @@ void NetClient::update()
 			bsIn >> timeStamp;
 
 			float rtt = TIME->getCurrentTime() - timeStamp;
-			mSimulationTime = rtt/2;
-
-			system("cls");
-
+			mSimulationTime = rtt/2.0f;
+			mIsSimulating = true;
 			mSimulationTimer->stop();
 			mSimulationTimer->start();
 		}

@@ -24,6 +24,12 @@ bool NetServer::setup()
 		return false;
 	}
 
+	if (!GameTime::createInstance()->setup())
+	{
+		std::cout << "Failed to create Time instance.\n";
+		return false;
+	}
+
 	GameObjectManager::createInstance();
 
 	RakNet::SocketDescriptor socketDesc(SERVER_PORT, 0);
@@ -41,6 +47,7 @@ void NetServer::clear()
 	GameObjectManager::destroyInstance();
 
 	RPCManager::destroyInstance();
+	GameTime::destroyInstance();
 }
 
 void NetServer::handleNewClient(BitStream& iStream, NetAddress addr)
@@ -181,7 +188,7 @@ void NetServer::update()
 	}
 
 
-	if (m_ball && m_paddleL && m_paddleR)
+	if (m_ball && m_paddleL)// && m_paddleR)
 	{
 		m_ball->update();
 
@@ -235,8 +242,8 @@ void NetServer::update()
 				sendByAddress(client.second.getAddress(), oStream);
 			}
 		}
-
-		if (m_frameCounter > 10)
+		std::cout << m_frameCounter << std::endl;
+		if (m_frameCounter >= 1000)
 		{
 			RakNet::BitStream stream;
 			stream.Write((RakNet::MessageID)REPLICATION_PACKET);
@@ -251,7 +258,7 @@ void NetServer::update()
 		}
 		else
 		{
-			m_frameCounter++;
+			m_frameCounter+= TIME->elapsedMilliseconds();
 		}
 
 		for (auto& client : m_clients)

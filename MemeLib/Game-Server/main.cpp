@@ -1,5 +1,5 @@
 #include "Common.h"
-
+#include "GameTime.h"
 int main()
 {
 	Maths::seedRandom();
@@ -16,7 +16,10 @@ int main()
 	registerRPCs();
 	while (isRunning)
 	{
+		TIME->beginStep();
+		TIME->step();
 		SERVER->update();
+		TIME->endStep();
 	}
 
 	NetServer::destroyInstance();

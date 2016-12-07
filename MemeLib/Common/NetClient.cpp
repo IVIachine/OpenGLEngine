@@ -54,6 +54,8 @@ void NetClient::clear()
 
 void NetClient::update()
 {
+	//std::cout << TIME->deltaTime() << std::endl;
+
 	if (!m_isConnected)
 		return;
 
@@ -63,9 +65,9 @@ void NetClient::update()
 	{
 		m_moves->addMove(currentState, TIME->getCurrentTime());
 	}
-	m_frameCount++;
+	m_frameCount+=TIME->elapsedMilliseconds();
 
-	if (m_frameCount >= 3) //May need to fix
+	if (m_frameCount >= 10) //May need to fix
 	{
 		RakNet::BitStream stream;
 		if (m_moves->sendInputPacket(stream))
@@ -74,27 +76,35 @@ void NetClient::update()
 		}
 		else
 		{
-			//RakNet::BitStream stream2;
-			//stream2.Write((RakNet::MessageID)RTT_PACKET);
-			//stream2.Write(TIME->getCurrentTime());
-			//sendToServer(stream2);
+			RakNet::BitStream stream2;
+			stream2.Write((RakNet::MessageID)RTT_PACKET);
+			stream2.Write(TIME->getCurrentTime());
+			sendToServer(stream2);
 		}
 		m_frameCount = 0;
 	}
 
-	if (mSimulationTime > 0.f)
+	if (mIsSimulating)
 	{
-		std::vector<BallClient*> ball = OBJECT_MANAGER->findObjectsOfType<BallClient>();
-		if (ball[0])
+		std::cout << "SIMULATION\n";
+		if (mSimulationTimer->getElapsedTime() >= mSimulationTime)
 		{
-			ball[0]->update(mSimulationTime);
-
-			//mSimulationTime = 0;
+			mSimulationTimer->stop();
+			mSimulationTime = 0;
+			mIsSimulating = false;
 		}
-
-		for (auto p : OBJECT_MANAGER->findObjectsOfType<PaddleClient>())
+		else
 		{
-			p->update();
+			std::vector<BallClient*> ball = OBJECT_MANAGER->findObjectsOfType<BallClient>();
+			if (ball[0])
+			{
+				ball[0]->update(mSimulationTime);
+			}
+
+			for (auto p : OBJECT_MANAGER->findObjectsOfType<PaddleClient>())
+			{
+				p->update();
+			}
 		}
 	}
 
@@ -185,7 +195,7 @@ void NetClient::update()
 		break;
 		case NetMessages::TIME_PACKET:
 		{
-			//mSimulationTimer->stop();
+			mSimulationTimer->stop();
 			RakNet::BitStream bsIn(mp_packet->data, mp_packet->length, false);
 
 			bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
@@ -195,10 +205,11 @@ void NetClient::update()
 			bsIn >> timeStamp;
 
 			float rtt = TIME->getCurrentTime() - timeStamp;
-			mSimulationTime = rtt/2.0f; //May need to divide by 2
-			std::cout << mSimulationTime << std::endl;
+			mSimulationTime = rtt/2; //May need to divide by 2
+			//std::cout << mSimulationTime << std::endl;
+			system("cls");
 			mIsSimulating = true;
-			//mSimulationTimer->start();
+			mSimulationTimer->start();
 		}
 		break;
 		default:

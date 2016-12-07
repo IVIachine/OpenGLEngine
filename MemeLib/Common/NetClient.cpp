@@ -65,7 +65,7 @@ void NetClient::update()
 	}
 	m_frameCount++;
 
-	if (m_frameCount >= 5) //May need to fix
+	if (m_frameCount >= 10) //May need to fix
 	{
 		RakNet::BitStream stream;
 		if (m_moves->sendInputPacket(stream))
@@ -197,6 +197,7 @@ void NetClient::update()
 
 			float rtt = TIME->getCurrentTime() - timeStamp;
 			mSimulationTime = rtt/2.0f; //May need to divide by 2
+			std::cout << mSimulationTime << std::endl;
 			mIsSimulating = true;
 			mSimulationTimer->start();
 		}

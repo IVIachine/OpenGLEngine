@@ -58,7 +58,7 @@ public:
 			return b;
 		}
 
-		return a * t + b * (1.f - t);
+		return b * t + a * (1.f - t);
 	}
 
 

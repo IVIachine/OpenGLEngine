@@ -165,20 +165,6 @@ void NetServer::update()
 			m_clients.find(addr)->second.readMove(iStream);
 		}
 		break;
-		case RTT_PACKET:
-		{
-			BitStream in(mp_packet->data, mp_packet->length, false);
-			in.IgnoreBytes(sizeof(RakNet::MessageID));
-
-			float timeStamp;
-			in >> timeStamp;
-
-			BitStream oStream;
-			oStream.Write((RakNet::MessageID)TIME_PACKET);
-			oStream.Write(timeStamp);
-			SERVER->sendByAddress(mp_packet->systemAddress, oStream);
-		}
-		break;
 		default:
 		{
 			printf("Message with identifier %i has arrived.\n", mp_packet->data[0]);
@@ -188,11 +174,11 @@ void NetServer::update()
 	}
 
 
-	if (m_ball && m_paddleL)// && m_paddleR)
-	{
+	//if (m_ball && m_paddleL && m_paddleR)
+	//{
 		m_ball->update();
 
-		float ballX = m_ball->getLoc().x;
+		/*float ballX = m_ball->getLoc().x;
 		float ballY = m_ball->getLoc().y;
 
 		float dyL = glm::distance(m_ball->getLoc(), m_paddleL->getLoc());
@@ -242,7 +228,7 @@ void NetServer::update()
 				sendByAddress(client.second.getAddress(), oStream);
 			}
 		}
-
+		*/
 		if (m_frameCounter >= 10.f)
 		{
 			RakNet::BitStream stream;
@@ -258,14 +244,14 @@ void NetServer::update()
 		}
 		else
 		{
-			m_frameCounter += TIME->deltaTime();
+			m_frameCounter+= TIME->deltaTime();
 		}
 
 		for (auto& client : m_clients)
 		{
 			client.second.update();
 		}
-	}
+	//}
 }
 
 

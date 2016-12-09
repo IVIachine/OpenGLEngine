@@ -9,6 +9,7 @@ BallClient::BallClient()
 	mp_sprite = RESOURCES->getSprite("ball");
 	mp_sprite->setScale(Vec3(0.211f, 0.211f, 1.f));
 	mp_sprite->setRotation(Vec3(0, 180, 0) * Maths::DEG_TO_RAD);
+	mNumFrames = 14;
 }
 
 
@@ -18,16 +19,27 @@ BallClient::~BallClient()
 
 void BallClient::draw()
 {
+	//std::cout << "DRAWING\n";
 	mp_sprite->setPosition(m_posCurrent);
 	mp_sprite->draw(*GRAPHICS->getCamera());
 }
 
 void BallClient::update(float lerpTime)
 {
-	m_posCurrent = Vector3::lerp(
-		m_posCurrent, 
-		m_posNew, 
-		lerpTime * TIME->deltaTime());
+	if (m_posCurrent != m_posNew && mCurrentFrame < mNumFrames)
+	{
+		m_posCurrent = Vector3::lerp(
+			m_posOld,
+			m_posNew,
+			mCurrentFrame/mNumFrames);
+		//std::cout << "Current Iteration: " << mCurrentFrame / mNumFrames << std::endl;
+		mCurrentFrame++;
+	}
+	else
+	{
+		m_posCurrent = m_posNew;
+		//std::cout << "AT LOCATION\n";
+	}
 }
 
 void BallClient::write(RakNet::BitStream & stream) const
@@ -57,11 +69,12 @@ void BallClient::sendToServer(RakNet::RakPeerInterface * peer)
 void BallClient::read(RakNet::BitStream & stream)
 {
 	m_posOld = m_posCurrent;
-
 	stream.Read(m_posNew.x);
 	stream.Read(m_posNew.y);
 	stream.Read(m_posNew.z);
-	//std::cout << m_posOld.x << " " << m_posOld.z << " | " << m_posNew.x << " " << m_posNew.z << std::endl;
+	mCurrentFrame = 0;
+	//std::cout << "New data\n";
+	//std::cout << m_posCurrent.x << " " << m_posCurrent.y << " | " << m_posNew.x << " " << m_posNew.y << std::endl;
 }
 
 void BallClient::writeToFile(std::ofstream & of)

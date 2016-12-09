@@ -63,7 +63,7 @@ void NetClient::update()
 	{
 		m_moves->addMove(currentState, TIME->getCurrentTime());
 	}
-	if (m_frameCount >= 30) //May need to fix
+	if (m_frameCount >= 2.f) //May need to fix
 	{
 		RakNet::BitStream stream;
 
@@ -71,14 +71,6 @@ void NetClient::update()
 		{
 			sendToServer(stream);
 		}
-		else
-		{
-			RakNet::BitStream stream2;
-			stream2.Write((RakNet::MessageID)RTT_PACKET);
-			stream2.Write(TIME->getCurrentTime());
-			sendToServer(stream2);
-		}
-
 		m_frameCount = 0;
 	}
 	else
@@ -96,16 +88,16 @@ void NetClient::update()
 		}
 		else
 		{
-			for (auto ball : OBJECT_MANAGER->findObjectsOfType<BallClient>())
-			{
-				ball->update(mSimulationTime);
-			}
-
 			for (auto paddle : OBJECT_MANAGER->findObjectsOfType<PaddleClient>())
 			{
-				paddle->update();
+				paddle->updateClient();
 			}
 		}
+	}
+
+	for (auto ball : OBJECT_MANAGER->findObjectsOfType<BallClient>())
+	{
+		ball->update(10);
 	}
 
 
@@ -204,7 +196,8 @@ void NetClient::update()
 			bsIn >> timeStamp;
 
 			float rtt = TIME->getCurrentTime() - timeStamp;
-			mSimulationTime = rtt/2.0f;
+			mSimulationTime = rtt/2;
+			//std::cout << mSimulationTime << std::endl;
 			mIsSimulating = true;
 			mSimulationTimer->stop();
 			mSimulationTimer->start();

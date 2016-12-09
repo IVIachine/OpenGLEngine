@@ -18,7 +18,7 @@ public:
 	virtual void read(RakNet::BitStream& stream);
 	virtual void writeToFile(std::ofstream& of);
 	virtual void draw();
-	virtual void update();
+	virtual void updateClient();
 
 	Vec3 getLoc() { return m_pos; };
 	void setLoc(Vec3 loc) { m_pos = loc; };
@@ -27,5 +27,6 @@ public:
 private:
 	Sprite* mp_sprite;
 	Vec3 m_pos, m_dir;
+	bool mFirstMove;
 };
 

@@ -24,6 +24,7 @@ public:
 	void setSprite(Sprite* sprite) { mp_sprite = sprite; };
 
 private:
+	float mCurrentFrame, mNumFrames;
 	Sprite* mp_sprite;
 	Vec3 m_posOld;
 	Vec3 m_posNew;

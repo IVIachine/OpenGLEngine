@@ -22,6 +22,7 @@ public:
 private:
 
 	std::string m_ip;
+	Sprite* mp_bg;
 };
 
 #endif // !_PONG_APP_H_

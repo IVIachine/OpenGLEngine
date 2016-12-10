@@ -23,7 +23,7 @@ public:
 	Vec3 getLoc() { return m_pos; };
 	void setLoc(Vec3 loc) { m_pos = loc; };
 	void setSprite(Sprite* sprite) { mp_sprite = sprite; };
-
+	void resetPaddle() { m_dir = Vec3(0, 0, 0); };
 private:
 	Sprite* mp_sprite;
 	Vec3 m_pos, m_dir;

@@ -201,6 +201,11 @@ void NetClient::update()
 			mIsSimulating = true;
 			mSimulationTimer->stop();
 			mSimulationTimer->start();
+
+			for (auto paddle : OBJECT_MANAGER->findObjectsOfType<PaddleClient>())
+			{
+				paddle->resetPaddle();
+			}
 		}
 		break;
 		default:

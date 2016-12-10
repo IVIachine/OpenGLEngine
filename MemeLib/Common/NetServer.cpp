@@ -174,11 +174,11 @@ void NetServer::update()
 	}
 
 
-	//if (m_ball && m_paddleL && m_paddleR)
-	//{
+	if (m_ball && m_paddleL && m_paddleR)
+	{
 		m_ball->update();
 
-		/*float ballX = m_ball->getLoc().x;
+		float ballX = m_ball->getLoc().x;
 		float ballY = m_ball->getLoc().y;
 
 		float dyL = glm::distance(m_ball->getLoc(), m_paddleL->getLoc());
@@ -228,7 +228,7 @@ void NetServer::update()
 				sendByAddress(client.second.getAddress(), oStream);
 			}
 		}
-		*/
+
 		if (m_frameCounter >= 10.f)
 		{
 			RakNet::BitStream stream;
@@ -251,7 +251,7 @@ void NetServer::update()
 		{
 			client.second.update();
 		}
-	//}
+	}
 }
 
 

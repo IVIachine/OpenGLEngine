@@ -23,6 +23,7 @@ void PaddleClient::draw()
 
 void PaddleClient::updateClient()
 {
+	std::cout << (m_dir * 0.015f * TIME->deltaTime()).x << " " << (m_dir * 0.015f * TIME->deltaTime()).y << std::endl;
 	m_pos += m_dir * 0.015f * TIME->deltaTime();
 }
 
@@ -67,7 +68,7 @@ void PaddleClient::read(RakNet::BitStream & stream)
 	stream.Read(tmp2.y);
 	stream.Read(tmp2.z);
 	m_pos = tmp2;
-	m_dir = tmp - m_pos;
+	m_dir = m_pos - tmp;
 }
 
 void PaddleClient::writeToFile(std::ofstream & of)

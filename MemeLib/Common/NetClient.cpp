@@ -97,7 +97,7 @@ void NetClient::update()
 
 	for (auto ball : OBJECT_MANAGER->findObjectsOfType<BallClient>())
 	{
-		ball->update(10);
+		ball->updateBall(10);
 	}
 
 

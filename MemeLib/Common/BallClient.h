@@ -17,7 +17,7 @@ public:
 	virtual void read(RakNet::BitStream& stream);
 	virtual void writeToFile(std::ofstream& of);
 	virtual void draw();
-	virtual void update(float lerpTime);
+	virtual void updateBall(float lerpTime);
 
 	Vec3 getLoc() const { return m_posOld; };
 	void setLoc(Vec3 loc) { m_posOld = loc; };

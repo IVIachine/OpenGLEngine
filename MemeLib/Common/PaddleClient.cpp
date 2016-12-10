@@ -23,7 +23,6 @@ void PaddleClient::draw()
 
 void PaddleClient::updateClient()
 {
-	std::cout << (m_dir * 0.015f * TIME->deltaTime()).x << " " << (m_dir * 0.015f * TIME->deltaTime()).y << std::endl;
 	m_pos += m_dir * 0.015f * TIME->deltaTime();
 }
 
